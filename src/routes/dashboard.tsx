@@ -19,11 +19,6 @@ function html(element: React.ReactElement, status = 200) {
 dashboard.get("/dashboard", authMiddleware, async (c) => {
   const user = c.get("user");
 
-  // Redirect to registration if not complete
-  if (!user.registration_complete) {
-    return c.redirect(`/register/step/${user.registration_step}`);
-  }
-
   if (user.role === "student") {
     return renderStudentDashboard(c, user);
   } else if (user.role === "mentor") {
@@ -73,6 +68,25 @@ async function renderStudentDashboard(c: any, user: any) {
           </h1>
           <p className="text-gray-500 mt-1">Here's what's happening with your mentorships.</p>
         </div>
+
+        {!user.registration_complete && (
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-blue-900">Complete your profile to get matched!</h2>
+                <p className="text-blue-700 text-sm mt-1">
+                  Fill out your profile so we can find the perfect mentor for you. It only takes a few minutes.
+                </p>
+              </div>
+              <a
+                href={`/register/step/${user.registration_step}`}
+                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+              >
+                Complete Profile
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -180,6 +194,25 @@ async function renderMentorDashboard(c: any, user: any) {
   return html(
     <Layout title="Dashboard" user={user}>
       <div>
+        {!user.registration_complete && (
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-blue-900">Complete your profile to start mentoring!</h2>
+                <p className="text-blue-700 text-sm mt-1">
+                  Fill out your professional details so students can find and connect with you.
+                </p>
+              </div>
+              <a
+                href={`/register/step/${user.registration_step}`}
+                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+              >
+                Complete Profile
+              </a>
+            </div>
+          </div>
+        )}
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             Welcome back, {user.first_name}!

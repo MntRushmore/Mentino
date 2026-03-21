@@ -109,6 +109,18 @@ sessions.get("/sessions", authMiddleware, async (c) => {
                   <option value="60">60 minutes</option>
                 </select>
               </div>
+              {user.role === "mentor" && (
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Zoom Meeting Link</label>
+                  <input
+                    type="url"
+                    name="meeting_url"
+                    placeholder="https://zoom.us/j/..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                  <p className="text-xs text-gray-400 mt-1">Create a Zoom meeting and paste the link here</p>
+                </div>
+              )}
               <div className="md:col-span-3">
                 <button
                   type="submit"
@@ -153,6 +165,17 @@ sessions.get("/sessions", authMiddleware, async (c) => {
                         })}
                       </p>
                       <p className="text-sm text-gray-500">{session.duration_minutes} minutes</p>
+                      {session.meeting_url && (
+                        <a
+                          href={session.meeting_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 font-medium mt-1"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                          Join Zoom Meeting
+                        </a>
+                      )}
                       {session.notes && (
                         <p className="text-sm text-gray-600 mt-2 italic">Notes: {session.notes}</p>
                       )}
@@ -163,12 +186,22 @@ sessions.get("/sessions", authMiddleware, async (c) => {
                       )}
                     </div>
                     <div className="flex flex-col gap-2">
-                      {session.status === "scheduled" && !isPast && (
+                      {session.status === "scheduled" && !isPast && session.meeting_url && (
                         <a
-                          href={`/sessions/${session.id}`}
+                          href={session.meeting_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 text-center"
                         >
-                          Join
+                          Join Zoom
+                        </a>
+                      )}
+                      {session.status === "scheduled" && !isPast && !session.meeting_url && (
+                        <a
+                          href={`/sessions/${session.id}`}
+                          className="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 text-center"
+                        >
+                          Details
                         </a>
                       )}
                       {session.status === "scheduled" && (
@@ -206,6 +239,7 @@ sessions.post("/sessions/create", authMiddleware, async (c) => {
   const matchId = body.match_id as string;
   const scheduledAt = body.scheduled_at as string;
   const duration = parseInt(body.duration as string) || 30;
+  const meetingUrl = (body.meeting_url as string)?.trim() || null;
 
   if (!matchId || !scheduledAt) return c.redirect("/sessions");
 
@@ -214,7 +248,7 @@ sessions.post("/sessions/create", authMiddleware, async (c) => {
     scheduled_at: new Date(scheduledAt).toISOString(),
     duration_minutes: duration,
     status: "scheduled",
-    room_id: `room-${crypto.randomUUID().slice(0, 8)}`,
+    meeting_url: meetingUrl,
     created_by: user.id,
   });
 
@@ -242,15 +276,32 @@ sessions.get("/sessions/:id", authMiddleware, async (c) => {
     <Layout title="Session Room" user={user}>
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          {/* Video Area (Stub) */}
-          <div className="bg-gray-900 aspect-video flex items-center justify-center">
+          {/* Zoom Meeting Area */}
+          <div className="bg-gray-900 py-16 flex items-center justify-center">
             <div className="text-center text-white">
-              <div className="text-6xl mb-4">📹</div>
-              <h2 className="text-xl font-semibold mb-2">Video Session</h2>
-              <p className="text-gray-400">
-                Video calling coming soon! For now, use an external video tool.
-              </p>
-              <p className="text-gray-500 text-sm mt-2">Room: {session.room_id}</p>
+              {session.meeting_url ? (
+                <>
+                  <svg className="w-16 h-16 mx-auto mb-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <h2 className="text-xl font-semibold mb-3">Zoom Meeting Ready</h2>
+                  <a
+                    href={session.meeting_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+                  >
+                    Join Zoom Meeting
+                  </a>
+                  <p className="text-gray-500 text-xs mt-3 max-w-sm mx-auto break-all">{session.meeting_url}</p>
+                </>
+              ) : (
+                <>
+                  <svg className="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <h2 className="text-xl font-semibold mb-2">No Meeting Link Yet</h2>
+                  <p className="text-gray-400">
+                    The mentor hasn't added a Zoom link for this session yet.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -265,6 +316,19 @@ sessions.get("/sessions/:id", authMiddleware, async (c) => {
 
             {/* Notes & Rating Form */}
             <form method="POST" action={`/sessions/${sessionId}/complete`} className="space-y-4">
+              {user.role === "mentor" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Zoom Meeting Link</label>
+                  <input
+                    type="url"
+                    name="meeting_url"
+                    defaultValue={session.meeting_url || ""}
+                    placeholder="https://zoom.us/j/..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                  <p className="text-xs text-gray-400 mt-1">Add or update the Zoom meeting link</p>
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Session Notes</label>
                 <textarea
@@ -317,14 +381,20 @@ sessions.post("/sessions/:id/complete", authMiddleware, async (c) => {
   const sessionId = c.req.param("id");
   const body = await c.req.parseBody();
 
+  const updateData: Record<string, any> = {
+    status: "completed",
+    notes: (body.notes as string) || null,
+    rating: body.rating ? parseInt(body.rating as string) : null,
+    feedback: (body.feedback as string) || null,
+  };
+
+  if (body.meeting_url !== undefined) {
+    updateData.meeting_url = (body.meeting_url as string)?.trim() || null;
+  }
+
   await supabase
     .from("sessions")
-    .update({
-      status: "completed",
-      notes: (body.notes as string) || null,
-      rating: body.rating ? parseInt(body.rating as string) : null,
-      feedback: (body.feedback as string) || null,
-    })
+    .update(updateData)
     .eq("id", sessionId);
 
   return c.redirect("/sessions");

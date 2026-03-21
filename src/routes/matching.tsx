@@ -21,7 +21,32 @@ matching.get("/matching", authMiddleware, async (c) => {
   const user = c.get("user");
 
   if (!user.registration_complete) {
-    return c.redirect(`/register/step/${user.registration_step}`);
+    return html(
+      <Layout title="Complete Your Profile" user={user}>
+        <div className="max-w-2xl mx-auto mt-12">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">Complete Your Profile First</h1>
+            <p className="text-gray-500 mb-6 max-w-md mx-auto">
+              To find the best mentor matches, we need to know a bit more about you — your interests, goals, and availability.
+            </p>
+            <a
+              href={`/register/step/${user.registration_step}`}
+              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Complete Profile
+            </a>
+            <p className="text-gray-400 text-sm mt-4">
+              <a href="/dashboard" className="hover:text-gray-600">Back to Dashboard</a>
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 
   if (user.role === "student") {

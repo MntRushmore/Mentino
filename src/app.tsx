@@ -12,6 +12,7 @@ import { matching } from "./routes/matching";
 import { messages } from "./routes/messages";
 import { sessions } from "./routes/sessions";
 import { staticPages } from "./routes/static";
+import { blog } from "./routes/blog";
 import { optionalAuth } from "./middleware/auth";
 
 export const app = new Hono();
@@ -55,6 +56,9 @@ app.route("/", messages);
 
 // Session routes
 app.route("/", sessions);
+
+// Blog routes
+app.route("/", blog);
 
 // Static pages
 app.route("/", staticPages);

@@ -84,11 +84,6 @@ auth.post("/login", async (c) => {
     path: "/",
   });
 
-  // Redirect based on registration status
-  if (!user.registration_complete) {
-    return c.redirect(`/register/step/${user.registration_step}`);
-  }
-
   return c.redirect("/dashboard");
 });
 
@@ -165,7 +160,7 @@ auth.post("/signup", async (c) => {
     path: "/",
   });
 
-  return c.redirect("/register/step/1");
+  return c.redirect("/dashboard");
 });
 
 // POST /logout

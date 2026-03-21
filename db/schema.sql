@@ -110,7 +110,7 @@ CREATE TABLE public.sessions (
     scheduled_at TIMESTAMPTZ NOT NULL,
     duration_minutes INTEGER DEFAULT 30,
     status VARCHAR(20) DEFAULT 'scheduled',
-    room_id VARCHAR(100),
+    meeting_url TEXT,
     notes TEXT,
     rating INTEGER,
     feedback TEXT,

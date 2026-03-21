@@ -6,7 +6,7 @@ interface NavbarProps {
 
 export function Navbar({ user }: NavbarProps) {
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm">
+    <nav className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <a href="/" className="flex items-center space-x-2">
@@ -49,8 +49,11 @@ export function Navbar({ user }: NavbarProps) {
               </>
             ) : (
               <>
-                <a href="/code-of-conduct" className="text-gray-600 hover:text-blue-600 font-medium">
-                  Community
+                <a href="/how-it-works" className="text-gray-600 hover:text-blue-600 font-medium">
+                  How It Works
+                </a>
+                <a href="/blog" className="text-gray-600 hover:text-blue-600 font-medium">
+                  Blog
                 </a>
                 <a href="/about" className="text-gray-600 hover:text-blue-600 font-medium">
                   About

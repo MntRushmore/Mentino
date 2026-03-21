@@ -87,7 +87,7 @@ export interface Session {
   scheduled_at: string;
   duration_minutes: number;
   status: "scheduled" | "in_progress" | "completed" | "cancelled" | "no_show";
-  room_id: string | null;
+  meeting_url: string | null;
   notes: string | null;
   rating: number | null;
   feedback: string | null;

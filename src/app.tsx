@@ -33,7 +33,7 @@ app.get("/", optionalAuth, async (c) => {
   // Fetch featured mentors for the landing page
   const { data: featuredMentors } = await supabase
     .from("mentors")
-    .select("career_field, job_title, company, years_experience, topics, accounts!inner(first_name, last_name, bio)")
+    .select("career_field, job_title, company, years_experience, topics, accounts!user_id!inner(first_name, last_name, bio)")
     .eq("verification_status", "approved")
     .limit(6);
 

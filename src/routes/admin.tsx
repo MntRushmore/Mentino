@@ -90,7 +90,7 @@ admin.get("/admin/verify", async (c) => {
 
   const { data: pendingMentors } = await supabase
     .from("mentors")
-    .select("*, accounts!inner(first_name, last_name, email, bio, created_at)")
+    .select("*, accounts!user_id!inner(first_name, last_name, email, bio, created_at)")
     .eq("verification_status", "pending")
     .order("created_at", { ascending: true });
 

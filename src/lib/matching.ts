@@ -36,7 +36,7 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
   // Get all approved mentors with capacity
   const { data: mentors } = await supabase
     .from("mentors")
-    .select("*, accounts!inner(id, first_name, last_name, email, bio)")
+    .select("*, accounts!user_id!inner(id, first_name, last_name, email, bio)")
     .eq("verification_status", "approved");
 
   if (!mentors || mentors.length === 0) return [];

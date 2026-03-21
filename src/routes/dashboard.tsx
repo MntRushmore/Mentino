@@ -38,7 +38,7 @@ async function renderStudentDashboard(c: any, user: any) {
   // Get matches with mentor info
   const { data: matches } = await supabase
     .from("matches")
-    .select("*, mentors!inner(*, accounts!inner(first_name, last_name, email, bio))")
+    .select("*, mentors!inner(*, accounts!user_id!inner(first_name, last_name, email, bio))")
     .eq("student_id", student?.id)
     .in("status", ["pending", "accepted", "active"])
     .order("created_at", { ascending: false });
@@ -46,7 +46,7 @@ async function renderStudentDashboard(c: any, user: any) {
   // Get upcoming sessions
   const { data: sessions } = await supabase
     .from("sessions")
-    .select("*, matches!inner(mentors!inner(accounts!inner(first_name, last_name)))")
+    .select("*, matches!inner(mentors!inner(accounts!user_id!inner(first_name, last_name)))")
     .eq("matches.student_id", student?.id)
     .in("status", ["scheduled"])
     .order("scheduled_at", { ascending: true })

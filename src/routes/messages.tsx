@@ -26,7 +26,7 @@ messages.get("/messages", authMiddleware, async (c) => {
     if (!student) return c.redirect("/dashboard");
     matchQuery = supabase
       .from("matches")
-      .select("*, mentors!inner(accounts!inner(first_name, last_name))")
+      .select("*, mentors!inner(accounts!user_id!inner(first_name, last_name))")
       .eq("student_id", student.id)
       .eq("status", "active");
   } else {
@@ -126,7 +126,7 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
   // Verify user is part of this match
   const { data: match } = await supabase
     .from("matches")
-    .select("*, students!inner(user_id, accounts!inner(first_name, last_name)), mentors!inner(user_id, accounts!inner(first_name, last_name))")
+    .select("*, students!inner(user_id, accounts!user_id!inner(first_name, last_name)), mentors!inner(user_id, accounts!user_id!inner(first_name, last_name))")
     .eq("id", matchId)
     .single();
 

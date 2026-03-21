@@ -41,7 +41,7 @@ sessions.get("/sessions", authMiddleware, async (c) => {
   if (matchIds.length > 0) {
     const { data } = await supabase
       .from("sessions")
-      .select("*, matches!inner(students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!inner(first_name, last_name)))")
+      .select("*, matches!inner(students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!user_id!inner(first_name, last_name)))")
       .in("match_id", matchIds)
       .order("scheduled_at", { ascending: false });
     sessionData = data || [];
@@ -52,7 +52,7 @@ sessions.get("/sessions", authMiddleware, async (c) => {
   if (matchIds.length > 0) {
     const { data } = await supabase
       .from("matches")
-      .select("id, students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!inner(first_name, last_name))")
+      .select("id, students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!user_id!inner(first_name, last_name))")
       .in("id", matchIds);
     activeMatches = data || [];
   }
@@ -262,7 +262,7 @@ sessions.get("/sessions/:id", authMiddleware, async (c) => {
 
   const { data: session } = await supabase
     .from("sessions")
-    .select("*, matches!inner(students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!inner(first_name, last_name)))")
+    .select("*, matches!inner(students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!user_id!inner(first_name, last_name)))")
     .eq("id", sessionId)
     .single();
 

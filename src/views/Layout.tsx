@@ -7,9 +7,10 @@ interface LayoutProps {
   children: React.ReactNode;
   user?: { first_name: string; role: string } | null;
   flash?: string | null;
+  navBadges?: { unreadMessages?: number; pendingRequests?: number };
 }
 
-export function Layout({ title = "Mentino", children, user, flash }: LayoutProps) {
+export function Layout({ title = "Mentino", children, user, flash, navBadges }: LayoutProps) {
   return (
     <html lang="en">
       <head>
@@ -33,7 +34,7 @@ export function Layout({ title = "Mentino", children, user, flash }: LayoutProps
         />
       </head>
       <body className="bg-gray-50 min-h-screen flex flex-col">
-        <Navbar user={user} />
+        <Navbar user={user} badges={navBadges} />
         {flash && (
           <div className="max-w-7xl mx-auto px-4 pt-4 w-full">
             <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">

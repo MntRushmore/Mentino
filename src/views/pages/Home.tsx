@@ -1,6 +1,10 @@
 import React from "react";
 
-export function Home() {
+interface HomeProps {
+  featuredMentors?: any[];
+}
+
+export function Home({ featuredMentors = [] }: HomeProps) {
   return (
     <div>
       {/* Hero Section */}
@@ -98,6 +102,72 @@ export function Home() {
           ))}
         </div>
       </section>
+
+      {/* Featured Mentors */}
+      {featuredMentors.length > 0 && (
+        <section className="py-16">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
+            Meet Our Mentors
+          </h2>
+          <p className="text-center text-gray-500 mb-10 max-w-xl mx-auto">
+            Real professionals, ready to guide you. Here are some of the mentors on Mentino.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredMentors.map((m: any, i: number) => {
+              const colors = [
+                "bg-blue-100 text-blue-600",
+                "bg-emerald-100 text-emerald-600",
+                "bg-violet-100 text-violet-600",
+                "bg-amber-100 text-amber-600",
+                "bg-rose-100 text-rose-600",
+                "bg-cyan-100 text-cyan-600",
+              ];
+              const color = colors[i % colors.length];
+              return (
+                <div key={i} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-12 h-12 ${color} rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0`}>
+                      {m.accounts?.first_name?.[0]}{m.accounts?.last_name?.[0]}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">
+                        {m.accounts?.first_name} {m.accounts?.last_name}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {m.job_title} at {m.company || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                    {m.accounts?.bio || `${m.years_experience} years in ${m.career_field}`}
+                  </p>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      {m.career_field}
+                    </span>
+                    <span className="text-xs text-gray-400">{m.years_experience} years exp.</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {m.topics?.slice(0, 3).map((topic: string) => (
+                      <span key={topic} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">
+                        {topic}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="text-center mt-8">
+            <a
+              href="/signup"
+              className="text-blue-600 font-semibold hover:underline"
+            >
+              Sign up to see all mentors and get matched &rarr;
+            </a>
+          </div>
+        </section>
+      )}
 
       {/* Matching system preview */}
       <section className="py-16">

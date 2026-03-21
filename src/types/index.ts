@@ -61,6 +61,7 @@ export interface Match {
   status: "pending" | "accepted" | "rejected" | "active" | "completed" | "cancelled";
   match_score: number | null;
   match_reason: string | null;
+  intro_message: string | null;
   requested_by: "student" | "mentor" | "system";
   responded_at: string | null;
   started_at: string | null;

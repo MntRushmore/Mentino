@@ -60,16 +60,30 @@ export function MatchCard({ match, otherUser, role }: MatchCardProps) {
           <div className="flex items-center gap-2">
             <h4 className="font-medium text-gray-900 text-sm">{otherUser.first_name} {otherUser.last_name}</h4>
             <Badge status={match.status} />
+            {match.match_score && (
+              <span className="bg-blue-50 text-blue-700 text-xs px-1.5 py-0.5 rounded">
+                {match.match_score}%
+              </span>
+            )}
           </div>
           <p className="text-xs text-gray-500">
             {role === "student" ? "Your mentor" : "Your mentee"}
+            {match.started_at && ` · Since ${new Date(match.started_at).toLocaleDateString()}`}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3 items-center">
           {match.status === "active" && (
-            <a href={`/messages/${match.id}`} className="text-blue-600 hover:underline text-xs font-medium">
-              Message
-            </a>
+            <>
+              <a href={`/messages/${match.id}`} className="text-blue-600 hover:text-blue-800 text-xs font-medium">
+                Message
+              </a>
+              <a href={`/sessions?match_id=${match.id}`} className="text-gray-500 hover:text-gray-700 text-xs font-medium">
+                Schedule
+              </a>
+            </>
+          )}
+          {match.status === "pending" && role === "student" && (
+            <span className="text-xs text-yellow-600 font-medium">Awaiting response</span>
           )}
         </div>
       </div>

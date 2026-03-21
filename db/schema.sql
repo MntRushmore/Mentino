@@ -80,6 +80,7 @@ CREATE TABLE public.matches (
     status VARCHAR(20) DEFAULT 'pending',
     match_score DECIMAL(5,2),
     match_reason TEXT,
+    intro_message TEXT,
     requested_by VARCHAR(20) NOT NULL,
     responded_at TIMESTAMPTZ,
     started_at TIMESTAMPTZ,

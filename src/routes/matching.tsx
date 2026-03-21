@@ -113,14 +113,21 @@ matching.get("/matching", authMiddleware, async (c) => {
                         ))}
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <form method="POST" action="/matching/request">
+                    <div className="flex flex-col gap-2 min-w-[200px]">
+                      <form method="POST" action="/matching/request" className="space-y-2">
                         <input type="hidden" name="mentor_db_id" value={result.mentorDbId} />
                         <input type="hidden" name="score" value={result.score.toString()} />
                         <input type="hidden" name="reason" value={result.reason} />
+                        <textarea
+                          name="intro_message"
+                          placeholder="Introduce yourself! What would you like help with?"
+                          rows={3}
+                          maxLength={500}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                        />
                         <button
                           type="submit"
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors whitespace-nowrap"
+                          className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
                         >
                           Request Match
                         </button>
@@ -158,6 +165,7 @@ matching.post("/matching/request", authMiddleware, async (c) => {
   const mentorDbId = body.mentor_db_id as string;
   const score = parseFloat(body.score as string) || 0;
   const reason = (body.reason as string) || "";
+  const introMessage = (body.intro_message as string)?.trim() || null;
 
   // Get student record
   const { data: student } = await supabase
@@ -187,6 +195,7 @@ matching.post("/matching/request", authMiddleware, async (c) => {
     status: "pending",
     match_score: score,
     match_reason: reason,
+    intro_message: introMessage,
     requested_by: "student",
   });
 

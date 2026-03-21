@@ -14,6 +14,7 @@ import { sessions } from "./routes/sessions";
 import { staticPages } from "./routes/static";
 import { blog } from "./routes/blog";
 import { optionalAuth } from "./middleware/auth";
+import { supabase } from "./db";
 
 export const app = new Hono();
 
@@ -26,11 +27,19 @@ export function render(element: React.ReactElement, status = 200) {
 }
 
 // Landing page
-app.get("/", optionalAuth, (c) => {
+app.get("/", optionalAuth, async (c) => {
   const user = c.get("user");
+
+  // Fetch featured mentors for the landing page
+  const { data: featuredMentors } = await supabase
+    .from("mentors")
+    .select("career_field, job_title, company, years_experience, topics, accounts!inner(first_name, last_name, bio)")
+    .eq("verification_status", "approved")
+    .limit(6);
+
   return render(
     <Layout title="Home" user={user}>
-      <Home />
+      <Home featuredMentors={featuredMentors || []} />
     </Layout>
   );
 });

@@ -60,7 +60,7 @@ async function renderStudentDashboard(c: any, user: any) {
     .eq("is_read", false);
 
   return html(
-    <Layout title="Dashboard" user={user}>
+    <Layout title="Dashboard" user={user} navBadges={{ unreadMessages: unreadCount || 0 }}>
       <div>
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -183,7 +183,7 @@ async function renderMentorDashboard(c: any, user: any) {
   // Get matches with student info
   const { data: matches } = await supabase
     .from("matches")
-    .select("*, students!inner(*, accounts!inner(first_name, last_name, email))")
+    .select("*, students!inner(*, accounts!inner(id, first_name, last_name, email, bio))")
     .eq("mentor_id", mentor?.id)
     .in("status", ["pending", "accepted", "active"])
     .order("created_at", { ascending: false });
@@ -192,7 +192,7 @@ async function renderMentorDashboard(c: any, user: any) {
   const activeMatches = matches?.filter((m: any) => m.status === "active") || [];
 
   return html(
-    <Layout title="Dashboard" user={user}>
+    <Layout title="Dashboard" user={user} navBadges={{ pendingRequests: pendingRequests.length }}>
       <div>
         {!user.registration_complete && (
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
@@ -261,39 +261,79 @@ async function renderMentorDashboard(c: any, user: any) {
                     <p className="text-gray-500">No pending requests</p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {pendingRequests.map((match: any) => (
-                      <div key={match.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-sm">
+                      <div key={match.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div className="p-5">
+                          <div className="flex items-start gap-3 mb-3">
+                            <div className="w-11 h-11 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-sm flex-shrink-0">
                               {match.students.accounts.first_name[0]}{match.students.accounts.last_name[0]}
                             </div>
-                            <div>
-                              <h4 className="font-medium text-gray-900 text-sm">
-                                {match.students.accounts.first_name} {match.students.accounts.last_name}
-                              </h4>
-                              <p className="text-xs text-gray-500">
-                                {match.students.career_interests?.join(", ")}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-gray-900">
+                                  {match.students.accounts.first_name} {match.students.accounts.last_name}
+                                </h4>
+                                {match.match_score && (
+                                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">
+                                    {match.match_score}% match
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-sm text-gray-500">
+                                {match.students.school_name && `${match.students.school_name} · `}
+                                {match.students.grade_or_year || `Age ${match.students.age}`}
                               </p>
                             </div>
+                            <a
+                              href={`/profile/${match.students.accounts.id}`}
+                              className="text-blue-600 hover:underline text-xs font-medium whitespace-nowrap"
+                            >
+                              View Profile
+                            </a>
                           </div>
-                          <div className="flex gap-2">
-                            <form method="POST" action="/matching/respond">
-                              <input type="hidden" name="match_id" value={match.id} />
-                              <input type="hidden" name="action" value="accept" />
-                              <button type="submit" className="bg-green-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-green-700">
-                                Accept
-                              </button>
-                            </form>
-                            <form method="POST" action="/matching/respond">
-                              <input type="hidden" name="match_id" value={match.id} />
-                              <input type="hidden" name="action" value="reject" />
-                              <button type="submit" className="bg-red-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-red-700">
-                                Decline
-                              </button>
-                            </form>
-                          </div>
+
+                          {match.students.career_interests?.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mb-3">
+                              {match.students.career_interests.map((interest: string) => (
+                                <span key={interest} className="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded">
+                                  {interest}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {match.intro_message && (
+                            <div className="bg-gray-50 rounded-lg p-3 mb-3">
+                              <p className="text-xs font-medium text-gray-500 mb-1">Their message to you:</p>
+                              <p className="text-sm text-gray-700 italic">"{match.intro_message}"</p>
+                            </div>
+                          )}
+
+                          {match.students.learning_goals && (
+                            <div className="mb-3">
+                              <p className="text-xs font-medium text-gray-500 mb-1">Learning goals:</p>
+                              <p className="text-sm text-gray-600 line-clamp-2">{match.students.learning_goals}</p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex border-t border-gray-100">
+                          <form method="POST" action="/matching/respond" className="flex-1">
+                            <input type="hidden" name="match_id" value={match.id} />
+                            <input type="hidden" name="action" value="accept" />
+                            <button type="submit" className="w-full py-2.5 text-sm font-medium text-green-700 hover:bg-green-50 transition-colors">
+                              Accept
+                            </button>
+                          </form>
+                          <div className="w-px bg-gray-100" />
+                          <form method="POST" action="/matching/respond" className="flex-1">
+                            <input type="hidden" name="match_id" value={match.id} />
+                            <input type="hidden" name="action" value="reject" />
+                            <button type="submit" className="w-full py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors">
+                              Decline
+                            </button>
+                          </form>
                         </div>
                       </div>
                     ))}

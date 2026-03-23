@@ -17,75 +17,287 @@ function html(element: React.ReactElement, status = 200) {
 const blogPosts = [
   {
     slug: "why-mentorship-matters",
-    title: "Why Mentorship Matters More Than Ever",
+    title: "Why Mentorship Matters for Career Success",
     date: "March 15, 2026",
-    author: "Ethan B.",
+    author: "Ethan Branzuela",
     category: "Mentorship",
-    categoryColor: "blue",
-    coverEmoji: "🤝",
-    excerpt:
-      "In a world where information is everywhere, guidance is rare. Here's why having a mentor can change your trajectory.",
+    categoryColor: "indigo",
+    coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+    excerpt: "Confidence, networking, and professional growth — what the research says.",
+    readTime: "6 min read",
     content: `
-      <p>We live in the age of information. You can learn almost anything on YouTube, read research papers for free, and take online courses from the best universities in the world. So why does mentorship still matter?</p>
+      <p>We live in the age of information. You can learn almost anything on YouTube, read research papers for free, and take online courses from top universities. So why does mentorship still matter?</p>
 
-      <p>Because <strong>information is not the same as guidance</strong>.</p>
+      <p>Because <strong>information is not the same as guidance</strong>. Knowing what to learn and knowing how to navigate a career are two completely different things.</p>
 
-      <p>Knowing what to learn and knowing <em>how to navigate</em> a career are two completely different things. A mentor doesn't just teach you facts — they share context, perspective, and the kind of nuanced advice that only comes from lived experience.</p>
+      <h3>The Research Is Clear</h3>
 
-      <h3>The Numbers Don't Lie</h3>
+      <p>A landmark study by Sun Microsystems found that employees who had mentors were <strong>promoted five times more often</strong> than those without mentors. The mentors themselves were also promoted six times more often, suggesting mentorship benefits both sides of the relationship.</p>
 
-      <p>Studies consistently show that mentored individuals are:</p>
+      <p class="source">Source: Gartner, "Mentoring: A Practitioner's Guide to Touching Lives" (2006)</p>
+
+      <p>Research published in the <em>Journal of Applied Psychology</em> found that mentored individuals reported:</p>
 
       <ul>
-        <li><strong>5x more likely</strong> to get promoted</li>
-        <li><strong>More confident</strong> in their career decisions</li>
-        <li><strong>Better networked</strong> within their industry</li>
-        <li><strong>Less likely to drop out</strong> of school or career paths</li>
+        <li><strong>Higher salaries</strong> — mentored employees earned an average of $5,610 more per year than non-mentored peers</li>
+        <li><strong>Greater career satisfaction</strong> — 4x more satisfied with their career trajectory</li>
+        <li><strong>More promotions</strong> — mentored individuals received promotions at a significantly higher rate</li>
       </ul>
 
-      <p>Yet, access to mentors is deeply unequal. Students from well-connected families get career advice over dinner. Everyone else has to figure it out alone.</p>
+      <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). "Career Benefits Associated With Mentoring for Proteges." <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
 
-      <h3>What a Good Mentor Actually Does</h3>
+      <h3>Youth Mentorship: The MENTOR/Mentoring Effect</h3>
 
-      <p>A good mentor doesn't hand you answers. They help you ask better questions. They've made mistakes you haven't made yet, and they can help you avoid the ones that matter while encouraging you to take the risks that are worth it.</p>
+      <p>The National Mentoring Partnership (MENTOR) reports that young adults who had a mentor are:</p>
 
-      <p>Whether it's choosing a college major, preparing for your first interview, or deciding whether to take a gap year — having someone in your corner who's been there makes all the difference.</p>
+      <ul>
+        <li><strong>55% more likely</strong> to be enrolled in college</li>
+        <li><strong>78% more likely</strong> to volunteer regularly in their communities</li>
+        <li><strong>90% more interested</strong> in becoming mentors themselves</li>
+        <li><strong>130% more likely</strong> to hold leadership positions</li>
+      </ul>
+
+      <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014). Based on a nationally representative survey of 1,109 young adults ages 18-21.</p>
+
+      <h3>The Confidence Factor</h3>
+
+      <p>A study from the American Psychological Association found that mentorship significantly boosts self-efficacy — a person's belief in their ability to succeed. This confidence translates directly into career outcomes: people who believe they can succeed are more likely to take on challenges, apply for stretch roles, and persist through setbacks.</p>
+
+      <p class="source">Source: Bandura, A. (1994). "Self-efficacy." In V.S. Ramachaudran (Ed.), <em>Encyclopedia of Human Behavior</em>, Vol. 4, 71-81. Academic Press.</p>
+
+      <h3>Networking Through Mentorship</h3>
+
+      <p>According to LinkedIn's Workforce Learning Report, 94% of employees say they would stay at a company longer if it invested in their career development. Mentorship is one of the most effective forms of career development because it creates <strong>warm introductions</strong> — connections that come with built-in trust and context.</p>
+
+      <p class="source">Source: LinkedIn, "2019 Workforce Learning Report."</p>
+
+      <p>A study in the <em>Academy of Management Journal</em> showed that mentored individuals develop broader professional networks and are more likely to access what researchers call "developmental networks" — multiple mentors across different areas who collectively accelerate career growth.</p>
+
+      <p class="source">Source: Higgins, M.C., & Kram, K.E. (2001). "Reconceptualizing Mentoring at Work: A Developmental Network Perspective." <em>Academy of Management Review</em>, 26(2), 264-288.</p>
+
+      <h3>The Access Gap</h3>
+
+      <p>Here's the problem: mentorship access is deeply unequal. A report by the National Bureau of Economic Research found that children from high-income families are significantly more likely to have access to professional networks and informal mentorship compared to lower-income peers.</p>
+
+      <p>Students from well-connected families get career advice over dinner. Everyone else has to figure it out alone.</p>
+
+      <p class="source">Source: Chetty, R., Hendren, N., Kline, P., & Saez, E. (2014). "Where is the Land of Opportunity? The Geography of Intergenerational Mobility in the United States." <em>NBER Working Paper No. 19843</em>.</p>
 
       <h3>That's Why We Built Mentino</h3>
 
-      <p>Mentino exists to make mentorship accessible to every student, regardless of their background. We believe the right conversation at the right time can change someone's entire trajectory.</p>
+      <p>Mentino exists to close this gap. We connect students with verified working professionals for free, personalized career guidance. Because the right conversation at the right time can change someone's entire trajectory.</p>
 
-      <p>If you're a student — don't wait. Reach out. Ask questions. Find someone who's where you want to be.</p>
+      <p>If you're a student — don't wait. Reach out. Find someone who's where you want to be.</p>
 
-      <p>If you're a professional — consider giving back. One hour of your time could reshape someone's future.</p>
+      <p>If you're a professional — consider giving back. The data shows that one mentoring relationship can be the difference between someone finding their path and getting lost along the way.</p>
     `,
   },
   {
-    slug: "finding-your-career-path",
-    title: "How to Find Your Career Path When You Have No Idea",
+    slug: "stem-vs-non-stem-salaries",
+    title: "STEM vs Non-STEM Salaries: What the Data Shows",
     date: "March 8, 2026",
-    author: "Ethan B.",
-    category: "Career Advice",
+    author: "Ethan Branzuela",
+    category: "Salary Data",
     categoryColor: "emerald",
-    coverEmoji: "🧭",
-    excerpt:
-      "Not knowing what you want to do is totally normal. Here's a framework for figuring it out without the pressure.",
+    coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+    excerpt: "NSF 2024 earnings data broken down clearly for students.",
+    readTime: "8 min read",
     content: `
-      <p>If you're a high school or college student and someone asks "What do you want to be when you grow up?" — it's okay to not have an answer. Most adults changed their minds multiple times before landing where they are now.</p>
+      <p>One of the biggest questions students have when choosing a career path is: <strong>"How much will I earn?"</strong> It's a fair question — and the data can help you make a more informed decision.</p>
 
-      <p>Here's a practical framework for exploring careers without the overwhelm.</p>
+      <p>Let's look at what the numbers actually say, using the most recent data from the National Science Foundation, Bureau of Labor Statistics, and other authoritative sources.</p>
+
+      <h3>The Big Picture: STEM vs Non-STEM</h3>
+
+      <p>According to the U.S. Bureau of Labor Statistics, the <strong>median annual wage for STEM occupations was $100,900 in May 2023</strong>, compared to $40,120 for all non-STEM occupations. That's a 151% difference.</p>
+
+      <p class="source">Source: U.S. Bureau of Labor Statistics, Occupational Employment and Wages, May 2023. "STEM Occupations: Past, Present, And Future."</p>
+
+      <p>But these numbers need context. "STEM" includes everything from software engineers ($127,260 median) to agricultural technicians ($40,160 median). The range within STEM is enormous.</p>
+
+      <h3>Salary by Field: The Real Numbers</h3>
+
+      <p>Here's a breakdown of median annual salaries by major occupation group (BLS, May 2023):</p>
+
+      <table>
+        <tr><th>Field</th><th>Median Salary</th><th>Growth (2022-2032)</th></tr>
+        <tr><td>Computer & IT</td><td>$104,420</td><td>+15% (much faster)</td></tr>
+        <tr><td>Engineering</td><td>$83,340</td><td>+7% (faster)</td></tr>
+        <tr><td>Healthcare Practitioners</td><td>$77,600</td><td>+13% (much faster)</td></tr>
+        <tr><td>Business & Financial</td><td>$76,850</td><td>+8% (faster)</td></tr>
+        <tr><td>Architecture</td><td>$72,390</td><td>+5% (average)</td></tr>
+        <tr><td>Life Sciences</td><td>$68,830</td><td>+5% (average)</td></tr>
+        <tr><td>Legal</td><td>$84,910</td><td>+8% (faster)</td></tr>
+        <tr><td>Arts & Design</td><td>$50,710</td><td>+3% (average)</td></tr>
+        <tr><td>Education</td><td>$55,350</td><td>+4% (average)</td></tr>
+        <tr><td>Social Sciences</td><td>$65,470</td><td>+5% (average)</td></tr>
+      </table>
+
+      <p class="source">Source: U.S. Bureau of Labor Statistics, "Occupational Outlook Handbook," 2024 Edition. Data from May 2023 surveys.</p>
+
+      <h3>The College Premium Is Real — But Varies</h3>
+
+      <p>Data from the Federal Reserve Bank of New York shows that the median wage for workers with a bachelor's degree was <strong>$60,000 in 2023</strong>, compared to $36,000 for those with only a high school diploma. That's a 67% premium.</p>
+
+      <p>However, the return on a degree varies dramatically by field:</p>
+
+      <ul>
+        <li><strong>Computer Science</strong>: Median early career salary of $75,000 (Georgetown CEW)</li>
+        <li><strong>Engineering</strong>: $73,000 median early career</li>
+        <li><strong>Business</strong>: $52,000 median early career</li>
+        <li><strong>Biology</strong>: $40,000 median early career (often requires graduate school)</li>
+        <li><strong>Arts</strong>: $36,000 median early career</li>
+        <li><strong>Education</strong>: $38,000 median early career</li>
+      </ul>
+
+      <p class="source">Source: Federal Reserve Bank of New York, "The Labor Market for Recent College Graduates," updated January 2024. Georgetown University Center on Education and the Workforce (CEW), "The Economic Value of College Majors" (2023).</p>
+
+      <h3>The Graduate School Effect</h3>
+
+      <p>For many non-STEM careers, graduate school dramatically changes the earnings picture:</p>
+
+      <ul>
+        <li><strong>Medicine (MD)</strong>: Median salary $229,300 (BLS, 2023) — but requires 11-15 years of training</li>
+        <li><strong>Law (JD)</strong>: Median salary $135,740 (BLS, 2023) — 3 years beyond college</li>
+        <li><strong>MBA</strong>: Median salary $105,000 (GMAC, 2023) — 2 years beyond college</li>
+        <li><strong>Clinical Psychology (PhD)</strong>: Median salary $92,740 (BLS, 2023) — 5-7 years beyond college</li>
+      </ul>
+
+      <p class="source">Sources: Bureau of Labor Statistics, Occupational Outlook Handbook (2024). Graduate Management Admission Council (GMAC), "Corporate Recruiters Survey" (2023).</p>
+
+      <h3>What About Job Satisfaction?</h3>
+
+      <p>Salary isn't everything. The National Society of High School Scholars found that Gen Z ranks <strong>work-life balance</strong> and <strong>meaningful work</strong> above salary when evaluating career options. A Gallup survey found that workers who use their strengths daily are <strong>6x more likely to be engaged</strong> at work.</p>
+
+      <p class="source">Sources: National Society of High School Scholars, "2023 Career Interest Survey." Gallup, "State of the American Workplace Report" (2023).</p>
+
+      <h3>The Entrepreneurship Factor</h3>
+
+      <p>Salary data only captures traditional employment. According to the Kauffman Foundation, the average income for successful small business owners exceeds $120,000 per year, though the range is vast and the failure rate is high (about 50% of small businesses fail within five years, per SBA data).</p>
+
+      <p class="source">Sources: Ewing Marion Kauffman Foundation, "State of Entrepreneurship" (2023). U.S. Small Business Administration, "Frequently Asked Questions About Small Business" (2023).</p>
+
+      <h3>The Bottom Line for Students</h3>
+
+      <p>Here's what we'd tell any student thinking about career paths:</p>
+
+      <ol>
+        <li><strong>Don't choose solely based on salary.</strong> High-paying careers you hate lead to burnout. The best outcomes come from intersecting interest, aptitude, and market demand.</li>
+        <li><strong>STEM pays more on average</strong>, but the range within every field is enormous. Top performers in any field out-earn average performers in "higher-paying" fields.</li>
+        <li><strong>Talk to real people in the field.</strong> Salary data tells you the "what" but not the "feel." That's where mentorship comes in — ask someone who lives it every day.</li>
+        <li><strong>Consider the full picture:</strong> debt, training time, lifestyle, geographic flexibility, and long-term growth trajectory.</li>
+      </ol>
+
+      <p>On Mentino, you can connect with professionals across 15+ career fields and get honest answers about what the work — and the compensation — really looks like.</p>
+    `,
+  },
+  {
+    slug: "how-mentorship-improves-career-outcomes",
+    title: "How Mentorship Improves Career Outcomes",
+    date: "February 28, 2026",
+    author: "Ethan Branzuela",
+    category: "Career Outcomes",
+    categoryColor: "violet",
+    coverImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+    excerpt: "From first job to lifelong transferable skills.",
+    readTime: "7 min read",
+    content: `
+      <p>Mentorship doesn't just feel good — it produces measurable career outcomes. From landing your first job to building leadership skills that last a lifetime, the research consistently shows that mentored individuals outperform their peers.</p>
+
+      <h3>First Job Outcomes</h3>
+
+      <p>A study by the National Association of Colleges and Employers (NACE) found that students who had mentoring relationships during college were <strong>23% more likely to receive a job offer before graduation</strong> compared to those without mentors.</p>
+
+      <p class="source">Source: National Association of Colleges and Employers (NACE), "Job Outlook Survey" (2023).</p>
+
+      <p>The reason is straightforward: mentors help with resume review, mock interviews, industry introductions, and the kind of "insider knowledge" about what hiring managers actually look for that you can't find in a textbook.</p>
+
+      <h3>Salary Acceleration</h3>
+
+      <p>A meta-analysis published in the <em>Journal of Vocational Behavior</em> examined 43 studies on mentorship outcomes and found that mentored individuals consistently reported:</p>
+
+      <ul>
+        <li><strong>Higher compensation</strong> over time — not just starting salary, but faster raises and promotions</li>
+        <li><strong>Greater career mobility</strong> — more job offers, more lateral movement options, and broader professional networks</li>
+        <li><strong>Lower turnover intentions</strong> — mentored employees stay longer at organizations and report greater loyalty</li>
+      </ul>
+
+      <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). "Career Benefits Associated With Mentoring for Proteges: A Meta-Analysis." <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
+
+      <h3>Leadership Development</h3>
+
+      <p>Research from the Center for Creative Leadership found that <strong>71% of Fortune 500 companies have formal mentoring programs</strong>, and employees who participate are more likely to be identified as "high-potential" leaders.</p>
+
+      <p>A Harvard Business Review study found that mentors help develop what researchers call "leadership self-efficacy" — the belief that you can lead effectively. This confidence is strongly predictive of actual leadership performance.</p>
+
+      <p class="source">Sources: Center for Creative Leadership, "Mentoring: A Key Strategy for Leadership Development" (2021). Lester, P.B., Hannah, S.T., Harms, P.D., Vogelgesang, G.R., & Avolio, B.J. (2011). "Mentoring Impact on Leader Efficacy Development." <em>Journal of Leadership & Organizational Studies</em>, 18(4), 469-483.</p>
+
+      <h3>Transferable Skills</h3>
+
+      <p>Perhaps the most lasting benefit of mentorship is the development of transferable skills that compound over an entire career:</p>
+
+      <ul>
+        <li><strong>Communication:</strong> Mentors model professional communication — how to present ideas, give feedback, and navigate difficult conversations</li>
+        <li><strong>Strategic thinking:</strong> Learning to see the bigger picture of a career, industry, or organization</li>
+        <li><strong>Network building:</strong> Understanding how professional relationships work and how to cultivate them authentically</li>
+        <li><strong>Resilience:</strong> Hearing how mentors overcame setbacks normalizes failure and builds persistence</li>
+      </ul>
+
+      <p>A longitudinal study from Cornell University tracked career outcomes over 20 years and found that early mentoring relationships had lasting effects on career satisfaction and earning potential decades later.</p>
+
+      <p class="source">Source: Ramaswami, A., & Dreher, G.F. (2007). "The Benefits Associated with Workplace Mentoring Relationships." In T.D. Allen & L.T. Eby (Eds.), <em>The Blackwell Handbook of Mentoring</em>, 211-231. Wiley-Blackwell.</p>
+
+      <h3>The Diversity Impact</h3>
+
+      <p>Mentorship is particularly impactful for underrepresented groups. A study published in the <em>Harvard Business Review</em> found that mentoring programs boosted representation of Black, Hispanic, and Asian-American women in management by 9% to 24%. For Black men, the increase was 8% to 15%.</p>
+
+      <p class="source">Source: Dobbin, F., & Kalev, A. (2016). "Why Diversity Programs Fail." <em>Harvard Business Review</em>, 94(7/8), 52-60.</p>
+
+      <p>When mentors from diverse backgrounds share their experiences navigating career challenges specific to their identity, it creates a roadmap that formal education rarely provides.</p>
+
+      <h3>What This Means for Students</h3>
+
+      <p>The evidence is overwhelming: mentorship works. It improves starting salaries, accelerates career growth, develops leadership skills, and has lasting effects that compound over decades.</p>
+
+      <p>But here's the key insight — <strong>the earlier you start, the more you benefit</strong>. Students who find mentors in high school or early college have more time to apply what they learn, more runway to build relationships, and more opportunities to course-correct before major decisions.</p>
+
+      <p>That's exactly what Mentino is designed for. We connect students with verified professionals at the earliest stages of career exploration, so that every student — regardless of their background or network — can benefit from the mentorship effect.</p>
+    `,
+  },
+  {
+    slug: "how-to-find-your-career-path",
+    title: "How to Find Your Career Path When You Have No Idea",
+    date: "February 20, 2026",
+    author: "Ethan Branzuela",
+    category: "Career Advice",
+    categoryColor: "amber",
+    coverImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
+    excerpt: "A research-backed framework for exploring careers without the pressure.",
+    readTime: "7 min read",
+    content: `
+      <p>If you're a high school or college student and someone asks "What do you want to be when you grow up?" — it's okay to not have an answer.</p>
+
+      <p>In fact, according to the National Center for Education Statistics, <strong>about 30% of college students change their major at least once</strong>, and many change it two or three times. Research from the Federal Reserve Bank of New York shows that only <strong>27% of college graduates work in a field related to their major</strong>.</p>
+
+      <p class="source">Sources: National Center for Education Statistics, "Beginning Postsecondary Students" (2023). Federal Reserve Bank of New York, "The Labor Market for Recent College Graduates" (2024).</p>
+
+      <p>The point? Not knowing your path is the norm, not the exception. Here's a research-backed framework for figuring it out.</p>
 
       <h3>Step 1: Follow Curiosity, Not Prestige</h3>
 
-      <p>Don't pick a career because it sounds impressive. Pick one because you're genuinely curious about the work. Prestige fades. Curiosity compounds.</p>
+      <p>Psychologist Angela Duckworth's research on "grit" shows that long-term passion and perseverance predict success more than talent or IQ. But you can't develop passion for something you chose because it sounded impressive at a dinner party.</p>
 
-      <p>Ask yourself: <em>What topics do I read about voluntarily? What problems do I enjoy solving?</em></p>
+      <p>Ask yourself: <em>What topics do I read about voluntarily? What problems do I enjoy solving? When does time fly?</em></p>
+
+      <p class="source">Source: Duckworth, A. (2016). <em>Grit: The Power of Passion and Perseverance</em>. Scribner.</p>
 
       <h3>Step 2: Talk to Real People</h3>
 
-      <p>Career descriptions online are sterile. They tell you the "what" but not the "feel." The best way to understand a career is to talk to someone who lives it every day.</p>
+      <p>Career descriptions online are sterile. They tell you the "what" but not the "feel." A study in the <em>Journal of Career Development</em> found that students who conducted informational interviews were significantly more confident in their career choices and more realistic about their expectations.</p>
 
-      <p>That's literally what Mentino is for. You can connect with professionals across 15+ career fields and ask them the questions Google can't answer:</p>
+      <p class="source">Source: Crosby, O. (2010). "Informational Interviewing: Get the Inside Scoop on Careers." <em>Occupational Outlook Quarterly</em>, Bureau of Labor Statistics.</p>
+
+      <p>That's literally what Mentino is for. Connect with professionals across 15+ career fields and ask them the questions Google can't answer:</p>
 
       <ul>
         <li>What does a typical day actually look like?</li>
@@ -96,142 +308,92 @@ const blogPosts = [
 
       <h3>Step 3: Experiment Early</h3>
 
-      <p>You don't need to commit to a career at 16. But you can start experimenting. Job shadow. Volunteer. Take on a project. The goal isn't to find "the answer" — it's to gather data points about what you enjoy and what you don't.</p>
+      <p>Stanford's "Designing Your Life" research by Bill Burnett and Dave Evans recommends "prototype experiences" — low-stakes ways to test career ideas before committing. This could mean job shadowing, volunteering, taking a project-based class, or starting a side project.</p>
+
+      <p class="source">Source: Burnett, B., & Evans, D. (2016). <em>Designing Your Life: How to Build a Well-Lived, Joyful Life</em>. Knopf.</p>
 
       <h3>Step 4: Build Skills That Transfer</h3>
 
-      <p>While you're exploring, focus on skills that are valuable everywhere: communication, problem-solving, writing, teamwork, and learning how to learn. These compound no matter where you end up.</p>
+      <p>The World Economic Forum's "Future of Jobs Report 2023" lists the top skills employers will prioritize through 2027:</p>
+
+      <ol>
+        <li>Analytical thinking</li>
+        <li>Creative thinking</li>
+        <li>Resilience, flexibility, and agility</li>
+        <li>Motivation and self-awareness</li>
+        <li>Curiosity and lifelong learning</li>
+      </ol>
+
+      <p>Notice that none of these are field-specific. While you're exploring, focus on skills that compound no matter where you end up.</p>
+
+      <p class="source">Source: World Economic Forum, "Future of Jobs Report 2023."</p>
+
+      <h3>Step 5: Don't Optimize Too Early</h3>
+
+      <p>Research by economist Ofer Malamud found that students who explored broadly before specializing ended up in <strong>better-fitting careers</strong> than those who specialized early. The UK education system (early specialization) was compared to the Scottish system (broader exploration), and Scottish graduates reported higher career satisfaction.</p>
+
+      <p class="source">Source: Malamud, O. (2010). "Breadth versus Depth: The Timing of Specialization in Higher Education." <em>Labour</em>, 24(4), 349-369.</p>
 
       <h3>The Bottom Line</h3>
 
-      <p>Your career path doesn't have to be a straight line. The most interesting careers rarely are. Give yourself permission to explore, and find mentors who can help you see possibilities you didn't know existed.</p>
+      <p>Your career path doesn't have to be a straight line. The most interesting careers rarely are. Give yourself permission to explore, build transferable skills, talk to real people in fields you're curious about, and trust that clarity comes from action — not from sitting and thinking about it.</p>
     `,
   },
   {
-    slug: "mentorship-in-sports",
-    title: "What Sports Taught Me About Mentorship",
-    date: "February 28, 2026",
-    author: "Ethan B.",
-    category: "Personal Story",
-    categoryColor: "amber",
-    coverEmoji: "📸",
-    excerpt:
-      "From the sidelines as a sports photographer, I saw the same pattern over and over: the best athletes all had great mentors.",
-    content: `
-      <p>As a freelance sports photographer, I've spent hundreds of hours on the sidelines watching athletes compete at every level — from high school games to professional events.</p>
-
-      <p>And I noticed something that changed how I think about success.</p>
-
-      <h3>Behind Every Great Athlete Is a Great Coach</h3>
-
-      <p>The best athletes I've photographed don't just have natural talent. They have someone in their corner pushing them, correcting them, and believing in them — especially when things get tough.</p>
-
-      <p>A coach sees potential that the athlete can't see in themselves. They provide structure, accountability, and the kind of honest feedback that accelerates growth faster than solo practice ever could.</p>
-
-      <h3>This Isn't Just About Sports</h3>
-
-      <p>The same pattern exists everywhere. In business, in medicine, in tech, in the arts. The people who rise fastest are the ones who sought out guidance early and often.</p>
-
-      <ul>
-        <li>Steve Jobs had Robert Friedland</li>
-        <li>Warren Buffett had Benjamin Graham</li>
-        <li>Oprah Winfrey had Maya Angelou</li>
-        <li>Mark Zuckerberg had Steve Jobs</li>
-      </ul>
-
-      <p>Mentorship isn't a luxury — it's a multiplier.</p>
-
-      <h3>My Own Experience</h3>
-
-      <p>When I started photography at 13, I was terrible. But I didn't stay terrible for long because I reached out to photographers I admired. I asked questions, studied their work, and learned directly from people with more experience.</p>
-
-      <p>That willingness to seek guidance — not just information, but personal guidance — is what accelerated my growth more than anything else.</p>
-
-      <h3>The Mentino Connection</h3>
-
-      <p>That experience is exactly why I created Mentino (originally MentorMatch). Every student deserves a "coach" for their career — someone who's been where they want to go and is willing to share the playbook.</p>
-
-      <p>You don't need to figure it out alone. And you shouldn't have to.</p>
-    `,
-  },
-  {
-    slug: "how-to-make-the-most-of-mentorship",
-    title: "5 Ways to Make the Most of Your Mentorship",
-    date: "February 20, 2026",
-    author: "Ethan B.",
-    category: "Tips",
-    categoryColor: "violet",
-    coverEmoji: "🎯",
-    excerpt:
-      "Getting matched with a mentor is just the beginning. Here's how to turn that connection into real growth.",
-    content: `
-      <p>Getting matched with a mentor on Mentino is exciting. But the real magic happens in how you show up to that relationship. Here are five ways to get the most out of your mentorship experience.</p>
-
-      <h3>1. Come Prepared</h3>
-
-      <p>Before each session, write down 2-3 specific questions or topics you want to discuss. Generic questions get generic answers. Specific questions unlock real insight.</p>
-
-      <p><strong>Instead of:</strong> "What should I do with my life?"</p>
-      <p><strong>Try:</strong> "I'm deciding between pre-med and biomedical engineering. What does the day-to-day look like in each, and how did you decide?"</p>
-
-      <h3>2. Be Honest About Where You Are</h3>
-
-      <p>Don't pretend to know things you don't. The whole point of mentorship is to learn from someone who's further ahead. Your mentor can only help if they know where you're actually starting from.</p>
-
-      <h3>3. Take Action Between Sessions</h3>
-
-      <p>If your mentor suggests reading something, trying something, or reaching out to someone — do it before your next session. This shows respect for their time and creates momentum.</p>
-
-      <h3>4. Ask Follow-Up Questions</h3>
-
-      <p>The best conversations go deep, not wide. When your mentor shares something interesting, dig into it. Ask "why" and "how" and "what happened next." That's where the real learning lives.</p>
-
-      <h3>5. Express Gratitude</h3>
-
-      <p>Your mentor is volunteering their time to help you. A simple thank-you message after a great session goes a long way. Let them know when their advice made a difference — it's motivating for them too.</p>
-
-      <h3>Remember</h3>
-
-      <p>Mentorship is a two-way street. The more you invest in the relationship, the more you'll get out of it. Show up curious, be respectful of their time, and take action on what you learn.</p>
-    `,
-  },
-  {
-    slug: "building-mentino",
+    slug: "building-mentino-at-15",
     title: "Building Mentino at 15: Lessons from a Young Founder",
     date: "February 10, 2026",
-    author: "Ethan B.",
+    author: "Ethan Branzuela",
     category: "Behind the Scenes",
     categoryColor: "rose",
-    coverEmoji: "🚀",
-    excerpt:
-      "Starting a platform to connect students with mentors as a 15-year-old has been the hardest and most rewarding thing I've done.",
+    coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80",
+    excerpt: "Starting a mentorship platform as a teenager — what I learned, what was hard, and what keeps me going.",
+    readTime: "5 min read",
     content: `
       <p>When I tell people I started Mentino at 15, I usually get one of two reactions: "That's amazing!" or "Why?" The honest answer to both is the same: because I saw a problem I cared about and couldn't wait for someone else to solve it.</p>
 
       <h3>The Spark</h3>
 
-      <p>It started with my own experience in photography. When I reached out to photographers I admired — asking questions, studying their work, learning from their experience — my growth accelerated dramatically. I went from a kid with a camera to a freelance sports photographer working with professional athletes.</p>
+      <p>It started with my own experience in sports photography. When I reached out to photographers I admired — asking questions, studying their work, learning from their experience — my growth accelerated dramatically. I went from a kid with a camera to a freelance sports photographer working with professional athletes in the Bay Area.</p>
 
       <p>And I thought: <em>What if every student had this kind of access?</em></p>
+
+      <p>According to MENTOR: The National Mentoring Partnership, one in three young people in the U.S. will grow up without a mentor. That's over <strong>16 million young people</strong> navigating career decisions without guidance.</p>
+
+      <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Gap" (2023).</p>
 
       <h3>The Hard Parts</h3>
 
       <p>Building a platform at 15 comes with unique challenges:</p>
 
       <ul>
-        <li><strong>Credibility:</strong> Getting adults to take you seriously when you're asking them to volunteer their time</li>
-        <li><strong>Reach:</strong> There are only so many people you can message personally</li>
+        <li><strong>Credibility:</strong> Getting adults to take you seriously when you're asking them to volunteer their time on a platform built by a teenager</li>
+        <li><strong>Reach:</strong> There are only so many people you can message personally. The Pew Research Center reports that teens spend an average of 8.5 hours per day on screens — but almost none of that time is spent on career development</li>
         <li><strong>Technical skills:</strong> Learning to build software while building the actual product</li>
         <li><strong>Time management:</strong> Balancing school, photography, and building a startup</li>
       </ul>
 
+      <p class="source">Source: Pew Research Center, "Teens, Social Media and Technology 2023."</p>
+
       <h3>What I've Learned</h3>
 
-      <p><strong>Start before you're ready.</strong> If I waited until I had all the skills and all the answers, Mentino would never exist. I learned by doing, made mistakes, and improved along the way.</p>
+      <p><strong>Start before you're ready.</strong> Research from Harvard Business School professor Francesca Gino shows that "learning by doing" is one of the most effective ways to develop competence. If I waited until I had all the skills and all the answers, Mentino would never exist.</p>
 
-      <p><strong>Focus on impact first.</strong> Growth follows when you're genuinely solving a problem people care about. I didn't start with a marketing plan — I started with a mission.</p>
+      <p class="source">Source: Gino, F. (2018). "The Business Case for Curiosity." <em>Harvard Business Review</em>, 96(5), 48-57.</p>
+
+      <p><strong>Focus on impact first.</strong> According to a study in the <em>Journal of Business Venturing</em>, mission-driven founders are more resilient through early-stage challenges because their motivation is intrinsic, not just financial.</p>
+
+      <p class="source">Source: Renko, M. (2013). "Early Challenges of Nascent Social Entrepreneurs." <em>Entrepreneurship Theory and Practice</em>, 37(5), 1045-1069.</p>
 
       <p><strong>Ask for help.</strong> Ironically, building a mentorship platform taught me the most important lesson about mentorship: you can't do it alone. Every person who gave me advice, feedback, or encouragement played a role in making Mentino real.</p>
+
+      <h3>Young Founders Are More Common Than You Think</h3>
+
+      <p>While the average age of successful startup founders is 45 (according to MIT research), some of the most impactful companies were started by young people: Mark Zuckerberg started Facebook at 19, Palmer Luckey started Oculus at 18, and Malala Yousafzai started the Malala Fund at 16.</p>
+
+      <p class="source">Source: Azoulay, P., Jones, B.F., Kim, J.D., & Miranda, J. (2020). "Age and High-Growth Entrepreneurship." <em>American Economic Review: Insights</em>, 2(1), 65-82.</p>
+
+      <p>Age isn't a barrier to impact. What matters is having a genuine problem to solve and the persistence to keep going.</p>
 
       <h3>What's Next</h3>
 
@@ -247,110 +409,76 @@ blog.get("/blog", optionalAuth, (c) => {
   const user = c.get("user");
 
   return html(
-    <Layout title="Blog" user={user}>
+    <Layout title="Blog" user={user} currentPath="/blog">
       <div className="max-w-5xl mx-auto">
         {/* Blog Header */}
         <div className="text-center mb-12">
-          <span className="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <span className="inline-block bg-indigo-100 text-indigo-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
             Our Blog
           </span>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            Stories, Tips & Insights
+            Stories, Research & Insights
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Thoughts on mentorship, career exploration, and building
-            something that matters — written by the Mentino team.
+            Research-backed articles on mentorship, career exploration, and building
+            something that matters.
           </p>
         </div>
 
-        {/* Featured Post */}
-        <a
-          href={`/blog/${blogPosts[0].slug}`}
-          className="block mb-10 group"
-        >
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-blue-300 transition-colors">
-            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-12 text-center">
-              <span className="text-7xl">{blogPosts[0].coverEmoji}</span>
-            </div>
-            <div className="p-8">
-              <div className="flex items-center gap-3 mb-3">
-                <span
-                  className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-${blogPosts[0].categoryColor}-100 text-${blogPosts[0].categoryColor}-700`}
-                >
-                  {blogPosts[0].category}
-                </span>
-                <span className="text-sm text-gray-400">
-                  {blogPosts[0].date}
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
-                {blogPosts[0].title}
-              </h2>
-              <p className="text-gray-500 text-lg">{blogPosts[0].excerpt}</p>
-              <div className="mt-4 flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                  EB
-                </div>
-                <span className="text-sm text-gray-600 font-medium">
-                  {blogPosts[0].author}
-                </span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        {/* Post Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {blogPosts.slice(1).map((post) => (
-            <a
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group block"
-            >
-              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-blue-300 hover:shadow-md transition-all h-full">
-                <div
-                  className={`bg-gradient-to-br ${
-                    post.categoryColor === "emerald"
-                      ? "from-emerald-400 to-teal-500"
-                      : post.categoryColor === "amber"
-                      ? "from-amber-400 to-orange-500"
-                      : post.categoryColor === "violet"
-                      ? "from-violet-400 to-purple-500"
-                      : "from-rose-400 to-pink-500"
-                  } p-8 text-center`}
-                >
-                  <span className="text-5xl">{post.coverEmoji}</span>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-${post.categoryColor}-100 text-${post.categoryColor}-700`}
-                    >
-                      {post.category}
-                    </span>
-                    <span className="text-xs text-gray-400">{post.date}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex items-center gap-2">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
-                      EB
-                    </div>
-                    <span className="text-xs text-gray-500">{post.author}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
+        {/* Post Grid - card style matching screenshot */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {blogPosts.map((post) => (
+            <BlogCard key={post.slug} post={post} />
           ))}
         </div>
       </div>
     </Layout>
   );
 });
+
+function BlogCard({ post }: { post: typeof blogPosts[number] }) {
+  const categoryColors: Record<string, string> = {
+    indigo: "bg-indigo-500 text-white",
+    emerald: "bg-emerald-500 text-white",
+    violet: "bg-violet-500 text-white",
+    amber: "bg-amber-500 text-white",
+    rose: "bg-rose-500 text-white",
+  };
+
+  return (
+    <a href={`/blog/${post.slug}`} className="group block">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all h-full flex flex-col">
+        {/* Cover Image */}
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          <span className={`absolute bottom-3 left-3 text-xs font-bold px-3 py-1 rounded-full ${categoryColors[post.categoryColor] || "bg-gray-600 text-white"}`}>
+            {post.category}
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex-1 flex flex-col">
+          <h3 className="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2 leading-snug">
+            {post.title}
+          </h3>
+          <p className="text-gray-500 text-sm mb-4 flex-1">
+            {post.excerpt}
+          </p>
+          <div className="flex items-center text-indigo-600 font-semibold text-sm group-hover:gap-2 transition-all">
+            Read article
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
 
 // GET /blog/:slug — Individual blog post
 blog.get("/blog/:slug", optionalAuth, (c) => {
@@ -367,10 +495,7 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
           <p className="text-gray-500 mb-6">
             This blog post doesn't exist or may have been removed.
           </p>
-          <a
-            href="/blog"
-            className="text-blue-600 hover:underline font-medium"
-          >
+          <a href="/blog" className="text-indigo-600 hover:underline font-medium">
             Back to Blog
           </a>
         </div>
@@ -382,56 +507,44 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
   // Find adjacent posts for navigation
   const currentIndex = blogPosts.indexOf(post);
   const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
-  const nextPost =
-    currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
-
-  const gradientClass =
-    post.categoryColor === "blue"
-      ? "from-blue-500 to-indigo-600"
-      : post.categoryColor === "emerald"
-      ? "from-emerald-400 to-teal-500"
-      : post.categoryColor === "amber"
-      ? "from-amber-400 to-orange-500"
-      : post.categoryColor === "violet"
-      ? "from-violet-400 to-purple-500"
-      : "from-rose-400 to-pink-500";
+  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
 
   return html(
     <Layout title={post.title} user={user}>
       <article className="max-w-3xl mx-auto">
         {/* Back link */}
-        <a
-          href="/blog"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 mb-6 font-medium"
-        >
+        <a href="/blog" className="inline-flex items-center text-sm text-gray-500 hover:text-indigo-600 mb-6 font-medium">
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Back to Blog
         </a>
 
-        {/* Cover */}
-        <div
-          className={`bg-gradient-to-br ${gradientClass} rounded-2xl p-16 text-center mb-8`}
-        >
-          <span className="text-8xl">{post.coverEmoji}</span>
+        {/* Cover Image */}
+        <div className="rounded-2xl overflow-hidden mb-8 h-64 md:h-80">
+          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
         </div>
 
         {/* Post header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span
-              className={`text-xs font-semibold px-3 py-1 rounded-full bg-${post.categoryColor}-100 text-${post.categoryColor}-700`}
-            >
+            <span className={`text-xs font-bold px-3 py-1 rounded-full ${
+              post.categoryColor === "indigo" ? "bg-indigo-100 text-indigo-700" :
+              post.categoryColor === "emerald" ? "bg-emerald-100 text-emerald-700" :
+              post.categoryColor === "violet" ? "bg-violet-100 text-violet-700" :
+              post.categoryColor === "amber" ? "bg-amber-100 text-amber-700" :
+              "bg-rose-100 text-rose-700"
+            }`}>
               {post.category}
             </span>
             <span className="text-sm text-gray-400">{post.date}</span>
+            <span className="text-sm text-gray-400">{post.readTime}</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
           <p className="text-xl text-gray-500 mb-6">{post.excerpt}</p>
           <div className="flex items-center gap-3 pb-6 border-b border-gray-200">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-              EB
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-200">
+              <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="text-sm font-semibold text-gray-900">{post.author}</div>
@@ -448,10 +561,15 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
               <style>
                 .prose h3 { font-size: 1.35rem; font-weight: 700; color: #111827; margin-top: 2rem; margin-bottom: 0.75rem; }
                 .prose p { color: #4b5563; line-height: 1.8; margin-bottom: 1.25rem; }
-                .prose ul { color: #4b5563; margin-bottom: 1.25rem; padding-left: 1.5rem; }
+                .prose ul, .prose ol { color: #4b5563; margin-bottom: 1.25rem; padding-left: 1.5rem; }
                 .prose li { margin-bottom: 0.5rem; line-height: 1.7; }
                 .prose strong { color: #111827; }
                 .prose em { color: #6b7280; }
+                .prose .source { font-size: 0.8rem; color: #9ca3af; border-left: 3px solid #e5e7eb; padding-left: 0.75rem; margin-top: -0.5rem; margin-bottom: 1.5rem; line-height: 1.5; }
+                .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.9rem; }
+                .prose th { background-color: #f3f4f6; font-weight: 600; color: #111827; text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid #e5e7eb; }
+                .prose td { padding: 0.75rem 1rem; border-bottom: 1px solid #f3f4f6; color: #4b5563; }
+                .prose tr:hover td { background-color: #f9fafb; }
               </style>
               ${post.content}
             `,
@@ -461,43 +579,30 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
         {/* Post navigation */}
         <div className="border-t border-gray-200 pt-8 grid grid-cols-2 gap-4">
           {prevPost ? (
-            <a
-              href={`/blog/${prevPost.slug}`}
-              className="group p-4 rounded-xl border border-gray-200 hover:border-blue-300 transition-colors"
-            >
+            <a href={`/blog/${prevPost.slug}`} className="group p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-colors">
               <div className="text-xs text-gray-400 mb-1">Previous</div>
-              <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+              <div className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
                 {prevPost.title}
               </div>
             </a>
-          ) : (
-            <div />
-          )}
+          ) : <div />}
           {nextPost ? (
-            <a
-              href={`/blog/${nextPost.slug}`}
-              className="group p-4 rounded-xl border border-gray-200 hover:border-blue-300 transition-colors text-right"
-            >
+            <a href={`/blog/${nextPost.slug}`} className="group p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-colors text-right">
               <div className="text-xs text-gray-400 mb-1">Next</div>
-              <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+              <div className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
                 {nextPost.title}
               </div>
             </a>
-          ) : (
-            <div />
-          )}
+          ) : <div />}
         </div>
 
         {/* CTA */}
-        <div className="mt-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-center text-white">
+        <div className="mt-12 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-8 text-center text-white">
           <h3 className="text-2xl font-bold mb-2">Ready to find your mentor?</h3>
-          <p className="text-blue-100 mb-6">
+          <p className="text-indigo-100 mb-6">
             Join Mentino and connect with professionals who can help guide your career.
           </p>
-          <a
-            href="/signup"
-            className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors"
-          >
+          <a href="/signup" className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors">
             Get Started Free
           </a>
         </div>

@@ -251,46 +251,58 @@ export function Home({ featuredMentors = [] }: HomeProps) {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">From the Blog</h2>
-            <p className="text-gray-500 mt-1">Stories, tips, and insights on mentorship</p>
+            <p className="text-gray-500 mt-1">Research-backed articles on mentorship and careers</p>
           </div>
-          <a href="/blog" className="text-blue-600 font-semibold hover:underline">
+          <a href="/blog" className="text-indigo-600 font-semibold hover:underline">
             View all posts &rarr;
           </a>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
               slug: "why-mentorship-matters",
-              title: "Why Mentorship Matters More Than Ever",
-              excerpt: "In a world where information is everywhere, guidance is rare.",
-              emoji: "🤝",
-              gradient: "from-blue-500 to-indigo-600",
+              title: "Why Mentorship Matters for Career Success",
+              excerpt: "Confidence, networking, and professional growth — what the research says.",
+              image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80",
+              category: "Mentorship",
+              categoryColor: "bg-indigo-500",
             },
             {
-              slug: "finding-your-career-path",
-              title: "How to Find Your Career Path",
-              excerpt: "Not knowing what you want to do is totally normal. Here's a framework.",
-              emoji: "🧭",
-              gradient: "from-emerald-400 to-teal-500",
+              slug: "stem-vs-non-stem-salaries",
+              title: "STEM vs Non-STEM Salaries: What the Data Shows",
+              excerpt: "NSF 2024 earnings data broken down clearly for students.",
+              image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80",
+              category: "Salary Data",
+              categoryColor: "bg-emerald-500",
             },
             {
-              slug: "mentorship-in-sports",
-              title: "What Sports Taught Me About Mentorship",
-              excerpt: "From the sidelines, I saw the same pattern over and over.",
-              emoji: "📸",
-              gradient: "from-amber-400 to-orange-500",
+              slug: "how-mentorship-improves-career-outcomes",
+              title: "How Mentorship Improves Career Outcomes",
+              excerpt: "From first job to lifelong transferable skills.",
+              image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80",
+              category: "Career Outcomes",
+              categoryColor: "bg-violet-500",
             },
           ].map((post) => (
             <a key={post.slug} href={`/blog/${post.slug}`} className="group block">
-              <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-blue-300 hover:shadow-md transition-all">
-                <div className={`bg-gradient-to-br ${post.gradient} p-6 text-center`}>
-                  <span className="text-4xl">{post.emoji}</span>
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all h-full flex flex-col">
+                <div className="relative h-48 overflow-hidden">
+                  <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <span className={`absolute bottom-3 left-3 ${post.categoryColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                    {post.category}
+                  </span>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2 leading-snug">
                     {post.title}
                   </h3>
-                  <p className="text-gray-500 text-sm">{post.excerpt}</p>
+                  <p className="text-gray-500 text-sm mb-4 flex-1">{post.excerpt}</p>
+                  <div className="flex items-center text-indigo-600 font-semibold text-sm">
+                    Read article
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </a>

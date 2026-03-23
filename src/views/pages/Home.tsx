@@ -212,8 +212,8 @@ export function Home({ featuredMentors = [] }: HomeProps) {
       <section className="py-16">
         <div className="bg-slate-800 rounded-2xl p-10 text-white">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="w-20 h-20 bg-slate-600 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto mb-6 border-2 border-slate-500">
-              EB
+            <div className="w-20 h-20 rounded-2xl mx-auto mb-6 border-2 border-slate-500 overflow-hidden">
+              <img src="/images/founder.jpg" alt="Ethan B., Founder of Mentino" className="w-full h-full object-cover" />
             </div>
             <blockquote className="text-xl leading-relaxed mb-6 text-slate-200">
               "Mentorship shouldn't depend on who you know. It should depend on who you aspire to become. I built Mentino because I believe every student deserves a guide for their career — someone who's been where they want to go."

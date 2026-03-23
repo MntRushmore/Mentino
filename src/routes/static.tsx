@@ -196,8 +196,8 @@ staticPages.get("/founder", optionalAuth, (c) => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-10 text-center text-white mb-10">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-2xl bg-slate-600 flex items-center justify-center text-5xl font-bold text-white border-4 border-slate-500 overflow-hidden">
-            EB
+          <div className="w-32 h-32 mx-auto mb-6 rounded-2xl border-4 border-slate-500 overflow-hidden">
+            <img src="/images/founder.jpg" alt="Ethan B., Founder of Mentino" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-3xl font-bold mb-2">Ethan B.</h1>
           <p className="text-slate-300 text-lg">Founder of Mentino</p>

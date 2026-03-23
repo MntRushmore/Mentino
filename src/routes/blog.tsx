@@ -407,36 +407,113 @@ const blogPosts = [
 // GET /blog — Blog index
 blog.get("/blog", optionalAuth, (c) => {
   const user = c.get("user");
+  const featured = blogPosts[0];
+  const rest = blogPosts.slice(1);
 
   return html(
     <Layout title="Blog" user={user} currentPath="/blog">
       <div className="max-w-5xl mx-auto">
+
         {/* Blog Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <span className="inline-block bg-indigo-100 text-indigo-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            Our Blog
+            Mentino Blog
           </span>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            Stories, Research & Insights
+            Stories, Research & Career Insights
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Research-backed articles on mentorship, career exploration, and building
-            something that matters.
+            Research-backed articles on mentorship, career exploration, salary data, and student success — written by Ethan Branzuela.
           </p>
         </div>
 
-        {/* Post Grid - card style matching screenshot */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
+        {/* Stats Banner */}
+        <div className="grid grid-cols-3 gap-4 mb-10">
+          {[
+            { num: "5", label: "Research-backed articles", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
+            { num: "16M", label: "Young people without a mentor (US)", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
+            { num: "5×", label: "More promotions with a mentor", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+          ].map((s) => (
+            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
+              <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
+              <div className="text-gray-600 text-sm">{s.label}</div>
+            </div>
           ))}
+        </div>
+
+        {/* Featured Post — hero style */}
+        <a href={`/blog/${featured.slug}`} className="group block mb-10">
+          <div className="relative rounded-3xl overflow-hidden h-80 md:h-96">
+            <img
+              src={featured.coverImage}
+              alt={featured.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  {featured.category}
+                </span>
+                <span className="text-white/60 text-sm">{featured.date}</span>
+                <span className="text-white/60 text-sm">{featured.readTime}</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-2 group-hover:text-indigo-300 transition-colors">
+                {featured.title}
+              </h2>
+              <p className="text-white/70 text-sm md:text-base max-w-2xl">
+                {featured.excerpt}
+              </p>
+              <div className="flex items-center text-indigo-300 font-semibold text-sm mt-4">
+                Read article
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        {/* Category row */}
+        <div className="flex items-center gap-3 mb-8 flex-wrap">
+          <span className="text-gray-500 text-sm font-medium">Browse by topic:</span>
+          {["Mentorship", "Salary Data", "Career Outcomes", "Career Advice", "Behind the Scenes"].map((cat) => (
+            <span key={cat} className="bg-gray-100 hover:bg-indigo-50 hover:text-indigo-700 text-gray-600 text-sm px-3 py-1 rounded-full cursor-pointer transition-colors">
+              {cat}
+            </span>
+          ))}
+        </div>
+
+        {/* Rest of posts grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-10">
+          {rest.map((post) => (
+            <BlogCard key={post.slug} post={post} large />
+          ))}
+        </div>
+
+        {/* CTA Banner */}
+        <div className="relative rounded-3xl overflow-hidden mt-4">
+          <img
+            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80"
+            alt="Mentorship in action"
+            className="w-full h-56 object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/92 to-violet-900/88 flex items-center justify-center">
+            <div className="text-center text-white px-6">
+              <h3 className="text-2xl font-bold mb-2">Ready to find your career mentor?</h3>
+              <p className="text-indigo-200 mb-5">Join Mentino — free for all students, verified professionals only.</p>
+              <a href="/signup" className="bg-white text-indigo-700 font-bold px-8 py-3 rounded-full hover:bg-indigo-50 transition-colors">
+                Get Started Free
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
   );
 });
 
-function BlogCard({ post }: { post: typeof blogPosts[number] }) {
+function BlogCard({ post, large = false }: { post: typeof blogPosts[number]; large?: boolean }) {
   const categoryColors: Record<string, string> = {
     indigo: "bg-indigo-500 text-white",
     emerald: "bg-emerald-500 text-white",
@@ -447,32 +524,45 @@ function BlogCard({ post }: { post: typeof blogPosts[number] }) {
 
   return (
     <a href={`/blog/${post.slug}`} className="group block">
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all h-full flex flex-col">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
         {/* Cover Image */}
-        <div className="relative h-48 overflow-hidden">
+        <div className={`relative ${large ? "h-56" : "h-48"} overflow-hidden`}>
           <img
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <span className={`absolute bottom-3 left-3 text-xs font-bold px-3 py-1 rounded-full ${categoryColors[post.categoryColor] || "bg-gray-600 text-white"}`}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <span className={`absolute bottom-3 left-3 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm ${categoryColors[post.categoryColor] || "bg-gray-600 text-white"}`}>
             {post.category}
+          </span>
+          <span className="absolute top-3 right-3 bg-black/50 text-white/80 text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+            {post.readTime}
           </span>
         </div>
 
         {/* Content */}
         <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2 leading-snug">
+          <div className="text-xs text-gray-400 mb-2">{post.date}</div>
+          <h3 className={`font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2 leading-snug ${large ? "text-xl" : "text-lg"}`}>
             {post.title}
           </h3>
-          <p className="text-gray-500 text-sm mb-4 flex-1">
+          <p className="text-gray-500 text-sm mb-4 flex-1 leading-relaxed">
             {post.excerpt}
           </p>
-          <div className="flex items-center text-indigo-600 font-semibold text-sm group-hover:gap-2 transition-all">
-            Read article
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full overflow-hidden border border-indigo-200">
+                <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
+              </div>
+              <span className="text-xs text-gray-500">{post.author}</span>
+            </div>
+            <div className="flex items-center text-indigo-600 font-semibold text-sm">
+              Read article
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>

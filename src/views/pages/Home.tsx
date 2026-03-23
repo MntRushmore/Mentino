@@ -213,13 +213,13 @@ export function Home({ featuredMentors = [] }: HomeProps) {
         <div className="bg-slate-800 rounded-2xl p-10 text-white">
           <div className="max-w-3xl mx-auto text-center">
             <div className="w-20 h-20 rounded-2xl mx-auto mb-6 border-2 border-slate-500 overflow-hidden">
-              <img src="/images/founder.jpg" alt="Ethan B., Founder of Mentino" className="w-full h-full object-cover" />
+              <img src="/images/founder.jpg" alt="Ethan Branzuela, Founder of Mentino" className="w-full h-full object-cover" />
             </div>
             <blockquote className="text-xl leading-relaxed mb-6 text-slate-200">
               "Mentorship shouldn't depend on who you know. It should depend on who you aspire to become. I built Mentino because I believe every student deserves a guide for their career — someone who's been where they want to go."
             </blockquote>
-            <div className="text-white font-semibold">Ethan B.</div>
-            <div className="text-slate-400 text-sm">Founder of Mentino, 15-year-old student & photographer</div>
+            <div className="text-white font-semibold">Ethan Branzuela</div>
+            <div className="text-slate-400 text-sm">Founder of Mentino, 15-year-old student & sports photographer</div>
             <a href="/founder" className="inline-block mt-4 text-blue-400 hover:text-blue-300 font-medium text-sm">
               Read Ethan's story &rarr;
             </a>

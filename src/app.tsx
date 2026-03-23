@@ -38,7 +38,7 @@ app.get("/", optionalAuth, async (c) => {
     .limit(6);
 
   return render(
-    <Layout title="Home" user={user}>
+    <Layout title="Home" user={user} currentPath="/">
       <Home featuredMentors={featuredMentors || []} />
     </Layout>
   );

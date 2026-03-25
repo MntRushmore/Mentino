@@ -9,42 +9,51 @@ export function Home({ featuredMentors = [] }: HomeProps) {
     <div className="space-y-16 pb-12">
 
       {/* Hero */}
-      <section className="relative text-center py-24 sm:py-32 overflow-hidden rounded-2xl sm:rounded-3xl">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1400&q=80"
-            alt="Students collaborating"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/92 via-blue-900/88 to-violet-900/85" />
+      <section className="relative text-center py-20 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl bg-indigo-950">
+        {/* Decorative background shapes — no competing imagery */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-700 rounded-full opacity-30 blur-3xl" />
+          <div className="absolute -bottom-16 -left-16 w-72 h-72 bg-violet-700 rounded-full opacity-25 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-800 rounded-full opacity-10 blur-3xl" />
         </div>
-        <div className="relative z-10 max-w-3xl mx-auto px-5 text-white">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight anim-fade-up">
-            Connect with mentors in<br className="hidden sm:block" /> your dream career.
+
+        <div className="relative z-10 max-w-3xl mx-auto px-5">
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-indigo-200 text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-6 anim-fade-in">
+            <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+            Free mentorship for students
+          </div>
+
+          {/* Headline — pure white on very dark background = maximum contrast */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight anim-fade-up">
+            Connect with mentors<br className="hidden sm:block" />
+            <span className="text-indigo-300"> in your dream career.</span>
           </h1>
-          <p className="text-base sm:text-lg text-blue-100 mb-8 leading-relaxed max-w-xl mx-auto anim-fade-up anim-d2">
-            Mentino pairs students with verified working professionals for free, personalized career mentorship.
-            Real advice from someone who's already where you want to be.
+
+          {/* Subtext — slightly muted but still very readable */}
+          <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto anim-fade-up anim-d2">
+            Mentino matches you with verified professionals — for free.
+            Get real advice from someone who's already where you want to be.
           </p>
 
-          {/* Big, clean CTA */}
+          {/* CTA */}
           <div className="anim-fade-up anim-d3">
             <a
               href="/signup"
-              className="inline-flex items-center gap-2 bg-white text-indigo-700 px-8 sm:px-12 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transform"
+              className="inline-flex items-center gap-2 bg-white text-indigo-700 px-8 sm:px-12 py-4 rounded-full text-base sm:text-lg font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform"
             >
               Get Started — It's Free
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <p className="text-blue-200 text-sm mt-3">No credit card. No commitment. Always free for students.</p>
+            <p className="text-slate-400 text-sm mt-3">No credit card. No commitment. Takes 5 minutes.</p>
           </div>
 
           {/* Trust badges */}
-          <div className="flex justify-center flex-wrap gap-4 sm:gap-6 mt-8 text-blue-200 text-xs sm:text-sm anim-fade-up anim-d4">
+          <div className="flex justify-center flex-wrap gap-4 sm:gap-6 mt-8 anim-fade-up anim-d4">
             {["100% Free for Students", "Verified Professionals Only", "Safe for Students Under 18"].map((t) => (
-              <div key={t} className="flex items-center gap-1.5">
+              <div key={t} className="flex items-center gap-1.5 text-slate-300 text-xs sm:text-sm">
                 <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -194,6 +203,76 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           </p>
         </section>
       )}
+
+      {/* FAQ */}
+      <section>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Common questions</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm sm:text-base">Straight answers, no fluff.</p>
+        <div className="space-y-3" id="faq-list">
+          {[
+            {
+              q: "Is Mentino actually free?",
+              a: "Yes — free for students, free for mentors. No premium tiers, no subscriptions, no fees ever. We're a student-built platform focused on access, not profit."
+            },
+            {
+              q: "How does the matching work?",
+              a: "You fill out your profile — career interests, goals, schedule, and personality. Our algorithm finds mentors in your target fields who match your availability and style. You send them a short intro, they accept or decline. Simple."
+            },
+            {
+              q: "Who are the mentors?",
+              a: "Working professionals who signed up to give back. Each mentor is interviewed and verified by our team before they show up in results. You'll see their field, job title, and reviews from students they've worked with."
+            },
+            {
+              q: "I'm in high school — is this for me?",
+              a: "Yes, 100%. Mentino was literally built by a 15-year-old. High school students are exactly who this is for. If you're trying to figure out what career you want or what it actually looks like, this is the place."
+            },
+            {
+              q: "What does a mentorship session actually look like?",
+              a: "It's a conversation — usually over video call or messages. You ask questions, the mentor shares their experience. There's no script. It could be about a day in their job, how to prepare for college, what skills matter, or just venting about not knowing what you want to do. It's real talk."
+            },
+            {
+              q: "Can I message my mentor before committing?",
+              a: "Once a mentor accepts your match request, you get a full messaging thread. You can ask anything before scheduling a formal session."
+            },
+            {
+              q: "What if a mentor is rude or inappropriate?",
+              a: "Report them. Every profile has a report button. We take reports seriously — first offense is a 24-hour ban, escalating from there. All mentors agreed to our Code of Conduct when they signed up."
+            },
+            {
+              q: "I'm a professional — why should I become a mentor?",
+              a: "Honestly? Because it matters. One conversation can change a student's direction entirely. It's flexible — you set your own availability and max mentees. And students leave reviews, so you build a real reputation on the platform."
+            },
+          ].map((item, i) => (
+            <div key={i} className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+              <button
+                type="button"
+                data-faq-btn={i}
+                className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              >
+                <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4">{item.q}</span>
+                <svg data-faq-icon={i} className="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div data-faq-panel={i} className="hidden px-6 pb-5">
+                <p className="text-gray-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <script dangerouslySetInnerHTML={{ __html: `
+    document.querySelectorAll('[data-faq-btn]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var i = this.getAttribute('data-faq-btn');
+        var panel = document.querySelector('[data-faq-panel="' + i + '"]');
+        var icon = document.querySelector('[data-faq-icon="' + i + '"]');
+        var isOpen = !panel.classList.contains('hidden');
+        panel.classList.toggle('hidden', isOpen);
+        if (icon) icon.style.transform = isOpen ? '' : 'rotate(180deg)';
+      });
+    });
+  ` }} />
+      </section>
 
       {/* Bottom CTA strip */}
       <section className="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm">

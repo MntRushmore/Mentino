@@ -142,6 +142,11 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
   if (user.role === "student") {
     const learningGoals = (body.learning_goals as string)?.trim() || null;
     const careerInterests = normalizeArray(body.career_interests);
+    const careerInterestsCustom = (body.career_interests_custom as string)?.trim();
+    if (careerInterestsCustom) {
+      careerInterests.push(careerInterestsCustom);
+    }
+    const personalityTags = normalizeArray(body.personality_tags);
     const schoolName = (body.school_name as string)?.trim() || null;
     const gradeOrYear = (body.grade_or_year as string)?.trim() || null;
 
@@ -164,6 +169,7 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
         grade_or_year: gradeOrYear,
         career_interests: careerInterests.length > 0 ? careerInterests : undefined,
         learning_goals: learningGoals,
+        personality_tags: personalityTags.length > 0 ? personalityTags : undefined,
       })
       .eq("user_id", user.id);
   } else if (user.role === "mentor") {
@@ -172,13 +178,19 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
     const careerField = (body.career_field as string)?.trim() || null;
     const topics = normalizeArray(body.topics);
     const linkedinUrl = (body.linkedin_url as string)?.trim() || null;
+    const careerFieldCustom = (body.career_field_custom as string)?.trim();
+    const finalCareerField = careerFieldCustom || careerField;
+    const personalityTagsMentor = normalizeArray(body.personality_tags);
+    const yearsExp = parseInt(body.years_experience as string) || undefined;
 
     const updateData: Record<string, any> = {};
     if (jobTitle) updateData.job_title = jobTitle;
     if (company !== undefined) updateData.company = company;
-    if (careerField) updateData.career_field = careerField;
+    if (finalCareerField) updateData.career_field = finalCareerField;
     if (topics.length > 0) updateData.topics = topics;
     if (linkedinUrl !== undefined) updateData.linkedin_url = linkedinUrl;
+    if (personalityTagsMentor.length > 0) updateData.personality_tags = personalityTagsMentor;
+    if (yearsExp) updateData.years_experience = yearsExp;
 
     if (Object.keys(updateData).length > 0) {
       await supabase.from("mentors").update(updateData).eq("user_id", user.id);
@@ -451,13 +463,35 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
   );
 }
 
-const CAREER_FIELDS = [
-  "Technology", "Medicine", "Law", "Business", "Sports", "Arts",
-  "Education", "Engineering", "Finance", "Science", "Media", "Government",
-  "Non-Profit", "Real Estate", "Consulting",
+const CAREER_FIELDS_FULL = [
+  "Technology & Software", "Medicine & Healthcare", "Law & Legal Services",
+  "Business & Management", "Sports & Athletics", "Arts & Design",
+  "Education & Teaching", "Engineering", "Finance & Accounting",
+  "Science & Research", "Media & Journalism", "Government & Public Policy",
+  "Non-Profit & Social Impact", "Real Estate", "Consulting", "Architecture",
+  "Aviation & Aerospace", "Criminal Justice & Law Enforcement", "Cybersecurity",
+  "Data Science & AI", "Dentistry", "Environmental Science", "Fashion & Apparel",
+  "Film & Television", "Food & Culinary Arts", "Gaming & Esports",
+  "Hospitality & Tourism", "Human Resources", "Marketing & Advertising",
+  "Military & Defense", "Music & Performing Arts", "Nursing & Allied Health",
+  "Pharmacy", "Photography & Visual Arts", "Psychology & Mental Health",
+  "Public Health", "Publishing & Writing", "Robotics & Automation",
+  "Social Work", "Supply Chain & Logistics", "Veterinary Medicine",
 ];
 
-const MENTOR_TOPICS = [
+const PERSONALITY_TAGS_STUDENT = [
+  "Visual learner", "Hands-on", "Analytical", "Creative",
+  "Introvert", "Extrovert", "Detail-oriented", "Big-picture thinker",
+  "Curious", "Goal-oriented",
+];
+
+const PERSONALITY_TAGS_MENTOR = [
+  "Patient", "Direct", "Encouraging", "Storyteller",
+  "Technical", "Strategic", "Empathetic", "Structured",
+  "Casual", "Detail-oriented",
+];
+
+const MENTOR_TOPICS_FULL = [
   "Breaking into the field", "Interview prep", "Resume review",
   "Career growth", "College guidance", "Entrepreneurship",
   "Work-life balance", "Networking", "Leadership",
@@ -465,136 +499,220 @@ const MENTOR_TOPICS = [
 ];
 
 function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; error?: string }) {
-  const inputClass = "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none";
+  const inputClass = "w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm";
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Profile</h1>
+    <div className="max-w-2xl mx-auto py-4">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Edit Profile</h1>
+        <p className="text-gray-500 text-sm mt-1">Everything here is visible to {user.role === "student" ? "mentors you connect with" : "students who find you"}.</p>
+      </div>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-            {error}
-          </div>
-        )}
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-5 text-sm">
+          {error}
+        </div>
+      )}
 
-        <form method="POST" action="/profile/edit" className="space-y-6">
-          {/* Basic Info */}
+      <form method="POST" action="/profile/edit" className="space-y-8">
+
+        {/* Profile Picture + Basic */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Profile Picture & Display</h2>
           <div>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Basic Info</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Picture URL <span className="text-gray-400 font-normal">(optional)</span></label>
-                <div className="flex items-center gap-3">
-                  {user.avatar_url ? (
-                    <img src={user.avatar_url} alt="" className="w-12 h-12 rounded-full object-cover border border-gray-200" />
-                  ) : (
-                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm border border-gray-200">
-                      {user.first_name?.[0]}{user.last_name?.[0]}
-                    </div>
-                  )}
-                  <input type="url" name="avatar_url" defaultValue={user.avatar_url || ""} placeholder="https://example.com/your-photo.jpg" className={`${inputClass} flex-1`} />
+            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
+            <div className="flex items-center gap-4">
+              {user.avatar_url ? (
+                <img src={user.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-gray-200 flex-shrink-0" />
+              ) : (
+                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg flex-shrink-0">
+                  {user.first_name?.[0]}{user.last_name?.[0]}
                 </div>
-                <p className="text-xs text-gray-400 mt-1">Paste a link to a photo (e.g. from Google Photos, Imgur, etc.)</p>
-              </div>
-              <div>
-                <label htmlFor="display_name" className="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
-                <input type="text" id="display_name" name="display_name" defaultValue={user.display_name || ""} maxLength={100} className={inputClass} />
-              </div>
-              <div>
-                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                <textarea id="bio" name="bio" rows={4} defaultValue={user.bio || ""} maxLength={2000} className={`${inputClass} resize-y`} placeholder="Tell us about yourself..." />
+              )}
+              <div className="flex-1">
+                <input type="url" name="avatar_url" defaultValue={user.avatar_url || ""} placeholder="https://example.com/your-photo.jpg" className={inputClass} />
+                <p className="text-xs text-gray-400 mt-1">Paste a direct image URL (Google Photos, Imgur, etc.)</p>
               </div>
             </div>
           </div>
+          <div>
+            <label htmlFor="display_name" className="block text-sm font-medium text-gray-700 mb-1">Display Name <span className="text-gray-400 font-normal">(optional)</span></label>
+            <input type="text" id="display_name" name="display_name" defaultValue={user.display_name || ""} maxLength={100} placeholder="How you want your name shown" className={inputClass} />
+          </div>
+        </div>
 
-          {/* Student-specific fields */}
-          {user.role === "student" && roleData && (
-            <div>
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Student Details</h2>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">School</label>
-                    <input type="text" name="school_name" defaultValue={roleData.school_name || ""} placeholder="e.g. Lincoln High School" className={inputClass} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Grade / Year</label>
-                    <input type="text" name="grade_or_year" defaultValue={roleData.grade_or_year || ""} placeholder="e.g. 11th grade" className={inputClass} />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Career Interests</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {CAREER_FIELDS.map((field) => (
-                      <label key={field} className="flex items-center gap-2 text-sm">
-                        <input type="checkbox" name="career_interests" value={field} defaultChecked={roleData.career_interests?.includes(field)} className="rounded text-blue-600" />
-                        {field}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Learning Goals</label>
-                  <textarea name="learning_goals" rows={3} defaultValue={roleData.learning_goals || ""} maxLength={2000} className={`${inputClass} resize-y`} placeholder="What do you hope to learn from a mentor?" />
-                </div>
-              </div>
-            </div>
-          )}
+        {/* About Me */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">About Me</h2>
+          <p className="text-xs text-gray-400 -mt-2">This shows at the top of your profile. Make it personal — mentors and students read this first.</p>
+          <textarea
+            id="bio"
+            name="bio"
+            rows={5}
+            maxLength={2000}
+            defaultValue={user.bio || ""}
+            className={`${inputClass} resize-y`}
+            placeholder={user.role === "student"
+              ? "Tell mentors about yourself — your interests, what drives you, what you're working toward, any hobbies or projects you're proud of..."
+              : "Tell students about yourself — your career story, what you care about, why you became a mentor, and what kind of students you connect best with..."}
+          />
+          <p className="text-xs text-gray-400">There's no wrong way to write this. Just be honest.</p>
+        </div>
 
-          {/* Mentor-specific fields */}
-          {user.role === "mentor" && roleData && (
-            <div>
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Professional Details</h2>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
-                    <input type="text" name="job_title" defaultValue={roleData.job_title || ""} className={inputClass} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
-                    <input type="text" name="company" defaultValue={roleData.company || ""} className={inputClass} />
-                  </div>
+        {/* Student-specific */}
+        {user.role === "student" && roleData && (
+          <>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">School & Year</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">School</label>
+                  <input type="text" name="school_name" defaultValue={roleData.school_name || ""} placeholder="e.g. Lincoln High School" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Career Field</label>
-                  <select name="career_field" defaultValue={roleData.career_field || ""} className={inputClass}>
-                    <option value="">Select your field</option>
-                    {CAREER_FIELDS.map((field) => (
-                      <option key={field} value={field}>{field}</option>
-                    ))}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Grade or Year</label>
+                  <select name="grade_or_year" defaultValue={roleData.grade_or_year || ""} className={inputClass}>
+                    <option value="">Select your grade</option>
+                    <optgroup label="High School">
+                      <option value="9th Grade">9th Grade</option>
+                      <option value="10th Grade">10th Grade</option>
+                      <option value="11th Grade">11th Grade</option>
+                      <option value="12th Grade">12th Grade</option>
+                    </optgroup>
+                    <optgroup label="College">
+                      <option value="College Freshman">College Freshman</option>
+                      <option value="College Sophomore">College Sophomore</option>
+                      <option value="College Junior">College Junior</option>
+                      <option value="College Senior">College Senior</option>
+                      <option value="Graduate Student">Graduate Student</option>
+                    </optgroup>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Career Interests</h2>
+              <p className="text-xs text-gray-400 -mt-2">Select everything you're curious about — even if you're unsure. This helps us find relevant mentors.</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {CAREER_FIELDS_FULL.map((field) => (
+                  <label key={field} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
+                    <input type="checkbox" name="career_interests" value={field} defaultChecked={roleData.career_interests?.includes(field)} className="rounded text-indigo-600 flex-shrink-0" />
+                    <span className="text-gray-700 leading-snug">{field}</span>
+                  </label>
+                ))}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Don't see yours? Add it <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" name="career_interests_custom" placeholder="e.g. Marine Biology, Nanotechnology..." className={inputClass} />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Learning Goals</h2>
+              <p className="text-xs text-gray-400 -mt-2">What do you actually want from a mentor? The more honest you are here, the better your matches will be.</p>
+              <textarea
+                name="learning_goals"
+                rows={5}
+                maxLength={2000}
+                defaultValue={roleData.learning_goals || ""}
+                className={`${inputClass} resize-y`}
+                placeholder="e.g. I want to learn what it's actually like to work in medicine day-to-day. I'm trying to figure out if pre-med is right for me, and I want to hear from someone who's been through it — the hard parts included..."
+              />
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Your Style</h2>
+              <p className="text-xs text-gray-400 -mt-2">How would you describe yourself as a learner? Pick all that fit.</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {PERSONALITY_TAGS_STUDENT.map((tag) => (
+                  <label key={tag} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
+                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData.personality_tags?.includes(tag)} className="rounded text-indigo-600 flex-shrink-0" />
+                    <span className="text-gray-700">{tag}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Mentor-specific */}
+        {user.role === "mentor" && roleData && (
+          <>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Professional Info</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Mentoring Topics</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {MENTOR_TOPICS.map((topic) => (
-                      <label key={topic} className="flex items-center gap-2 text-sm">
-                        <input type="checkbox" name="topics" value={topic} defaultChecked={roleData.topics?.includes(topic)} className="rounded text-blue-600" />
-                        {topic}
-                      </label>
-                    ))}
-                  </div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                  <input type="text" name="job_title" defaultValue={roleData.job_title || ""} placeholder="e.g. Senior Software Engineer" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn URL</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                  <input type="text" name="company" defaultValue={roleData.company || ""} placeholder="e.g. Google" className={inputClass} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
+                  <input type="number" name="years_experience" defaultValue={roleData.years_experience || ""} min={1} max={50} placeholder="Years in your field" className={inputClass} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn URL <span className="text-gray-400 font-normal">(optional)</span></label>
                   <input type="url" name="linkedin_url" defaultValue={roleData.linkedin_url || ""} placeholder="https://linkedin.com/in/yourname" className={inputClass} />
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Career Field</label>
+                <select name="career_field" defaultValue={roleData.career_field || ""} className={inputClass}>
+                  <option value="">Select your field</option>
+                  {CAREER_FIELDS_FULL.map((field) => (
+                    <option key={field} value={field}>{field}</option>
+                  ))}
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Not listed? Write it in <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" name="career_field_custom" placeholder="e.g. Biomedical Engineering, Forensic Accounting..." className={inputClass} />
+              </div>
             </div>
-          )}
 
-          <div className="flex gap-3 pt-2">
-            <button type="submit" className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-              Save Changes
-            </button>
-            <a href="/profile" className="text-gray-600 hover:text-gray-900 px-6 py-2.5 font-medium">
-              Cancel
-            </a>
-          </div>
-        </form>
-      </div>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Mentoring Topics</h2>
+              <p className="text-xs text-gray-400 -mt-2">What can you actually help students with?</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {MENTOR_TOPICS_FULL.map((topic) => (
+                  <label key={topic} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
+                    <input type="checkbox" name="topics" value={topic} defaultChecked={roleData.topics?.includes(topic)} className="rounded text-emerald-600 flex-shrink-0" />
+                    <span className="text-gray-700">{topic}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Mentoring Style</h2>
+              <p className="text-xs text-gray-400 -mt-2">Students use this to find mentors who match how they learn best.</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {PERSONALITY_TAGS_MENTOR.map((tag) => (
+                  <label key={tag} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
+                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData.personality_tags?.includes(tag)} className="rounded text-emerald-600 flex-shrink-0" />
+                    <span className="text-gray-700">{tag}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        <div className="flex gap-3 pb-6">
+          <button type="submit" className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-colors">
+            Save Changes
+          </button>
+          <a href="/profile" className="text-gray-500 hover:text-gray-800 px-6 py-3 font-medium rounded-xl hover:bg-gray-100 transition-colors">
+            Cancel
+          </a>
+        </div>
+      </form>
     </div>
   );
 }

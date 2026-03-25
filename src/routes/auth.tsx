@@ -111,6 +111,7 @@ auth.post("/signup", async (c) => {
   }
 
   const { email, password, first_name, last_name, role } = parsed.data;
+  const bio = (body.bio as string)?.trim() || null;
 
   // Moderate first and last name
   const firstMod = moderateUsername(first_name);
@@ -150,6 +151,7 @@ auth.post("/signup", async (c) => {
       display_name: `${first_name.trim()} ${last_name.trim().charAt(0)}.`,
       registration_step: 1,
       registration_complete: false,
+      bio,
     })
     .select()
     .single();

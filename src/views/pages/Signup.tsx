@@ -106,6 +106,21 @@ export function Signup({ error }: SignupProps) {
               </div>
             </div>
 
+            <div>
+              <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-1">
+                About Me <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <textarea
+                id="bio"
+                name="bio"
+                rows={3}
+                maxLength={500}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm resize-none"
+                placeholder="A quick intro — who you are, what you're interested in, what you're hoping to get from Mentino..."
+              />
+              <p className="text-xs text-gray-400 mt-1">You can always add more later in your profile.</p>
+            </div>
+
             <label className="flex items-start gap-2.5 cursor-pointer">
               <input type="checkbox" name="tos_agreed" value="1" required className="mt-0.5 rounded text-indigo-600 flex-shrink-0" />
               <span className="text-xs text-gray-500 leading-relaxed">

@@ -9,6 +9,7 @@ import { supabase } from "../db";
 import { hashPassword, verifyPassword } from "../lib/password";
 import { signToken } from "../lib/jwt";
 import { signupSchema, loginSchema } from "../lib/validation";
+import { moderateUsername } from "../lib/moderation";
 import { config } from "../config";
 
 const auth = new Hono();
@@ -110,6 +111,16 @@ auth.post("/signup", async (c) => {
   }
 
   const { email, password, first_name, last_name, role } = parsed.data;
+
+  // Moderate first and last name
+  const firstMod = moderateUsername(first_name);
+  if (!firstMod.clean) {
+    return html(<Layout title="Sign Up"><Signup error={firstMod.reason} /></Layout>);
+  }
+  const lastMod = moderateUsername(last_name);
+  if (!lastMod.clean) {
+    return html(<Layout title="Sign Up"><Signup error={lastMod.reason} /></Layout>);
+  }
 
   // Check if email already exists
   const { data: existing } = await supabase

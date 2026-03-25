@@ -105,16 +105,24 @@ staticPages.get("/about", optionalAuth, (c) => {
   return html(
     <Layout title="About" user={user} currentPath="/about">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">About Mentino</span>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Mentorship shouldn't depend on who you know.</h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-            Mentino is a free platform that connects students with verified professionals for personalized career guidance — regardless of background or network.
-          </p>
+        {/* Colorful hero banner */}
+        <div className="relative rounded-3xl overflow-hidden mb-10">
+          <div className="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80" alt="Team collaborating" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/85 to-violet-900/80" />
+          </div>
+          <div className="relative z-10 text-center text-white py-16 px-8">
+            <span className="inline-block bg-white/20 border border-white/30 text-white text-sm font-semibold px-5 py-2 rounded-full mb-5 backdrop-blur-sm anim-fade-in">About Mentino</span>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 anim-fade-up anim-d1">Mentorship shouldn't depend<br />on who you know.</h1>
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto anim-fade-up anim-d2">
+              A free platform connecting students with verified professionals for personalized career guidance — regardless of background or network.
+            </p>
+          </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+        {/* Colorful mission section */}
+        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <p className="text-indigo-100 text-lg leading-relaxed">
             Too many talented students lack access to professional networks and career guidance. Students from well-connected families get career advice over dinner. Everyone else has to figure it out alone. Mentino bridges this gap by creating a safe, structured platform where industry professionals can volunteer their time to help the next generation succeed.
           </p>
         </div>
@@ -150,11 +158,11 @@ staticPages.get("/about", optionalAuth, (c) => {
             ))}
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Get in Touch</h2>
-          <p className="text-gray-600">
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-8 text-center text-white">
+          <h2 className="text-xl font-bold mb-2">Get in Touch</h2>
+          <p className="text-emerald-100">
             Have questions, feedback, or want to partner with us? Reach out at{" "}
-            <a href="mailto:hello@mentino.org" className="text-blue-600 hover:underline font-medium">hello@mentino.org</a>
+            <a href="mailto:hello@mentino.org" className="underline font-semibold hover:text-white">hello@mentino.org</a>
           </p>
         </div>
       </div>
@@ -185,18 +193,30 @@ staticPages.get("/founder", optionalAuth, (c) => {
             </div>
             <h1 className="text-4xl font-extrabold mb-2">Ethan Branzuela</h1>
             <p className="text-indigo-300 text-xl mb-5">Founder of Mentino</p>
-            <div className="flex justify-center flex-wrap gap-3">
+            <div className="flex justify-center flex-wrap gap-3 mb-6">
               {["15 years old", "Bay Area, CA", "Sports Photographer", "Young Entrepreneur"].map((tag) => (
                 <span key={tag} className="bg-white/15 border border-white/20 text-white text-sm px-4 py-1.5 rounded-full backdrop-blur-sm">
                   {tag}
                 </span>
               ))}
             </div>
+            <a
+              href="https://ebonthecam.mypixieset.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold px-6 py-2.5 rounded-full backdrop-blur-sm transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              View Photography Portfolio
+            </a>
           </div>
         </div>
 
         {/* Impact stats banner */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 anim-fade-up anim-d1">
           {[
             { num: "16M", label: "Young people without a mentor in the US", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
             { num: "5×", label: "More promotions for mentored employees", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
@@ -211,18 +231,18 @@ staticPages.get("/founder", optionalAuth, (c) => {
         </div>
 
         {/* Story section with image */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10 items-start anim-fade-up anim-d2">
           <div className="md:col-span-3 bg-white rounded-2xl border border-gray-200 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">The Story</h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                My name is <strong>Ethan Branzuela</strong>, and I'm a 15-year-old student in the Bay Area. I'm also a freelance sports photographer who has worked with professional, collegiate, and high school athletes throughout the region.
+                I'm Ethan Branzuela. I'm 15, I live in the Bay Area, and I shoot sports photography — mainly professional and collegiate athletes around the region. That's how I pay for equipment and honestly, it's what I love doing.
               </p>
               <p>
-                As a young photographer trying to grow in a competitive field, I learned something early: <strong>talent isn't enough</strong>. What truly accelerated my growth was reaching out to photographers I admired — asking questions, studying their work, and learning directly from people with more experience than me.
+                When I was trying to get better at photography, I started reaching out to photographers I followed online. Not in a formal way — just cold DMs, emails, stuff like that. A few of them actually responded. And those conversations taught me more in a few weeks than I learned in years of watching tutorials.
               </p>
               <p>
-                Having someone older, wiser, and further ahead guide me made an enormous difference in my career trajectory. That personal experience with mentorship is what inspired everything you see here.
+                I got better because someone who already knew what they were doing was willing to talk to me. That's it. And I kept thinking — why isn't this easier for everyone?
               </p>
             </div>
           </div>
@@ -233,13 +253,13 @@ staticPages.get("/founder", optionalAuth, (c) => {
         </div>
 
         {/* Realization callout */}
-        <div className="relative bg-indigo-600 rounded-2xl p-10 mb-10 text-white overflow-hidden">
+        <div className="relative bg-indigo-600 rounded-2xl p-10 mb-10 text-white overflow-hidden anim-fade-up anim-d3">
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/4 translate-x-1/4" />
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/4 -translate-x-1/4" />
           <div className="relative z-10">
-            <h2 className="text-2xl font-bold mb-4">That realization stuck with me.</h2>
+            <h2 className="text-2xl font-bold mb-4">That stuck with me.</h2>
             <p className="text-indigo-100 text-lg leading-relaxed max-w-3xl">
-              I began noticing the same pattern everywhere. Whether someone wants to become a professional athlete, a doctor, a lawyer, an entrepreneur, or a scientist — no one succeeds alone. Every successful person had guidance. Every successful person had someone who helped them navigate the unknown.
+              I started looking around and seeing it everywhere. Athletes who made it had coaches. Doctors who made it had mentors. Lawyers, engineers, founders — almost every person I looked up to had someone older who showed them how things actually worked. Not from a book. From real experience. That's the thing you can't Google.
             </p>
           </div>
         </div>
@@ -277,45 +297,17 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">The Mentino Journey</h2>
-          <div className="space-y-0">
-            {[
-              { year: "2022", title: "The Spark", desc: "Started sports photography, discovered the power of seeking guidance from experienced photographers.", color: "bg-blue-500" },
-              { year: "2023", title: "The Idea", desc: "Recognized that every student deserves access to professional mentors, not just those with connections.", color: "bg-indigo-500" },
-              { year: "2024", title: "Building Begins", desc: "Started designing and developing Mentino — learning to code while building the actual product.", color: "bg-violet-500" },
-              { year: "2025", title: "Mentino Launches", desc: "Launched the platform with a focus on safety, smart matching, and free access for all students.", color: "bg-emerald-500" },
-              { year: "2026", title: "Growing Impact", desc: "500+ students matched, 200+ verified mentors, 15+ career fields — and just getting started.", color: "bg-rose-500" },
-            ].map((item, i, arr) => (
-              <div key={i} className="flex gap-5 relative">
-                <div className="flex flex-col items-center">
-                  <div className={`${item.color} text-white w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 z-10`}>
-                    {item.year.slice(2)}
-                  </div>
-                  {i < arr.length - 1 && <div className="w-0.5 bg-gray-200 flex-1 mt-1" />}
-                </div>
-                <div className={`pb-8 ${i === arr.length - 1 ? "pb-0" : ""}`}>
-                  <div className="text-xs text-gray-400 font-semibold mb-0.5">{item.year}</div>
-                  <h4 className="font-bold text-gray-900">{item.title}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Challenges */}
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">The Challenges</h2>
           <p className="text-gray-600 leading-relaxed mb-4">
-            Starting Mentino at 15 hasn't been easy. One of the biggest challenges has been reaching a wider audience. There are only so many people you can message personally, and building trust at a young age requires persistence and proof.
+            Building this at 15 has been genuinely hard. Getting people to take you seriously when you're a teenager asking them to volunteer their time — that's not easy. My reach is limited. I can only message so many people directly. And there's no playbook for this.
           </p>
           <p className="text-gray-600 leading-relaxed mb-4">
-            But every meaningful idea starts small. And every large movement once began with a single conversation.
+            But I've learned more building Mentino than I have sitting in a classroom. And every time I see a student get matched with someone they actually connect with, it feels worth it.
           </p>
           <p className="text-gray-800 font-semibold">
-            I believe that if I focus on impact first, growth will follow.
+            Focus on impact. Growth follows.
           </p>
         </div>
 
@@ -323,7 +315,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Trust Mentino?</h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            Mentino isn't just an idea — it's built from real experience. I've personally seen how mentorship accelerates career growth. I've experienced it in photography. I've seen it in sports. And I've seen how one conversation can change someone's confidence and direction.
+            I'm 15. I'm not a career coach or a therapist or a guidance counselor. But I've seen firsthand what happens when someone who knows their field sits down and actually talks to you. It changes things. I built Mentino because I wanted more students to have that experience — not just the ones whose parents happen to know the right people.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {[
@@ -345,8 +337,8 @@ staticPages.get("/founder", optionalAuth, (c) => {
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-10 text-center text-white">
-          <h3 className="text-2xl font-bold mb-2">Join the Mission</h3>
-          <p className="text-indigo-100 mb-6">Whether you're a student or a professional, there's a place for you at Mentino.</p>
+          <h3 className="text-2xl font-bold mb-2">Come be part of it.</h3>
+          <p className="text-indigo-100 mb-6">If you're a student who wants direction, sign up. If you're someone who's figured something out and wants to share it — we need you.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <a href="/signup" className="bg-white text-indigo-600 font-bold px-7 py-3 rounded-full hover:bg-indigo-50 transition-colors">
               Sign Up as Student
@@ -663,5 +655,169 @@ function Section({ title, children }: { title: string; children: React.ReactNode
     </div>
   );
 }
+
+// GET /terms
+staticPages.get("/terms", optionalAuth, (c) => {
+  const user = c.get("user");
+  return html(
+    <Layout title="Terms of Service" user={user} currentPath="/terms">
+      <div className="max-w-3xl mx-auto">
+        <div className="relative rounded-3xl overflow-hidden mb-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-indigo-900" />
+          <div className="relative z-10 text-center text-white py-14 px-8">
+            <span className="inline-block bg-white/15 border border-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Legal</span>
+            <h1 className="text-4xl font-extrabold mb-3">Terms of Service</h1>
+            <p className="text-slate-300 text-sm">Last updated: March 2026 · Effective immediately upon account creation</p>
+          </div>
+        </div>
+
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8">
+          <p className="text-amber-900 text-sm font-medium">
+            <strong>Please read these terms carefully.</strong> By creating an account or using Mentino, you agree to be bound by these Terms of Service. If you do not agree, do not use the platform.
+          </p>
+        </div>
+
+        <div className="space-y-8 bg-white rounded-2xl border border-gray-100 p-8">
+          <Section title="1. About Mentino">
+            <p>Mentino ("we," "us," or "the platform") is a free mentorship platform that connects students with verified working professionals. Mentino is operated by Ethan Branzuela as an independent project. We are not a staffing agency, school, or licensed counseling service.</p>
+          </Section>
+
+          <Section title="2. Eligibility">
+            <p>You must be at least 10 years old to use Mentino. Students under 18 must have verifiable parental or guardian consent, which is collected during registration. By registering, you confirm that all information you provide is truthful and accurate.</p>
+          </Section>
+
+          <Section title="3. User Accounts">
+            <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You agree not to share your login, impersonate another person, or create multiple accounts. Mentino reserves the right to suspend or terminate accounts that violate these terms.</p>
+          </Section>
+
+          <Section title="4. Use of the Platform">
+            <p>Mentino is intended solely for career mentorship and educational guidance. You agree not to:</p>
+            <ul className="list-disc list-inside space-y-1 mt-2">
+              <li>Use the platform for solicitation, advertising, or commercial gain</li>
+              <li>Share inappropriate, harmful, or illegal content</li>
+              <li>Harass, bully, or threaten any user</li>
+              <li>Collect or misuse other users' personal information</li>
+              <li>Attempt to bypass safety or moderation systems</li>
+            </ul>
+          </Section>
+
+          <Section title="5. Liability Disclaimer — User Interactions">
+            <p className="font-semibold text-gray-800">Mentino is a platform that facilitates connections between users. We do not guarantee the quality, accuracy, or outcome of any mentorship relationship.</p>
+            <p className="mt-2">All interactions between students and mentors are voluntary and occur at each user's own risk. Mentino is not responsible for:</p>
+            <ul className="list-disc list-inside space-y-1 mt-2">
+              <li>Advice given by mentors (which is not professional, legal, or medical counsel)</li>
+              <li>Unsuccessful, discouraging, or negative experiences with mentors</li>
+              <li>Missed sessions, unresponsive mentors, or dissolved match relationships</li>
+              <li>Any direct, indirect, or consequential harm arising from platform use</li>
+            </ul>
+            <p className="mt-2 text-sm text-gray-500 italic">Mentors on Mentino are volunteer professionals, not Mentino employees. Their conduct is their own responsibility.</p>
+          </Section>
+
+          <Section title="6. Minors — Additional Terms">
+            <p className="font-semibold text-gray-800">If you are under 18, the following additional terms apply to you.</p>
+            <p className="mt-2">Your use of Mentino is entirely at your own risk and the risk of your parent or guardian who consented on your behalf. Mentino implements safety features including mentor verification, content moderation, and parental consent requirements — however:</p>
+            <ul className="list-disc list-inside space-y-1 mt-2">
+              <li>Mentino does not guarantee the safety or appropriateness of all mentor interactions</li>
+              <li>Parents and guardians are encouraged to monitor their child's activity on the platform</li>
+              <li>Any adverse experience, emotional impact, or harm arising from platform use is not the liability of Mentino</li>
+              <li>Mentino is not a substitute for professional counseling, academic advising, or parental guidance</li>
+            </ul>
+          </Section>
+
+          <Section title="7. Content Moderation & Reports">
+            <p>Mentino uses automated moderation and human review to keep the platform safe. Users may report inappropriate behavior at any time. Reported users are subject to temporary or permanent suspension depending on the severity and frequency of violations.</p>
+            <p className="mt-2">Submitting a false report is a violation of these terms and may result in action against your account.</p>
+          </Section>
+
+          <Section title="8. Mentor Verification">
+            <p>Mentors are required to complete a verification process before being approved. However, Mentino does not independently verify all credentials claimed by mentors. Mentor information is self-reported. Use your judgment and report any concerns to our team.</p>
+          </Section>
+
+          <Section title="9. Termination">
+            <p>We reserve the right to suspend or permanently ban any account at any time for any violation of these terms, without prior notice. You may also delete your account at any time by contacting us at <a href="mailto:hello@mentino.org" className="text-indigo-600 hover:underline">hello@mentino.org</a>.</p>
+          </Section>
+
+          <Section title="10. Changes to Terms">
+            <p>We may update these terms from time to time. Continued use of the platform after changes constitutes acceptance of the revised terms. We will notify users of significant changes via email when possible.</p>
+          </Section>
+
+          <Section title="11. Contact">
+            <p>For questions about these terms, contact us at <a href="mailto:hello@mentino.org" className="text-indigo-600 hover:underline">hello@mentino.org</a>.</p>
+          </Section>
+        </div>
+
+        <div className="text-center mt-8">
+          <a href="/privacy" className="text-indigo-600 hover:underline font-medium text-sm">Read our Privacy Policy →</a>
+        </div>
+      </div>
+    </Layout>
+  );
+});
+
+// GET /privacy
+staticPages.get("/privacy", optionalAuth, (c) => {
+  const user = c.get("user");
+  return html(
+    <Layout title="Privacy Policy" user={user} currentPath="/privacy">
+      <div className="max-w-3xl mx-auto">
+        <div className="relative rounded-3xl overflow-hidden mb-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-800 to-indigo-900" />
+          <div className="relative z-10 text-center text-white py-14 px-8">
+            <span className="inline-block bg-white/15 border border-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Legal</span>
+            <h1 className="text-4xl font-extrabold mb-3">Privacy Policy</h1>
+            <p className="text-violet-200 text-sm">Last updated: March 2026</p>
+          </div>
+        </div>
+
+        <div className="space-y-8 bg-white rounded-2xl border border-gray-100 p-8">
+          <Section title="1. What We Collect">
+            <p>When you use Mentino, we collect:</p>
+            <ul className="list-disc list-inside space-y-1 mt-2">
+              <li><strong>Account information:</strong> name, email, password (hashed), role</li>
+              <li><strong>Profile data:</strong> school, grade, career interests, bio, job title, availability</li>
+              <li><strong>Activity data:</strong> messages, session records, match history, reports</li>
+              <li><strong>For minors:</strong> parental consent and parent email address</li>
+            </ul>
+          </Section>
+
+          <Section title="2. How We Use Your Data">
+            <p>We use your data solely to:</p>
+            <ul className="list-disc list-inside space-y-1 mt-2">
+              <li>Match students with appropriate mentors</li>
+              <li>Enable messaging and session scheduling</li>
+              <li>Moderate content and enforce safety policies</li>
+              <li>Improve the platform</li>
+            </ul>
+            <p className="mt-2">We do not sell your data, use it for advertising, or share it with third parties except as required by law.</p>
+          </Section>
+
+          <Section title="3. Data Storage">
+            <p>Your data is stored in Supabase (PostgreSQL), a cloud database provider. Passwords are stored as bcrypt hashes — never in plain text. All authentication uses secure, HTTP-only cookies.</p>
+          </Section>
+
+          <Section title="4. Minors' Privacy">
+            <p>We take the privacy of users under 18 seriously. We collect only the minimum data necessary. Parent emails collected for consent are used solely for that purpose. We do not share minors' data with any third party.</p>
+          </Section>
+
+          <Section title="5. Your Rights">
+            <p>You may request deletion of your account and associated data at any time by emailing <a href="mailto:hello@mentino.org" className="text-indigo-600 hover:underline">hello@mentino.org</a>. We will process deletion requests within 30 days.</p>
+          </Section>
+
+          <Section title="6. Cookies">
+            <p>We use a single secure HTTP-only cookie for authentication. We do not use tracking cookies, analytics cookies, or third-party cookies.</p>
+          </Section>
+
+          <Section title="7. Contact">
+            <p>Privacy questions: <a href="mailto:hello@mentino.org" className="text-indigo-600 hover:underline">hello@mentino.org</a></p>
+          </Section>
+        </div>
+
+        <div className="text-center mt-8">
+          <a href="/terms" className="text-indigo-600 hover:underline font-medium text-sm">← Back to Terms of Service</a>
+        </div>
+      </div>
+    </Layout>
+  );
+});
 
 export { staticPages };

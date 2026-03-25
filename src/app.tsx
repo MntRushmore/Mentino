@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { Layout } from "./views/Layout";
 import { Home } from "./views/pages/Home";
 import { auth } from "./routes/auth";
@@ -13,10 +14,15 @@ import { messages } from "./routes/messages";
 import { sessions } from "./routes/sessions";
 import { staticPages } from "./routes/static";
 import { blog } from "./routes/blog";
+import { reports } from "./routes/reports";
 import { optionalAuth } from "./middleware/auth";
 import { supabase } from "./db";
 
 export const app = new Hono();
+
+// Serve static files from /public
+app.use("/images/*", serveStatic({ root: "./public" }));
+app.use("/js/*", serveStatic({ root: "./public" }));
 
 // Helper to render full-page HTML
 export function render(element: React.ReactElement, status = 200) {
@@ -68,6 +74,9 @@ app.route("/", sessions);
 
 // Blog routes
 app.route("/", blog);
+
+// Reports & Reviews routes
+app.route("/", reports);
 
 // Static pages
 app.route("/", staticPages);

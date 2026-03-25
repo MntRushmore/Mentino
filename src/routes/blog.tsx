@@ -26,70 +26,59 @@ const blogPosts = [
     excerpt: "Confidence, networking, and professional growth — what the research says.",
     readTime: "6 min read",
     content: `
-      <p>We live in the age of information. You can learn almost anything on YouTube, read research papers for free, and take online courses from top universities. So why does mentorship still matter?</p>
+      <p>You can learn almost anything online. Free courses, YouTube tutorials, research papers — information has never been more accessible. So why does mentorship still matter?</p>
 
-      <p>Because <strong>information is not the same as guidance</strong>. Knowing what to learn and knowing how to navigate a career are two completely different things.</p>
+      <p>Because knowing <em>what</em> to learn is different from knowing <em>how to navigate a career</em>. That's the gap a mentor fills.</p>
 
-      <h3>The Research Is Clear</h3>
+      <h3>What the research actually says</h3>
 
-      <p>A landmark study by Sun Microsystems found that employees who had mentors were <strong>promoted five times more often</strong> than those without mentors. The mentors themselves were also promoted six times more often, suggesting mentorship benefits both sides of the relationship.</p>
+      <p>A Sun Microsystems study found that mentored employees were <strong>promoted five times more often</strong> than employees without mentors. The mentors themselves were promoted six times more often. Both sides benefit.</p>
 
       <p class="source">Source: Gartner, "Mentoring: A Practitioner's Guide to Touching Lives" (2006)</p>
 
-      <p>Research published in the <em>Journal of Applied Psychology</em> found that mentored individuals reported:</p>
+      <p>Research in the <em>Journal of Applied Psychology</em> found mentored workers reported:</p>
 
       <ul>
-        <li><strong>Higher salaries</strong> — mentored employees earned an average of $5,610 more per year than non-mentored peers</li>
-        <li><strong>Greater career satisfaction</strong> — 4x more satisfied with their career trajectory</li>
-        <li><strong>More promotions</strong> — mentored individuals received promotions at a significantly higher rate</li>
+        <li><strong>Higher salaries</strong> — about $5,610 more per year on average</li>
+        <li><strong>Greater career satisfaction</strong> — 4x more than non-mentored peers</li>
+        <li><strong>More promotions</strong> — at a significantly higher rate</li>
       </ul>
 
-      <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). "Career Benefits Associated With Mentoring for Proteges." <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
+      <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
 
-      <h3>Youth Mentorship: The MENTOR/Mentoring Effect</h3>
+      <h3>For young people specifically</h3>
 
-      <p>The National Mentoring Partnership (MENTOR) reports that young adults who had a mentor are:</p>
+      <p>MENTOR's national study found that young adults who had a mentor are:</p>
 
       <ul>
         <li><strong>55% more likely</strong> to be enrolled in college</li>
-        <li><strong>78% more likely</strong> to volunteer regularly in their communities</li>
-        <li><strong>90% more interested</strong> in becoming mentors themselves</li>
+        <li><strong>78% more likely</strong> to volunteer in their communities</li>
         <li><strong>130% more likely</strong> to hold leadership positions</li>
       </ul>
 
-      <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014). Based on a nationally representative survey of 1,109 young adults ages 18-21.</p>
+      <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014). Survey of 1,109 young adults ages 18-21.</p>
 
-      <h3>The Confidence Factor</h3>
+      <h3>Confidence is underrated</h3>
 
-      <p>A study from the American Psychological Association found that mentorship significantly boosts self-efficacy — a person's belief in their ability to succeed. This confidence translates directly into career outcomes: people who believe they can succeed are more likely to take on challenges, apply for stretch roles, and persist through setbacks.</p>
+      <p>Mentorship builds self-efficacy — your belief that you can actually do something. Research shows this translates directly into career behavior: people who believe in themselves are more likely to apply for harder roles, take on challenges, and push through setbacks instead of giving up.</p>
 
-      <p class="source">Source: Bandura, A. (1994). "Self-efficacy." In V.S. Ramachaudran (Ed.), <em>Encyclopedia of Human Behavior</em>, Vol. 4, 71-81. Academic Press.</p>
+      <p class="source">Source: Bandura, A. (1994). "Self-efficacy." <em>Encyclopedia of Human Behavior</em>, Vol. 4, 71-81.</p>
 
-      <h3>Networking Through Mentorship</h3>
+      <h3>The access problem</h3>
 
-      <p>According to LinkedIn's Workforce Learning Report, 94% of employees say they would stay at a company longer if it invested in their career development. Mentorship is one of the most effective forms of career development because it creates <strong>warm introductions</strong> — connections that come with built-in trust and context.</p>
+      <p>Here's what bothers me: mentorship access is deeply unequal. Students from well-connected families get career advice over dinner. A parent's colleague becomes their first industry contact. Everyone else has to figure it out alone.</p>
 
-      <p class="source">Source: LinkedIn, "2019 Workforce Learning Report."</p>
+      <p>That's not a talent gap. It's a network gap. And it's fixable.</p>
 
-      <p>A study in the <em>Academy of Management Journal</em> showed that mentored individuals develop broader professional networks and are more likely to access what researchers call "developmental networks" — multiple mentors across different areas who collectively accelerate career growth.</p>
+      <p class="source">Source: Chetty, R., Hendren, N., Kline, P., & Saez, E. (2014). <em>NBER Working Paper No. 19843</em>.</p>
 
-      <p class="source">Source: Higgins, M.C., & Kram, K.E. (2001). "Reconceptualizing Mentoring at Work: A Developmental Network Perspective." <em>Academy of Management Review</em>, 26(2), 264-288.</p>
+      <h3>That's the whole point of Mentino</h3>
 
-      <h3>The Access Gap</h3>
+      <p>We connect students with working professionals — for free. No network required. Just sign up, tell us what you're interested in, and we'll find someone who can actually help you.</p>
 
-      <p>Here's the problem: mentorship access is deeply unequal. A report by the National Bureau of Economic Research found that children from high-income families are significantly more likely to have access to professional networks and informal mentorship compared to lower-income peers.</p>
+      <p>If you're a student: don't wait. Find someone who's already where you want to be and ask them what they wish they'd known.</p>
 
-      <p>Students from well-connected families get career advice over dinner. Everyone else has to figure it out alone.</p>
-
-      <p class="source">Source: Chetty, R., Hendren, N., Kline, P., & Saez, E. (2014). "Where is the Land of Opportunity? The Geography of Intergenerational Mobility in the United States." <em>NBER Working Paper No. 19843</em>.</p>
-
-      <h3>That's Why We Built Mentino</h3>
-
-      <p>Mentino exists to close this gap. We connect students with verified working professionals for free, personalized career guidance. Because the right conversation at the right time can change someone's entire trajectory.</p>
-
-      <p>If you're a student — don't wait. Reach out. Find someone who's where you want to be.</p>
-
-      <p>If you're a professional — consider giving back. The data shows that one mentoring relationship can be the difference between someone finding their path and getting lost along the way.</p>
+      <p>If you're a professional: consider what it would've meant to you to have someone like you when you were starting out.</p>
     `,
   },
   {
@@ -275,68 +264,59 @@ const blogPosts = [
     excerpt: "A research-backed framework for exploring careers without the pressure.",
     readTime: "7 min read",
     content: `
-      <p>If you're a high school or college student and someone asks "What do you want to be when you grow up?" — it's okay to not have an answer.</p>
+      <p>If you're in high school or early college and you don't know what you want to do with your life — you're not behind. You're normal.</p>
 
-      <p>In fact, according to the National Center for Education Statistics, <strong>about 30% of college students change their major at least once</strong>, and many change it two or three times. Research from the Federal Reserve Bank of New York shows that only <strong>27% of college graduates work in a field related to their major</strong>.</p>
+      <p>About 30% of college students change their major at least once. Research from the Federal Reserve Bank of New York shows only 27% of college graduates end up working in a field related to their major.</p>
 
-      <p class="source">Sources: National Center for Education Statistics, "Beginning Postsecondary Students" (2023). Federal Reserve Bank of New York, "The Labor Market for Recent College Graduates" (2024).</p>
+      <p class="source">Sources: National Center for Education Statistics (2023). Federal Reserve Bank of New York, "The Labor Market for Recent College Graduates" (2024).</p>
 
-      <p>The point? Not knowing your path is the norm, not the exception. Here's a research-backed framework for figuring it out.</p>
+      <p>Figuring out your path is a process, not a decision you make once and stick to. Here's what actually helps.</p>
 
-      <h3>Step 1: Follow Curiosity, Not Prestige</h3>
+      <h3>1. Follow what you're actually curious about</h3>
 
-      <p>Psychologist Angela Duckworth's research on "grit" shows that long-term passion and perseverance predict success more than talent or IQ. But you can't develop passion for something you chose because it sounded impressive at a dinner party.</p>
+      <p>Angela Duckworth's research on grit found that passion and persistence predict success more than raw talent. But you can't be passionate about something you picked because it sounded good on paper.</p>
 
-      <p>Ask yourself: <em>What topics do I read about voluntarily? What problems do I enjoy solving? When does time fly?</em></p>
+      <p>A more useful question than "what do I want to be?" is: <em>What do I already read about voluntarily? What problems do I find interesting? When does time disappear?</em></p>
 
       <p class="source">Source: Duckworth, A. (2016). <em>Grit: The Power of Passion and Perseverance</em>. Scribner.</p>
 
-      <h3>Step 2: Talk to Real People</h3>
+      <h3>2. Talk to actual people in the field</h3>
 
-      <p>Career descriptions online are sterile. They tell you the "what" but not the "feel." A study in the <em>Journal of Career Development</em> found that students who conducted informational interviews were significantly more confident in their career choices and more realistic about their expectations.</p>
+      <p>Job descriptions tell you the requirements. They don't tell you what the work actually feels like. Research shows students who do informational interviews — just asking someone in a field about their experience — make more confident, realistic career choices.</p>
 
-      <p class="source">Source: Crosby, O. (2010). "Informational Interviewing: Get the Inside Scoop on Careers." <em>Occupational Outlook Quarterly</em>, Bureau of Labor Statistics.</p>
+      <p class="source">Source: Crosby, O. (2010). "Informational Interviewing: Get the Inside Scoop on Careers." <em>Occupational Outlook Quarterly</em>.</p>
 
-      <p>That's literally what Mentino is for. Connect with professionals across 15+ career fields and ask them the questions Google can't answer:</p>
-
+      <p>Some questions worth asking:</p>
       <ul>
-        <li>What does a typical day actually look like?</li>
-        <li>What do you wish you knew before starting?</li>
-        <li>What's the hardest part that nobody talks about?</li>
-        <li>Would you choose this career again?</li>
+        <li>What does a typical week actually look like?</li>
+        <li>What do you wish you'd known before getting into this?</li>
+        <li>What's the part nobody warns you about?</li>
+        <li>Would you do it again?</li>
       </ul>
 
-      <h3>Step 3: Experiment Early</h3>
+      <p>That's genuinely what Mentino is built for. Find someone in a field you're considering and just ask them.</p>
 
-      <p>Stanford's "Designing Your Life" research by Bill Burnett and Dave Evans recommends "prototype experiences" — low-stakes ways to test career ideas before committing. This could mean job shadowing, volunteering, taking a project-based class, or starting a side project.</p>
+      <h3>3. Try things before you commit</h3>
 
-      <p class="source">Source: Burnett, B., & Evans, D. (2016). <em>Designing Your Life: How to Build a Well-Lived, Joyful Life</em>. Knopf.</p>
+      <p>Stanford researchers Bill Burnett and Dave Evans call it "prototyping" — low-stakes experiments that let you test whether you actually like something before it becomes a major decision. Shadow someone for a day. Start a project related to the field. Volunteer somewhere relevant. You learn more in two weeks of doing than two years of thinking about it.</p>
 
-      <h3>Step 4: Build Skills That Transfer</h3>
+      <p class="source">Source: Burnett, B., & Evans, D. (2016). <em>Designing Your Life</em>. Knopf.</p>
 
-      <p>The World Economic Forum's "Future of Jobs Report 2023" lists the top skills employers will prioritize through 2027:</p>
+      <h3>4. Build skills that work everywhere</h3>
 
-      <ol>
-        <li>Analytical thinking</li>
-        <li>Creative thinking</li>
-        <li>Resilience, flexibility, and agility</li>
-        <li>Motivation and self-awareness</li>
-        <li>Curiosity and lifelong learning</li>
-      </ol>
-
-      <p>Notice that none of these are field-specific. While you're exploring, focus on skills that compound no matter where you end up.</p>
+      <p>The World Economic Forum's Future of Jobs Report lists the skills employers most want through 2027: analytical thinking, creative thinking, resilience, self-awareness, curiosity. None of them are field-specific. While you're figuring out your direction, focus on these. They compound no matter what you end up doing.</p>
 
       <p class="source">Source: World Economic Forum, "Future of Jobs Report 2023."</p>
 
-      <h3>Step 5: Don't Optimize Too Early</h3>
+      <h3>5. Don't specialize too soon</h3>
 
-      <p>Research by economist Ofer Malamud found that students who explored broadly before specializing ended up in <strong>better-fitting careers</strong> than those who specialized early. The UK education system (early specialization) was compared to the Scottish system (broader exploration), and Scottish graduates reported higher career satisfaction.</p>
+      <p>Economist Ofer Malamud compared students who specialized early vs. those who explored broadly first. The broad explorers ended up in better-fitting careers and reported higher satisfaction. There's a cost to narrowing too quickly.</p>
 
       <p class="source">Source: Malamud, O. (2010). "Breadth versus Depth: The Timing of Specialization in Higher Education." <em>Labour</em>, 24(4), 349-369.</p>
 
-      <h3>The Bottom Line</h3>
+      <h3>The short version</h3>
 
-      <p>Your career path doesn't have to be a straight line. The most interesting careers rarely are. Give yourself permission to explore, build transferable skills, talk to real people in fields you're curious about, and trust that clarity comes from action — not from sitting and thinking about it.</p>
+      <p>Your career doesn't have to be a straight line. The most interesting ones rarely are. Explore, talk to real people, try things, and trust that clarity comes from doing — not from sitting and thinking harder about it.</p>
     `,
   },
   {
@@ -350,56 +330,42 @@ const blogPosts = [
     excerpt: "Starting a mentorship platform as a teenager — what I learned, what was hard, and what keeps me going.",
     readTime: "5 min read",
     content: `
-      <p>When I tell people I started Mentino at 15, I usually get one of two reactions: "That's amazing!" or "Why?" The honest answer to both is the same: because I saw a problem I cared about and couldn't wait for someone else to solve it.</p>
+      <p>People ask me why I started Mentino at 15. Honestly? I didn't overthink it. I saw something that bothered me and I started building.</p>
 
-      <h3>The Spark</h3>
+      <h3>Where it came from</h3>
 
-      <p>It started with my own experience in sports photography. When I reached out to photographers I admired — asking questions, studying their work, learning from their experience — my growth accelerated dramatically. I went from a kid with a camera to a freelance sports photographer working with professional athletes in the Bay Area.</p>
+      <p>I shoot sports photography. I've been doing it since I was around 13 — mostly professional and collegiate athletes in the Bay Area. It's my thing. And when I was trying to actually get good at it, I started cold-DMing photographers I followed online. Just asking questions. Most didn't respond. But a few did. And those few conversations did more for my work than years of watching YouTube tutorials.</p>
 
-      <p>And I thought: <em>What if every student had this kind of access?</em></p>
+      <p>At some point I realized: that experience I had — someone further along taking 20 minutes to talk to me — most students don't get that. Not because people don't want to help, but because there's no easy way for them to connect. That's the gap Mentino is trying to close.</p>
 
-      <p>According to MENTOR: The National Mentoring Partnership, one in three young people in the U.S. will grow up without a mentor. That's over <strong>16 million young people</strong> navigating career decisions without guidance.</p>
+      <p>About 1 in 3 young people in the U.S. will grow up without a mentor. That's 16 million people figuring things out alone when they don't have to.</p>
 
       <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Gap" (2023).</p>
 
-      <h3>The Hard Parts</h3>
+      <h3>What's actually hard about this</h3>
 
-      <p>Building a platform at 15 comes with unique challenges:</p>
+      <p>I'm not going to pretend it's been smooth. A few things have been genuinely difficult:</p>
 
       <ul>
-        <li><strong>Credibility:</strong> Getting adults to take you seriously when you're asking them to volunteer their time on a platform built by a teenager</li>
-        <li><strong>Reach:</strong> There are only so many people you can message personally. The Pew Research Center reports that teens spend an average of 8.5 hours per day on screens — but almost none of that time is spent on career development</li>
-        <li><strong>Technical skills:</strong> Learning to build software while building the actual product</li>
-        <li><strong>Time management:</strong> Balancing school, photography, and building a startup</li>
+        <li><strong>Getting people to take you seriously.</strong> Asking adults to volunteer their time on a platform a 15-year-old built is not an easy pitch. Some people say yes immediately. Others look at my age and check out.</li>
+        <li><strong>Limited reach.</strong> I can only personally message so many people. Growth is slow when you're one person with a phone and a laptop.</li>
+        <li><strong>Building while learning.</strong> I was learning to code while building the actual product. That's a weird experience. Mistakes cost real time.</li>
+        <li><strong>Time.</strong> School. Photography clients. Mentino. Sleep is a luxury.</li>
       </ul>
 
-      <p class="source">Source: Pew Research Center, "Teens, Social Media and Technology 2023."</p>
+      <h3>What building this taught me</h3>
 
-      <h3>What I've Learned</h3>
+      <p>The biggest one: <strong>start before you're ready.</strong> If I waited until I knew everything I needed to know, I'd still be waiting. You learn way more by building than by planning to build.</p>
 
-      <p><strong>Start before you're ready.</strong> Research from Harvard Business School professor Francesca Gino shows that "learning by doing" is one of the most effective ways to develop competence. If I waited until I had all the skills and all the answers, Mentino would never exist.</p>
+      <p>Second: asking for help isn't weakness. It's the whole point. Ironically, building a mentorship platform made me better at asking for mentorship myself. I've leaned on a lot of people to get here.</p>
 
-      <p class="source">Source: Gino, F. (2018). "The Business Case for Curiosity." <em>Harvard Business Review</em>, 96(5), 48-57.</p>
+      <p>Third: keep the focus on impact. When things get frustrating — and they do — I come back to why I started. Someone's going to connect with the right mentor through this platform and it's going to change something for them. That's worth the hard days.</p>
 
-      <p><strong>Focus on impact first.</strong> According to a study in the <em>Journal of Business Venturing</em>, mission-driven founders are more resilient through early-stage challenges because their motivation is intrinsic, not just financial.</p>
+      <h3>What's next</h3>
 
-      <p class="source">Source: Renko, M. (2013). "Early Challenges of Nascent Social Entrepreneurs." <em>Entrepreneurship Theory and Practice</em>, 37(5), 1045-1069.</p>
+      <p>I want a student to be able to open Mentino, find the right mentor for exactly where they're trying to go, and have a real conversation — not a form, not an algorithm pretending to care, just a real person with real experience. We're building toward that.</p>
 
-      <p><strong>Ask for help.</strong> Ironically, building a mentorship platform taught me the most important lesson about mentorship: you can't do it alone. Every person who gave me advice, feedback, or encouragement played a role in making Mentino real.</p>
-
-      <h3>Young Founders Are More Common Than You Think</h3>
-
-      <p>While the average age of successful startup founders is 45 (according to MIT research), some of the most impactful companies were started by young people: Mark Zuckerberg started Facebook at 19, Palmer Luckey started Oculus at 18, and Malala Yousafzai started the Malala Fund at 16.</p>
-
-      <p class="source">Source: Azoulay, P., Jones, B.F., Kim, J.D., & Miranda, J. (2020). "Age and High-Growth Entrepreneurship." <em>American Economic Review: Insights</em>, 2(1), 65-82.</p>
-
-      <p>Age isn't a barrier to impact. What matters is having a genuine problem to solve and the persistence to keep going.</p>
-
-      <h3>What's Next</h3>
-
-      <p>My vision for Mentino is simple: one day, a student should be able to click a button and instantly connect with the right mentor for their dream career. We're not there yet, but every conversation, every match, every session brings us closer.</p>
-
-      <p>If you want to be part of this — as a student, a mentor, or someone who believes in what we're building — welcome. We're just getting started.</p>
+      <p>If you're a student — sign up. If you're someone who's figured something out and wants to give back — we need you. We're just getting started.</p>
     `,
   },
 ];

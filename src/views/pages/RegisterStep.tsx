@@ -13,9 +13,47 @@ interface RegisterStepProps {
 }
 
 const CAREER_FIELDS = [
-  "Technology", "Medicine", "Law", "Business", "Sports", "Arts",
-  "Education", "Engineering", "Finance", "Science", "Media", "Government",
-  "Non-Profit", "Real Estate", "Consulting",
+  "Technology & Software",
+  "Medicine & Healthcare",
+  "Law & Legal Services",
+  "Business & Management",
+  "Sports & Athletics",
+  "Arts & Design",
+  "Education & Teaching",
+  "Engineering",
+  "Finance & Accounting",
+  "Science & Research",
+  "Media & Journalism",
+  "Government & Public Policy",
+  "Non-Profit & Social Impact",
+  "Real Estate",
+  "Consulting",
+  "Architecture",
+  "Aviation & Aerospace",
+  "Criminal Justice & Law Enforcement",
+  "Cybersecurity",
+  "Data Science & AI",
+  "Dentistry",
+  "Environmental Science",
+  "Fashion & Apparel",
+  "Film & Television",
+  "Food & Culinary Arts",
+  "Gaming & Esports",
+  "Hospitality & Tourism",
+  "Human Resources",
+  "Marketing & Advertising",
+  "Military & Defense",
+  "Music & Performing Arts",
+  "Nursing & Allied Health",
+  "Pharmacy",
+  "Photography & Visual Arts",
+  "Psychology & Mental Health",
+  "Public Health",
+  "Publishing & Writing",
+  "Robotics & Automation",
+  "Social Work",
+  "Supply Chain & Logistics",
+  "Veterinary Medicine",
 ];
 
 const MENTOR_TOPICS = [
@@ -47,17 +85,19 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
       : ["Career", "Expertise", "Profile", "Schedule", "Review"];
 
   return (
-    <div className="max-w-2xl mx-auto mt-8">
+    <div className="max-w-2xl mx-auto mt-4 sm:mt-8">
       <Stepper currentStep={step} totalSteps={5} labels={stepLabels} />
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {stepLabels[step - 1]}
-        </h1>
-        <p className="text-gray-500 mb-6">
-          Step {step} of 5 &mdash;{" "}
-          {role === "student" ? "Student" : "Mentor"} registration
-        </p>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className={`px-5 sm:px-8 py-5 sm:py-6 ${role === "student" ? "bg-gradient-to-r from-indigo-600 to-blue-600" : "bg-gradient-to-r from-emerald-600 to-teal-600"}`}>
+          <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">
+            {stepLabels[step - 1]}
+          </h1>
+          <p className="text-white/70 text-sm">
+            Step {step} of 5 &mdash; {role === "student" ? "Student" : "Mentor"} registration
+          </p>
+        </div>
+        <div className="p-5 sm:p-8">
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -85,36 +125,74 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                 placeholder="e.g. Lincoln High School"
                 value={student?.school_name || ""}
               />
-              <FormField
-                label="Grade or Year"
-                name="grade_or_year"
-                placeholder="e.g. 11th grade, College Sophomore"
-                value={student?.grade_or_year || ""}
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Grade or Year</label>
+                <select
+                  name="grade_or_year"
+                  defaultValue={student?.grade_or_year || ""}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                >
+                  <option value="">Select your grade or year</option>
+                  <optgroup label="High School">
+                    <option value="9th Grade">9th Grade</option>
+                    <option value="10th Grade">10th Grade</option>
+                    <option value="11th Grade">11th Grade</option>
+                    <option value="12th Grade">12th Grade</option>
+                  </optgroup>
+                  <optgroup label="College">
+                    <option value="College Freshman">College Freshman (1st Year)</option>
+                    <option value="College Sophomore">College Sophomore (2nd Year)</option>
+                    <option value="College Junior">College Junior (3rd Year)</option>
+                    <option value="College Senior">College Senior (4th Year)</option>
+                    <option value="Graduate Student">Graduate Student</option>
+                  </optgroup>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </>
           )}
 
           {role === "student" && step === 2 && (
-            <CheckboxGroup
-              label="What career fields interest you? (select all that apply)"
-              name="career_interests"
-              options={CAREER_FIELDS}
-              selected={student?.career_interests}
-              columns={3}
-            />
+            <>
+              <CheckboxGroup
+                label="What career fields interest you? (select all that apply)"
+                name="career_interests"
+                options={CAREER_FIELDS}
+                selected={student?.career_interests}
+                columns={3}
+              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Don't see yours? Write it in{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  name="career_interests_custom"
+                  placeholder="e.g. Marine Biology, Urban Planning, Nanotechnology..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                />
+              </div>
+            </>
           )}
 
           {role === "student" && step === 3 && (
             <>
-              <TextAreaField
-                label="What do you hope to learn from a mentor?"
-                name="learning_goals"
-                required
-                placeholder="Describe your goals, questions, or what you'd like guidance on..."
-                value={student?.learning_goals || ""}
-                minLength={10}
-                maxLength={2000}
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  What do you hope to learn from a mentor?{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <p className="text-xs text-gray-400 mb-2">Share as much or as little as you'd like — even a few words helps us match you better.</p>
+                <textarea
+                  name="learning_goals"
+                  placeholder="e.g. I want to learn how to break into tech, prepare for college interviews, or explore what a career in medicine looks like day-to-day..."
+                  defaultValue={student?.learning_goals || ""}
+                  maxLength={2000}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                />
+              </div>
               <CheckboxGroup
                 label="How would you describe yourself?"
                 name="personality_tags"
@@ -180,7 +258,20 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                       {field}
                     </option>
                   ))}
+                  <option value="Other">Other (write below)</option>
                 </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Not listed? Write your field{" "}
+                  <span className="text-gray-400 font-normal">(optional — overrides selection above)</span>
+                </label>
+                <input
+                  type="text"
+                  name="career_field_custom"
+                  placeholder="e.g. Marine Biology, Forensic Accounting, Biomedical Engineering..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                />
               </div>
               <CheckboxGroup
                 label="What topics can you mentor on?"
@@ -194,22 +285,35 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
 
           {role === "mentor" && step === 3 && (
             <>
-              <FormField
-                label="LinkedIn Profile URL"
-                name="linkedin_url"
-                type="url"
-                placeholder="https://linkedin.com/in/yourname"
-                value={mentor?.linkedin_url || ""}
-              />
-              <TextAreaField
-                label="Bio"
-                name="bio"
-                required
-                placeholder="Tell students about yourself, your experience, and why you want to mentor..."
-                value={user.bio || ""}
-                minLength={20}
-                maxLength={2000}
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  LinkedIn Profile URL{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="url"
+                  name="linkedin_url"
+                  placeholder="https://linkedin.com/in/yourname"
+                  defaultValue={mentor?.linkedin_url || ""}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bio{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <p className="text-xs text-gray-400 mb-2">Minimum 80 characters — students read this before deciding to connect with you, so give them a real picture of who you are.</p>
+                <textarea
+                  name="bio"
+                  placeholder="e.g. I'm a software engineer at Google with 6 years of experience. I grew up without mentors and want to change that for the next generation. I can help with interview prep, breaking into tech, navigating college CS programs, and career growth."
+                  defaultValue={user.bio || ""}
+                  minLength={80}
+                  maxLength={2000}
+                  rows={5}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                />
+              </div>
               <CheckboxGroup
                 label="How would you describe your mentoring style?"
                 name="personality_tags"
@@ -223,14 +327,18 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
           {role === "mentor" && step === 4 && (
             <>
               <AvailabilityGrid availability={mentor?.availability} />
-              <FormField
-                label="Maximum number of mentees"
-                name="max_mentees"
-                type="number"
-                min={1}
-                max={10}
-                value={mentor?.max_mentees?.toString() || "3"}
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Maximum number of mentees</label>
+                <select
+                  name="max_mentees"
+                  defaultValue={mentor?.max_mentees?.toString() || "3"}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                >
+                  {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                    <option key={n} value={n.toString()}>{n} {n === 1 ? "mentee" : "mentees"}</option>
+                  ))}
+                </select>
+              </div>
             </>
           )}
 
@@ -255,7 +363,8 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
             </button>
           </div>
         </form>
-      </div>
+        </div>{/* end p-8 */}
+      </div>{/* end card */}
     </div>
   );
 }

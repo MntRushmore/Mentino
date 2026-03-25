@@ -38,7 +38,7 @@ export function FormField({
         defaultValue={value}
         min={min}
         max={max}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base"
       />
     </div>
   );
@@ -101,23 +101,29 @@ export function CheckboxGroup({
   selected = [],
   columns = 2,
 }: CheckboxGroupProps) {
+  // Always 2 cols on mobile; use columns prop for sm+ screens
+  const colClass =
+    columns === 3 ? "grid-cols-2 sm:grid-cols-3" :
+    columns === 4 ? "grid-cols-2 sm:grid-cols-4" :
+    "grid-cols-2";
+
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
-      <div className={`grid grid-cols-${columns} gap-2`}>
+      <div className={`grid ${colClass} gap-2`}>
         {options.map((option) => (
           <label
             key={option}
-            className="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-400"
+            className="flex items-center p-2.5 sm:p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-400"
           >
             <input
               type="checkbox"
               name={name}
               value={option}
               defaultChecked={selected.includes(option)}
-              className="mr-2 rounded text-blue-600"
+              className="mr-2 rounded text-blue-600 flex-shrink-0"
             />
-            <span className="text-sm text-gray-700">{option}</span>
+            <span className="text-xs sm:text-sm text-gray-700 leading-snug">{option}</span>
           </label>
         ))}
       </div>

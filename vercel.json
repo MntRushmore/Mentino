@@ -1,6 +1,8 @@
 {
   "buildCommand": "bun run build",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index.mjs" }
+  "routes": [
+    { "src": "/images/(.*)", "dest": "/images/$1" },
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/(.*)", "dest": "/api/index.mjs" }
   ]
 }

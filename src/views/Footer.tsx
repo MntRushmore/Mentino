@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           <div>
             <h3 className="text-xl font-bold text-white mb-3">Mentino</h3>
             <p className="text-slate-400 text-sm leading-relaxed">
@@ -61,8 +61,12 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="border-t border-slate-800 mt-8 pt-6 text-center text-slate-500 text-sm">
-          &copy; {new Date().getFullYear()} Mentino. Built for students, by students.
+        <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-slate-500 text-sm">
+          <span>&copy; {new Date().getFullYear()} Mentino. Built for students, by students.</span>
+          <div className="flex gap-4">
+            <a href="/terms" className="hover:text-slate-300 transition-colors">Terms of Service</a>
+            <a href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</a>
+          </div>
         </div>
       </div>
     </footer>

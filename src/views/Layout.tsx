@@ -30,7 +30,27 @@ export function Layout({ title = "Mentino", children, user, flash, navBadges, cu
               -webkit-box-orient: vertical;
               overflow: hidden;
             }
-          `,
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(20px); }
+              to   { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to   { opacity: 1; }
+            }
+            @keyframes slideRight {
+              from { opacity: 0; transform: translateX(-16px); }
+              to   { opacity: 1; transform: translateX(0); }
+            }
+            .anim-fade-up   { animation: fadeUp   0.6s ease-out both; }
+            .anim-fade-in   { animation: fadeIn   0.5s ease-out both; }
+            .anim-slide-r   { animation: slideRight 0.5s ease-out both; }
+            .anim-d1 { animation-delay: 0.1s; }
+            .anim-d2 { animation-delay: 0.2s; }
+            .anim-d3 { animation-delay: 0.3s; }
+            .anim-d4 { animation-delay: 0.4s; }
+            .anim-d5 { animation-delay: 0.5s; }
+`,
           }}
         />
       </head>
@@ -43,7 +63,7 @@ export function Layout({ title = "Mentino", children, user, flash, navBadges, cu
             </div>
           </div>
         )}
-        <main className="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">{children}</main>
+        <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 py-5 sm:py-8 w-full">{children}</main>
         <Footer />
       </body>
     </html>

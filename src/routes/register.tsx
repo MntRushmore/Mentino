@@ -131,6 +131,8 @@ async function handleStudentStep(
     }
     case 2: {
       const interests = normalizeArray(body.career_interests);
+      const custom = (body.career_interests_custom as string)?.trim();
+      if (custom) interests.push(custom);
       if (interests.length === 0) throw new Error("Select at least one career interest");
 
       await supabase
@@ -143,14 +145,14 @@ async function handleStudentStep(
       const goals = (body.learning_goals as string) || "";
       const tags = normalizeArray(body.personality_tags);
 
-      const modResult = moderateFields({ learning_goals: goals });
-      if (!modResult.clean) throw new Error(modResult.reason);
-
-      if (goals.length < 10) throw new Error("Please describe your goals (at least 10 characters)");
+      if (goals) {
+        const modResult = moderateFields({ learning_goals: goals });
+        if (!modResult.clean) throw new Error(modResult.reason);
+      }
 
       await supabase
         .from("students")
-        .update({ learning_goals: goals, personality_tags: tags })
+        .update({ learning_goals: goals || null, personality_tags: tags })
         .eq("user_id", user.id);
       break;
     }
@@ -223,7 +225,8 @@ async function handleMentorStep(
       break;
     }
     case 2: {
-      const careerField = (body.career_field as string)?.trim();
+      const customField = (body.career_field_custom as string)?.trim();
+      const careerField = customField || (body.career_field as string)?.trim();
       const topics = normalizeArray(body.topics);
 
       if (!careerField) throw new Error("Select a career field");
@@ -240,10 +243,11 @@ async function handleMentorStep(
       const bio = (body.bio as string)?.trim() || "";
       const tags = normalizeArray(body.personality_tags);
 
-      const modResult = moderateFields({ bio });
-      if (!modResult.clean) throw new Error(modResult.reason);
-
-      if (bio.length < 20) throw new Error("Bio must be at least 20 characters");
+      if (bio) {
+        const modResult = moderateFields({ bio });
+        if (!modResult.clean) throw new Error(modResult.reason);
+        if (bio.length < 80) throw new Error("Bio must be at least 80 characters. Students read this to decide if you're a good fit — give them a real picture of who you are.");
+      }
 
       await supabase
         .from("mentors")
@@ -252,7 +256,7 @@ async function handleMentorStep(
 
       await supabase
         .from("accounts")
-        .update({ bio })
+        .update({ bio: bio || null })
         .eq("id", user.id);
       break;
     }

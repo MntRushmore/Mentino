@@ -274,10 +274,10 @@ async function handleMentorStep(
       break;
     }
     case 5: {
-      // Set verification status to pending
+      // Auto-approve on registration so mentors appear immediately
       await supabase
         .from("mentors")
-        .update({ verification_status: "pending" })
+        .update({ verification_status: "approved", verified_at: new Date().toISOString() })
         .eq("user_id", user.id);
       break;
     }

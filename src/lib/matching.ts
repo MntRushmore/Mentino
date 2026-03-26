@@ -33,11 +33,11 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
 
   if (!student) return [];
 
-  // Get all approved mentors with capacity
+  // Get all mentors who have completed registration (approved or pending verification)
   const { data: mentors } = await supabase
     .from("mentors")
-    .select("*, accounts!user_id!inner(id, first_name, last_name, email, bio)")
-    .eq("verification_status", "approved");
+    .select("*, accounts!user_id!inner(id, first_name, last_name, email, bio, avatar_url, registration_complete)")
+    .in("verification_status", ["approved", "pending"]);
 
   if (!mentors || mentors.length === 0) return [];
 
@@ -53,7 +53,8 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
   const results: MatchResult[] = [];
 
   for (const mentor of mentors) {
-    // Skip if already matched or at capacity
+    // Skip if profile not complete, already matched, or at capacity
+    if (!mentor.accounts?.registration_complete) continue;
     if (matchedMentorIds.has(mentor.id)) continue;
     if (mentor.current_mentees >= mentor.max_mentees) continue;
 

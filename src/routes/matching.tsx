@@ -72,6 +72,26 @@ matching.get("/matching", authMiddleware, async (c) => {
   if (user.role === "student") {
     const results = await findMatches(user.id);
 
+    // Fallback: if algorithm returns 0 results, fetch all available mentors directly
+    let allMentorsFallback: any[] = [];
+    if (results.length === 0) {
+      const { data: fallbackMentors } = await supabase
+        .from("mentors")
+        .select("*, accounts!user_id!inner(id, first_name, last_name, bio, avatar_url, registration_complete)")
+        .in("verification_status", ["approved", "pending"]);
+      if (fallbackMentors) {
+        // Get student for existing match filter
+        const { data: student } = await supabase.from("students").select("id").eq("user_id", user.id).single();
+        const { data: existingMatches } = student
+          ? await supabase.from("matches").select("mentor_id").eq("student_id", student.id).in("status", ["pending", "accepted", "active"])
+          : { data: [] };
+        const matchedIds = new Set((existingMatches || []).map((m: any) => m.mentor_id));
+        allMentorsFallback = fallbackMentors.filter(
+          (m: any) => m.accounts?.registration_complete && !matchedIds.has(m.id)
+        );
+      }
+    }
+
     // Fetch reviews summary for each mentor
     const mentorIds = results.map((r) => r.mentorDbId);
     let reviewsMap: Record<string, { avg: number; count: number }> = {};
@@ -110,14 +130,76 @@ matching.get("/matching", authMiddleware, async (c) => {
           </div>
 
           {results.length === 0 ? (
-            <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
-                </svg>
-              </div>
-              <p className="text-gray-700 font-semibold text-lg mb-1">No mentors available right now</p>
-              <p className="text-gray-400 text-sm">Check back soon — new mentors are being verified regularly.</p>
+            <div>
+              {allMentorsFallback.length === 0 ? (
+                <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100 text-center">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-700 font-semibold text-lg mb-1">No mentors have signed up yet</p>
+                  <p className="text-gray-400 text-sm">Check back soon — mentors are joining regularly.</p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-sm text-gray-500 mb-4">No close algorithm matches yet, but here are all available mentors you can reach out to:</p>
+                  <div className="space-y-4">
+                    {allMentorsFallback.map((mentor: any) => (
+                      <div key={mentor.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                        <div className="flex items-start gap-4">
+                          <Avatar user={mentor.accounts} size="lg" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <h3 className="text-lg font-bold text-gray-900">
+                                {mentor.accounts.first_name} {mentor.accounts.last_name}
+                              </h3>
+                              {mentor.verification_status === "approved" ? (
+                                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                  Verified
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full">
+                                  Pending verification
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-gray-600 text-sm font-medium">{mentor.job_title}{mentor.company ? ` · ${mentor.company}` : ""}</p>
+                            <p className="text-gray-400 text-xs mb-2">{mentor.career_field} · {mentor.years_experience} yrs experience</p>
+                            {mentor.accounts.bio && <p className="text-gray-600 text-sm line-clamp-2 mb-2">{mentor.accounts.bio}</p>}
+                          </div>
+                          <div className="flex flex-col gap-2 min-w-[190px]">
+                            <form method="POST" action="/matching/request" className="space-y-2">
+                              <input type="hidden" name="mentor_db_id" value={mentor.id} />
+                              <input type="hidden" name="score" value="0" />
+                              <input type="hidden" name="reason" value="Direct browse" />
+                              <div>
+                                <textarea
+                                  name="intro_message"
+                                  placeholder="Introduce yourself — at least 30 characters"
+                                  rows={3}
+                                  minLength={30}
+                                  maxLength={500}
+                                  required
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                                />
+                                <p className="text-xs text-gray-400 mt-0.5">Min 30 characters</p>
+                              </div>
+                              <button type="submit" className="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">
+                                Request Match
+                              </button>
+                            </form>
+                            <a href={`/profile/${mentor.accounts.id}`} className="text-center text-indigo-600 hover:underline text-xs font-medium py-1">
+                              View Profile
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <>

@@ -44,6 +44,28 @@ const blogPosts = [
         <li><strong>More promotions</strong> — at a significantly higher rate</li>
       </ul>
 
+      <div style="background:linear-gradient(135deg,#eff6ff,#eef2ff);border:1px solid #bfdbfe;border-radius:20px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Mentored vs Non-Mentored Employees</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career promotions</span><span style="font-weight:700;color:#4f46e5">5×</span></div>
+            <div style="background:#dbeafe;border-radius:99px;height:10px"><div style="background:#4f46e5;height:10px;border-radius:99px;width:100%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career satisfaction</span><span style="font-weight:700;color:#059669">4×</span></div>
+            <div style="background:#d1fae5;border-radius:99px;height:10px"><div style="background:#059669;height:10px;border-radius:99px;width:80%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Higher avg salary vs peers</span><span style="font-weight:700;color:#d97706">+$5,610/yr</span></div>
+            <div style="background:#fef3c7;border-radius:99px;height:10px"><div style="background:#d97706;height:10px;border-radius:99px;width:60%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Job offers before graduation</span><span style="font-weight:700;color:#ef4444">+23%</span></div>
+            <div style="background:#fee2e2;border-radius:99px;height:10px"><div style="background:#ef4444;height:10px;border-radius:99px;width:23%"></div></div>
+          </div>
+        </div>
+      </div>
+
       <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
 
       <h3>For young people specifically</h3>
@@ -55,6 +77,24 @@ const blogPosts = [
         <li><strong>78% more likely</strong> to volunteer in their communities</li>
         <li><strong>130% more likely</strong> to hold leadership positions</li>
       </ul>
+
+      <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:20px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Key Stats for Young People with Mentors</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+            <div style="font-size:2rem;font-weight:900;color:#6366f1;line-height:1">55%</div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to enroll in college</div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+            <div style="font-size:2rem;font-weight:900;color:#10b981;line-height:1">130%</div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to hold leadership positions</div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+            <div style="font-size:2rem;font-weight:900;color:#f59e0b;line-height:1">78%</div>
+            <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to volunteer in communities</div>
+          </div>
+        </div>
+      </div>
 
       <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014). Survey of 1,109 young adults ages 18-21.</p>
 
@@ -104,23 +144,38 @@ const blogPosts = [
 
       <p>But these numbers need context. "STEM" includes everything from software engineers ($127,260 median) to agricultural technicians ($40,160 median). The range within STEM is enormous.</p>
 
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
+        <div style="background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:20px;padding:24px;color:white;text-align:center">
+          <div style="font-size:0.7rem;font-weight:700;opacity:0.8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">STEM Median</div>
+          <div style="font-size:2.5rem;font-weight:900;line-height:1">$100,900</div>
+          <div style="font-size:0.75rem;opacity:0.8;margin-top:6px">per year (BLS, 2023)</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:20px;padding:24px;color:white;text-align:center">
+          <div style="font-size:0.7rem;font-weight:700;opacity:0.8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Non-STEM Median</div>
+          <div style="font-size:2.5rem;font-weight:900;line-height:1">$40,120</div>
+          <div style="font-size:0.75rem;opacity:0.8;margin-top:6px">per year (BLS, 2023)</div>
+        </div>
+      </div>
+      <div style="background:#fef2f2;border-left:4px solid #f87171;border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 24px;font-size:0.85rem;color:#991b1b"><strong>151% higher</strong> — but context matters. Range within STEM is vast: from $40K to $127K+</div>
+
       <h3>Salary by Field: The Real Numbers</h3>
 
       <p>Here's a breakdown of median annual salaries by major occupation group (BLS, May 2023):</p>
 
-      <table>
-        <tr><th>Field</th><th>Median Salary</th><th>Growth (2022-2032)</th></tr>
-        <tr><td>Computer & IT</td><td>$104,420</td><td>+15% (much faster)</td></tr>
-        <tr><td>Engineering</td><td>$83,340</td><td>+7% (faster)</td></tr>
-        <tr><td>Healthcare Practitioners</td><td>$77,600</td><td>+13% (much faster)</td></tr>
-        <tr><td>Business & Financial</td><td>$76,850</td><td>+8% (faster)</td></tr>
-        <tr><td>Architecture</td><td>$72,390</td><td>+5% (average)</td></tr>
-        <tr><td>Life Sciences</td><td>$68,830</td><td>+5% (average)</td></tr>
-        <tr><td>Legal</td><td>$84,910</td><td>+8% (faster)</td></tr>
-        <tr><td>Arts & Design</td><td>$50,710</td><td>+3% (average)</td></tr>
-        <tr><td>Education</td><td>$55,350</td><td>+4% (average)</td></tr>
-        <tr><td>Social Sciences</td><td>$65,470</td><td>+5% (average)</td></tr>
-      </table>
+      <div style="background:#f8fafc;border-radius:20px;padding:24px;margin:24px 0;border:1px solid #e2e8f0">
+        <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Median Annual Salary by Field (BLS, May 2023)</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Computer & IT</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#3b82f6,#6366f1);height:28px;border-radius:99px;width:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$104,420</span></div></div><div style="font-size:0.7rem;background:#dbeafe;color:#1d4ed8;padding:2px 7px;border-radius:99px;white-space:nowrap">+15%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Legal</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#f59e0b,#d97706);height:28px;border-radius:99px;width:82%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$84,910</span></div></div><div style="font-size:0.7rem;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Engineering</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#6366f1,#8b5cf6);height:28px;border-radius:99px;width:80%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$83,340</span></div></div><div style="font-size:0.7rem;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+7%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Healthcare</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#10b981,#059669);height:28px;border-radius:99px;width:75%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$77,600</span></div></div><div style="font-size:0.7rem;background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:99px;white-space:nowrap">+13%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Business & Financial</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#14b8a6,#0d9488);height:28px;border-radius:99px;width:74%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$76,850</span></div></div><div style="font-size:0.7rem;background:#ccfbf1;color:#065f46;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Life Sciences</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#8b5cf6,#7c3aed);height:28px;border-radius:99px;width:66%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$68,830</span></div></div><div style="font-size:0.7rem;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+5%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Education</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#0ea5e9,#0284c7);height:28px;border-radius:99px;width:53%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$55,350</span></div></div><div style="font-size:0.7rem;background:#e0f2fe;color:#0c4a6e;padding:2px 7px;border-radius:99px;white-space:nowrap">+4%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Arts & Design</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#ec4899,#db2777);height:28px;border-radius:99px;width:49%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$50,710</span></div></div><div style="font-size:0.7rem;background:#fce7f3;color:#831843;padding:2px 7px;border-radius:99px;white-space:nowrap">+3%</div></div>
+        </div>
+        <div style="font-size:0.7rem;color:#94a3b8;margin-top:12px">% growth = projected 2022–2032 job growth rate. Source: BLS Occupational Outlook Handbook 2024</div>
+      </div>
 
       <p class="source">Source: U.S. Bureau of Labor Statistics, "Occupational Outlook Handbook," 2024 Edition. Data from May 2023 surveys.</p>
 
@@ -192,6 +247,28 @@ const blogPosts = [
     readTime: "7 min read",
     content: `
       <p>Mentorship doesn't just feel good — it produces measurable career outcomes. From landing your first job to building leadership skills that last a lifetime, the research consistently shows that mentored individuals outperform their peers.</p>
+
+      <div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #ddd6fe;border-radius:20px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
+            <div style="font-size:1.8rem;font-weight:900;color:#7c3aed">23%</div>
+            <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More likely to get a job offer before graduation</div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
+            <div style="font-size:1.8rem;font-weight:900;color:#059669">71%</div>
+            <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">Fortune 500 companies with formal mentoring programs</div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
+            <div style="font-size:1.8rem;font-weight:900;color:#d97706">5×</div>
+            <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More promotions over a career</div>
+          </div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
+            <div style="font-size:1.8rem;font-weight:900;color:#ef4444">+$5,610</div>
+            <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">Higher average salary per year</div>
+          </div>
+        </div>
+      </div>
 
       <h3>First Job Outcomes</h3>
 
@@ -272,6 +349,15 @@ const blogPosts = [
 
       <p>Figuring out your path is a process, not a decision you make once and stick to. Here's what actually helps.</p>
 
+      <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fde68a;border-radius:20px;padding:20px;margin:24px 0;display:flex;flex-wrap:wrap;gap:10px">
+        <div style="font-size:0.7rem;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.08em;width:100%;margin-bottom:4px">5 Things That Actually Help</div>
+        <span style="background:#d97706;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">1. Follow your curiosity</span>
+        <span style="background:#7c3aed;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">2. Talk to real people</span>
+        <span style="background:#059669;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">3. Try before committing</span>
+        <span style="background:#2563eb;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">4. Build flexible skills</span>
+        <span style="background:#e11d48;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">5. Don't specialize too soon</span>
+      </div>
+
       <h3>1. Follow what you're actually curious about</h3>
 
       <p>Angela Duckworth's research on grit found that passion and persistence predict success more than raw talent. But you can't be passionate about something you picked because it sounded good on paper.</p>
@@ -340,6 +426,18 @@ const blogPosts = [
 
       <p>About 1 in 3 young people in the U.S. will grow up without a mentor. That's 16 million people figuring things out alone when they don't have to.</p>
 
+      <div style="background:linear-gradient(135deg,#0f172a,#1e1b4b);border-radius:20px;padding:28px;margin:28px 0;text-align:center;color:white">
+        <div style="font-size:4rem;font-weight:900;background:linear-gradient(135deg,#f472b6,#fb7185,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">16M</div>
+        <div style="font-size:1rem;color:#cbd5e1;margin-top:8px">young people in the U.S. growing up without a mentor</div>
+        <div style="display:flex;justify-content:center;gap:24px;margin-top:20px">
+          <div style="text-align:center"><div style="font-size:1.3rem;font-weight:700;color:#f472b6">1 in 3</div><div style="font-size:0.7rem;color:#94a3b8;margin-top:2px">young Americans</div></div>
+          <div style="width:1px;background:#334155"></div>
+          <div style="text-align:center"><div style="font-size:1.3rem;font-weight:700;color:#34d399">Free</div><div style="font-size:0.7rem;color:#94a3b8;margin-top:2px">on Mentino</div></div>
+          <div style="width:1px;background:#334155"></div>
+          <div style="text-align:center"><div style="font-size:1.3rem;font-weight:700;color:#fbbf24">15</div><div style="font-size:0.7rem;color:#94a3b8;margin-top:2px">age of founder</div></div>
+        </div>
+      </div>
+
       <p class="source">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Gap" (2023).</p>
 
       <h3>What's actually hard about this</h3>
@@ -380,29 +478,38 @@ blog.get("/blog", optionalAuth, (c) => {
     <Layout title="Blog" user={user} currentPath="/blog">
       <div className="max-w-5xl mx-auto">
 
-        {/* Blog Header */}
-        <div className="text-center mb-10">
-          <span className="inline-block bg-indigo-100 text-indigo-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            Mentino Blog
-          </span>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            Stories, Research & Career Insights
-          </h1>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Research-backed articles on mentorship, career exploration, salary data, and student success — written by Ethan Branzuela.
-          </p>
+        {/* Magazine masthead */}
+        <div className="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950 rounded-3xl overflow-hidden mb-10 px-8 py-14 text-white">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/10 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+          <div className="relative z-10 text-center max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-sm font-medium mb-5">
+              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              Mentino Blog
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Stories, Research & Career Insights</h1>
+            <p className="text-lg text-slate-300 max-w-xl mx-auto">Research-backed writing on mentorship, salary data, and student success — by Ethan Branzuela, founder of Mentino.</p>
+          </div>
         </div>
 
-        {/* Stats Banner */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        {/* Colorful data strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
           {[
-            { num: "5", label: "Research-backed articles", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-            { num: "16M", label: "Young people without a mentor (US)", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
-            { num: "5×", label: "More promotions with a mentor", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+            { num: "16M", label: "US youth without a mentor", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
+            { num: "5×", label: "More promotions with a mentor", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+            { num: "$60K", label: "Median bachelor's degree salary", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+            { num: "71%", label: "Fortune 500 companies run mentoring", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
           ].map((s) => (
-            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
-              <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
-              <div className="text-gray-600 text-sm">{s.label}</div>
+            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 flex items-center gap-3`}>
+              <div className={`w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                <svg className={`w-5 h-5 ${s.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={s.icon} />
+                </svg>
+              </div>
+              <div>
+                <div className={`text-2xl font-extrabold ${s.color} leading-none`}>{s.num}</div>
+                <div className="text-gray-500 text-xs mt-0.5 leading-snug">{s.label}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -488,6 +595,14 @@ function BlogCard({ post, large = false }: { post: typeof blogPosts[number]; lar
     rose: "bg-rose-500 text-white",
   };
 
+  const accentColors: Record<string, string> = {
+    indigo: "#6366f1",
+    emerald: "#10b981",
+    violet: "#8b5cf6",
+    amber: "#f59e0b",
+    rose: "#f43f5e",
+  };
+
   return (
     <a href={`/blog/${post.slug}`} className="group block">
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
@@ -530,6 +645,11 @@ function BlogCard({ post, large = false }: { post: typeof blogPosts[number]; lar
               </svg>
             </div>
           </div>
+          {/* Category accent bar */}
+          <div
+            className="h-1 rounded-full mt-3"
+            style={{ background: accentColors[post.categoryColor] || "#6b7280" }}
+          />
         </div>
       </div>
     </a>
@@ -604,9 +724,17 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
             </div>
             <div>
               <div className="text-sm font-semibold text-gray-900">{post.author}</div>
-              <div className="text-xs text-gray-400">Founder of Mentino</div>
+              <div className="text-xs text-gray-400">Founder of Mentino · {post.readTime}</div>
             </div>
           </div>
+        </div>
+
+        {/* Key Insight Callout */}
+        <div className="bg-gradient-to-r from-indigo-50 to-violet-50 border border-indigo-100 rounded-2xl px-6 py-4 mb-8 flex items-start gap-3">
+          <svg className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          </svg>
+          <p className="text-indigo-800 text-sm font-medium italic leading-relaxed">{post.excerpt}</p>
         </div>
 
         {/* Post content */}
@@ -655,12 +783,18 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
         {/* CTA */}
         <div className="mt-12 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-8 text-center text-white">
           <h3 className="text-2xl font-bold mb-2">Ready to find your mentor?</h3>
-          <p className="text-indigo-100 mb-6">
+          <p className="text-indigo-100 mb-2">
             Join Mentino and connect with professionals who can help guide your career.
           </p>
-          <a href="/signup" className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors">
-            Get Started Free
-          </a>
+          <p className="text-indigo-200/70 text-sm mb-6">Free for all students. Verified professionals only. No cold emailing required.</p>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <a href="/signup" className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors">
+              Get Started Free
+            </a>
+            <a href="/blog" className="inline-block border border-white/30 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
+              Read More Articles
+            </a>
+          </div>
         </div>
       </article>
     </Layout>

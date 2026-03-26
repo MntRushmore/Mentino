@@ -262,7 +262,7 @@ admin.get("/admin/users", async (c) => {
                   <td className="px-4 py-3 text-sm text-gray-500">
                     {new Date(u.created_at).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 flex items-center gap-3">
                     {!u.is_banned && u.role !== "admin" && (
                       <form method="POST" action={`/admin/users/${u.id}/ban`} className="inline">
                         <button type="submit" className="text-red-600 hover:text-red-800 text-xs font-medium">
@@ -274,6 +274,13 @@ admin.get("/admin/users", async (c) => {
                       <form method="POST" action={`/admin/users/${u.id}/unban`} className="inline">
                         <button type="submit" className="text-green-600 hover:text-green-800 text-xs font-medium">
                           Unban
+                        </button>
+                      </form>
+                    )}
+                    {!u.registration_complete && u.role !== "admin" && (
+                      <form method="POST" action={`/admin/users/${u.id}/complete-registration`} className="inline">
+                        <button type="submit" className="text-indigo-600 hover:text-indigo-800 text-xs font-medium">
+                          Fix Reg
                         </button>
                       </form>
                     )}
@@ -298,6 +305,33 @@ admin.post("/admin/users/:id/ban", async (c) => {
   await supabase.from("audit_log").insert({
     admin_id: adminUser.id,
     action: "ban_user",
+    target_type: "user",
+    target_id: userId,
+  });
+
+  return c.redirect("/admin/users");
+});
+
+// POST /admin/users/:id/complete-registration
+admin.post("/admin/users/:id/complete-registration", async (c) => {
+  const adminUser = c.get("user");
+  const userId = c.req.param("id");
+
+  // Force registration complete
+  await supabase
+    .from("accounts")
+    .update({ registration_complete: true, registration_step: 5 })
+    .eq("id", userId);
+
+  // If they're a mentor, set verification_status to pending so they appear in matching
+  const { data: mentor } = await supabase.from("mentors").select("id, verification_status").eq("user_id", userId).single();
+  if (mentor && mentor.verification_status !== "approved") {
+    await supabase.from("mentors").update({ verification_status: "approved", verified_at: new Date().toISOString() }).eq("id", mentor.id);
+  }
+
+  await supabase.from("audit_log").insert({
+    admin_id: adminUser.id,
+    action: "fix_registration",
     target_type: "user",
     target_id: userId,
   });

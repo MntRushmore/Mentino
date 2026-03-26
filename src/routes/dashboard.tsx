@@ -59,112 +59,126 @@ async function renderStudentDashboard(c: any, user: any) {
     .neq("sender_id", user.id)
     .eq("is_read", false);
 
+  const activeCount = matches?.filter((m: any) => m.status === "active").length || 0;
+  const pendingCount = matches?.filter((m: any) => m.status === "pending").length || 0;
+
   return html(
     <Layout title="Dashboard" user={user} navBadges={{ unreadMessages: unreadCount || 0 }}>
-      <div>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user.first_name}!
-          </h1>
-          <p className="text-gray-500 mt-1">Here's what's happening with your mentorships.</p>
-        </div>
-
-        {!user.registration_complete && (
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-blue-900">Complete your profile to get matched!</h2>
-                <p className="text-blue-700 text-sm mt-1">
-                  Fill out your profile so we can find the perfect mentor for you. It only takes a few minutes.
-                </p>
-              </div>
-              <a
-                href={`/register/step/${user.registration_step}`}
-                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
-              >
-                Complete Profile
+      <div className="space-y-6">
+        {/* Hero welcome banner */}
+        <div className="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 rounded-2xl px-8 py-7 text-white overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+          <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
+          <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <p className="text-indigo-200 text-sm font-medium mb-1">Good to see you 👋</p>
+              <h1 className="text-2xl sm:text-3xl font-bold">{user.first_name} {user.last_name}</h1>
+              <p className="text-indigo-200 text-sm mt-1">Student · Mentino</p>
+            </div>
+            <div className="flex gap-3">
+              <a href="/matching" className="bg-white text-indigo-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-indigo-50 transition-colors">
+                Find a Mentor
+              </a>
+              <a href="/profile/edit" className="bg-white/20 border border-white/30 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:bg-white/30 transition-colors">
+                Edit Profile
               </a>
             </div>
           </div>
-        )}
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="text-2xl font-bold text-blue-600">
-              {matches?.filter((m: any) => m.status === "active").length || 0}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">Active Mentors</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="text-2xl font-bold text-yellow-600">
-              {matches?.filter((m: any) => m.status === "pending").length || 0}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">Pending Requests</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="text-2xl font-bold text-purple-600">{unreadCount || 0}</div>
-            <div className="text-xs text-gray-500 mt-1">Unread Messages</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <div className="text-2xl font-bold text-green-600">{sessions?.length || 0}</div>
-            <div className="text-xs text-gray-500 mt-1">Upcoming Sessions</div>
-          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Matches */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Your Matches</h2>
-              <a href="/matching" className="text-blue-600 hover:underline text-sm">Find Mentors</a>
+        {!user.registration_complete && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex items-start gap-4">
+            <div className="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-amber-900 text-sm">Finish setting up your profile</p>
+              <p className="text-amber-700 text-xs mt-0.5">Complete a few more steps so we can find the right mentor for you.</p>
+            </div>
+            <a href={`/register/step/${user.registration_step}`} className="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition-colors whitespace-nowrap">
+              Continue →
+            </a>
+          </div>
+        )}
+
+        {/* Stats row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: "Active Mentors", value: activeCount, color: "text-indigo-600", bg: "bg-indigo-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+            { label: "Pending", value: pendingCount, color: "text-amber-600", bg: "bg-amber-50", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+            { label: "Unread Messages", value: unreadCount || 0, color: "text-blue-600", bg: "bg-blue-50", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" },
+            { label: "Sessions", value: sessions?.length || 0, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+          ].map((stat) => (
+            <div key={stat.label} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3">
+              <div className={`w-9 h-9 ${stat.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                <svg className={`w-5 h-5 ${stat.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={stat.icon} />
+                </svg>
+              </div>
+              <div>
+                <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                <div className="text-xs text-gray-400 leading-tight">{stat.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Matches — wider */}
+          <div className="lg:col-span-3">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-semibold text-gray-900">Your Mentors</h2>
+              <a href="/matching" className="text-indigo-600 hover:underline text-sm font-medium">Browse all →</a>
             </div>
             {!matches || matches.length === 0 ? (
-              <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200 text-center">
-                <p className="text-gray-500 mb-4">No matches yet</p>
-                <a href="/matching" className="text-blue-600 hover:underline font-medium">Browse Mentors</a>
+              <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-8 text-center">
+                <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <p className="font-semibold text-gray-800 mb-1">No mentors yet</p>
+                <p className="text-gray-500 text-sm mb-4">Find someone who can help you get where you're going.</p>
+                <a href="/matching" className="inline-block bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">
+                  Browse Mentors
+                </a>
               </div>
             ) : (
               <div className="space-y-3">
                 {matches.map((match: any) => (
-                  <MatchCard
-                    key={match.id}
-                    match={match}
-                    otherUser={match.mentors.accounts}
-                    role="student"
-                  />
+                  <MatchCard key={match.id} match={match} otherUser={match.mentors.accounts} role="student" />
                 ))}
               </div>
             )}
           </div>
 
-          {/* Quick Actions */}
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-            <div className="space-y-3">
-              <a href="/matching" className="block bg-white rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <h3 className="font-medium text-gray-900">Find a Mentor</h3>
-                <p className="text-sm text-gray-500">Browse our matching system to find the perfect mentor for you</p>
-              </a>
-              <a href="/messages" className="block bg-white rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <h3 className="font-medium text-gray-900">Messages</h3>
-                <p className="text-sm text-gray-500">
-                  Chat with your mentors
-                  {(unreadCount || 0) > 0 && (
-                    <span className="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full">
-                      {unreadCount} new
-                    </span>
-                  )}
-                </p>
-              </a>
-              <a href="/sessions" className="block bg-white rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <h3 className="font-medium text-gray-900">Sessions</h3>
-                <p className="text-sm text-gray-500">View and schedule mentoring sessions</p>
-              </a>
-              <a href="/profile" className="block bg-white rounded-xl p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <h3 className="font-medium text-gray-900">Your Profile</h3>
-                <p className="text-sm text-gray-500">View and edit your profile</p>
-              </a>
+          {/* Quick Actions — narrower */}
+          <div className="lg:col-span-2">
+            <h2 className="font-semibold text-gray-900 mb-3">Quick Actions</h2>
+            <div className="space-y-2">
+              {[
+                { href: "/matching", icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z", label: "Find a Mentor", sub: "Browse and connect", color: "text-indigo-500", bg: "bg-indigo-50" },
+                { href: "/messages", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z", label: "Messages", sub: (unreadCount || 0) > 0 ? `${unreadCount} unread` : "Chat with mentors", color: "text-blue-500", bg: "bg-blue-50" },
+                { href: "/profile/edit", icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z", label: "Edit Profile", sub: "Update your info", color: "text-emerald-500", bg: "bg-emerald-50" },
+                { href: "/sessions", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z", label: "Sessions", sub: "Upcoming meetings", color: "text-purple-500", bg: "bg-purple-50" },
+              ].map((action) => (
+                <a key={action.href} href={action.href} className="flex items-center gap-3 bg-white border border-gray-100 rounded-xl p-3.5 hover:shadow-md hover:border-gray-200 transition-all group">
+                  <div className={`w-9 h-9 ${action.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <svg className={`w-5 h-5 ${action.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={action.icon} />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-gray-900">{action.label}</p>
+                    <p className="text-xs text-gray-400">{action.sub}</p>
+                  </div>
+                  <svg className="w-4 h-4 text-gray-300 group-hover:text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -193,63 +207,80 @@ async function renderMentorDashboard(c: any, user: any) {
 
   return html(
     <Layout title="Dashboard" user={user} navBadges={{ pendingRequests: pendingRequests.length }}>
-      <div>
-        {!user.registration_complete && (
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-blue-900">Complete your profile to start mentoring!</h2>
-                <p className="text-blue-700 text-sm mt-1">
-                  Fill out your professional details so students can find and connect with you.
-                </p>
-              </div>
-              <a
-                href={`/register/step/${user.registration_step}`}
-                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
-              >
-                Complete Profile
+      <div className="space-y-6">
+
+        {/* Hero welcome banner */}
+        <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 rounded-2xl px-8 py-7 text-white overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+          <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
+          <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <p className="text-emerald-100 text-sm font-medium mb-1">Mentor Dashboard 🎓</p>
+              <h1 className="text-2xl sm:text-3xl font-bold">{user.first_name} {user.last_name}</h1>
+              {mentor?.job_title && <p className="text-emerald-100 text-sm mt-1">{mentor.job_title}{mentor.company ? ` · ${mentor.company}` : ""}</p>}
+            </div>
+            <div className="flex gap-3">
+              <a href="/messages" className="bg-white text-emerald-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-emerald-50 transition-colors">
+                Messages
               </a>
+              <a href="/profile/edit" className="bg-white/20 border border-white/30 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:bg-white/30 transition-colors">
+                Edit Profile
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {!user.registration_complete && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex items-start gap-4">
+            <div className="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-amber-900 text-sm">Finish setting up your profile</p>
+              <p className="text-amber-700 text-xs mt-0.5">Complete your profile so students can find and connect with you.</p>
+            </div>
+            <a href={`/register/step/${user.registration_step}`} className="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition-colors whitespace-nowrap">
+              Continue →
+            </a>
+          </div>
+        )}
+
+        {mentor?.verification_status === "pending" && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-start gap-3">
+            <svg className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-yellow-800">Profile under review</p>
+              <p className="text-sm text-yellow-700">Our team is verifying your profile — usually 24–48 hours. You can still receive and respond to mentee requests in the meantime.</p>
             </div>
           </div>
         )}
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user.first_name}!
-          </h1>
-          <p className="text-gray-500 mt-1">
-            {mentor?.verification_status === "pending" ? (
-              <span className="text-yellow-600">Your profile is pending verification.</span>
-            ) : mentor?.verification_status === "rejected" ? (
-              <span className="text-red-600">Your profile was not approved. {mentor?.rejection_reason || ""}</span>
-            ) : (
-              "Manage your mentorships below."
-            )}
-          </p>
-        </div>
-
-        {mentor?.verification_status === "approved" && (
+        {(mentor?.verification_status === "approved" || mentor?.verification_status === "pending") && (
           <>
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-                <div className="text-2xl font-bold text-blue-600">{activeMatches.length}</div>
-                <div className="text-xs text-gray-500 mt-1">Active Mentees</div>
-              </div>
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-                <div className="text-2xl font-bold text-yellow-600">{pendingRequests.length}</div>
-                <div className="text-xs text-gray-500 mt-1">Pending Requests</div>
-              </div>
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-                <div className="text-2xl font-bold text-green-600">{mentor.max_mentees}</div>
-                <div className="text-xs text-gray-500 mt-1">Max Mentees</div>
-              </div>
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-                <div className="text-2xl font-bold text-purple-600">
-                  {mentor.max_mentees - (mentor.current_mentees || 0)}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { label: "Active Mentees", value: activeMatches.length, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
+                { label: "Pending Requests", value: pendingRequests.length, color: "text-amber-600", bg: "bg-amber-50", icon: "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
+                { label: "Spots Available", value: mentor.max_mentees - (mentor.current_mentees || 0), color: "text-blue-600", bg: "bg-blue-50", icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" },
+                { label: "Max Capacity", value: mentor.max_mentees, color: "text-purple-600", bg: "bg-purple-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+              ].map((stat) => (
+                <div key={stat.label} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3">
+                  <div className={`w-9 h-9 ${stat.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <svg className={`w-5 h-5 ${stat.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={stat.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                    <div className="text-xs text-gray-400 leading-tight">{stat.label}</div>
+                  </div>
                 </div>
-                <div className="text-xs text-gray-500 mt-1">Spots Available</div>
-              </div>
+              ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -257,8 +288,14 @@ async function renderMentorDashboard(c: any, user: any) {
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Pending Requests</h2>
                 {pendingRequests.length === 0 ? (
-                  <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200 text-center">
-                    <p className="text-gray-500">No pending requests</p>
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-8 text-center">
+                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                      </svg>
+                    </div>
+                    <p className="font-semibold text-gray-800 mb-1">Inbox is clear</p>
+                    <p className="text-gray-500 text-sm">New mentee requests will show up here.</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -345,8 +382,14 @@ async function renderMentorDashboard(c: any, user: any) {
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Active Mentees</h2>
                 {activeMatches.length === 0 ? (
-                  <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200 text-center">
-                    <p className="text-gray-500">No active mentees yet</p>
+                  <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-8 text-center">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </div>
+                    <p className="font-semibold text-gray-800 mb-1">No active mentees yet</p>
+                    <p className="text-gray-500 text-sm">Accept a request to start your first mentorship.</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -365,15 +408,6 @@ async function renderMentorDashboard(c: any, user: any) {
           </>
         )}
 
-        {mentor?.verification_status === "pending" && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-8 text-center">
-            <h2 className="text-xl font-semibold text-yellow-800 mb-2">Profile Under Review</h2>
-            <p className="text-yellow-700">
-              Our admin team is reviewing your profile. You'll be able to start mentoring once approved.
-              This usually takes 24-48 hours.
-            </p>
-          </div>
-        )}
       </div>
     </Layout>
   );

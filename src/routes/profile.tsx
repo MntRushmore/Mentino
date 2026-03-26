@@ -162,16 +162,20 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
       }
     }
 
-    await supabase
-      .from("students")
-      .update({
-        school_name: schoolName,
-        grade_or_year: gradeOrYear,
-        career_interests: careerInterests.length > 0 ? careerInterests : undefined,
-        learning_goals: learningGoals,
-        personality_tags: personalityTags.length > 0 ? personalityTags : undefined,
-      })
-      .eq("user_id", user.id);
+    const studentPayload: Record<string, any> = {
+      user_id: user.id,
+      school_name: schoolName,
+      grade_or_year: gradeOrYear,
+      career_interests: careerInterests.length > 0 ? careerInterests : [],
+      learning_goals: learningGoals,
+      personality_tags: personalityTags.length > 0 ? personalityTags : [],
+    };
+    const { data: existingStudent } = await supabase.from("students").select("id").eq("user_id", user.id).single();
+    if (existingStudent) {
+      await supabase.from("students").update(studentPayload).eq("user_id", user.id);
+    } else {
+      await supabase.from("students").insert(studentPayload);
+    }
   } else if (user.role === "mentor") {
     const jobTitle = (body.job_title as string)?.trim() || null;
     const company = (body.company as string)?.trim() || null;
@@ -192,8 +196,23 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
     if (personalityTagsMentor.length > 0) updateData.personality_tags = personalityTagsMentor;
     if (yearsExp) updateData.years_experience = yearsExp;
 
-    if (Object.keys(updateData).length > 0) {
-      await supabase.from("mentors").update(updateData).eq("user_id", user.id);
+    const { data: existingMentor } = await supabase.from("mentors").select("id").eq("user_id", user.id).single();
+    if (existingMentor) {
+      if (Object.keys(updateData).length > 0) {
+        await supabase.from("mentors").update(updateData).eq("user_id", user.id);
+      }
+    } else {
+      await supabase.from("mentors").insert({
+        user_id: user.id,
+        job_title: updateData.job_title || "",
+        company: updateData.company || "",
+        career_field: updateData.career_field || "",
+        topics: updateData.topics || [],
+        availability: {},
+        verification_status: "approved",
+        verified_at: new Date().toISOString(),
+        ...updateData,
+      });
     }
   }
 
@@ -522,16 +541,29 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
             <div className="flex items-center gap-4">
+              {/* Current / preview avatar */}
               {user.avatar_url ? (
-                <img src={user.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-gray-200 flex-shrink-0" />
+                <img id="avatar-preview" src={user.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-gray-200 flex-shrink-0" />
               ) : (
-                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg flex-shrink-0">
+                <div id="avatar-initials" className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg flex-shrink-0">
                   {user.first_name?.[0]}{user.last_name?.[0]}
                 </div>
               )}
-              <div className="flex-1">
-                <input type="url" name="avatar_url" defaultValue={user.avatar_url || ""} placeholder="https://example.com/your-photo.jpg" className={inputClass} />
-                <p className="text-xs text-gray-400 mt-1">Paste a direct image URL (Google Photos, Imgur, etc.)</p>
+              {user.avatar_url && (
+                <img id="avatar-preview" src={user.avatar_url} alt="" className="hidden w-16 h-16 rounded-full object-cover border-2 border-indigo-300 flex-shrink-0" />
+              )}
+              <div className="flex-1 space-y-2">
+                {/* Hidden input that holds the final value (data URL or pasted URL) */}
+                <input type="hidden" id="avatar-url-hidden" name="avatar_url" defaultValue={user.avatar_url || ""} />
+                {/* File picker */}
+                <label className="flex items-center gap-2 cursor-pointer bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-sm font-medium px-4 py-2 rounded-lg transition-colors w-fit">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Upload Photo
+                  <input type="file" id="avatar-file-input" accept="image/*" className="hidden" />
+                </label>
+                <p id="avatar-file-name" className="text-xs text-gray-400">JPG, PNG, GIF — max ~2MB. Will be resized to 200×200.</p>
               </div>
             </div>
           </div>
@@ -713,6 +745,49 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           </a>
         </div>
       </form>
+      <script dangerouslySetInnerHTML={{ __html: `
+        (function() {
+          var fileInput = document.getElementById('avatar-file-input');
+          var hiddenInput = document.getElementById('avatar-url-hidden');
+          var fileNameLabel = document.getElementById('avatar-file-name');
+          var preview = document.getElementById('avatar-preview');
+          var initials = document.getElementById('avatar-initials');
+          if (!fileInput) return;
+          fileInput.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            fileNameLabel.textContent = file.name + ' — processing...';
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+              var img = new Image();
+              img.onload = function() {
+                var MAX = 200;
+                var w = img.width, h = img.height;
+                if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+                else { w = Math.round(w * MAX / h); h = MAX; }
+                var canvas = document.createElement('canvas');
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                hiddenInput.value = dataUrl;
+                if (preview) {
+                  preview.src = dataUrl;
+                  preview.classList.remove('hidden');
+                } else {
+                  var newImg = document.createElement('img');
+                  newImg.src = dataUrl;
+                  newImg.className = 'w-16 h-16 rounded-full object-cover border-2 border-indigo-300 flex-shrink-0';
+                  newImg.id = 'avatar-preview';
+                  if (initials) initials.replaceWith(newImg);
+                }
+                fileNameLabel.textContent = file.name + ' ✓ ready';
+              };
+              img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+          });
+        })();
+      ` }} />
     </div>
   );
 }

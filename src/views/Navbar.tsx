@@ -98,14 +98,14 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
             </div>
 
             {/* Mobile: right side (sign up or name) + hamburger */}
-            <div className="flex items-center gap-2 md:hidden">
+            <div className="flex items-center gap-1.5 md:hidden">
               {!user && (
-                <a href="/signup" className="bg-indigo-600 text-white px-4 py-1.5 rounded-full font-semibold text-sm">
+                <a href="/signup" className="bg-indigo-600 text-white px-3 py-1.5 rounded-full font-semibold text-xs whitespace-nowrap">
                   Sign Up
                 </a>
               )}
               {user && (
-                <a href="/profile" className="text-gray-700 font-medium text-sm">{user.first_name}</a>
+                <a href="/profile" className="text-gray-700 font-medium text-sm truncate max-w-[80px]">{user.first_name}</a>
               )}
               <button
                 id="hamburger-btn"

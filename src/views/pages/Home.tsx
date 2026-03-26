@@ -6,10 +6,10 @@ interface HomeProps {
 
 export function Home({ featuredMentors = [] }: HomeProps) {
   return (
-    <div className="space-y-16 pb-12">
+    <div className="space-y-10 sm:space-y-16 pb-12">
 
       {/* Hero */}
-      <section className="relative text-center py-20 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl bg-indigo-950">
+      <section className="relative text-center py-14 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl bg-indigo-950">
         {/* Decorative background shapes — no competing imagery */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-700 rounded-full opacity-30 blur-3xl" />
@@ -40,7 +40,7 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           <div className="anim-fade-up anim-d3">
             <a
               href="/signup"
-              className="inline-flex items-center gap-2 bg-white text-indigo-700 px-8 sm:px-12 py-4 rounded-full text-base sm:text-lg font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-white text-indigo-700 px-8 sm:px-12 py-4 rounded-full text-base sm:text-lg font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform"
             >
               Get Started — It's Free
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,9 +51,9 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           </div>
 
           {/* Trust badges */}
-          <div className="flex justify-center flex-wrap gap-4 sm:gap-6 mt-8 anim-fade-up anim-d4">
+          <div className="grid grid-cols-1 sm:flex sm:justify-center sm:flex-wrap gap-2 sm:gap-6 mt-8 anim-fade-up anim-d4 max-w-xs sm:max-w-none mx-auto">
             {["100% Free for Students", "Verified Professionals Only", "Safe for Students Under 18"].map((t) => (
-              <div key={t} className="flex items-center gap-1.5 text-slate-300 text-xs sm:text-sm">
+              <div key={t} className="flex items-center justify-center gap-1.5 text-slate-300 text-xs sm:text-sm">
                 <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -65,8 +65,8 @@ export function Home({ featuredMentors = [] }: HomeProps) {
       </section>
 
       {/* For Mentors */}
-      <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl sm:rounded-3xl p-6 sm:p-10 anim-fade-up">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+      <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl sm:rounded-3xl p-5 sm:p-10 anim-fade-up">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
           <div>
             <span className="inline-block bg-emerald-100 text-emerald-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">For Mentors</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
@@ -88,7 +88,7 @@ export function Home({ featuredMentors = [] }: HomeProps) {
                 </li>
               ))}
             </ul>
-            <a href="/signup" className="inline-block bg-emerald-600 text-white px-7 py-3 rounded-full font-bold hover:bg-emerald-700 transition-colors shadow-sm">
+            <a href="/signup" className="block sm:inline-block text-center bg-emerald-600 text-white px-7 py-3 rounded-full font-bold hover:bg-emerald-700 transition-colors shadow-sm">
               Become a Mentor
             </a>
           </div>
@@ -157,15 +157,15 @@ export function Home({ featuredMentors = [] }: HomeProps) {
         <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-violet-600 rounded-2xl sm:rounded-3xl text-white text-center py-12 sm:py-14 px-6 sm:px-8">
           <h2 className="text-xl sm:text-2xl font-bold mb-1">Making an impact</h2>
           <p className="text-indigo-200 text-sm mb-8 sm:mb-10">Real students. Real mentors. Real outcomes.</p>
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-3 sm:gap-8 max-w-2xl mx-auto">
             {[
               { num: "500+", label: "Students Matched" },
               { num: "200+", label: "Verified Mentors" },
               { num: "40+", label: "Career Fields" },
             ].map((s) => (
               <div key={s.num}>
-                <div className="text-2xl sm:text-4xl font-extrabold">{s.num}</div>
-                <div className="text-indigo-200 text-xs sm:text-sm mt-1">{s.label}</div>
+                <div className="text-xl sm:text-4xl font-extrabold">{s.num}</div>
+                <div className="text-indigo-200 text-xs mt-1 leading-tight">{s.label}</div>
               </div>
             ))}
           </div>

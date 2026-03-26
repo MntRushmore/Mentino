@@ -6,7 +6,7 @@ interface SignupProps {
 
 export function Signup({ error }: SignupProps) {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-8 px-4">
+    <div className="min-h-[80vh] flex items-center justify-center py-6 px-3 sm:px-4">
       <div className="w-full max-w-md">
 
         {/* Header */}
@@ -20,7 +20,7 @@ export function Signup({ error }: SignupProps) {
           <p className="text-gray-500 text-sm sm:text-base">Free for students. Verified professionals. Real guidance.</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 sm:p-8">
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-5 text-sm">
@@ -29,7 +29,7 @@ export function Signup({ error }: SignupProps) {
           )}
 
           <form method="POST" action="/signup" className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 min-[380px]:grid-cols-2 gap-3">
               <div>
                 <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                 <input
@@ -87,20 +87,20 @@ export function Signup({ error }: SignupProps) {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">I am a...</label>
               <div className="grid grid-cols-2 gap-3">
-                <label className="flex items-center justify-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 transition-colors">
+                <label className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 transition-colors">
                   <input type="radio" name="role" value="student" required className="sr-only" />
-                  <div className="text-center">
-                    <div className="text-2xl mb-1">🎓</div>
+                  <span className="text-xl flex-shrink-0">🎓</span>
+                  <div>
                     <div className="font-semibold text-gray-800 text-sm">Student</div>
-                    <div className="text-xs text-gray-400 mt-0.5">Find a mentor</div>
+                    <div className="text-xs text-gray-400">Find a mentor</div>
                   </div>
                 </label>
-                <label className="flex items-center justify-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 transition-colors">
+                <label className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 transition-colors">
                   <input type="radio" name="role" value="mentor" className="sr-only" />
-                  <div className="text-center">
-                    <div className="text-2xl mb-1">💼</div>
+                  <span className="text-xl flex-shrink-0">💼</span>
+                  <div>
                     <div className="font-semibold text-gray-800 text-sm">Mentor</div>
-                    <div className="text-xs text-gray-400 mt-0.5">Share expertise</div>
+                    <div className="text-xs text-gray-400">Share expertise</div>
                   </div>
                 </label>
               </div>
@@ -147,7 +147,7 @@ export function Signup({ error }: SignupProps) {
         </div>
 
         {/* Bottom trust row */}
-        <div className="flex justify-center flex-wrap gap-4 mt-6 text-gray-400 text-xs">
+        <div className="flex justify-center flex-wrap gap-x-4 gap-y-2 mt-5 text-gray-400 text-xs">
           {["Free forever for students", "No spam", "Cancel anytime"].map((t) => (
             <div key={t} className="flex items-center gap-1">
               <svg className="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">

@@ -56,6 +56,56 @@ export function Layout({ title = "Mentino", children, user, flash, navBadges, cu
       </head>
       <body className="bg-gray-50 min-h-screen flex flex-col">
         <Navbar user={user} badges={navBadges} currentPath={currentPath} />
+        {user && (
+          <script dangerouslySetInnerHTML={{ __html: `
+            (function() {
+              // Request notification permission once
+              if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+              }
+
+              var lastUnread = ${(navBadges?.unreadMessages || 0)};
+
+              function checkNotifications() {
+                fetch('/api/notifications')
+                  .then(function(r) { return r.json(); })
+                  .then(function(data) {
+                    // New message notification
+                    if (data.unreadMessages > lastUnread && Notification.permission === 'granted') {
+                      var diff = data.unreadMessages - lastUnread;
+                      new Notification('Mentino — New message', {
+                        body: diff + ' new message' + (diff > 1 ? 's' : '') + ' waiting for you.',
+                        icon: '/images/logo-icon.png',
+                        tag: 'mentino-msg',
+                      });
+                    }
+                    lastUnread = data.unreadMessages;
+
+                    // Session reminder (15-min warning)
+                    if (data.upcomingSessions) {
+                      data.upcomingSessions.forEach(function(s) {
+                        var msUntil = new Date(s.scheduled_at) - Date.now();
+                        if (msUntil > 0 && msUntil < 16 * 60 * 1000 && !sessionStorage.getItem('notified-' + s.id)) {
+                          sessionStorage.setItem('notified-' + s.id, '1');
+                          if (Notification.permission === 'granted') {
+                            new Notification('Mentino — Session in 15 min', {
+                              body: 'Your session with ' + s.other_name + ' starts soon.',
+                              icon: '/images/logo-icon.png',
+                              tag: 'mentino-session-' + s.id,
+                            });
+                          }
+                        }
+                      });
+                    }
+                  })
+                  .catch(function() {});
+              }
+
+              // Poll every 30 seconds
+              setInterval(checkNotifications, 30000);
+            })();
+          `}} />
+        )}
         {flash && (
           <div className="max-w-7xl mx-auto px-4 pt-4 w-full">
             <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">

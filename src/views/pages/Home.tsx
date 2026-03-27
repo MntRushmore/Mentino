@@ -2,9 +2,19 @@ import React from "react";
 
 interface HomeProps {
   featuredMentors?: any[];
+  stats?: { students: number; mentors: number; activeMatches: number };
 }
 
-export function Home({ featuredMentors = [] }: HomeProps) {
+export function Home({ featuredMentors = [], stats }: HomeProps) {
+  const studentCount = stats?.students ?? 0;
+  const mentorCount = stats?.mentors ?? 0;
+  const matchCount = stats?.activeMatches ?? 0;
+
+  function fmtNum(n: number) {
+    if (n >= 1000) return `${(n / 1000).toFixed(1)}k+`;
+    if (n === 0) return "0";
+    return `${n}`;
+  }
   return (
     <div className="space-y-10 sm:space-y-16 pb-12">
 
@@ -22,6 +32,15 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-indigo-200 text-xs sm:text-sm font-semibold px-4 py-2 rounded-full mb-6 anim-fade-in">
             <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
             Free mentorship for students
+          </div>
+
+          {/* Brand name + meaning */}
+          <div className="flex items-center justify-center gap-2 mb-3 anim-fade-up">
+            <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Mentino</span>
+            <span className="text-indigo-400 text-sm sm:text-base font-semibold">=</span>
+            <span className="text-indigo-300 text-sm sm:text-base font-semibold">mentor</span>
+            <span className="text-indigo-400 text-sm sm:text-base">+</span>
+            <span className="text-violet-300 text-sm sm:text-base font-semibold">innovation</span>
           </div>
 
           {/* Headline — pure white on very dark background = maximum contrast */}
@@ -94,8 +113,8 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {[
-              { num: "200+", label: "Mentors already signed up", border: "border-emerald-100", color: "text-emerald-600" },
-              { num: "40+", label: "Career fields covered", border: "border-indigo-100", color: "text-indigo-600" },
+              { num: fmtNum(mentorCount), label: "Mentors already signed up", border: "border-emerald-100", color: "text-emerald-600" },
+              { num: fmtNum(studentCount), label: "Students already registered", border: "border-indigo-100", color: "text-indigo-600" },
               { num: "5×", label: "More promotions with a mentor", border: "border-amber-100", color: "text-amber-600" },
               { num: "16M", label: "US students without a mentor", border: "border-rose-100", color: "text-rose-600" },
             ].map((s, i) => (
@@ -159,11 +178,11 @@ export function Home({ featuredMentors = [] }: HomeProps) {
           <p className="text-indigo-200 text-sm mb-8 sm:mb-10">Real students. Real mentors. Real outcomes.</p>
           <div className="grid grid-cols-3 gap-3 sm:gap-8 max-w-2xl mx-auto">
             {[
-              { num: "500+", label: "Students Matched" },
-              { num: "200+", label: "Verified Mentors" },
-              { num: "40+", label: "Career Fields" },
+              { num: fmtNum(studentCount), label: "Students Registered" },
+              { num: fmtNum(mentorCount), label: "Verified Mentors" },
+              { num: fmtNum(matchCount), label: "Active Matches" },
             ].map((s) => (
-              <div key={s.num}>
+              <div key={s.label}>
                 <div className="text-xl sm:text-4xl font-extrabold">{s.num}</div>
                 <div className="text-indigo-200 text-xs mt-1 leading-tight">{s.label}</div>
               </div>

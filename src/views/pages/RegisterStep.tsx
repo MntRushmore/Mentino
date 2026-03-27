@@ -84,18 +84,37 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
       ? ["About You", "Interests", "Goals", "Schedule", "Review"]
       : ["Career", "Expertise", "Profile", "Schedule", "Review"];
 
+  // Decorative icons per step
+  const stepIcons = role === "student"
+    ? ["🎓", "🌟", "🎯", "📅", "✅"]
+    : ["💼", "🔧", "👤", "📅", "✅"];
+
   return (
-    <div className="max-w-2xl mx-auto mt-4 sm:mt-8">
+    <div className="max-w-2xl mx-auto mt-4 sm:mt-8 anim-fade-up">
       <Stepper currentStep={step} totalSteps={5} labels={stepLabels} />
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className={`px-5 sm:px-8 py-5 sm:py-6 ${role === "student" ? "bg-gradient-to-r from-indigo-600 to-blue-600" : "bg-gradient-to-r from-emerald-600 to-teal-600"}`}>
-          <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">
-            {stepLabels[step - 1]}
-          </h1>
-          <p className="text-white/70 text-sm">
-            Step {step} of 5 &mdash; {role === "student" ? "Student" : "Mentor"} registration
-          </p>
+        <div className={`relative px-5 sm:px-8 py-5 sm:py-6 overflow-hidden ${role === "student" ? "bg-gradient-to-r from-indigo-600 to-blue-600" : "bg-gradient-to-r from-emerald-600 to-teal-600"}`}>
+          {/* Decorative background shapes */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+          <div className="absolute bottom-0 left-1/4 w-20 h-20 bg-white/10 rounded-full translate-y-1/2 pointer-events-none" />
+          <svg className="absolute top-3 right-10 w-6 h-6 text-white/30 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+          </svg>
+          <svg className="absolute bottom-3 right-24 w-4 h-4 text-white/20 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          <div className="relative z-10 flex items-center gap-3">
+            <span className="text-3xl">{stepIcons[step - 1]}</span>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-white mb-0.5">
+                {stepLabels[step - 1]}
+              </h1>
+              <p className="text-white/70 text-sm">
+                Step {step} of 5 &mdash; {role === "student" ? "Student" : "Mentor"} registration
+              </p>
+            </div>
+          </div>
         </div>
         <div className="p-5 sm:p-8">
 

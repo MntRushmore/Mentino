@@ -220,8 +220,8 @@ staticPages.get("/founder", optionalAuth, (c) => {
           {[
             { num: "16M", label: "Young people without a mentor in the US", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
             { num: "5×", label: "More promotions for mentored employees", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-            { num: "500+", label: "Students connected on Mentino", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
-            { num: "15+", label: "Career fields covered on the platform", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
+            { num: "Early", label: "Access — be one of the first students", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+            { num: "Free", label: "Forever for students — no catch", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
           ].map((s) => (
             <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
               <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
@@ -248,7 +248,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </div>
           <div className="md:col-span-2 space-y-3">
             <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=500&q=80" alt="Sports photography" className="rounded-2xl w-full h-52 object-cover" />
-            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80" alt="Youth in sports" className="rounded-2xl w-full h-44 object-cover" />
+            <img src="/images/founder.jpg" alt="Ethan Branzuela at Serra Track & Field" className="rounded-2xl w-full h-44 object-cover" />
           </div>
         </div>
 

@@ -5,6 +5,7 @@ import { Layout } from "../views/Layout";
 import { Badge } from "../views/components/Badge";
 import { authMiddleware } from "../middleware/auth";
 import { supabase } from "../db";
+import { sendEmail, newSessionEmail } from "../lib/email";
 
 const sessions = new Hono();
 
@@ -251,6 +252,33 @@ sessions.post("/sessions/create", authMiddleware, async (c) => {
     meeting_url: meetingUrl,
     created_by: user.id,
   });
+
+  // Email both participants
+  const { data: matchData } = await supabase
+    .from("matches")
+    .select("*, students!inner(accounts!inner(email, first_name, last_name)), mentors!inner(accounts!user_id!inner(email, first_name, last_name))")
+    .eq("id", matchId)
+    .single();
+
+  if (matchData) {
+    const baseUrl = new URL(c.req.url).origin;
+    const scheduledIso = new Date(scheduledAt).toISOString();
+    const studentAccount = matchData.students.accounts;
+    const mentorAccount = matchData.mentors.accounts;
+    const otherForStudent = `${mentorAccount.first_name} ${mentorAccount.last_name}`;
+    const otherForMentor = `${studentAccount.first_name} ${studentAccount.last_name}`;
+
+    sendEmail({
+      to: studentAccount.email,
+      subject: `Session scheduled with ${otherForStudent} on Mentino`,
+      html: newSessionEmail({ recipientName: studentAccount.first_name, otherName: otherForStudent, scheduledAt: scheduledIso, durationMinutes: duration, meetingUrl, baseUrl }),
+    });
+    sendEmail({
+      to: mentorAccount.email,
+      subject: `Session scheduled with ${otherForMentor} on Mentino`,
+      html: newSessionEmail({ recipientName: mentorAccount.first_name, otherName: otherForMentor, scheduledAt: scheduledIso, durationMinutes: duration, meetingUrl, baseUrl }),
+    });
+  }
 
   return c.redirect("/sessions");
 });

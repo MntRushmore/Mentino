@@ -52,12 +52,16 @@ async function renderStudentDashboard(c: any, user: any) {
     .order("scheduled_at", { ascending: true })
     .limit(5);
 
-  // Get unread message count
-  const { count: unreadCount } = await supabase
-    .from("messages")
-    .select("*", { count: "exact", head: true })
-    .neq("sender_id", user.id)
-    .eq("is_read", false);
+  // Get unread message count — only in this student's active matches
+  const matchIds = matches?.filter((m: any) => m.status === "active").map((m: any) => m.id) || [];
+  const { count: unreadCount } = matchIds.length > 0
+    ? await supabase
+        .from("messages")
+        .select("*", { count: "exact", head: true })
+        .in("match_id", matchIds)
+        .neq("sender_id", user.id)
+        .eq("is_read", false)
+    : { count: 0 };
 
   const activeCount = matches?.filter((m: any) => m.status === "active").length || 0;
   const pendingCount = matches?.filter((m: any) => m.status === "pending").length || 0;
@@ -66,7 +70,7 @@ async function renderStudentDashboard(c: any, user: any) {
     <Layout title="Dashboard" user={user} navBadges={{ unreadMessages: unreadCount || 0 }}>
       <div className="space-y-6">
         {/* Hero welcome banner */}
-        <div className="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 rounded-2xl px-8 py-7 text-white overflow-hidden">
+        <div className="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 rounded-2xl px-8 py-7 text-white overflow-hidden anim-fade-up">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
           <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
           <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
@@ -103,15 +107,15 @@ async function renderStudentDashboard(c: any, user: any) {
           </div>
         )}
 
-        {/* Stats row */}
+        {/* Stats row — each card is a clickable link */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Active Mentors", value: activeCount, color: "text-indigo-600", bg: "bg-indigo-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-            { label: "Pending", value: pendingCount, color: "text-amber-600", bg: "bg-amber-50", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-            { label: "Unread Messages", value: unreadCount || 0, color: "text-blue-600", bg: "bg-blue-50", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" },
-            { label: "Sessions", value: sessions?.length || 0, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+            { href: "/matching", label: "Active Mentors", value: activeCount, color: "text-indigo-600", bg: "bg-indigo-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", delay: "anim-d1" },
+            { href: "/matching", label: "Pending", value: pendingCount, color: "text-amber-600", bg: "bg-amber-50", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", delay: "anim-d2" },
+            { href: "/messages", label: "Unread Messages", value: unreadCount || 0, color: "text-blue-600", bg: "bg-blue-50", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z", delay: "anim-d3" },
+            { href: "/sessions", label: "Sessions", value: sessions?.length || 0, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z", delay: "anim-d4" },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3">
+            <a key={stat.label} href={stat.href} className={`bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3 hover:shadow-md hover:border-gray-200 transition-all group anim-fade-up ${stat.delay}`}>
               <div className={`w-9 h-9 ${stat.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
                 <svg className={`w-5 h-5 ${stat.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={stat.icon} />
@@ -121,7 +125,7 @@ async function renderStudentDashboard(c: any, user: any) {
                 <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
                 <div className="text-xs text-gray-400 leading-tight">{stat.label}</div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -210,7 +214,7 @@ async function renderMentorDashboard(c: any, user: any) {
       <div className="space-y-6">
 
         {/* Hero welcome banner */}
-        <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 rounded-2xl px-8 py-7 text-white overflow-hidden">
+        <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 rounded-2xl px-8 py-7 text-white overflow-hidden anim-fade-up">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
           <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
           <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
@@ -261,15 +265,15 @@ async function renderMentorDashboard(c: any, user: any) {
 
         {(mentor?.verification_status === "approved" || mentor?.verification_status === "pending") && (
           <>
-            {/* Stats */}
+            {/* Stats — clickable */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: "Active Mentees", value: activeMatches.length, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
-                { label: "Pending Requests", value: pendingRequests.length, color: "text-amber-600", bg: "bg-amber-50", icon: "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" },
-                { label: "Spots Available", value: mentor.max_mentees - (mentor.current_mentees || 0), color: "text-blue-600", bg: "bg-blue-50", icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" },
-                { label: "Max Capacity", value: mentor.max_mentees, color: "text-purple-600", bg: "bg-purple-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+                { href: "/messages", label: "Active Mentees", value: activeMatches.length, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z", delay: "anim-d1" },
+                { href: "/dashboard", label: "Pending Requests", value: pendingRequests.length, color: "text-amber-600", bg: "bg-amber-50", icon: "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9", delay: "anim-d2" },
+                { href: "/messages", label: "Messages", value: activeMatches.length, color: "text-blue-600", bg: "bg-blue-50", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z", delay: "anim-d3" },
+                { href: "/sessions", label: "Sessions", value: 0, color: "text-purple-600", bg: "bg-purple-50", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z", delay: "anim-d4" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3">
+                <a key={stat.label} href={stat.href} className={`bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex items-center gap-3 hover:shadow-md hover:border-gray-200 transition-all group anim-fade-up ${stat.delay}`}>
                   <div className={`w-9 h-9 ${stat.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
                     <svg className={`w-5 h-5 ${stat.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={stat.icon} />
@@ -279,13 +283,13 @@ async function renderMentorDashboard(c: any, user: any) {
                     <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
                     <div className="text-xs text-gray-400 leading-tight">{stat.label}</div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Pending Requests */}
-              <div>
+              <div className="anim-fade-up anim-d2">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Pending Requests</h2>
                 {pendingRequests.length === 0 ? (
                   <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-8 text-center">
@@ -379,7 +383,7 @@ async function renderMentorDashboard(c: any, user: any) {
               </div>
 
               {/* Active Mentees */}
-              <div>
+              <div className="anim-fade-up anim-d3">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Active Mentees</h2>
                 {activeMatches.length === 0 ? (
                   <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-8 text-center">

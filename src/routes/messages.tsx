@@ -5,6 +5,7 @@ import { Layout } from "../views/Layout";
 import { authMiddleware } from "../middleware/auth";
 import { supabase } from "../db";
 import { moderateText } from "../lib/moderation";
+import { sendEmail, newMessageEmail } from "../lib/email";
 
 const messages = new Hono();
 
@@ -72,6 +73,19 @@ messages.get("/messages", authMiddleware, async (c) => {
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Messages</h1>
 
+        <script dangerouslySetInnerHTML={{ __html: `
+          document.querySelectorAll('.local-time').forEach(function(el) {
+            var utc = el.getAttribute('data-utc');
+            if (!utc) return;
+            var d = new Date(utc);
+            var now = new Date();
+            var diff = now - d;
+            if (diff < 60000) { el.textContent = 'just now'; }
+            else if (diff < 3600000) { el.textContent = Math.floor(diff/60000) + 'm ago'; }
+            else if (diff < 86400000) { el.textContent = d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+            else { el.textContent = d.toLocaleDateString([],{month:'short',day:'numeric'}); }
+          });
+        `}} />
         {conversations.length === 0 ? (
           <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-200 text-center">
             <p className="text-gray-500 text-lg mb-2">No conversations yet</p>
@@ -95,8 +109,8 @@ messages.get("/messages", authMiddleware, async (c) => {
                       {otherUser?.first_name} {otherUser?.last_name}
                     </h3>
                     {lastMsg && (
-                      <span className="text-xs text-gray-400">
-                        {new Date(lastMsg.created_at).toLocaleDateString()}
+                      <span className="text-xs text-gray-400 local-time" data-utc={lastMsg.created_at}>
+                        {lastMsg.created_at}
                       </span>
                     )}
                   </div>
@@ -203,12 +217,10 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
                     >
                       <p className="text-sm">{msg.content}</p>
                       <p
-                        className={`text-xs mt-1 ${isMe ? "text-blue-200" : "text-gray-400"}`}
+                        className={`text-xs mt-1 local-time ${isMe ? "text-blue-200" : "text-gray-400"}`}
+                        data-utc={msg.created_at}
                       >
-                        {new Date(msg.created_at).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                        {msg.created_at}
                       </p>
                     </div>
                   </div>
@@ -219,6 +231,23 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
         </div>
 
         {/* Send message form */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          // Auto-scroll to bottom
+          var msgBox = document.querySelector('.min-h-\\\\[400px\\\\]');
+          if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+          // Convert UTC timestamps to local time
+          document.querySelectorAll('.local-time').forEach(function(el) {
+            var utc = el.getAttribute('data-utc');
+            if (!utc) return;
+            var d = new Date(utc);
+            var now = new Date();
+            var diff = now - d;
+            if (diff < 60000) { el.textContent = 'just now'; }
+            else if (diff < 3600000) { el.textContent = Math.floor(diff/60000) + 'm ago'; }
+            else if (diff < 86400000) { el.textContent = d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+            else { el.textContent = d.toLocaleDateString([],{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+          });
+        `}} />
         <form method="POST" action={`/messages/${matchId}`} className="flex gap-2">
           <input
             type="text"
@@ -273,6 +302,32 @@ messages.post("/messages/:matchId", authMiddleware, async (c) => {
     is_flagged: isFlagged,
     flag_reason: modResult.reason || null,
   });
+
+  // Send email notification to the other participant
+  const recipientId = match.students.user_id === user.id
+    ? match.mentors.user_id
+    : match.students.user_id;
+
+  const { data: recipient } = await supabase
+    .from("accounts")
+    .select("email, first_name")
+    .eq("id", recipientId)
+    .single();
+
+  if (recipient?.email) {
+    const baseUrl = new URL(c.req.url).origin;
+    sendEmail({
+      to: recipient.email,
+      subject: `New message from ${user.first_name} on Mentino`,
+      html: newMessageEmail({
+        recipientName: recipient.first_name,
+        senderName: `${user.first_name} ${user.last_name}`,
+        preview: content,
+        matchId,
+        baseUrl,
+      }),
+    });
+  }
 
   return c.redirect(`/messages/${matchId}`);
 });

@@ -6,17 +6,22 @@ interface SignupProps {
 
 export function Signup({ error }: SignupProps) {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-6 px-3 sm:px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-[80vh] flex items-center justify-center py-6 px-3 sm:px-4 relative overflow-hidden">
+      {/* Decorative background blobs */}
+      <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%)" }} />
+      <div className="absolute -bottom-10 -left-10 w-56 h-56 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%)" }} />
+      <div className="w-full max-w-md anim-fade-up">
 
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg" style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)" }}>
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a7 7 0 00-4 12.75V17a1 1 0 001 1h6a1 1 0 001-1v-2.25A7 7 0 0012 2z" opacity="0.85" />
+              <rect x="9" y="19" width="6" height="1.5" rx="0.75" opacity="0.9" />
+              <rect x="9.5" y="21.5" width="5" height="1" rx="0.5" opacity="0.7" />
             </svg>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-1">Join Mentino</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold mb-1" style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Join Mentino</h1>
           <p className="text-gray-500 text-sm sm:text-base">Free for students. Verified professionals. Real guidance.</p>
         </div>
 

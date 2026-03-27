@@ -35,12 +35,14 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
 
             {/* Logo */}
             <a href="/" className="flex items-center gap-2 flex-shrink-0">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)" }}>
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2a7 7 0 00-4 12.75V17a1 1 0 001 1h6a1 1 0 001-1v-2.25A7 7 0 0012 2z" opacity="0.85" />
+                  <rect x="9" y="19" width="6" height="1.5" rx="0.75" opacity="0.9" />
+                  <rect x="9.5" y="21.5" width="5" height="1" rx="0.5" opacity="0.7" />
                 </svg>
               </div>
-              <span className="text-xl font-extrabold text-gray-900 tracking-tight">Mentino</span>
+              <span className="text-xl font-extrabold tracking-tight" style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Mentino</span>
             </a>
 
             {/* Desktop nav links */}
@@ -49,7 +51,7 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
                 ? authLinks.map((link) => (
                     <a key={link.href} href={link.href} className="text-gray-600 hover:text-indigo-600 font-medium relative text-sm">
                       {link.label}
-                      {link.badge && link.badge > 0 && (
+                      {link.badge > 0 && (
                         <span className="absolute -top-2 -right-4 bg-indigo-600 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
                           {link.badge > 9 ? "9+" : link.badge}
                         </span>
@@ -133,7 +135,7 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
                     className="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium text-sm"
                   >
                     {link.label}
-                    {link.badge && link.badge > 0 && (
+                    {link.badge > 0 && (
                       <span className="bg-indigo-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">{link.badge}</span>
                     )}
                   </a>

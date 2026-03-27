@@ -36,18 +36,104 @@ export function render(element: React.ReactElement, status = 200) {
 app.get("/", optionalAuth, async (c) => {
   const user = c.get("user");
 
-  // Fetch featured mentors for the landing page
-  const { data: featuredMentors } = await supabase
-    .from("mentors")
-    .select("career_field, job_title, company, years_experience, topics, accounts!user_id!inner(first_name, last_name, bio)")
-    .eq("verification_status", "approved")
-    .limit(6);
+  // Fetch featured mentors + real stats in parallel
+  const [featuredResult, studentCountResult, mentorCountResult, matchCountResult] = await Promise.all([
+    supabase
+      .from("mentors")
+      .select("career_field, job_title, company, years_experience, topics, accounts!user_id!inner(first_name, last_name, bio)")
+      .eq("verification_status", "approved")
+      .limit(6),
+    supabase
+      .from("accounts")
+      .select("*", { count: "exact", head: true })
+      .eq("role", "student")
+      .eq("is_active", true)
+      .eq("registration_complete", true),
+    supabase
+      .from("mentors")
+      .select("*", { count: "exact", head: true })
+      .eq("verification_status", "approved"),
+    supabase
+      .from("matches")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "active"),
+  ]);
+
+  const stats = {
+    students: studentCountResult.count ?? 0,
+    mentors: mentorCountResult.count ?? 0,
+    activeMatches: matchCountResult.count ?? 0,
+  };
 
   return render(
     <Layout title="Home" user={user} currentPath="/">
-      <Home featuredMentors={featuredMentors || []} />
+      <Home featuredMentors={featuredResult.data || []} stats={stats} />
     </Layout>
   );
+});
+
+// Notifications API — for browser push polling
+app.get("/api/notifications", async (c) => {
+  const { getCookie } = await import("hono/cookie");
+  const { verifyToken } = await import("./lib/jwt");
+  const { config } = await import("./config");
+
+  const token = getCookie(c, config.cookieName);
+  if (!token) return c.json({ unreadMessages: 0, upcomingSessions: [] });
+
+  const payload = await verifyToken(token);
+  if (!payload) return c.json({ unreadMessages: 0, upcomingSessions: [] });
+
+  const userId = payload.sub as string;
+
+  // Get user + active match IDs
+  const { data: roleRow } = await supabase
+    .from("accounts")
+    .select("role")
+    .eq("id", userId)
+    .single();
+
+  let matchIds: string[] = [];
+  if (roleRow?.role === "student") {
+    const { data: student } = await supabase.from("students").select("id").eq("user_id", userId).single();
+    if (student) {
+      const { data: m } = await supabase.from("matches").select("id").eq("student_id", student.id).eq("status", "active");
+      matchIds = m?.map((x: any) => x.id) || [];
+    }
+  } else if (roleRow?.role === "mentor") {
+    const { data: mentor } = await supabase.from("mentors").select("id").eq("user_id", userId).single();
+    if (mentor) {
+      const { data: m } = await supabase.from("matches").select("id").eq("mentor_id", mentor.id).eq("status", "active");
+      matchIds = m?.map((x: any) => x.id) || [];
+    }
+  }
+
+  const { count: unreadMessages } = matchIds.length > 0
+    ? await supabase.from("messages").select("*", { count: "exact", head: true })
+        .in("match_id", matchIds).neq("sender_id", userId).eq("is_read", false)
+    : { count: 0 };
+
+  // Upcoming sessions (next 24 hours)
+  const nowIso = new Date().toISOString();
+  const soonIso = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const { data: upcomingRaw } = matchIds.length > 0
+    ? await supabase.from("sessions")
+        .select("id, scheduled_at, matches!inner(students!inner(accounts!inner(first_name,last_name)), mentors!inner(accounts!user_id!inner(first_name,last_name)))")
+        .in("match_id", matchIds)
+        .eq("status", "scheduled")
+        .gte("scheduled_at", nowIso)
+        .lte("scheduled_at", soonIso)
+    : { data: [] };
+
+  const upcomingSessions = (upcomingRaw || []).map((s: any) => ({
+    id: s.id,
+    scheduled_at: s.scheduled_at,
+    other_name: roleRow?.role === "student"
+      ? `${s.matches.mentors.accounts.first_name} ${s.matches.mentors.accounts.last_name}`
+      : `${s.matches.students.accounts.first_name} ${s.matches.students.accounts.last_name}`,
+  }));
+
+  return c.json({ unreadMessages: unreadMessages ?? 0, upcomingSessions });
 });
 
 // Auth routes

@@ -465,11 +465,45 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
           </div>
         </div>
 
+        {/* Prepare your questions — pro tip section */}
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-8 mb-10">
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="flex-shrink-0 w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl">
+              💡
+            </div>
+            <div className="flex-1">
+              <span className="inline-block bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full mb-3">PRO TIP — FOR STUDENTS</span>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">Prepare 3–5 questions before every session</h2>
+              <p className="text-gray-600 mb-5 leading-relaxed">
+                The students who get the most out of Mentino come prepared. A mentor's time is valuable — showing up with real, specific questions gets you real, specific answers. Vague sessions happen when students show up without a plan. Don't be that student.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                {[
+                  { q: '"What does a typical day look like for you?"', why: "Replaces every assumption you have with reality" },
+                  { q: '"What do you wish you\'d known starting out?"', why: "Gets you years of experience in a few minutes" },
+                  { q: '"How did you get to where you are — step by step?"', why: "Shows the actual path, not the polished version" },
+                  { q: '"What skills matter most in your field right now?"', why: "Cuts the noise on what to actually work on" },
+                  { q: '"If you were me, what would you do next?"', why: "Personalized advice you can't get anywhere else" },
+                  { q: '"What was your biggest career mistake?"', why: "Most mentors love this one — pure gold" },
+                ].map((item) => (
+                  <div key={item.q} className="bg-white rounded-xl border border-amber-100 p-3">
+                    <p className="text-sm font-semibold text-gray-800 italic mb-1">{item.q}</p>
+                    <p className="text-xs text-gray-500">{item.why}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-amber-700 font-medium">
+                You'll be asked to confirm you've prepared questions before your first session — it's that important.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Inside the Matching System — Donut Chart + Legend */}
         <div className="bg-white rounded-2xl border border-gray-200 p-8 md:p-10 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Inside the Matching System</h2>
           <p className="text-gray-500 text-center mb-10 max-w-2xl mx-auto">
-            Our algorithm considers five key factors to pair students with the most compatible career mentors. Here's exactly how each factor is weighted:
+            Our algorithm considers eight factors — including mentorship style alignment, specific session needs, and experience-level fit — to pair you with the most compatible mentor. Here's how the core weights break down:
           </p>
           <div className="flex flex-col md:flex-row gap-10 items-center">
             {/* SVG Donut Chart */}

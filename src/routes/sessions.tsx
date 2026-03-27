@@ -381,14 +381,31 @@ sessions.get("/sessions/:id", authMiddleware, async (c) => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Feedback</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Written Review <span className="text-gray-400 font-normal text-xs">(optional — shown on mentor profile)</span></label>
                 <textarea
                   name="feedback"
                   rows={2}
                   defaultValue={session.feedback || ""}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-y"
-                  placeholder="Any feedback about the session..."
+                  placeholder="Share what you learned or how the session went..."
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Would you meet with this mentor again?</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="meet_again" value="yes" className="text-emerald-500" />
+                    <span className="text-sm text-gray-700">👍 Yes, definitely</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="meet_again" value="no" />
+                    <span className="text-sm text-gray-700">👎 No</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="meet_again" value="maybe" defaultChecked />
+                    <span className="text-sm text-gray-700">🤔 Not sure</span>
+                  </label>
+                </div>
               </div>
               <button
                 type="submit"
@@ -409,11 +426,16 @@ sessions.post("/sessions/:id/complete", authMiddleware, async (c) => {
   const sessionId = c.req.param("id");
   const body = await c.req.parseBody();
 
+  const { encodeFeedback } = await import("../lib/badges");
+  const meetAgainVal = body.meet_again as string;
+  const meetAgain = meetAgainVal === "yes" ? true : meetAgainVal === "no" ? false : null;
+  const feedbackText = (body.feedback as string)?.trim() || "";
+
   const updateData: Record<string, any> = {
     status: "completed",
     notes: (body.notes as string) || null,
     rating: body.rating ? parseInt(body.rating as string) : null,
-    feedback: (body.feedback as string) || null,
+    feedback: encodeFeedback(meetAgain, feedbackText) || null,
   };
 
   if (body.meeting_url !== undefined) {

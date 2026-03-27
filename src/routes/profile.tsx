@@ -6,6 +6,12 @@ import { Badge } from "../views/components/Badge";
 import { authMiddleware } from "../middleware/auth";
 import { supabase } from "../db";
 import { moderateFields } from "../lib/moderation";
+import {
+  getMentorBadges, getMentorLevel,
+  getStudentBadges, getStudentLevel,
+  parseMeetAgain, parseReviewText, encodeFeedback,
+  type MentorBadge, type StudentBadge, type Level,
+} from "../lib/badges";
 
 const profile = new Hono();
 
@@ -22,16 +28,40 @@ profile.get("/profile", authMiddleware, async (c) => {
   const roleData = await loadRoleData(user.id, user.role);
 
   let reviews: any[] = [];
+  let mentorBadges: MentorBadge[] = [];
+  let mentorLevel: Level | null = null;
+  let studentBadges: StudentBadge[] = [];
+  let studentLevel: Level | null = null;
+
   if (user.role === "mentor" && roleData?.id) {
-    const { data: rv } = await supabase
-      .from("reviews").select("*, accounts!reviewer_user_id(first_name, last_name, avatar_url)")
-      .eq("mentor_id", roleData.id).order("updated_at", { ascending: false });
-    reviews = rv || [];
+    reviews = await loadMentorReviews(roleData.id);
+    const completedCount = reviews.length;
+    const ratedSessions = reviews.filter((r: any) => r.rating);
+    const uniqueStudents = new Set(reviews.map((r: any) => r._studentUserId)).size;
+    mentorBadges = getMentorBadges({
+      completedSessions: completedCount,
+      ratedSessions,
+      verificationStatus: roleData.verification_status,
+      yearsExperience: roleData.years_experience || 0,
+      createdAt: user.created_at,
+      uniqueStudents,
+    });
+    const avg = ratedSessions.length > 0
+      ? ratedSessions.reduce((s: number, r: any) => s + r.rating, 0) / ratedSessions.length : 0;
+    mentorLevel = getMentorLevel(completedCount, avg);
+  }
+
+  if (user.role === "student" && roleData) {
+    const studentStats = await loadStudentStats(user.id);
+    studentBadges = getStudentBadges(studentStats);
+    studentLevel = getStudentLevel(studentStats.completedSessions);
   }
 
   return html(
     <Layout title="My Profile" user={user}>
-      <ProfileView user={user} roleData={roleData} isOwn={true} reviews={reviews} />
+      <ProfileView user={user} roleData={roleData} isOwn={true} reviews={reviews}
+        mentorBadges={mentorBadges} mentorLevel={mentorLevel}
+        studentBadges={studentBadges} studentLevel={studentLevel} />
     </Layout>
   );
 });
@@ -62,13 +92,11 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
   let reviews: any[] = [];
   let canReview = false;
   let existingReview: any = null;
+  let mentorBadgesP: MentorBadge[] = [];
+  let mentorLevelP: Level | null = null;
+
   if (profileUser.role === "mentor" && roleData?.id) {
-    const { data: rv } = await supabase
-      .from("reviews")
-      .select("*, accounts!reviewer_user_id(first_name, last_name, avatar_url)")
-      .eq("mentor_id", roleData.id)
-      .order("updated_at", { ascending: false });
-    reviews = rv || [];
+    reviews = await loadMentorReviews(roleData.id);
 
     // Check if current student has active match with this mentor
     if (currentUser.role === "student") {
@@ -77,11 +105,26 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
         const { data: activeMatch } = await supabase
           .from("matches").select("id")
           .eq("student_id", student.id).eq("mentor_id", roleData.id)
-          .in("status", ["active", "completed"]).single();
+          .in("status", ["active", "accepted", "completed"]).single();
         canReview = !!activeMatch;
-        existingReview = reviews.find((r: any) => r.reviewer_user_id === currentUser.id) || null;
+        existingReview = reviews.find((r: any) => r._studentUserId === currentUser.id) || null;
       }
     }
+
+    const completedCount = reviews.length;
+    const ratedSessions = reviews.filter((r: any) => r.rating);
+    const uniqueStudents = new Set(reviews.map((r: any) => r._studentUserId)).size;
+    mentorBadgesP = getMentorBadges({
+      completedSessions: completedCount,
+      ratedSessions,
+      verificationStatus: roleData.verification_status,
+      yearsExperience: roleData.years_experience || 0,
+      createdAt: profileUser.created_at,
+      uniqueStudents,
+    });
+    const avg = ratedSessions.length > 0
+      ? ratedSessions.reduce((s: number, r: any) => s + r.rating, 0) / ratedSessions.length : 0;
+    mentorLevelP = getMentorLevel(completedCount, avg);
   }
 
   return html(
@@ -90,6 +133,7 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
         user={profileUser} roleData={roleData} isOwn={false}
         currentUser={currentUser} reviews={reviews}
         canReview={canReview} existingReview={existingReview}
+        mentorBadges={mentorBadgesP} mentorLevel={mentorLevelP}
         flash={reviewed === "1" ? "Your review has been saved!" : undefined}
       />
     </Layout>
@@ -219,6 +263,133 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
   return c.redirect("/profile");
 });
 
+// POST /reviews — save a review for a mentor (stored in their most recent completed session)
+profile.post("/reviews", authMiddleware, async (c) => {
+  const user = c.get("user");
+  if (user.role !== "student") return c.redirect("/dashboard");
+
+  const body = await c.req.parseBody();
+  const mentorUserId = body.mentor_user_id as string;
+  const rating = parseInt(body.rating as string);
+  const comment = (body.comment as string)?.trim() || "";
+  const meetAgain = body.meet_again === "yes" ? true : body.meet_again === "no" ? false : null;
+
+  if (!mentorUserId || !rating || rating < 1 || rating > 5) {
+    return c.redirect(`/profile/${mentorUserId}`);
+  }
+
+  // Moderate comment
+  if (comment) {
+    const { moderateText } = await import("../lib/moderation");
+    const mod = moderateText(comment);
+    if (!mod.clean) return c.redirect(`/profile/${mentorUserId}?reviewed=error`);
+  }
+
+  // Get student and mentor DB IDs
+  const { data: student } = await supabase.from("students").select("id").eq("user_id", user.id).single();
+  const { data: mentorAccount } = await supabase.from("accounts").select("id").eq("id", mentorUserId).single();
+  if (!student || !mentorAccount) return c.redirect(`/profile/${mentorUserId}`);
+
+  const { data: mentor } = await supabase.from("mentors").select("id").eq("user_id", mentorUserId).single();
+  if (!mentor) return c.redirect(`/profile/${mentorUserId}`);
+
+  // Find the most recent completed session between student and this mentor
+  const { data: match } = await supabase
+    .from("matches").select("id")
+    .eq("student_id", student.id).eq("mentor_id", mentor.id)
+    .in("status", ["active", "accepted", "completed"]).single();
+
+  if (!match) return c.redirect(`/profile/${mentorUserId}`);
+
+  const { data: session } = await supabase
+    .from("sessions").select("id")
+    .eq("match_id", match.id).eq("status", "completed")
+    .order("scheduled_at", { ascending: false }).limit(1).single();
+
+  if (session) {
+    // Update the session's rating and feedback
+    await supabase.from("sessions").update({
+      rating,
+      feedback: encodeFeedback(meetAgain, comment),
+    }).eq("id", session.id);
+  }
+
+  return c.redirect(`/profile/${mentorUserId}?reviewed=1`);
+});
+
+async function loadMentorReviews(mentorDbId: string): Promise<any[]> {
+  // Get all match IDs for this mentor
+  const { data: matches } = await supabase
+    .from("matches").select("id, student_id").eq("mentor_id", mentorDbId);
+  if (!matches || matches.length === 0) return [];
+
+  const matchIds = matches.map((m: any) => m.id);
+  const studentMap: Record<string, string> = {};
+  for (const m of matches) studentMap[m.id] = m.student_id;
+
+  // Get completed sessions with ratings
+  const { data: sessions } = await supabase
+    .from("sessions").select("id, match_id, rating, feedback, scheduled_at")
+    .in("match_id", matchIds).eq("status", "completed")
+    .not("rating", "is", null)
+    .order("scheduled_at", { ascending: false });
+
+  if (!sessions || sessions.length === 0) return [];
+
+  // Get student user IDs
+  const studentDbIds = [...new Set(matches.map((m: any) => m.student_id))];
+  const { data: students } = await supabase
+    .from("students").select("id, user_id").in("id", studentDbIds);
+
+  const studentUserMap: Record<string, string> = {};
+  for (const s of students || []) studentUserMap[s.id] = s.user_id;
+
+  // Get account info for students
+  const studentUserIds = Object.values(studentUserMap);
+  const { data: accounts } = await supabase
+    .from("accounts").select("id, first_name, last_name, avatar_url").in("id", studentUserIds);
+
+  const accountMap: Record<string, any> = {};
+  for (const a of accounts || []) accountMap[a.id] = a;
+
+  return sessions.map((s: any) => {
+    const studentDbId = studentMap[s.match_id];
+    const studentUserId = studentUserMap[studentDbId] || "";
+    const account = accountMap[studentUserId] || {};
+    return {
+      ...s,
+      _studentUserId: studentUserId,
+      _studentName: `${account.first_name || "?"} ${account.last_name || ""}`,
+      _studentAvatar: account.avatar_url || null,
+      _meetAgain: parseMeetAgain(s.feedback),
+      _reviewText: parseReviewText(s.feedback),
+    };
+  });
+}
+
+async function loadStudentStats(studentUserId: string) {
+  const { data: student } = await supabase.from("students").select("id, learning_goals").eq("user_id", studentUserId).single();
+  if (!student) return { completedSessions: 0, learningGoals: null, uniqueMentors: 0, receivedPositiveFeedback: false };
+
+  const { data: matches } = await supabase.from("matches").select("id, mentor_id").eq("student_id", student.id);
+  if (!matches || matches.length === 0) {
+    return { completedSessions: 0, learningGoals: student.learning_goals, uniqueMentors: 0, receivedPositiveFeedback: false };
+  }
+
+  const matchIds = matches.map((m: any) => m.id);
+  const uniqueMentors = new Set(matches.map((m: any) => m.mentor_id)).size;
+
+  const { data: sessions } = await supabase
+    .from("sessions").select("id, notes")
+    .in("match_id", matchIds).eq("status", "completed");
+
+  const completedSessions = sessions?.length || 0;
+  // Positive feedback = mentor left a note (they engaged)
+  const receivedPositiveFeedback = (sessions || []).some((s: any) => s.notes && s.notes.length > 10);
+
+  return { completedSessions, learningGoals: student.learning_goals, uniqueMentors, receivedPositiveFeedback };
+}
+
 function normalizeArray(value: any): string[] {
   if (Array.isArray(value)) return value.filter(Boolean).map(String);
   if (typeof value === "string" && value) return [value];
@@ -248,13 +419,50 @@ function StarDisplay({ rating }: { rating: number }) {
   );
 }
 
-function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canReview = false, existingReview = null, flash }: {
+function BadgeChip({ badge }: { badge: MentorBadge | StudentBadge }) {
+  return (
+    <span className={`inline-flex items-center gap-1 ${badge.color} ${badge.textColor} text-xs font-semibold px-2.5 py-1 rounded-full`}
+      title={badge.description}>
+      {badge.icon} {badge.label}
+    </span>
+  );
+}
+
+function LevelBar({ level, completedSessions }: { level: Level; completedSessions: number }) {
+  const prev = level.number === 1 ? 0 : level.number === 2 ? 1 : level.number === 3 ? (level.label.includes("Mentor") ? 3 : 1) : (level.label.includes("Mentor") ? 10 : 5);
+  const next = level.nextThreshold;
+  const progress = next ? Math.min(100, Math.round(((completedSessions - prev) / (next - prev)) * 100)) : 100;
+
+  return (
+    <div className="mt-3">
+      <div className="flex items-center justify-between mb-1">
+        <span className={`text-xs font-bold ${level.color}`}>Level {level.number} — {level.label}</span>
+        {next && <span className="text-xs text-gray-400">{completedSessions}/{next} sessions to Level {level.number + 1}</span>}
+        {!next && <span className="text-xs text-amber-500 font-semibold">Max Level Reached 🏆</span>}
+      </div>
+      <div className="w-full bg-gray-100 rounded-full h-2">
+        <div className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all"
+          style={{ width: `${progress}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canReview = false,
+  existingReview = null, mentorBadges = [], mentorLevel = null,
+  studentBadges = [], studentLevel = null, flash }: {
   user: any; roleData: any; isOwn: boolean; currentUser?: any;
-  reviews?: any[]; canReview?: boolean; existingReview?: any; flash?: string;
+  reviews?: any[]; canReview?: boolean; existingReview?: any;
+  mentorBadges?: MentorBadge[]; mentorLevel?: Level | null;
+  studentBadges?: StudentBadge[]; studentLevel?: Level | null;
+  flash?: string;
 }) {
-  const avgRating = reviews.length > 0
-    ? Math.round((reviews.reduce((s: number, r: any) => s + r.rating, 0) / reviews.length) * 10) / 10
+  const ratedReviews = reviews.filter((r: any) => r.rating);
+  const avgRating = ratedReviews.length > 0
+    ? Math.round((ratedReviews.reduce((s: number, r: any) => s + r.rating, 0) / ratedReviews.length) * 10) / 10
     : null;
+  const meetAgainCount = reviews.filter((r: any) => r._meetAgain === true).length;
+  const meetAgainPct = reviews.length > 0 ? Math.round((meetAgainCount / reviews.length) * 100) : null;
 
   return (
     <div className="max-w-3xl mx-auto space-y-5">
@@ -285,15 +493,31 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
               {user.role === "student" && roleData?.grade_or_year && (
                 <p className="text-white/80 text-sm mt-0.5">{roleData.grade_or_year}{roleData.school_name ? ` · ${roleData.school_name}` : ""}</p>
               )}
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center flex-wrap gap-2 mt-2">
                 <Badge status={user.role} />
                 {roleData?.verification_status && <Badge status={roleData.verification_status} />}
                 {avgRating && (
                   <span className="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-medium">
-                    ★ {avgRating} ({reviews.length})
+                    ★ {avgRating} ({ratedReviews.length} review{ratedReviews.length !== 1 ? "s" : ""})
+                  </span>
+                )}
+                {meetAgainPct !== null && meetAgainPct >= 70 && (
+                  <span className="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-medium">
+                    🔄 {meetAgainPct}% would meet again
+                  </span>
+                )}
+                {mentorLevel && (
+                  <span className="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-medium">
+                    Lv.{mentorLevel.number} {mentorLevel.label}
                   </span>
                 )}
               </div>
+              {(mentorBadges.length > 0 || studentBadges.length > 0) && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {mentorBadges.map((b) => <BadgeChip key={b.id} badge={b} />)}
+                  {studentBadges.map((b) => <BadgeChip key={b.id} badge={b} />)}
+                </div>
+              )}
             </div>
             <div className="flex flex-col gap-2 items-end">
               {isOwn && (
@@ -396,6 +620,52 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         </div>
       </div>
 
+      {/* Badges & Level section — mentor only, when there are badges */}
+      {user.role === "mentor" && (mentorBadges.length > 0 || mentorLevel) && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Achievements</h2>
+          {mentorBadges.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {mentorBadges.map((b) => (
+                <div key={b.id} className={`flex items-center gap-2 ${b.color} ${b.textColor} rounded-xl px-3 py-2`}>
+                  <span className="text-lg">{b.icon}</span>
+                  <div>
+                    <div className="text-xs font-bold">{b.label}</div>
+                    <div className="text-xs opacity-75">{b.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {mentorLevel && (
+            <LevelBar level={mentorLevel} completedSessions={reviews.length} />
+          )}
+        </div>
+      )}
+
+      {/* Student badges & level — own profile only */}
+      {user.role === "student" && (studentBadges.length > 0 || studentLevel) && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Your Progress</h2>
+          {studentBadges.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {studentBadges.map((b) => (
+                <div key={b.id} className={`flex items-center gap-2 ${b.color} ${b.textColor} rounded-xl px-3 py-2`}>
+                  <span className="text-lg">{b.icon}</span>
+                  <div>
+                    <div className="text-xs font-bold">{b.label}</div>
+                    <div className="text-xs opacity-75">{b.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {studentLevel && (
+            <LevelBar level={studentLevel} completedSessions={reviews.length} />
+          )}
+        </div>
+      )}
+
       {/* Reviews section — only for mentors */}
       {user.role === "mentor" && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
@@ -403,9 +673,17 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
             <div>
               <h2 className="text-lg font-bold text-gray-900">Student Reviews</h2>
               {avgRating ? (
-                <div className="flex items-center gap-2 mt-1">
-                  <StarDisplay rating={Math.round(avgRating)} />
-                  <span className="text-sm text-gray-500 font-medium">{avgRating} out of 5 · {reviews.length} review{reviews.length !== 1 ? "s" : ""}</span>
+                <div className="flex items-center gap-3 mt-1 flex-wrap">
+                  <div className="flex items-center gap-1.5">
+                    <StarDisplay rating={Math.round(avgRating)} />
+                    <span className="text-sm text-gray-600 font-semibold">{avgRating}</span>
+                    <span className="text-sm text-gray-400">/ 5 · {ratedReviews.length} review{ratedReviews.length !== 1 ? "s" : ""}</span>
+                  </div>
+                  {meetAgainPct !== null && (
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${meetAgainPct >= 70 ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-600"}`}>
+                      🔄 {meetAgainPct}% would meet again
+                    </span>
+                  )}
                 </div>
               ) : (
                 <p className="text-sm text-gray-400 mt-1">No reviews yet</p>
@@ -422,12 +700,12 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
               <form method="POST" action="/reviews" className="space-y-3">
                 <input type="hidden" name="mentor_user_id" value={user.id} />
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Rating</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Rating <span className="text-red-400">*</span></label>
                   <div className="flex gap-1">
                     {[1,2,3,4,5].map((n) => (
                       <label key={n} className="cursor-pointer">
                         <input type="radio" name="rating" value={n.toString()} defaultChecked={existingReview?.rating === n} required className="sr-only" />
-                        <svg className="w-7 h-7 text-gray-300 hover:text-amber-400 transition-colors peer-checked:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-7 h-7 text-gray-300 hover:text-amber-400 transition-colors" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                         </svg>
                       </label>
@@ -435,8 +713,24 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                   </div>
                 </div>
                 <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-2">Would you meet with this mentor again?</label>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="meet_again" value="yes" defaultChecked={existingReview?._meetAgain === true} className="text-emerald-500" />
+                      <span className="text-sm text-gray-700">👍 Yes</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="meet_again" value="no" defaultChecked={existingReview?._meetAgain === false} />
+                      <span className="text-sm text-gray-700">👎 No</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">Comment <span className="text-gray-400 font-normal">(optional)</span></label>
-                  <textarea name="comment" rows={3} maxLength={500} defaultValue={existingReview?.comment || ""} placeholder="Share your experience..." className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-400 resize-none" />
+                  <textarea name="comment" rows={3} maxLength={500}
+                    defaultValue={existingReview?._reviewText || ""}
+                    placeholder="Share your experience — what did you learn? Was the mentor helpful?"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-400 resize-none" />
                 </div>
                 <button type="submit" className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-colors">
                   {existingReview ? "Update Review" : "Submit Review"}
@@ -446,7 +740,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
           )}
 
           {/* Reviews list */}
-          {reviews.length === 0 ? (
+          {ratedReviews.length === 0 ? (
             <div className="text-center py-8 text-gray-400">
               <svg className="w-10 h-10 mx-auto mb-2 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
@@ -455,23 +749,31 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
             </div>
           ) : (
             <div className="space-y-4">
-              {reviews.map((rv: any, i: number) => (
+              {ratedReviews.map((rv: any, i: number) => (
                 <div key={i} className="border border-gray-100 rounded-xl p-4">
                   <div className="flex items-center gap-3 mb-2">
-                    {rv.accounts?.avatar_url ? (
-                      <img src={rv.accounts.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover" />
+                    {rv._studentAvatar ? (
+                      <img src={rv._studentAvatar} alt="" className="w-8 h-8 rounded-full object-cover" />
                     ) : (
                       <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-xs font-bold">
-                        {rv.accounts?.first_name?.[0]}{rv.accounts?.last_name?.[0]}
+                        {rv._studentName?.[0]}
                       </div>
                     )}
                     <div>
-                      <span className="text-sm font-medium text-gray-800">{rv.accounts?.first_name} {rv.accounts?.last_name?.[0]}.</span>
+                      <span className="text-sm font-medium text-gray-800">{rv._studentName?.split(" ")[0]} {rv._studentName?.split(" ")[1]?.[0]}.</span>
                       <StarDisplay rating={rv.rating} />
                     </div>
-                    <span className="ml-auto text-xs text-gray-400">{new Date(rv.updated_at).toLocaleDateString()}</span>
+                    <div className="ml-auto flex items-center gap-2">
+                      {rv._meetAgain === true && (
+                        <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">👍 Would meet again</span>
+                      )}
+                      {rv._meetAgain === false && (
+                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">👎 Wouldn't meet again</span>
+                      )}
+                      <span className="text-xs text-gray-400">{new Date(rv.scheduled_at).toLocaleDateString()}</span>
+                    </div>
                   </div>
-                  {rv.comment && <p className="text-sm text-gray-600 leading-relaxed">{rv.comment}</p>}
+                  {rv._reviewText && <p className="text-sm text-gray-600 leading-relaxed">{rv._reviewText}</p>}
                 </div>
               ))}
             </div>

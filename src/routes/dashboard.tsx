@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { getStudentBadges, getStudentLevel } from "../lib/badges";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { Layout } from "../views/Layout";
@@ -66,6 +67,22 @@ async function renderStudentDashboard(c: any, user: any) {
   const activeCount = matches?.filter((m: any) => m.status === "active").length || 0;
   const pendingCount = matches?.filter((m: any) => m.status === "pending").length || 0;
 
+  // Badges & level
+  const allMatchIds = matches?.map((m: any) => m.id) || [];
+  const { data: completedSessions } = await supabase
+    .from("sessions").select("id, notes", { count: "exact" })
+    .in("match_id", allMatchIds).eq("status", "completed");
+  const completedCount = completedSessions?.length || 0;
+  const uniqueMentors = new Set(matches?.filter((m: any) => m.status !== "pending").map((m: any) => m.mentor_id) || []).size;
+  const receivedPositiveFeedback = (completedSessions || []).some((s: any) => s.notes && s.notes.length > 10);
+  const studentBadges = getStudentBadges({
+    completedSessions: completedCount,
+    learningGoals: student?.learning_goals || null,
+    uniqueMentors,
+    receivedPositiveFeedback,
+  });
+  const studentLevel = getStudentLevel(completedCount);
+
   return html(
     <Layout title="Dashboard" user={user} navBadges={{ unreadMessages: unreadCount || 0 }}>
       <div className="space-y-6">
@@ -128,6 +145,47 @@ async function renderStudentDashboard(c: any, user: any) {
             </a>
           ))}
         </div>
+
+        {/* Progress & Badges */}
+        {(studentBadges.length > 0 || completedCount > 0) && (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 anim-fade-up anim-d2">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-semibold text-gray-900 text-sm">Your Progress</h2>
+              <a href="/profile" className="text-indigo-600 text-xs hover:underline">View profile →</a>
+            </div>
+            {/* Level bar */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between mb-1">
+                <span className={`text-xs font-bold ${studentLevel.color}`}>Level {studentLevel.number} — {studentLevel.label}</span>
+                {studentLevel.nextThreshold ? (
+                  <span className="text-xs text-gray-400">{completedCount}/{studentLevel.nextThreshold} sessions to Level {studentLevel.number + 1}</span>
+                ) : (
+                  <span className="text-xs text-amber-500 font-semibold">Max Level 🏆</span>
+                )}
+              </div>
+              {(() => {
+                const prev = studentLevel.number === 1 ? 0 : studentLevel.number === 2 ? 1 : studentLevel.number === 3 ? 5 : 15;
+                const next = studentLevel.nextThreshold;
+                const pct = next ? Math.min(100, Math.round(((completedCount - prev) / (next - prev)) * 100)) : 100;
+                return (
+                  <div className="w-full bg-gray-100 rounded-full h-2">
+                    <div className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all" style={{ width: `${pct}%` }} />
+                  </div>
+                );
+              })()}
+            </div>
+            {/* Badges */}
+            {studentBadges.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {studentBadges.map((b) => (
+                  <span key={b.id} className={`inline-flex items-center gap-1 ${b.color} ${b.textColor} text-xs font-semibold px-2.5 py-1 rounded-full`} title={b.description}>
+                    {b.icon} {b.label}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Matches — wider */}

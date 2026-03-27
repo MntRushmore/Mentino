@@ -202,21 +202,96 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                   What do you hope to learn from a mentor?{" "}
                   <span className="text-gray-400 font-normal">(optional)</span>
                 </label>
-                <p className="text-xs text-gray-400 mb-2">Share as much or as little as you'd like — even a few words helps us match you better.</p>
+                <p className="text-xs text-gray-400 mb-2">Be specific — the more detail you give, the better your match will be.</p>
                 <textarea
                   name="learning_goals"
-                  placeholder="e.g. I want to learn how to break into tech, prepare for college interviews, or explore what a career in medicine looks like day-to-day..."
+                  placeholder="e.g. I want to understand what a day as a doctor actually looks like. I'm deciding between pre-med and nursing, and I'd love help preparing for college applications and picking the right major..."
                   defaultValue={student?.learning_goals || ""}
                   maxLength={2000}
                   rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
                 />
               </div>
+
+              {/* Specific needs — improves match accuracy */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  What do you most need help with right now? <span className="text-red-500">*</span>
+                </label>
+                <p className="text-xs text-gray-400 mb-2">Select all that apply — this directly feeds our matching algorithm.</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Need: college applications", label: "🎓 College applications" },
+                    { value: "Need: career exploration", label: "🔭 Exploring career options" },
+                    { value: "Need: skill building", label: "🔧 Building specific skills" },
+                    { value: "Need: interview prep", label: "🎤 Interview preparation" },
+                    { value: "Need: networking", label: "🤝 Networking & connections" },
+                    { value: "Need: day-in-life insights", label: "👁 Day-in-the-life insights" },
+                    { value: "Need: resume cv", label: "📄 Resume / CV help" },
+                    { value: "Need: entrepreneurship", label: "🚀 Starting something" },
+                  ].map((opt) => {
+                    const isSelected = student?.personality_tags?.includes(opt.value);
+                    return (
+                      <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 transition-colors">
+                        <input type="checkbox" name="session_needs" value={opt.value} defaultChecked={isSelected} className="rounded text-indigo-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{opt.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Mentorship style */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  How would you prefer to be mentored? <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Style: structured sessions", label: "📋 Structured sessions with agendas" },
+                    { value: "Style: casual chats", label: "💬 Casual, open conversations" },
+                    { value: "Style: project-based", label: "📁 Working on projects together" },
+                    { value: "Style: advice on demand", label: "⚡ Quick advice when I need it" },
+                  ].map((opt) => {
+                    const isSelected = student?.personality_tags?.includes(opt.value);
+                    return (
+                      <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 transition-colors">
+                        <input type="checkbox" name="mentorship_style" value={opt.value} defaultChecked={isSelected} className="rounded text-indigo-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{opt.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Session frequency */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  How often can you commit to meeting? <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Freq: weekly", label: "📆 Weekly" },
+                    { value: "Freq: bi-weekly", label: "📅 Every two weeks" },
+                    { value: "Freq: monthly", label: "🗓 Monthly" },
+                    { value: "Freq: as-needed", label: "🔔 As-needed / flexible" },
+                  ].map((opt) => {
+                    const isSelected = student?.personality_tags?.includes(opt.value);
+                    return (
+                      <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-400 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 transition-colors">
+                        <input type="radio" name="session_frequency" value={opt.value} defaultChecked={isSelected} className="text-indigo-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{opt.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
               <CheckboxGroup
                 label="How would you describe yourself?"
                 name="personality_tags"
                 options={PERSONALITY_TAGS_STUDENT}
-                selected={student?.personality_tags}
+                selected={student?.personality_tags?.filter((t: string) => PERSONALITY_TAGS_STUDENT.includes(t))}
                 columns={2}
               />
             </>
@@ -333,11 +408,58 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
                 />
               </div>
+              {/* Mentor approach */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  How do you typically mentor? <span className="text-red-500">*</span>
+                </label>
+                <p className="text-xs text-gray-400 mb-2">Select all that apply — this helps us match you with compatible students.</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Approach: structured sessions", label: "📋 Structured sessions" },
+                    { value: "Approach: casual conversations", label: "💬 Casual conversations" },
+                    { value: "Approach: project-based", label: "📁 Project-based work" },
+                    { value: "Approach: available when needed", label: "⚡ Available when needed" },
+                  ].map((opt) => {
+                    const isSelected = mentor?.personality_tags?.includes(opt.value);
+                    return (
+                      <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition-colors">
+                        <input type="checkbox" name="mentor_approach" value={opt.value} defaultChecked={isSelected} className="rounded text-emerald-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{opt.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Who they're best for */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Who do you mentor best? <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Best for: high schoolers", label: "🎒 High school students" },
+                    { value: "Best for: college students", label: "🏛 College students" },
+                    { value: "Best for: career changers", label: "🔄 Career changers" },
+                    { value: "Best for: any student", label: "🌍 Anyone — I'm flexible" },
+                  ].map((opt) => {
+                    const isSelected = mentor?.personality_tags?.includes(opt.value);
+                    return (
+                      <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition-colors">
+                        <input type="checkbox" name="mentor_best_for" value={opt.value} defaultChecked={isSelected} className="rounded text-emerald-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{opt.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
               <CheckboxGroup
-                label="How would you describe your mentoring style?"
+                label="How would you describe your mentoring personality?"
                 name="personality_tags"
                 options={PERSONALITY_TAGS_MENTOR}
-                selected={mentor?.personality_tags}
+                selected={mentor?.personality_tags?.filter((t: string) => PERSONALITY_TAGS_MENTOR.includes(t))}
                 columns={2}
               />
             </>
@@ -470,6 +592,27 @@ function StudentReview({ user, student }: { user: User; student?: Partial<Studen
         )}
       </div>
 
+      {/* Prepare questions callout */}
+      <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-5">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl flex-shrink-0">💡</span>
+          <div>
+            <h3 className="font-bold text-indigo-900 text-sm mb-1">Before your first session — prepare 3–5 questions</h3>
+            <p className="text-indigo-700 text-xs leading-relaxed mb-3">
+              Sessions go way better when you come prepared. Your mentor's time is valuable — showing up with real questions makes a strong first impression and gets you real answers.
+            </p>
+            <p className="text-xs font-semibold text-indigo-800 mb-1">Good question starters:</p>
+            <ul className="text-xs text-indigo-700 space-y-0.5 list-disc list-inside">
+              <li>"What does a typical day look like for you?"</li>
+              <li>"What do you wish you'd known starting out?"</li>
+              <li>"How did you get to where you are?"</li>
+              <li>"What skills matter most in your field right now?"</li>
+              <li>"If you were me, what would you do next?"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {student?.age && student.age < 18 && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <p className="text-sm text-yellow-800 font-medium mb-3">
@@ -520,9 +663,24 @@ function MentorReview({ user, mentor }: { user: User; mentor?: Partial<Mentor> }
           </div>
         )}
       </div>
+      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl flex-shrink-0">💡</span>
+          <div>
+            <h3 className="font-bold text-emerald-900 text-sm mb-1">Help students come prepared</h3>
+            <p className="text-emerald-700 text-xs leading-relaxed mb-2">
+              When a student requests a match with you, encourage them to prepare 3–5 questions beforehand. Sessions are much more productive when students come with specific things they want to learn, not just "tell me about your job."
+            </p>
+            <p className="text-xs text-emerald-800 font-semibold">Your first message to a new mentee can set the tone:</p>
+            <div className="mt-2 bg-white/60 rounded-lg p-3 text-xs text-emerald-700 italic border border-emerald-200">
+              "Before our first session, come with 3–5 questions. Think about what you actually want to know — the more specific, the better the conversation."
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <p className="text-sm text-blue-800">
-          After completing registration, your profile will be submitted for verification. Our team will review it within 24-48 hours. You'll be notified once approved.
+          After completing registration, your profile is live and students can start requesting to match with you.
         </p>
       </div>
     </div>

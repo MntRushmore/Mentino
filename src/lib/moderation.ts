@@ -1,17 +1,36 @@
 const BLOCKED_WORDS = [
   // Profanity
-  "fuck", "fucking", "fucked", "fucker", "fuk",
-  "shit", "shitting", "shitty",
-  "ass", "asshole", "asses",
-  "bitch", "bitches",
-  "damn", "crap", "dick", "dicks", "cock", "cocks",
+  "fuck", "fucking", "fucked", "fucker", "fuk", "f*ck", "fck",
+  "shit", "shitting", "shitty", "sh*t",
+  "ass", "asshole", "asses", "a**",
+  "bitch", "bitches", "b*tch",
+  "damn", "dammit", "crap", "crud",
+  "dick", "dicks", "cock", "cocks",
   "bastard", "bastards",
   "pussy", "pussies",
   "cunt", "cunts",
-  // Slurs
-  "nigger", "nigga", "faggot", "fag", "retard", "retarded",
-  "slut", "whore", "tranny",
-  "spic", "chink", "kike", "wetback",
+  "hell", "wtf", "stfu", "gtfo",
+  "piss", "pissed", "pissoff",
+  "douche", "douchebag",
+  "jackass", "dumbass", "smartass", "fatass", "badass",
+  "moron", "idiot", "imbecile", "dipshit", "dumbshit",
+  "screw you", "screw off",
+  "bloody hell", "bollocks", "bugger", "tosser", "wanker", "twat", "arsehole",
+  // Sexual
+  "butt", "butthole", "boobs", "boob", "tits", "tit", "penis", "vagina",
+  "anus", "anal", "horny", "boner", "dildo", "jerk", "jerking",
+  "cum", "cumshot", "orgasm", "masturbate", "masturbation",
+  "blowjob", "handjob", "fingering", "erection",
+  // Slurs — n-word and all common variants/spellings
+  "nigger", "nigga", "nigg", "n1gger", "n1gga", "n!gger", "n!gga",
+  "nig", "niggah", "niggaz", "niggr", "n*gger", "n*gga",
+  "faggot", "fag", "f*ggot", "fgt",
+  "retard", "retarded",
+  "slut", "whore",
+  "tranny", "trannies",
+  "spic", "spics", "chink", "chinks", "kike", "kikes", "wetback", "wetbacks",
+  "gook", "gooks", "zipperhead", "beaner", "beaners", "sandnigger", "raghead",
+  "cracker", "honky", "coon", "jigaboo", "pickaninny",
   // Threats / harmful
   "kill yourself", "kys", "go die", "i will kill",
   "bomb", "shoot up",
@@ -23,8 +42,12 @@ const BLOCKED_WORDS = [
 const BLOCKED_USERNAME_PATTERNS = [
   /^admin/i, /^root$/i, /^moderator/i, /^mentino/i,
   /^support/i, /^staff/i, /^official/i,
-  /fuck|shit|bitch|ass(?:hole)?|dick|cock|cunt|slut|whore|nigger|nigga|faggot|retard/i,
+  /fuck|shit|bitch|ass(?:hole)?|dick|cock|cunt|slut|whore|nigger|nigga|nigg|faggot|retard/i,
+  /n[i1!*]gg[ae]/i,
   /porn|xxx|nude|sex(?:y)?/i,
+  /butt|butthole|boob|tits?|penis|vagina|anus|anal|horny|boner|dildo/i,
+  /wanker|twat|tosser|bollocks|arsehole|douche(?:bag)?|jackass|dumbass/i,
+  /cum|blowjob|handjob|masturbat/i,
 ];
 
 // Patterns that look like spam or bots

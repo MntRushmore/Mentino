@@ -143,7 +143,19 @@ async function handleStudentStep(
     }
     case 3: {
       const goals = (body.learning_goals as string) || "";
-      const tags = normalizeArray(body.personality_tags);
+      const personalityTags = normalizeArray(body.personality_tags);
+      const sessionNeeds = normalizeArray(body.session_needs);
+      const mentorshipStyle = normalizeArray(body.mentorship_style);
+      // session_frequency is a radio — single value
+      const freqVal = (body.session_frequency as string)?.trim();
+      const sessionFrequency = freqVal ? [freqVal] : [];
+
+      // Merge all into personality_tags (strip old prefixed values first to avoid duplication)
+      const PREFIXES = ["Need:", "Style:", "Freq:"];
+      const cleanedPersonality = personalityTags.filter(
+        (t) => !PREFIXES.some((p) => t.startsWith(p))
+      );
+      const allTags = [...cleanedPersonality, ...sessionNeeds, ...mentorshipStyle, ...sessionFrequency];
 
       if (goals) {
         const modResult = moderateFields({ learning_goals: goals });
@@ -152,7 +164,7 @@ async function handleStudentStep(
 
       await supabase
         .from("students")
-        .update({ learning_goals: goals || null, personality_tags: tags })
+        .update({ learning_goals: goals || null, personality_tags: allTags })
         .eq("user_id", user.id);
       break;
     }
@@ -241,7 +253,16 @@ async function handleMentorStep(
     case 3: {
       const linkedinUrl = (body.linkedin_url as string)?.trim() || null;
       const bio = (body.bio as string)?.trim() || "";
-      const tags = normalizeArray(body.personality_tags);
+      const personalityTags = normalizeArray(body.personality_tags);
+      const mentorApproach = normalizeArray(body.mentor_approach);
+      const mentorBestFor = normalizeArray(body.mentor_best_for);
+
+      // Merge all into personality_tags, stripping old prefixed values
+      const PREFIXES = ["Approach:", "Best for:"];
+      const cleanedPersonality = personalityTags.filter(
+        (t) => !PREFIXES.some((p) => t.startsWith(p))
+      );
+      const allTags = [...cleanedPersonality, ...mentorApproach, ...mentorBestFor];
 
       if (bio) {
         const modResult = moderateFields({ bio });
@@ -251,7 +272,7 @@ async function handleMentorStep(
 
       await supabase
         .from("mentors")
-        .update({ linkedin_url: linkedinUrl, personality_tags: tags })
+        .update({ linkedin_url: linkedinUrl, personality_tags: allTags })
         .eq("user_id", user.id);
 
       await supabase

@@ -92,19 +92,22 @@ matching.get("/matching", authMiddleware, async (c) => {
       }
     }
 
-    // Fetch reviews summary for each mentor
+    // Fetch reviews summary for each mentor from sessions (reviews table doesn't exist)
     const mentorIds = results.map((r) => r.mentorDbId);
     let reviewsMap: Record<string, { avg: number; count: number }> = {};
     if (mentorIds.length > 0) {
-      const { data: reviews } = await supabase
-        .from("reviews")
-        .select("mentor_id, rating")
-        .in("mentor_id", mentorIds);
-      if (reviews) {
-        for (const r of reviews) {
-          if (!reviewsMap[r.mentor_id]) reviewsMap[r.mentor_id] = { avg: 0, count: 0 };
-          reviewsMap[r.mentor_id].count++;
-          reviewsMap[r.mentor_id].avg += r.rating;
+      const { data: ratedSessions } = await supabase
+        .from("sessions")
+        .select("rating, matches!inner(mentor_id)")
+        .eq("status", "completed")
+        .not("rating", "is", null);
+      if (ratedSessions) {
+        for (const s of ratedSessions) {
+          const mid = (s as any).matches?.mentor_id;
+          if (!mid || !mentorIds.includes(mid)) continue;
+          if (!reviewsMap[mid]) reviewsMap[mid] = { avg: 0, count: 0 };
+          reviewsMap[mid].count++;
+          reviewsMap[mid].avg += s.rating;
         }
         for (const id of Object.keys(reviewsMap)) {
           reviewsMap[id].avg = Math.round((reviewsMap[id].avg / reviewsMap[id].count) * 10) / 10;
@@ -125,7 +128,7 @@ matching.get("/matching", authMiddleware, async (c) => {
             </div>
             <div className="relative z-10">
               <h1 className="text-3xl font-bold mb-1">Find Your Mentor</h1>
-              <p className="text-indigo-100">Based on your interests and goals, here are your top matches.</p>
+              <p className="text-indigo-100">All available mentors — sorted by how well they match your profile.</p>
             </div>
           </div>
 

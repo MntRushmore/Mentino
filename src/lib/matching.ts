@@ -237,15 +237,6 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
     // HARD FILTER 1: mentor at capacity → skip
     if ((mentor.current_mentees || 0) >= mentor.max_mentees) continue;
 
-    // HARD FILTER 2: no schedule overlap → skip
-    const studentAvail: Record<string, string[]> = student.availability || {};
-    const mentorAvail: Record<string, string[]> = mentor.availability || {};
-    if (
-      Object.keys(studentAvail).length > 0 &&
-      Object.keys(mentorAvail).length > 0 &&
-      !hasScheduleOverlap(studentAvail, mentorAvail)
-    ) continue;
-
     const { score, reasons } = calculateScore(student, mentor, mentorFeedback[mentor.id]);
 
     results.push({

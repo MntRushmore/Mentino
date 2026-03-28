@@ -70,6 +70,9 @@ profile.get("/profile", authMiddleware, async (c) => {
 profile.get("/profile/:userId", authMiddleware, async (c) => {
   const currentUser = c.get("user");
   const userId = c.req.param("userId");
+
+  // Guard: "edit" is a sub-route, not a userId
+  if (userId === "edit") return c.redirect("/profile/edit");
   const reviewed = c.req.query("reviewed");
 
   const { data: profileUser } = await supabase
@@ -419,6 +422,16 @@ function StarDisplay({ rating }: { rating: number }) {
   );
 }
 
+function PencilLink({ href }: { href: string }) {
+  return (
+    <a href={href} className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-indigo-500 p-1 rounded" title="Edit">
+      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+    </a>
+  );
+}
+
 function BadgeChip({ badge }: { badge: MentorBadge | StudentBadge }) {
   return (
     <span className={`inline-flex items-center gap-1 ${badge.color} ${badge.textColor} text-xs font-semibold px-2.5 py-1 rounded-full`}
@@ -477,8 +490,24 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         <div className={`relative px-8 py-10 overflow-hidden ${user.role === "mentor" ? "bg-gradient-to-r from-emerald-600 to-teal-600" : "bg-gradient-to-r from-indigo-600 to-blue-600"}`}>
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
           <div className="relative z-10 flex items-center gap-6">
-            {/* Avatar */}
-            {user.avatar_url ? (
+            {/* Avatar — click to edit if own profile */}
+            {isOwn ? (
+              <a href="/profile/edit" className="relative group flex-shrink-0" title="Change photo">
+                {user.avatar_url ? (
+                  <img src={user.avatar_url} alt={user.first_name} className="w-20 h-20 rounded-full object-cover border-4 border-white/30 shadow-lg" />
+                ) : (
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg border-4 border-white/30">
+                    {user.first_name?.[0]}{user.last_name?.[0]}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </a>
+            ) : user.avatar_url ? (
               <img src={user.avatar_url} alt={user.first_name} className="w-20 h-20 rounded-full object-cover border-4 border-white/30 shadow-lg flex-shrink-0" />
             ) : (
               <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg flex-shrink-0 border-4 border-white/30">
@@ -536,82 +565,123 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
 
         {/* Body */}
         <div className="p-8">
-          {user.bio && (
-            <div className="mb-6 bg-gray-50 rounded-xl p-5">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">About</h3>
+          {user.bio ? (
+            <div className="mb-6 bg-gray-50 rounded-xl p-5 group relative">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide">About</h3>
+                {isOwn && <PencilLink href="/profile/edit#bio" />}
+              </div>
               <p className="text-gray-700 leading-relaxed">{user.bio}</p>
             </div>
+          ) : isOwn && (
+            <a href="/profile/edit#bio" className="mb-6 flex items-center gap-2 bg-gray-50 border border-dashed border-gray-200 rounded-xl p-5 text-gray-400 hover:border-indigo-300 hover:text-indigo-500 transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4"/></svg>
+              <span className="text-sm">Add a bio</span>
+            </a>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Student specific */}
             {user.role === "student" && roleData && (
               <>
-                <div className="bg-indigo-50 rounded-xl p-4">
-                  <h3 className="text-xs font-semibold text-indigo-400 uppercase tracking-wide mb-2">Education</h3>
+                <div className="bg-indigo-50 rounded-xl p-4 group relative">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xs font-semibold text-indigo-400 uppercase tracking-wide">Education</h3>
+                    {isOwn && <PencilLink href="/profile/edit#school" />}
+                  </div>
                   <p className="text-gray-800 font-medium text-sm">{roleData.school_name || "—"}</p>
                   <p className="text-gray-500 text-xs mt-0.5">{roleData.grade_or_year || "—"}</p>
                 </div>
-                {roleData.career_interests?.length > 0 && (
-                  <div className="bg-blue-50 rounded-xl p-4">
-                    <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-2">Career Interests</h3>
+                <div className="bg-blue-50 rounded-xl p-4 group relative">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Career Interests</h3>
+                    {isOwn && <PencilLink href="/profile/edit#interests" />}
+                  </div>
+                  {roleData.career_interests?.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
                       {roleData.career_interests.map((i: string) => (
                         <span key={i} className="bg-white text-blue-700 text-xs px-2 py-0.5 rounded-full border border-blue-200">{i}</span>
                       ))}
                     </div>
+                  ) : (
+                    isOwn ? <a href="/profile/edit#interests" className="text-xs text-blue-400 hover:underline">+ Add interests</a> : <p className="text-xs text-gray-400">—</p>
+                  )}
+                </div>
+                <div className="md:col-span-2 bg-violet-50 rounded-xl p-4 group relative">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xs font-semibold text-violet-400 uppercase tracking-wide">Learning Goals</h3>
+                    {isOwn && <PencilLink href="/profile/edit#goals" />}
                   </div>
-                )}
-                {roleData.learning_goals && (
-                  <div className="md:col-span-2 bg-violet-50 rounded-xl p-4">
-                    <h3 className="text-xs font-semibold text-violet-400 uppercase tracking-wide mb-2">Learning Goals</h3>
+                  {roleData.learning_goals ? (
                     <p className="text-gray-700 text-sm">{roleData.learning_goals}</p>
-                  </div>
-                )}
+                  ) : (
+                    isOwn ? <a href="/profile/edit#goals" className="text-xs text-violet-400 hover:underline">+ Add your learning goals</a> : <p className="text-xs text-gray-400">—</p>
+                  )}
+                </div>
               </>
             )}
 
             {/* Mentor specific */}
             {user.role === "mentor" && roleData && (
               <>
-                <div className="bg-emerald-50 rounded-xl p-4">
-                  <h3 className="text-xs font-semibold text-emerald-500 uppercase tracking-wide mb-2">Experience</h3>
+                <div className="bg-emerald-50 rounded-xl p-4 group relative">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xs font-semibold text-emerald-500 uppercase tracking-wide">Experience</h3>
+                    {isOwn && <PencilLink href="/profile/edit#experience" />}
+                  </div>
                   <p className="text-gray-800 font-medium text-sm">{roleData.job_title}</p>
                   <p className="text-gray-500 text-xs mt-0.5">{roleData.career_field} · {roleData.years_experience} yrs</p>
                 </div>
-                {roleData.topics?.length > 0 && (
-                  <div className="bg-teal-50 rounded-xl p-4">
-                    <h3 className="text-xs font-semibold text-teal-500 uppercase tracking-wide mb-2">Mentoring Topics</h3>
+                <div className="bg-teal-50 rounded-xl p-4 group relative">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xs font-semibold text-teal-500 uppercase tracking-wide">Mentoring Topics</h3>
+                    {isOwn && <PencilLink href="/profile/edit#topics" />}
+                  </div>
+                  {roleData.topics?.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
                       {roleData.topics.map((t: string) => (
                         <span key={t} className="bg-white text-teal-700 text-xs px-2 py-0.5 rounded-full border border-teal-200">{t}</span>
                       ))}
                     </div>
-                  </div>
-                )}
-                {roleData.linkedin_url && (
-                  <div className="bg-blue-50 rounded-xl p-4">
-                    <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-2">LinkedIn</h3>
-                    <a href={roleData.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
-                      View LinkedIn Profile →
-                    </a>
+                  ) : (
+                    isOwn ? <a href="/profile/edit#topics" className="text-xs text-teal-500 hover:underline">+ Add topics</a> : <p className="text-xs text-gray-400">—</p>
+                  )}
+                </div>
+                {(roleData.linkedin_url || isOwn) && (
+                  <div className="bg-blue-50 rounded-xl p-4 group relative">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide">LinkedIn</h3>
+                      {isOwn && <PencilLink href="/profile/edit#linkedin" />}
+                    </div>
+                    {roleData.linkedin_url ? (
+                      <a href={roleData.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
+                        View LinkedIn Profile →
+                      </a>
+                    ) : (
+                      <a href="/profile/edit#linkedin" className="text-xs text-blue-400 hover:underline">+ Add LinkedIn URL</a>
+                    )}
                   </div>
                 )}
               </>
             )}
 
-            {roleData?.personality_tags?.length > 0 && (
-              <div className="md:col-span-2 bg-purple-50 rounded-xl p-4">
-                <h3 className="text-xs font-semibold text-purple-400 uppercase tracking-wide mb-2">
+            <div className="md:col-span-2 bg-purple-50 rounded-xl p-4 group relative">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xs font-semibold text-purple-400 uppercase tracking-wide">
                   {user.role === "mentor" ? "Mentoring Style" : "Personality"}
                 </h3>
+                {isOwn && <PencilLink href="/profile/edit#personality" />}
+              </div>
+              {roleData?.personality_tags?.length > 0 ? (
                 <div className="flex flex-wrap gap-1">
                   {roleData.personality_tags.map((tag: string) => (
                     <span key={tag} className="bg-white text-purple-700 text-xs px-2 py-0.5 rounded-full border border-purple-200">{tag}</span>
                   ))}
                 </div>
-              </div>
-            )}
+              ) : (
+                isOwn ? <a href="/profile/edit#personality" className="text-xs text-purple-400 hover:underline">+ Add personality tags</a> : <p className="text-xs text-gray-400">—</p>
+              )}
+            </div>
           </div>
 
           <div className="mt-6 pt-5 border-t border-gray-100 text-xs text-gray-400">
@@ -843,29 +913,35 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
             <div className="flex items-center gap-4">
-              {/* Current / preview avatar */}
-              {user.avatar_url ? (
-                <img id="avatar-preview" src={user.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-gray-200 flex-shrink-0" />
-              ) : (
-                <div id="avatar-initials" className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg flex-shrink-0">
-                  {user.first_name?.[0]}{user.last_name?.[0]}
+              {/* Single avatar preview element — no duplicate ids */}
+              <div id="avatar-wrap" className="flex-shrink-0 relative group cursor-pointer">
+                {user.avatar_url ? (
+                  <img id="avatar-preview" src={user.avatar_url} alt="" className="w-20 h-20 rounded-full object-cover border-2 border-gray-200" />
+                ) : (
+                  <div id="avatar-preview" className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-2xl">
+                    {user.first_name?.[0]}{user.last_name?.[0]}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
                 </div>
-              )}
-              {user.avatar_url && (
-                <img id="avatar-preview" src={user.avatar_url} alt="" className="hidden w-16 h-16 rounded-full object-cover border-2 border-indigo-300 flex-shrink-0" />
-              )}
+              </div>
               <div className="flex-1 space-y-2">
-                {/* Hidden input that holds the final value (data URL or pasted URL) */}
                 <input type="hidden" id="avatar-url-hidden" name="avatar_url" defaultValue={user.avatar_url || ""} />
-                {/* File picker */}
-                <label className="flex items-center gap-2 cursor-pointer bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-sm font-medium px-4 py-2 rounded-lg transition-colors w-fit">
+                <label className="flex items-center gap-2 cursor-pointer bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-sm font-semibold px-4 py-2 rounded-lg transition-colors w-fit">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   Upload Photo
                   <input type="file" id="avatar-file-input" accept="image/*" className="hidden" />
                 </label>
-                <p id="avatar-file-name" className="text-xs text-gray-400">JPG, PNG, GIF — max ~2MB. Will be resized to 200×200.</p>
+                <p id="avatar-file-name" className="text-xs text-gray-400">Click photo or button — JPG/PNG, auto-resized.</p>
+                {user.avatar_url && (
+                  <button type="button" id="avatar-remove-btn" className="text-xs text-red-400 hover:text-red-600 underline block">Remove photo</button>
+                )}
               </div>
             </div>
           </div>
@@ -1052,9 +1128,16 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           var fileInput = document.getElementById('avatar-file-input');
           var hiddenInput = document.getElementById('avatar-url-hidden');
           var fileNameLabel = document.getElementById('avatar-file-name');
-          var preview = document.getElementById('avatar-preview');
-          var initials = document.getElementById('avatar-initials');
+          var wrap = document.getElementById('avatar-wrap');
+          var removeBtn = document.getElementById('avatar-remove-btn');
           if (!fileInput) return;
+
+          // Clicking the avatar preview also triggers file picker
+          if (wrap) wrap.addEventListener('click', function(e) {
+            if (e.target === fileInput || e.target.closest('label')) return;
+            fileInput.click();
+          });
+
           fileInput.addEventListener('change', function(e) {
             var file = e.target.files[0];
             if (!file) return;
@@ -1063,30 +1146,46 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
             reader.onload = function(ev) {
               var img = new Image();
               img.onload = function() {
-                var MAX = 200;
+                var MAX = 300;
                 var w = img.width, h = img.height;
-                if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-                else { w = Math.round(w * MAX / h); h = MAX; }
+                var scale = Math.min(MAX / w, MAX / h, 1);
+                w = Math.round(w * scale); h = Math.round(h * scale);
                 var canvas = document.createElement('canvas');
                 canvas.width = w; canvas.height = h;
                 canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                var dataUrl = canvas.toDataURL('image/jpeg', 0.88);
                 hiddenInput.value = dataUrl;
-                if (preview) {
-                  preview.src = dataUrl;
-                  preview.classList.remove('hidden');
+                // Replace whatever is in avatar-wrap with an img
+                var existing = document.getElementById('avatar-preview');
+                if (existing && existing.tagName === 'IMG') {
+                  existing.src = dataUrl;
                 } else {
                   var newImg = document.createElement('img');
-                  newImg.src = dataUrl;
-                  newImg.className = 'w-16 h-16 rounded-full object-cover border-2 border-indigo-300 flex-shrink-0';
                   newImg.id = 'avatar-preview';
-                  if (initials) initials.replaceWith(newImg);
+                  newImg.src = dataUrl;
+                  newImg.className = 'w-20 h-20 rounded-full object-cover border-2 border-indigo-300';
+                  if (existing) existing.replaceWith(newImg);
                 }
-                fileNameLabel.textContent = file.name + ' ✓ ready';
+                fileNameLabel.textContent = '\u2713 ' + file.name + ' — ready to save';
               };
               img.src = ev.target.result;
             };
             reader.readAsDataURL(file);
+          });
+
+          // Remove photo button
+          if (removeBtn) removeBtn.addEventListener('click', function() {
+            hiddenInput.value = '';
+            var existing = document.getElementById('avatar-preview');
+            if (existing) {
+              var initials = document.createElement('div');
+              initials.id = 'avatar-preview';
+              initials.className = 'w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-2xl';
+              initials.textContent = hiddenInput.dataset.initials || '?';
+              existing.replaceWith(initials);
+            }
+            fileNameLabel.textContent = 'Photo removed — save to confirm.';
+            removeBtn.style.display = 'none';
           });
         })();
       ` }} />

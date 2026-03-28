@@ -112,13 +112,13 @@ const blogPosts = [
 
       <p class="source">Source: Chetty, R., Hendren, N., Kline, P., & Saez, E. (2014). <em>NBER Working Paper No. 19843</em>.</p>
 
-      <h3>That's the whole point of Mentino</h3>
+      <h3>That's what Mentino is for</h3>
 
-      <p>We connect students with working professionals — for free. No network required. Just sign up, tell us what you're interested in, and we'll find someone who can actually help you.</p>
+      <p>No network? No problem. Sign up, tell us what you're interested in, and we match you with someone who's actually in that field. Then you just ask them stuff.</p>
 
-      <p>If you're a student: don't wait. Find someone who's already where you want to be and ask them what they wish they'd known.</p>
+      <p>If you're a student: don't wait until you have everything figured out. The whole point is that you don't have to figure it out alone.</p>
 
-      <p>If you're a professional: consider what it would've meant to you to have someone like you when you were starting out.</p>
+      <p>If you're a professional: think about what it would've meant to you at 16 or 17 to have someone in your field willing to answer your questions. That's what you'd be doing.</p>
     `,
   },
   {
@@ -223,16 +223,16 @@ const blogPosts = [
 
       <h3>The Bottom Line for Students</h3>
 
-      <p>Here's what we'd tell any student thinking about career paths:</p>
+      <p>A few things worth keeping in mind before you choose:</p>
 
       <ol>
-        <li><strong>Don't choose solely based on salary.</strong> High-paying careers you hate lead to burnout. The best outcomes come from intersecting interest, aptitude, and market demand.</li>
-        <li><strong>STEM pays more on average</strong>, but the range within every field is enormous. Top performers in any field out-earn average performers in "higher-paying" fields.</li>
-        <li><strong>Talk to real people in the field.</strong> Salary data tells you the "what" but not the "feel." That's where mentorship comes in — ask someone who lives it every day.</li>
-        <li><strong>Consider the full picture:</strong> debt, training time, lifestyle, geographic flexibility, and long-term growth trajectory.</li>
+        <li><strong>Don't pick a career just for the salary.</strong> A high-paying job you hate will burn you out faster than a lower-paying one you're actually good at.</li>
+        <li><strong>STEM pays more on average</strong>, but the range inside every field is huge. A great attorney earns more than a mediocre software engineer. Field matters less than you'd think.</li>
+        <li><strong>Talk to someone who actually does it.</strong> Salary data tells you the number — it doesn't tell you what the job actually feels like at 10pm on a Tuesday. That's what mentors are for.</li>
+        <li><strong>Think past the first paycheck:</strong> student debt, years of training, lifestyle, location, and where the field is headed in 10 years all matter.</li>
       </ol>
 
-      <p>On Mentino, you can connect with professionals across 15+ career fields and get honest answers about what the work — and the compensation — really looks like.</p>
+      <p>On Mentino, you can find professionals across 15+ career fields who'll give you the honest version — not the recruiting brochure version.</p>
     `,
   },
   {
@@ -246,7 +246,7 @@ const blogPosts = [
     excerpt: "From first job to lifelong transferable skills.",
     readTime: "7 min read",
     content: `
-      <p>Mentorship doesn't just feel good — it produces measurable career outcomes. From landing your first job to building leadership skills that last a lifetime, the research consistently shows that mentored individuals outperform their peers.</p>
+      <p>There's a version of career success that comes from grinding alone, and a version that comes from knowing the right person at the right time. Most people who made it had both — but the second one is a lot harder to get by accident.</p>
 
       <div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #ddd6fe;border-radius:20px;padding:24px;margin:28px 0">
         <div style="font-size:0.75rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
@@ -323,11 +323,11 @@ const blogPosts = [
 
       <h3>What This Means for Students</h3>
 
-      <p>The evidence is overwhelming: mentorship works. It improves starting salaries, accelerates career growth, develops leadership skills, and has lasting effects that compound over decades.</p>
+      <p>The data is consistent across decades of research: mentorship works. Not just a little — it moves the needle on salary, promotions, leadership, and job satisfaction in ways that compound over a whole career.</p>
 
-      <p>But here's the key insight — <strong>the earlier you start, the more you benefit</strong>. Students who find mentors in high school or early college have more time to apply what they learn, more runway to build relationships, and more opportunities to course-correct before major decisions.</p>
+      <p>And the earlier you start, the more runway you have. A mentor in high school or early college gives you time to actually use what you learn — to make better decisions before you've locked anything in.</p>
 
-      <p>That's exactly what Mentino is designed for. We connect students with verified professionals at the earliest stages of career exploration, so that every student — regardless of their background or network — can benefit from the mentorship effect.</p>
+      <p>That's what Mentino is for. Sign up, find someone who's already where you're trying to go, and just ask them what you need to know.</p>
     `,
   },
   {
@@ -402,7 +402,7 @@ const blogPosts = [
 
       <h3>The short version</h3>
 
-      <p>Your career doesn't have to be a straight line. The most interesting ones rarely are. Explore, talk to real people, try things, and trust that clarity comes from doing — not from sitting and thinking harder about it.</p>
+      <p>Your career doesn't have to be a straight line — and it probably won't be. The most interesting ones rarely are. Explore, talk to real people, try things. Clarity comes from doing, not from sitting and thinking harder about it. Stop waiting to have it figured out and start having conversations with people who can help you figure it out.</p>
     `,
   },
   {
@@ -487,8 +487,8 @@ blog.get("/blog", optionalAuth, (c) => {
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
               Mentino Blog
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Stories, Research & Career Insights</h1>
-            <p className="text-lg text-slate-300 max-w-xl mx-auto">Research-backed writing on mentorship, salary data, and student success — by Ethan Branzuela, founder of Mentino.</p>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Things worth knowing before you pick a career.</h1>
+            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real data, and honest takes — written by Ethan Branzuela, the 15-year-old who built Mentino.</p>
           </div>
         </div>
 
@@ -573,8 +573,8 @@ blog.get("/blog", optionalAuth, (c) => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/92 to-violet-900/88 flex items-center justify-center">
             <div className="text-center text-white px-6">
-              <h3 className="text-2xl font-bold mb-2">Ready to find your career mentor?</h3>
-              <p className="text-indigo-200 mb-5">Join Mentino — free for all students, verified professionals only.</p>
+              <h3 className="text-2xl font-bold mb-2">Stop reading. Start talking to someone.</h3>
+              <p className="text-indigo-200 mb-5">All the research in the world doesn't beat one honest conversation with someone who's actually done it.</p>
               <a href="/signup" className="bg-white text-indigo-700 font-bold px-8 py-3 rounded-full hover:bg-indigo-50 transition-colors">
                 Get Started Free
               </a>

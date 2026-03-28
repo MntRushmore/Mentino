@@ -262,13 +262,12 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
   // Sort by score descending
   results.sort((a, b) => b.score - a.score);
 
-  // Assign match labels to top 3
-  const top = results.slice(0, 10);
-  if (top[0]) top[0].matchLabel = "Best Match";
-  if (top[1]) top[1].matchLabel = "Strong Alternative";
-  if (top[2]) top[2].matchLabel = "Wildcard Match";
+  // Assign match labels to top 3, show ALL results
+  if (results[0]) results[0].matchLabel = "Best Match";
+  if (results[1]) results[1].matchLabel = "Strong Alternative";
+  if (results[2]) results[2].matchLabel = "Wildcard Match";
 
-  return top;
+  return results;
 }
 
 // ── Scoring ───────────────────────────────────────────────────────────────────

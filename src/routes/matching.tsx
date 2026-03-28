@@ -293,11 +293,26 @@ matching.get("/matching", authMiddleware, async (c) => {
                             <p className="text-gray-600 text-sm line-clamp-2 mb-2">{result.mentorUser.bio}</p>
                           )}
                           <p className="text-emerald-600 text-xs font-medium mb-2">✓ {result.reason}</p>
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-1 mb-2">
                             {result.mentor.topics?.slice(0, 4).map((topic: string) => (
                               <span key={topic} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">{topic}</span>
                             ))}
                           </div>
+                          {/* Availability */}
+                          {result.mentor.availability && Object.keys(result.mentor.availability).length > 0 && (
+                            <div className="mt-2">
+                              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Available</p>
+                              <div className="flex flex-wrap gap-1">
+                                {Object.entries(result.mentor.availability as Record<string, string[]>).map(([day, slots]) =>
+                                  (slots as string[]).map((slot) => (
+                                    <span key={`${day}-${slot}`} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5 rounded-full border border-emerald-100">
+                                      {day.charAt(0).toUpperCase() + day.slice(1)} {slot}
+                                    </span>
+                                  ))
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                         <div className="flex flex-col gap-2 min-w-[190px]">
                           <form method="POST" action="/matching/request" className="space-y-2">

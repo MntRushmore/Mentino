@@ -115,7 +115,7 @@ staticPages.get("/about", optionalAuth, (c) => {
             <span className="inline-block bg-white/20 border border-white/30 text-white text-sm font-semibold px-5 py-2 rounded-full mb-5 backdrop-blur-sm anim-fade-in">About Mentino</span>
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 anim-fade-up anim-d1">Mentorship shouldn't depend<br />on who you know.</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto anim-fade-up anim-d2">
-              A free platform connecting students with verified professionals for personalized career guidance — regardless of background or network.
+              Every student deserves a shot at their dream career — not just the ones whose parents happened to know the right people.
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ staticPages.get("/about", optionalAuth, (c) => {
         <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 mb-8 text-white">
           <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
           <p className="text-indigo-100 text-lg leading-relaxed">
-            Too many talented students lack access to professional networks and career guidance. Students from well-connected families get career advice over dinner. Everyone else has to figure it out alone. Mentino bridges this gap by creating a safe, structured platform where industry professionals can volunteer their time to help the next generation succeed.
+            Some students have a parent in the field they want to enter. An uncle who's a lawyer. A family friend who runs a startup. They get career advice over dinner without even asking for it. Everyone else has to figure things out alone — or not at all. Mentino exists to close that gap. It's where students who don't have those connections can find a real person who's already doing the work and just ask them.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -132,24 +132,24 @@ staticPages.get("/about", optionalAuth, (c) => {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
             </div>
             <h3 className="text-lg font-bold text-gray-900 mb-2">For Students</h3>
-            <p className="text-gray-600">Create a profile, tell us about your career interests and goals, and our matching system will connect you with mentors who align with your aspirations.</p>
+            <p className="text-gray-600">Sign up, tell us what you're interested in and where you want to go, and we'll find mentors who've actually been there.</p>
           </div>
           <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6">
             <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white mb-4">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             </div>
             <h3 className="text-lg font-bold text-gray-900 mb-2">For Mentors</h3>
-            <p className="text-gray-600">Sign up, complete our verification process, and start making an impact. Share your experience, conduct mock interviews, or help students understand your career path.</p>
+            <p className="text-gray-600">Sign up, go through our verification process, and connect with students who genuinely want to hear from someone like you. A few conversations is all it takes.</p>
           </div>
         </div>
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { title: "Accessibility", desc: "Free for all students. No premium tiers, no paywalls. Every student deserves opportunity.", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
-              { title: "Safety", desc: "All mentors are verified. Content is moderated. Students under 18 require parental consent.", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
-              { title: "Authenticity", desc: "Real mentors with real experience. No fluff, no filler — genuine career guidance from people who've done it.", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
-              { title: "Impact", desc: "Conversations that create long-term growth. Sometimes one mentor is all it takes to change a life.", bg: "bg-amber-50", border: "border-amber-100", h: "text-amber-800", p: "text-amber-700" },
+              { title: "Accessibility", desc: "Free for students, full stop. No premium tier, no waitlist, no paywall. If you want to find a mentor, you can.", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
+              { title: "Safety", desc: "Every mentor is manually reviewed before going live. Students under 18 require parental consent. We don't skip steps.", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
+              { title: "Honesty", desc: "We match you with people who've actually done the thing — not coaches who've read about it. Real experience, real talk.", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
+              { title: "Impact", desc: "One conversation can change how you see your future. That's not an exaggeration — we've seen it happen.", bg: "bg-amber-50", border: "border-amber-100", h: "text-amber-800", p: "text-amber-700" },
             ].map((v) => (
               <div key={v.title} className={`${v.bg} border ${v.border} rounded-xl p-5`}>
                 <h3 className={`font-bold ${v.h} text-lg mb-1`}>{v.title}</h3>
@@ -159,9 +159,9 @@ staticPages.get("/about", optionalAuth, (c) => {
           </div>
         </div>
         <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-8 text-center text-white">
-          <h2 className="text-xl font-bold mb-2">Get in Touch</h2>
+          <h2 className="text-xl font-bold mb-2">Say hi.</h2>
           <p className="text-emerald-100">
-            Have questions, feedback, or want to partner with us? Reach out at{" "}
+            Questions, feedback, or just want to reach out? Email us at{" "}
             <a href="mailto:hello@mentino.org" className="underline font-semibold hover:text-white">hello@mentino.org</a>
           </p>
         </div>
@@ -338,7 +338,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
         {/* CTA */}
         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-10 text-center text-white">
           <h3 className="text-2xl font-bold mb-2">Come be part of it.</h3>
-          <p className="text-indigo-100 mb-6">If you're a student who wants direction, sign up. If you're someone who's figured something out and wants to share it — we need you.</p>
+          <p className="text-indigo-100 mb-6">If you're a student trying to figure out your path, sign up. If you're someone who's already figured something out and wants to share it — we genuinely need you.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <a href="/signup" className="bg-white text-indigo-600 font-bold px-7 py-3 rounded-full hover:bg-indigo-50 transition-colors">
               Sign Up as Student
@@ -374,9 +374,9 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
             <span className="inline-block bg-white/20 border border-white/30 text-white text-sm font-semibold px-5 py-2 rounded-full mb-4 backdrop-blur-sm">
               How It Works
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4">From Sign-Up to Mentorship in Minutes</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Sign up. Get matched. Actually talk to someone.</h1>
             <p className="text-lg text-emerald-100 max-w-2xl mx-auto">
-              Our smart matching platform makes it easy to find the right career mentor. Here's exactly how the process works — step by step.
+              No complicated onboarding, no weeks of waiting. Here's how it works — it's pretty straightforward.
             </p>
           </div>
         </div>
@@ -400,7 +400,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
         <div className="mb-14">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">Your 4-Step Journey</h2>
           <p className="text-center text-gray-500 mb-10 max-w-xl mx-auto">
-            From creating your profile to your first mentorship session — here's every step.
+            From creating your profile to your first session — here's what it actually looks like.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
@@ -408,32 +408,32 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
                 number: 1, color: "blue",
                 title: "Create Your Profile",
                 img: "https://images.unsplash.com/photo-1616587226157-48e49175ee20?w=600&q=80",
-                description: "Sign up and tell us about yourself. Students share their career interests, learning goals, availability, and personality traits. Mentors share professional background, expertise, and topics they can help with.",
-                details: ["Choose your role: Student or Mentor", "Complete a simple multi-step registration", "Students: career interests, goals, schedule preferences", "Mentors: job title, experience, topics, verification"],
+                description: "Sign up and tell us who you are. Students share their career interests, goals, availability, and how they like to learn. Mentors share their background, what they can help with, and when they're free.",
+                details: ["Pick your role: Student or Mentor", "Takes about 5 minutes to set up your profile", "Students: interests, goals, schedule, personality style", "Mentors: job title, experience, topics, verification info"],
                 numBg: "bg-blue-600", cardBg: "bg-blue-50", cardBorder: "border-blue-100", dot: "bg-blue-400",
               },
               {
                 number: 2, color: "emerald",
                 title: "Get Smart-Matched",
                 img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-                description: "Our matching system analyzes 5 key factors to find the best mentor-student pairs. It's not random — it's thoughtful, data-driven pairing designed to maximize the value of every career conversation.",
-                details: ["Career field alignment (35% of match score)", "Topic relevance to your goals (25%)", "Schedule overlap so you can actually meet (20%)", "Personality and learning style compatibility (15%)"],
+                description: "The matching system looks at your career interests, learning goals, schedule, and personality style to find mentors who are a real fit — not just the closest keyword match.",
+                details: ["Career field alignment (35% of match score)", "Topic relevance to your goals (25%)", "Schedule overlap — because you have to actually meet (20%)", "Personality and learning style (15%)"],
                 numBg: "bg-emerald-600", cardBg: "bg-emerald-50", cardBorder: "border-emerald-100", dot: "bg-emerald-400",
               },
               {
                 number: 3, color: "violet",
                 title: "Request a Match",
                 img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80",
-                description: "Browse your top matches, read mentor profiles, and request to connect with the ones that resonate with you. Mentors review requests and accept the students they feel they can help most.",
-                details: ["See your top 10 matches ranked by compatibility", "Read detailed mentor bios and career expertise", "Send a match request with one click", "Mentors accept or pass — no pressure on either side"],
+                description: "Browse your matches, read through mentor profiles, and send a request to the ones that feel right. Mentors review it and accept when they think it's a good fit — no awkward cold-pitching involved.",
+                details: ["See your matches ranked by compatibility", "Read actual mentor bios — not just job titles", "Send a request with one click", "Mentors accept or pass — no weirdness either way"],
                 numBg: "bg-violet-600", cardBg: "bg-violet-50", cardBorder: "border-violet-100", dot: "bg-violet-400",
               },
               {
                 number: 4, color: "amber",
                 title: "Connect & Learn",
                 img: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80",
-                description: "Once matched, start messaging your mentor directly through Mentino. Schedule video sessions for deeper conversations. Get career guidance on interviews, college decisions, and more.",
-                details: ["Direct messaging built into the platform", "Schedule video sessions at times that work for both", "Rate sessions and provide feedback", "Stay connected as long as the mentorship is valuable"],
+                description: "Once matched, message your mentor and set up a time to talk. Use the platform to schedule sessions, keep notes, and leave feedback after. That's it — the rest is just a real conversation.",
+                details: ["Direct messaging inside the platform", "Schedule video sessions whenever it works for both of you", "Rate and review sessions after they happen", "Keep the relationship going as long as it's useful"],
                 numBg: "bg-amber-600", cardBg: "bg-amber-50", cardBorder: "border-amber-100", dot: "bg-amber-400",
               },
             ].map((step) => (
@@ -503,7 +503,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 md:p-10 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Inside the Matching System</h2>
           <p className="text-gray-500 text-center mb-10 max-w-2xl mx-auto">
-            Our algorithm considers eight factors — including mentorship style alignment, specific session needs, and experience-level fit — to pair you with the most compatible mentor. Here's how the core weights break down:
+            The algorithm looks at eight factors — your mentorship style, session needs, experience level, and more — to find someone who's actually a good fit. Here's how the core weights break down:
           </p>
           <div className="flex flex-col md:flex-row gap-10 items-center">
             {/* SVG Donut Chart */}
@@ -547,9 +547,9 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
 
         {/* Research Impact Section — visual bar chart */}
         <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-2xl p-8 md:p-10 mb-10 text-white">
-          <h2 className="text-2xl font-bold mb-2 text-center">Why Mentorship Works — The Research</h2>
+          <h2 className="text-2xl font-bold mb-2 text-center">Why Mentorship Works</h2>
           <p className="text-slate-300 text-center mb-10 max-w-xl mx-auto">
-            The data is clear: mentored students and professionals consistently outperform their peers across every key career metric.
+            The research keeps pointing the same direction. Mentored students and professionals consistently do better — not by a little.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left: horizontal bar chart */}
@@ -601,7 +601,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Salary by Career Field</h2>
           <p className="text-gray-500 text-center mb-8 max-w-xl mx-auto">
-            Median annual salaries across major career fields (BLS, May 2023). Talk to mentors in any field to understand the full picture.
+            Median annual salaries by field (BLS, May 2023). Numbers tell you what, mentors tell you how — find someone in your field and ask.
           </p>
           <div className="space-y-3">
             {[
@@ -638,7 +638,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
                 ),
                 bg: "bg-emerald-100",
                 title: "Verified Mentors",
-                desc: "Every mentor goes through a verification process before connecting with students. We check credentials, review backgrounds, and approve manually.",
+                desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand — no automation shortcuts.",
               },
               {
                 icon: (
@@ -646,7 +646,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
                 ),
                 bg: "bg-blue-100",
                 title: "Content Moderation",
-                desc: "All messages are monitored. Inappropriate content is flagged and reviewed by our admin team within 24 hours. Users can report any concern at any time.",
+                desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it — we take those seriously.",
               },
               {
                 icon: (
@@ -654,7 +654,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
                 ),
                 bg: "bg-amber-100",
                 title: "Parental Consent",
-                desc: "Students under 18 require parental consent to use the platform. We take the safety of young users extremely seriously.",
+                desc: "Students under 18 need parental consent to join. This isn't optional — it's how we keep younger students safe.",
               },
             ].map((item) => (
               <div key={item.title} className="text-center">
@@ -670,11 +670,16 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-10 text-center text-white">
-          <h3 className="text-2xl font-bold mb-2">Ready to get matched?</h3>
-          <p className="text-emerald-100 mb-6">Create your profile in under 5 minutes and start connecting with career mentors today.</p>
-          <a href="/signup" className="inline-block bg-white text-emerald-700 font-bold px-8 py-3 rounded-full hover:bg-emerald-50 transition-colors">
-            Sign Up Free
-          </a>
+          <h3 className="text-2xl font-bold mb-2">Start the conversation.</h3>
+          <p className="text-emerald-100 mb-6">Set up your profile in 5 minutes and get matched with someone who's already in the field you want to enter.</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/signup?role=student" className="inline-block bg-white text-emerald-700 font-bold px-8 py-3 rounded-full hover:bg-emerald-50 transition-colors">
+              I'm a Student
+            </a>
+            <a href="/signup?role=mentor" className="inline-block border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition-colors">
+              I'm a Mentor
+            </a>
+          </div>
         </div>
       </div>
     </Layout>

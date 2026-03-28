@@ -77,17 +77,45 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
             <div className="hidden md:flex items-center">
               {user ? (
                 <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
-                  <a href="/profile" className="text-gray-600 hover:text-indigo-600 font-medium text-sm relative">
-                    {user.first_name}
-                    {pending > 0 && user.role === "mentor" && (
-                      <span className="absolute -top-2 -right-4 bg-yellow-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                        {pending > 9 ? "9+" : pending}
-                      </span>
-                    )}
-                  </a>
-                  <form method="POST" action="/logout" className="inline">
-                    <button type="submit" className="text-gray-400 hover:text-red-500 text-sm font-medium">Logout</button>
-                  </form>
+                  {/* Profile dropdown */}
+                  <div className="relative" id="profile-menu-wrap">
+                    <button id="profile-menu-btn" type="button"
+                      className="flex items-center gap-1.5 text-gray-700 hover:text-indigo-600 font-medium text-sm transition-colors">
+                      {user.first_name}
+                      {pending > 0 && user.role === "mentor" && (
+                        <span className="bg-yellow-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                          {pending > 9 ? "9+" : pending}
+                        </span>
+                      )}
+                      <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    <div id="profile-menu-dropdown"
+                      className="hidden absolute right-0 top-full mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-50">
+                      <a href="/profile" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        View Profile
+                      </a>
+                      <a href="/profile/edit" className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit Profile
+                      </a>
+                      <div className="border-t border-gray-100 my-1" />
+                      <form method="POST" action="/logout">
+                        <button type="submit" className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                          </svg>
+                          Logout
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
@@ -99,13 +127,8 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
               )}
             </div>
 
-            {/* Mobile: right side (sign up or name) + hamburger */}
+            {/* Mobile: right side (name if logged in) + hamburger */}
             <div className="flex items-center gap-1.5 md:hidden">
-              {!user && (
-                <a href="/signup" className="bg-indigo-600 text-white px-3 py-1.5 rounded-full font-semibold text-xs whitespace-nowrap">
-                  Sign Up
-                </a>
-              )}
               {user && (
                 <a href="/profile" className="text-gray-700 font-medium text-sm truncate max-w-[80px]">{user.first_name}</a>
               )}
@@ -184,6 +207,17 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
               var hidden = menu.classList.toggle('hidden');
               iconOpen.classList.toggle('hidden', !hidden);
               iconClose.classList.toggle('hidden', hidden);
+            });
+          }
+          var profileBtn = document.getElementById('profile-menu-btn');
+          var profileDropdown = document.getElementById('profile-menu-dropdown');
+          if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              profileDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function() {
+              profileDropdown.classList.add('hidden');
             });
           }
         })();

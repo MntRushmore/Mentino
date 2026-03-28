@@ -8,7 +8,7 @@ export function Footer() {
           <div>
             <h3 className="text-xl font-bold text-white mb-3">Mentino</h3>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Connecting students with verified professionals for personalized career guidance. Free for everyone.
+              Free mentorship for students. Real professionals who want to give back. No network required.
             </p>
           </div>
           <div>

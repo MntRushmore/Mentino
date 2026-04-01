@@ -116,9 +116,23 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
     if (careerInterestsCustom) {
       careerInterests.push(careerInterestsCustom);
     }
-    const personalityTags = normalizeArray(body.personality_tags);
+    // Merge all personality-related arrays: base tags + session needs + mentorship style + frequency
+    const personalityTags = [
+      ...normalizeArray(body.personality_tags),
+      ...normalizeArray(body.session_needs),
+      ...normalizeArray(body.mentorship_style),
+      ...normalizeArray(body.session_frequency),
+    ];
     const schoolName = (body.school_name as string)?.trim() || null;
     const gradeOrYear = (body.grade_or_year as string)?.trim() || null;
+
+    // Parse availability from checkbox grid
+    const availability: Record<string, string[]> = {};
+    const DAYS_LC = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
+    for (const day of DAYS_LC) {
+      const slots = normalizeArray((body as any)[`availability_${day}`]);
+      if (slots.length > 0) availability[day] = slots;
+    }
 
     if (learningGoals) {
       const goalsMod = moderateFields({ learning_goals: learningGoals });
@@ -136,9 +150,10 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
       user_id: user.id,
       school_name: schoolName,
       grade_or_year: gradeOrYear,
-      career_interests: careerInterests.length > 0 ? careerInterests : [],
+      career_interests: careerInterests,
       learning_goals: learningGoals,
-      personality_tags: personalityTags.length > 0 ? personalityTags : [],
+      personality_tags: personalityTags,
+      availability,
     };
     const { data: existingStudent } = await supabase.from("students").select("id").eq("user_id", user.id).single();
     if (existingStudent) {
@@ -154,23 +169,38 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
     const linkedinUrl = (body.linkedin_url as string)?.trim() || null;
     const careerFieldCustom = (body.career_field_custom as string)?.trim();
     const finalCareerField = careerFieldCustom || careerField;
-    const personalityTagsMentor = normalizeArray(body.personality_tags);
+    // Merge personality tags + mentor approach + mentor best-for
+    const personalityTagsMentor = [
+      ...normalizeArray(body.personality_tags),
+      ...normalizeArray(body.mentor_approach),
+      ...normalizeArray(body.mentor_best_for),
+    ];
     const yearsExp = parseInt(body.years_experience as string) || undefined;
+    const maxMentees = parseInt(body.max_mentees as string) || undefined;
 
-    const updateData: Record<string, any> = {};
+    // Parse availability from checkbox grid
+    const availability: Record<string, string[]> = {};
+    const DAYS_LC = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
+    for (const day of DAYS_LC) {
+      const slots = normalizeArray((body as any)[`availability_${day}`]);
+      if (slots.length > 0) availability[day] = slots;
+    }
+
+    const updateData: Record<string, any> = {
+      topics,
+      personality_tags: personalityTagsMentor,
+      availability,
+    };
     if (jobTitle) updateData.job_title = jobTitle;
     if (company !== undefined) updateData.company = company;
     if (finalCareerField) updateData.career_field = finalCareerField;
-    if (topics.length > 0) updateData.topics = topics;
     if (linkedinUrl !== undefined) updateData.linkedin_url = linkedinUrl;
-    if (personalityTagsMentor.length > 0) updateData.personality_tags = personalityTagsMentor;
     if (yearsExp) updateData.years_experience = yearsExp;
+    if (maxMentees) updateData.max_mentees = maxMentees;
 
     const { data: existingMentor } = await supabase.from("mentors").select("id").eq("user_id", user.id).single();
     if (existingMentor) {
-      if (Object.keys(updateData).length > 0) {
-        await supabase.from("mentors").update(updateData).eq("user_id", user.id);
-      }
+      await supabase.from("mentors").update(updateData).eq("user_id", user.id);
     } else {
       await supabase.from("mentors").insert({
         user_id: user.id,
@@ -178,7 +208,7 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
         company: updateData.company || "",
         career_field: updateData.career_field || "",
         topics: updateData.topics || [],
-        availability: {},
+        availability: updateData.availability || {},
         verification_status: "approved",
         verified_at: new Date().toISOString(),
         ...updateData,
@@ -887,6 +917,51 @@ const MENTOR_TOPICS_FULL = [
   "Industry trends", "Technical skills", "Soft skills",
 ];
 
+const EDIT_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const EDIT_TIME_SLOTS = ["9am-12pm", "12pm-3pm", "3pm-6pm", "6pm-9pm"];
+
+function EditAvailabilityGrid({ availability }: { availability?: Record<string, string[]> }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr>
+            <th className="p-2 text-left text-sm text-gray-500"></th>
+            {EDIT_TIME_SLOTS.map((slot) => (
+              <th key={slot} className="p-2 text-center text-xs text-gray-500 font-medium">{slot}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {EDIT_DAYS.map((day) => (
+            <tr key={day}>
+              <td className="p-2 text-sm font-medium text-gray-700">{day}</td>
+              {EDIT_TIME_SLOTS.map((slot) => {
+                const key = day.toLowerCase();
+                const isChecked = availability?.[key]?.includes(slot) || false;
+                return (
+                  <td key={slot} className="p-1 text-center">
+                    <label className="flex items-center justify-center p-2 border border-gray-200 rounded cursor-pointer hover:bg-blue-50 has-[:checked]:bg-blue-100 has-[:checked]:border-blue-400">
+                      <input
+                        type="checkbox"
+                        name={`availability_${key}`}
+                        value={slot}
+                        defaultChecked={isChecked}
+                        className="sr-only"
+                      />
+                      <span className="w-4 h-4 rounded border border-gray-300 has-[:checked]:bg-blue-600 block"></span>
+                    </label>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; error?: string }) {
   const inputClass = "w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm";
 
@@ -1042,6 +1117,70 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                 ))}
               </div>
             </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">What You Need Help With</h2>
+              <p className="text-xs text-gray-400 -mt-2">Select all that apply — this feeds our matching algorithm.</p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: "Need: college applications", label: "🎓 College applications" },
+                  { value: "Need: career exploration", label: "🔭 Exploring career options" },
+                  { value: "Need: skill building", label: "🔧 Building specific skills" },
+                  { value: "Need: interview prep", label: "🎤 Interview preparation" },
+                  { value: "Need: networking", label: "🤝 Networking & connections" },
+                  { value: "Need: day-in-life insights", label: "👁 Day-in-the-life insights" },
+                  { value: "Need: resume cv", label: "📄 Resume / CV help" },
+                  { value: "Need: entrepreneurship", label: "🚀 Starting something" },
+                ].map((opt) => (
+                  <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
+                    <input type="checkbox" name="session_needs" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="rounded text-indigo-600 flex-shrink-0" />
+                    <span className="text-gray-700">{opt.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Mentorship Preferences</h2>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">How would you prefer to be mentored?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Style: structured sessions", label: "📋 Structured sessions" },
+                    { value: "Style: casual chats", label: "💬 Casual conversations" },
+                    { value: "Style: project-based", label: "📁 Project-based work" },
+                    { value: "Style: advice on demand", label: "⚡ Advice when needed" },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
+                      <input type="checkbox" name="mentorship_style" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="rounded text-indigo-600 flex-shrink-0" />
+                      <span className="text-gray-700">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">How often can you commit to meeting?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Freq: weekly", label: "📆 Weekly" },
+                    { value: "Freq: bi-weekly", label: "📅 Every two weeks" },
+                    { value: "Freq: monthly", label: "🗓 Monthly" },
+                    { value: "Freq: as-needed", label: "🔔 As-needed / flexible" },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
+                      <input type="radio" name="session_frequency" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="text-indigo-600 flex-shrink-0" />
+                      <span className="text-gray-700">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Availability</h2>
+              <p className="text-xs text-gray-400 -mt-2">When are you generally free for sessions?</p>
+              <EditAvailabilityGrid availability={roleData?.availability} />
+            </div>
           </>
         )}
 
@@ -1107,6 +1246,52 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                     <span className="text-gray-700">{tag}</span>
                   </label>
                 ))}
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">How do you typically mentor?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Approach: structured sessions", label: "📋 Structured sessions" },
+                    { value: "Approach: casual conversations", label: "💬 Casual conversations" },
+                    { value: "Approach: project-based", label: "📁 Project-based work" },
+                    { value: "Approach: available when needed", label: "⚡ Available when needed" },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
+                      <input type="checkbox" name="mentor_approach" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="rounded text-emerald-600 flex-shrink-0" />
+                      <span className="text-gray-700">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">Who do you mentor best?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: "Best for: high schoolers", label: "🎒 High school students" },
+                    { value: "Best for: college students", label: "🏛 College students" },
+                    { value: "Best for: career changers", label: "🔄 Career changers" },
+                    { value: "Best for: any student", label: "🌍 Anyone — I'm flexible" },
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
+                      <input type="checkbox" name="mentor_best_for" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="rounded text-emerald-600 flex-shrink-0" />
+                      <span className="text-gray-700">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Availability & Capacity</h2>
+              <p className="text-xs text-gray-400 -mt-2">When are you available for sessions?</p>
+              <EditAvailabilityGrid availability={roleData?.availability} />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Maximum number of mentees</label>
+                <select name="max_mentees" defaultValue={roleData?.max_mentees?.toString() || "3"} className={inputClass}>
+                  {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                    <option key={n} value={n.toString()}>{n} {n === 1 ? "mentee" : "mentees"}</option>
+                  ))}
+                </select>
               </div>
             </div>
           </>

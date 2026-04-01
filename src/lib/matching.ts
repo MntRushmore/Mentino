@@ -170,17 +170,6 @@ const PREFIXES = ["Need:", "Style:", "Freq:", "Approach:", "Best for:"];
 
 // ── Hard filter helpers ───────────────────────────────────────────────────────
 
-function hasScheduleOverlap(
-  studentAvail: Record<string, string[]>,
-  mentorAvail: Record<string, string[]>
-): boolean {
-  for (const [day, slots] of Object.entries(studentAvail)) {
-    const mentorSlots = mentorAvail[day] || [];
-    if (slots.some((s) => mentorSlots.includes(s))) return true;
-  }
-  return false;
-}
-
 // ── Main find function ────────────────────────────────────────────────────────
 
 export async function findMatches(studentUserId: string): Promise<MatchResult[]> {
@@ -233,9 +222,6 @@ export async function findMatches(studentUserId: string): Promise<MatchResult[]>
     // Skip if profile not complete or already matched
     if (!mentor.accounts?.registration_complete) continue;
     if (matchedMentorIds.has(mentor.id)) continue;
-
-    // HARD FILTER 1: mentor at capacity → skip
-    if ((mentor.current_mentees || 0) >= mentor.max_mentees) continue;
 
     const { score, reasons } = calculateScore(student, mentor, mentorFeedback[mentor.id]);
 

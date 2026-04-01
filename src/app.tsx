@@ -46,13 +46,11 @@ app.get("/", optionalAuth, async (c) => {
     supabase
       .from("accounts")
       .select("*", { count: "exact", head: true })
-      .eq("role", "student")
-      .eq("is_active", true)
-      .eq("registration_complete", true),
+      .eq("role", "student"),
     supabase
-      .from("mentors")
+      .from("accounts")
       .select("*", { count: "exact", head: true })
-      .eq("verification_status", "approved"),
+      .eq("role", "mentor"),
     supabase
       .from("matches")
       .select("*", { count: "exact", head: true })

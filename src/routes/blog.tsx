@@ -26,9 +26,9 @@ const blogPosts = [
     excerpt: "Confidence, networking, and professional growth — what the research says.",
     readTime: "6 min read",
     content: `
-      <p>You can learn almost anything online. Free courses, YouTube tutorials, research papers — information has never been more accessible. So why does mentorship still matter?</p>
+      <p>You can learn almost anything online. Free courses, YouTube tutorials, research papers: information has never been more accessible. So why does mentorship still matter?</p>
 
-      <p>Because knowing <em>what</em> to learn is different from knowing <em>how to navigate a career</em>. That's the gap a mentor fills.</p>
+      <p>Because knowing <em>what</em> to learn is different from knowing <em>how to navigate a career</em>. A mentor bridges that gap.</p>
 
       <h3>What the research actually says</h3>
 
@@ -39,9 +39,9 @@ const blogPosts = [
       <p>Research in the <em>Journal of Applied Psychology</em> found mentored workers reported:</p>
 
       <ul>
-        <li><strong>Higher salaries</strong> — about $5,610 more per year on average</li>
-        <li><strong>Greater career satisfaction</strong> — 4x more than non-mentored peers</li>
-        <li><strong>More promotions</strong> — at a significantly higher rate</li>
+        <li><strong>Higher salaries:</strong> about $5,610 more per year on average</li>
+        <li><strong>Greater career satisfaction:</strong> 4x the rate of non-mentored peers</li>
+        <li><strong>More promotions</strong> at a significantly higher rate</li>
       </ul>
 
       <div style="background:linear-gradient(135deg,#eff6ff,#eef2ff);border:1px solid #bfdbfe;border-radius:20px;padding:24px;margin:28px 0">
@@ -100,7 +100,7 @@ const blogPosts = [
 
       <h3>Confidence is underrated</h3>
 
-      <p>Mentorship builds self-efficacy — your belief that you can actually do something. Research shows this translates directly into career behavior: people who believe in themselves are more likely to apply for harder roles, take on challenges, and push through setbacks instead of giving up.</p>
+      <p>Mentorship builds self-efficacy: the belief that you can actually accomplish something difficult. Research shows this translates directly into career behavior. People who believe in their own capabilities are more likely to pursue challenging roles, take on stretch assignments, and persist through setbacks rather than withdrawing.</p>
 
       <p class="source">Source: Bandura, A. (1994). "Self-efficacy." <em>Encyclopedia of Human Behavior</em>, Vol. 4, 71-81.</p>
 
@@ -132,7 +132,7 @@ const blogPosts = [
     excerpt: "NSF 2024 earnings data broken down clearly for students.",
     readTime: "8 min read",
     content: `
-      <p>One of the biggest questions students have when choosing a career path is: <strong>"How much will I earn?"</strong> It's a fair question — and the data can help you make a more informed decision.</p>
+      <p>One of the biggest questions students have when choosing a career path is: <strong>"How much will I earn?"</strong> It's a fair question, and the data can help you make a more informed decision.</p>
 
       <p>Let's look at what the numbers actually say, using the most recent data from the National Science Foundation, Bureau of Labor Statistics, and other authoritative sources.</p>
 
@@ -156,7 +156,7 @@ const blogPosts = [
           <div style="font-size:0.75rem;opacity:0.8;margin-top:6px">per year (BLS, 2023)</div>
         </div>
       </div>
-      <div style="background:#fef2f2;border-left:4px solid #f87171;border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 24px;font-size:0.85rem;color:#991b1b"><strong>151% higher</strong> — but context matters. Range within STEM is vast: from $40K to $127K+</div>
+      <div style="background:#fef2f2;border-left:4px solid #f87171;border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 24px;font-size:0.85rem;color:#991b1b"><strong>151% higher</strong>, but context matters. Range within STEM is vast: from $40K to $127K+</div>
 
       <h3>Salary by Field: The Real Numbers</h3>
 
@@ -179,7 +179,7 @@ const blogPosts = [
 
       <p class="source">Source: U.S. Bureau of Labor Statistics, "Occupational Outlook Handbook," 2024 Edition. Data from May 2023 surveys.</p>
 
-      <h3>The College Premium Is Real — But Varies</h3>
+      <h3>The College Premium Is Real, But It Varies</h3>
 
       <p>Data from the Federal Reserve Bank of New York shows that the median wage for workers with a bachelor's degree was <strong>$60,000 in 2023</strong>, compared to $36,000 for those with only a high school diploma. That's a 67% premium.</p>
 
@@ -201,10 +201,10 @@ const blogPosts = [
       <p>For many non-STEM careers, graduate school dramatically changes the earnings picture:</p>
 
       <ul>
-        <li><strong>Medicine (MD)</strong>: Median salary $229,300 (BLS, 2023) — but requires 11-15 years of training</li>
-        <li><strong>Law (JD)</strong>: Median salary $135,740 (BLS, 2023) — 3 years beyond college</li>
-        <li><strong>MBA</strong>: Median salary $105,000 (GMAC, 2023) — 2 years beyond college</li>
-        <li><strong>Clinical Psychology (PhD)</strong>: Median salary $92,740 (BLS, 2023) — 5-7 years beyond college</li>
+        <li><strong>Medicine (MD):</strong> Median salary $229,300 (BLS, 2023); requires 11-15 years of training</li>
+        <li><strong>Law (JD):</strong> Median salary $135,740 (BLS, 2023); 3 years beyond college</li>
+        <li><strong>MBA:</strong> Median salary $105,000 (GMAC, 2023); 2 years beyond college</li>
+        <li><strong>Clinical Psychology (PhD):</strong> Median salary $92,740 (BLS, 2023); 5-7 years beyond college</li>
       </ul>
 
       <p class="source">Sources: Bureau of Labor Statistics, Occupational Outlook Handbook (2024). Graduate Management Admission Council (GMAC), "Corporate Recruiters Survey" (2023).</p>
@@ -228,11 +228,11 @@ const blogPosts = [
       <ol>
         <li><strong>Don't pick a career just for the salary.</strong> A high-paying job you hate will burn you out faster than a lower-paying one you're actually good at.</li>
         <li><strong>STEM pays more on average</strong>, but the range inside every field is huge. A great attorney earns more than a mediocre software engineer. Field matters less than you'd think.</li>
-        <li><strong>Talk to someone who actually does it.</strong> Salary data tells you the number — it doesn't tell you what the job actually feels like at 10pm on a Tuesday. That's what mentors are for.</li>
+        <li><strong>Talk to someone who actually does it.</strong> Salary data tells you the number, but it doesn't tell you what the job actually feels like at 10pm on a Tuesday. That's what mentors are for.</li>
         <li><strong>Think past the first paycheck:</strong> student debt, years of training, lifestyle, location, and where the field is headed in 10 years all matter.</li>
       </ol>
 
-      <p>On Mentino, you can find professionals across 15+ career fields who'll give you the honest version — not the recruiting brochure version.</p>
+      <p>On Mentino, you can find professionals across 15+ career fields who'll give you the honest version, not the recruiting brochure version.</p>
     `,
   },
   {
@@ -246,7 +246,7 @@ const blogPosts = [
     excerpt: "From first job to lifelong transferable skills.",
     readTime: "7 min read",
     content: `
-      <p>There's a version of career success that comes from grinding alone, and a version that comes from knowing the right person at the right time. Most people who made it had both — but the second one is a lot harder to get by accident.</p>
+      <p>There's a version of career success that comes from grinding alone, and a version that comes from knowing the right person at the right time. Most people who made it had both, but the second one is a lot harder to get by accident.</p>
 
       <div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #ddd6fe;border-radius:20px;padding:24px;margin:28px 0">
         <div style="font-size:0.75rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
@@ -283,9 +283,9 @@ const blogPosts = [
       <p>A meta-analysis published in the <em>Journal of Vocational Behavior</em> examined 43 studies on mentorship outcomes and found that mentored individuals consistently reported:</p>
 
       <ul>
-        <li><strong>Higher compensation</strong> over time — not just starting salary, but faster raises and promotions</li>
-        <li><strong>Greater career mobility</strong> — more job offers, more lateral movement options, and broader professional networks</li>
-        <li><strong>Lower turnover intentions</strong> — mentored employees stay longer at organizations and report greater loyalty</li>
+        <li><strong>Higher compensation</strong> over time, not just in starting salary but in the pace of raises and promotions</li>
+        <li><strong>Greater career mobility:</strong> more job offers, more lateral movement options, and broader professional networks</li>
+        <li><strong>Lower turnover:</strong> mentored employees stay longer at organizations and report greater job satisfaction</li>
       </ul>
 
       <p class="source">Source: Allen, T.D., Eby, L.T., Poteet, M.L., Lentz, E., & Lima, L. (2004). "Career Benefits Associated With Mentoring for Proteges: A Meta-Analysis." <em>Journal of Applied Psychology</em>, 89(1), 127-136.</p>
@@ -294,7 +294,7 @@ const blogPosts = [
 
       <p>Research from the Center for Creative Leadership found that <strong>71% of Fortune 500 companies have formal mentoring programs</strong>, and employees who participate are more likely to be identified as "high-potential" leaders.</p>
 
-      <p>A Harvard Business Review study found that mentors help develop what researchers call "leadership self-efficacy" — the belief that you can lead effectively. This confidence is strongly predictive of actual leadership performance.</p>
+      <p>A Harvard Business Review study found that mentors help develop what researchers call "leadership self-efficacy": the belief that one can lead effectively. This sense of confidence is a strong predictor of actual leadership performance.</p>
 
       <p class="source">Sources: Center for Creative Leadership, "Mentoring: A Key Strategy for Leadership Development" (2021). Lester, P.B., Hannah, S.T., Harms, P.D., Vogelgesang, G.R., & Avolio, B.J. (2011). "Mentoring Impact on Leader Efficacy Development." <em>Journal of Leadership & Organizational Studies</em>, 18(4), 469-483.</p>
 
@@ -303,7 +303,7 @@ const blogPosts = [
       <p>Perhaps the most lasting benefit of mentorship is the development of transferable skills that compound over an entire career:</p>
 
       <ul>
-        <li><strong>Communication:</strong> Mentors model professional communication — how to present ideas, give feedback, and navigate difficult conversations</li>
+        <li><strong>Communication:</strong> Mentors model professional communication, including how to present ideas, give feedback, and navigate difficult conversations</li>
         <li><strong>Strategic thinking:</strong> Learning to see the bigger picture of a career, industry, or organization</li>
         <li><strong>Network building:</strong> Understanding how professional relationships work and how to cultivate them authentically</li>
         <li><strong>Resilience:</strong> Hearing how mentors overcame setbacks normalizes failure and builds persistence</li>
@@ -323,9 +323,9 @@ const blogPosts = [
 
       <h3>What This Means for Students</h3>
 
-      <p>The data is consistent across decades of research: mentorship works. Not just a little — it moves the needle on salary, promotions, leadership, and job satisfaction in ways that compound over a whole career.</p>
+      <p>The data is consistent across decades of research: mentorship works. Not just a little: it moves the needle on salary, promotions, leadership, and job satisfaction in ways that compound over a whole career.</p>
 
-      <p>And the earlier you start, the more runway you have. A mentor in high school or early college gives you time to actually use what you learn — to make better decisions before you've locked anything in.</p>
+      <p>And the earlier you start, the more runway you have. A mentor in high school or early college gives you time to actually use what you learn, to make better decisions before you've locked anything in.</p>
 
       <p>That's what Mentino is for. Sign up, find someone who's already where you're trying to go, and just ask them what you need to know.</p>
     `,
@@ -341,7 +341,7 @@ const blogPosts = [
     excerpt: "A research-backed framework for exploring careers without the pressure.",
     readTime: "7 min read",
     content: `
-      <p>If you're in high school or early college and you don't know what you want to do with your life — you're not behind. You're normal.</p>
+      <p>If you're in high school or early college and you don't know what you want to do with your life, you're not behind. You're normal.</p>
 
       <p>About 30% of college students change their major at least once. Research from the Federal Reserve Bank of New York shows only 27% of college graduates end up working in a field related to their major.</p>
 
@@ -368,7 +368,7 @@ const blogPosts = [
 
       <h3>2. Talk to actual people in the field</h3>
 
-      <p>Job descriptions tell you the requirements. They don't tell you what the work actually feels like. Research shows students who do informational interviews — just asking someone in a field about their experience — make more confident, realistic career choices.</p>
+      <p>Job descriptions tell you the requirements. They don't tell you what the work actually feels like. Research shows students who conduct informational interviews, simply asking someone in a field about their experience, make more confident and realistic career choices.</p>
 
       <p class="source">Source: Crosby, O. (2010). "Informational Interviewing: Get the Inside Scoop on Careers." <em>Occupational Outlook Quarterly</em>.</p>
 
@@ -384,7 +384,7 @@ const blogPosts = [
 
       <h3>3. Try things before you commit</h3>
 
-      <p>Stanford researchers Bill Burnett and Dave Evans call it "prototyping" — low-stakes experiments that let you test whether you actually like something before it becomes a major decision. Shadow someone for a day. Start a project related to the field. Volunteer somewhere relevant. You learn more in two weeks of doing than two years of thinking about it.</p>
+      <p>Stanford researchers Bill Burnett and Dave Evans call it "prototyping": low-stakes experiments that let you test whether you actually like something before it becomes a major decision. Shadow someone for a day. Start a project related to the field. Volunteer somewhere relevant. You learn more in two weeks of doing than two years of thinking about it.</p>
 
       <p class="source">Source: Burnett, B., & Evans, D. (2016). <em>Designing Your Life</em>. Knopf.</p>
 
@@ -402,7 +402,7 @@ const blogPosts = [
 
       <h3>The short version</h3>
 
-      <p>Your career doesn't have to be a straight line — and it probably won't be. The most interesting ones rarely are. Explore, talk to real people, try things. Clarity comes from doing, not from sitting and thinking harder about it. Stop waiting to have it figured out and start having conversations with people who can help you figure it out.</p>
+      <p>Your career doesn't have to be a straight line, and it probably won't be. The most interesting ones rarely are. Explore, talk to real people, try things. Clarity comes from doing, not from sitting and thinking harder about it. Stop waiting to have it figured out and start having conversations with people who can help you figure it out.</p>
     `,
   },
   {
@@ -413,16 +413,16 @@ const blogPosts = [
     category: "Behind the Scenes",
     categoryColor: "rose",
     coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80",
-    excerpt: "Starting a mentorship platform as a teenager — what I learned, what was hard, and what keeps me going.",
+    excerpt: "Starting a mentorship platform as a teenager: what I learned, what was hard, and what keeps me going.",
     readTime: "5 min read",
     content: `
       <p>People ask me why I started Mentino at 15. Honestly? I didn't overthink it. I saw something that bothered me and I started building.</p>
 
       <h3>Where it came from</h3>
 
-      <p>I shoot sports photography. I've been doing it since I was around 13 — mostly professional and collegiate athletes in the Bay Area. It's my thing. And when I was trying to actually get good at it, I started cold-DMing photographers I followed online. Just asking questions. Most didn't respond. But a few did. And those few conversations did more for my work than years of watching YouTube tutorials.</p>
+      <p>I shoot sports photography. I've been doing it since I was around 13, mostly professional and collegiate athletes in the Bay Area. It's my thing. And when I was trying to actually get good at it, I started cold-DMing photographers I followed online. Just asking questions. Most didn't respond. But a few did. And those few conversations did more for my work than years of watching YouTube tutorials.</p>
 
-      <p>At some point I realized: that experience I had — someone further along taking 20 minutes to talk to me — most students don't get that. Not because people don't want to help, but because there's no easy way for them to connect. That's the gap Mentino is trying to close.</p>
+      <p>At some point I realized: that experience I had (someone further along taking 20 minutes to talk to me) most students don't get that. Not because people don't want to help, but because there's no easy way for them to connect. That's the gap Mentino is trying to close.</p>
 
       <p>About 1 in 3 young people in the U.S. will grow up without a mentor. That's 16 million people figuring things out alone when they don't have to.</p>
 
@@ -457,13 +457,13 @@ const blogPosts = [
 
       <p>Second: asking for help isn't weakness. It's the whole point. Ironically, building a mentorship platform made me better at asking for mentorship myself. I've leaned on a lot of people to get here.</p>
 
-      <p>Third: keep the focus on impact. When things get frustrating — and they do — I come back to why I started. Someone's going to connect with the right mentor through this platform and it's going to change something for them. That's worth the hard days.</p>
+      <p>Third: keep the focus on impact. When things get frustrating (and they do), I come back to why I started. Someone's going to connect with the right mentor through this platform and it's going to change something for them. That's worth the hard days.</p>
 
       <h3>What's next</h3>
 
-      <p>I want a student to be able to open Mentino, find the right mentor for exactly where they're trying to go, and have a real conversation — not a form, not an algorithm pretending to care, just a real person with real experience. We're building toward that.</p>
+      <p>I want a student to be able to open Mentino, find the right mentor for exactly where they're trying to go, and have a real conversation: not a form, not an algorithm pretending to care, just a real person with real experience. We're building toward that.</p>
 
-      <p>If you're a student — sign up. If you're someone who's figured something out and wants to give back — we need you. We're just getting started.</p>
+      <p>If you're a student, sign up. If you're someone who's figured something out and wants to give back, we need you. We're just getting started.</p>
     `,
   },
 ];
@@ -488,7 +488,7 @@ blog.get("/blog", optionalAuth, (c) => {
               Mentino Blog
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Things worth knowing before you pick a career.</h1>
-            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real data, and honest takes — written by Ethan Branzuela, the 15-year-old who built Mentino.</p>
+            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real data, and honest takes. Written by Ethan Branzuela, the 15-year-old who built Mentino.</p>
           </div>
         </div>
 

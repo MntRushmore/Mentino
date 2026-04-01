@@ -151,6 +151,7 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
   if (!isStudent && !isMentor) return c.redirect("/messages");
 
   const otherUser = isStudent ? match.mentors.accounts : match.students.accounts;
+  const otherUserId = isStudent ? match.mentors.user_id : match.students.user_id;
 
   // Get messages
   const { data: threadMessages } = await supabase
@@ -186,9 +187,15 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
               {isStudent ? "Your Mentor" : "Your Mentee"}
             </p>
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-4">
             <a href={`/sessions?match_id=${matchId}`} className="text-blue-600 hover:underline text-sm font-medium">
               Schedule Session
+            </a>
+            <a href={`/reports/new?reported_id=${otherUserId}`} className="text-gray-400 hover:text-red-500 transition-colors text-xs font-medium flex items-center gap-1" title="Report this user">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6H13l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+              </svg>
+              Report
             </a>
           </div>
         </div>

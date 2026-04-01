@@ -66,83 +66,6 @@ profile.get("/profile", authMiddleware, async (c) => {
   );
 });
 
-// GET /profile/:userId — view another user's profile
-profile.get("/profile/:userId", authMiddleware, async (c) => {
-  const currentUser = c.get("user");
-  const userId = c.req.param("userId");
-
-  // Guard: "edit" is a sub-route, not a userId
-  if (userId === "edit") return c.redirect("/profile/edit");
-  const reviewed = c.req.query("reviewed");
-
-  const { data: profileUser } = await supabase
-    .from("accounts").select("*").eq("id", userId).single();
-
-  if (!profileUser) {
-    return html(
-      <Layout title="Not Found" user={currentUser}>
-        <div className="text-center py-20">
-          <h1 className="text-4xl font-bold text-gray-300 mb-4">User not found</h1>
-          <a href="/dashboard" className="text-blue-600 hover:underline">Back to Dashboard</a>
-        </div>
-      </Layout>, 404
-    );
-  }
-
-  const roleData = await loadRoleData(profileUser.id, profileUser.role);
-
-  // Fetch reviews if this is a mentor profile
-  let reviews: any[] = [];
-  let canReview = false;
-  let existingReview: any = null;
-  let mentorBadgesP: MentorBadge[] = [];
-  let mentorLevelP: Level | null = null;
-
-  if (profileUser.role === "mentor" && roleData?.id) {
-    reviews = await loadMentorReviews(roleData.id);
-
-    // Check if current student has active match with this mentor
-    if (currentUser.role === "student") {
-      const { data: student } = await supabase.from("students").select("id").eq("user_id", currentUser.id).single();
-      if (student) {
-        const { data: activeMatch } = await supabase
-          .from("matches").select("id")
-          .eq("student_id", student.id).eq("mentor_id", roleData.id)
-          .in("status", ["active", "accepted", "completed"]).single();
-        canReview = !!activeMatch;
-        existingReview = reviews.find((r: any) => r._studentUserId === currentUser.id) || null;
-      }
-    }
-
-    const completedCount = reviews.length;
-    const ratedSessions = reviews.filter((r: any) => r.rating);
-    const uniqueStudents = new Set(reviews.map((r: any) => r._studentUserId)).size;
-    mentorBadgesP = getMentorBadges({
-      completedSessions: completedCount,
-      ratedSessions,
-      verificationStatus: roleData.verification_status,
-      yearsExperience: roleData.years_experience || 0,
-      createdAt: profileUser.created_at,
-      uniqueStudents,
-    });
-    const avg = ratedSessions.length > 0
-      ? ratedSessions.reduce((s: number, r: any) => s + r.rating, 0) / ratedSessions.length : 0;
-    mentorLevelP = getMentorLevel(completedCount, avg);
-  }
-
-  return html(
-    <Layout title={`${profileUser.first_name}'s Profile`} user={currentUser}>
-      <ProfileView
-        user={profileUser} roleData={roleData} isOwn={false}
-        currentUser={currentUser} reviews={reviews}
-        canReview={canReview} existingReview={existingReview}
-        mentorBadges={mentorBadgesP} mentorLevel={mentorLevelP}
-        flash={reviewed === "1" ? "Your review has been saved!" : undefined}
-      />
-    </Layout>
-  );
-});
-
 // GET /profile/edit
 profile.get("/profile/edit", authMiddleware, async (c) => {
   const user = c.get("user");
@@ -264,6 +187,81 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
   }
 
   return c.redirect("/profile");
+});
+
+// GET /profile/:userId — view another user's profile
+profile.get("/profile/:userId", authMiddleware, async (c) => {
+  const currentUser = c.get("user");
+  const userId = c.req.param("userId");
+
+  const reviewed = c.req.query("reviewed");
+
+  const { data: profileUser } = await supabase
+    .from("accounts").select("*").eq("id", userId).single();
+
+  if (!profileUser) {
+    return html(
+      <Layout title="Not Found" user={currentUser}>
+        <div className="text-center py-20">
+          <h1 className="text-4xl font-bold text-gray-300 mb-4">User not found</h1>
+          <a href="/dashboard" className="text-blue-600 hover:underline">Back to Dashboard</a>
+        </div>
+      </Layout>, 404
+    );
+  }
+
+  const roleData = await loadRoleData(profileUser.id, profileUser.role);
+
+  // Fetch reviews if this is a mentor profile
+  let reviews: any[] = [];
+  let canReview = false;
+  let existingReview: any = null;
+  let mentorBadgesP: MentorBadge[] = [];
+  let mentorLevelP: Level | null = null;
+
+  if (profileUser.role === "mentor" && roleData?.id) {
+    reviews = await loadMentorReviews(roleData.id);
+
+    // Check if current student has active match with this mentor
+    if (currentUser.role === "student") {
+      const { data: student } = await supabase.from("students").select("id").eq("user_id", currentUser.id).single();
+      if (student) {
+        const { data: activeMatch } = await supabase
+          .from("matches").select("id")
+          .eq("student_id", student.id).eq("mentor_id", roleData.id)
+          .in("status", ["active", "accepted", "completed"]).single();
+        canReview = !!activeMatch;
+        existingReview = reviews.find((r: any) => r._studentUserId === currentUser.id) || null;
+      }
+    }
+
+    const completedCount = reviews.length;
+    const ratedSessions = reviews.filter((r: any) => r.rating);
+    const uniqueStudents = new Set(reviews.map((r: any) => r._studentUserId)).size;
+    mentorBadgesP = getMentorBadges({
+      completedSessions: completedCount,
+      ratedSessions,
+      verificationStatus: roleData.verification_status,
+      yearsExperience: roleData.years_experience || 0,
+      createdAt: profileUser.created_at,
+      uniqueStudents,
+    });
+    const avg = ratedSessions.length > 0
+      ? ratedSessions.reduce((s: number, r: any) => s + r.rating, 0) / ratedSessions.length : 0;
+    mentorLevelP = getMentorLevel(completedCount, avg);
+  }
+
+  return html(
+    <Layout title={`${profileUser.first_name}'s Profile`} user={currentUser}>
+      <ProfileView
+        user={profileUser} roleData={roleData} isOwn={false}
+        currentUser={currentUser} reviews={reviews}
+        canReview={canReview} existingReview={existingReview}
+        mentorBadges={mentorBadgesP} mentorLevel={mentorLevelP}
+        flash={reviewed === "1" ? "Your review has been saved!" : undefined}
+      />
+    </Layout>
+  );
 });
 
 // POST /reviews — save a review for a mentor (stored in their most recent completed session)
@@ -970,18 +968,18 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
         </div>
 
         {/* Student-specific */}
-        {user.role === "student" && roleData && (
+        {user.role === "student" && (
           <>
             <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
               <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">School & Year</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">School</label>
-                  <input type="text" name="school_name" defaultValue={roleData.school_name || ""} placeholder="e.g. Lincoln High School" className={inputClass} />
+                  <input type="text" name="school_name" defaultValue={roleData?.school_name || ""} placeholder="e.g. Lincoln High School" className={inputClass} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Grade or Year</label>
-                  <select name="grade_or_year" defaultValue={roleData.grade_or_year || ""} className={inputClass}>
+                  <select name="grade_or_year" defaultValue={roleData?.grade_or_year || ""} className={inputClass}>
                     <option value="">Select your grade</option>
                     <optgroup label="High School">
                       <option value="9th Grade">9th Grade</option>
@@ -1008,7 +1006,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {CAREER_FIELDS_FULL.map((field) => (
                   <label key={field} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
-                    <input type="checkbox" name="career_interests" value={field} defaultChecked={roleData.career_interests?.includes(field)} className="rounded text-indigo-600 flex-shrink-0" />
+                    <input type="checkbox" name="career_interests" value={field} defaultChecked={roleData?.career_interests?.includes(field)} className="rounded text-indigo-600 flex-shrink-0" />
                     <span className="text-gray-700 leading-snug">{field}</span>
                   </label>
                 ))}
@@ -1026,7 +1024,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                 name="learning_goals"
                 rows={5}
                 maxLength={2000}
-                defaultValue={roleData.learning_goals || ""}
+                defaultValue={roleData?.learning_goals || ""}
                 className={`${inputClass} resize-y`}
                 placeholder="e.g. I want to learn what it's actually like to work in medicine day-to-day. I'm trying to figure out if pre-med is right for me, and I want to hear from someone who's been through it — the hard parts included..."
               />
@@ -1038,7 +1036,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {PERSONALITY_TAGS_STUDENT.map((tag) => (
                   <label key={tag} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
-                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData.personality_tags?.includes(tag)} className="rounded text-indigo-600 flex-shrink-0" />
+                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData?.personality_tags?.includes(tag)} className="rounded text-indigo-600 flex-shrink-0" />
                     <span className="text-gray-700">{tag}</span>
                   </label>
                 ))}
@@ -1048,31 +1046,31 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
         )}
 
         {/* Mentor-specific */}
-        {user.role === "mentor" && roleData && (
+        {user.role === "mentor" && (
           <>
             <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
               <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Professional Info</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
-                  <input type="text" name="job_title" defaultValue={roleData.job_title || ""} placeholder="e.g. Senior Software Engineer" className={inputClass} />
+                  <input type="text" name="job_title" defaultValue={roleData?.job_title || ""} placeholder="e.g. Senior Software Engineer" className={inputClass} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
-                  <input type="text" name="company" defaultValue={roleData.company || ""} placeholder="e.g. Google" className={inputClass} />
+                  <input type="text" name="company" defaultValue={roleData?.company || ""} placeholder="e.g. Google" className={inputClass} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
-                  <input type="number" name="years_experience" defaultValue={roleData.years_experience || ""} min={1} max={50} placeholder="Years in your field" className={inputClass} />
+                  <input type="number" name="years_experience" defaultValue={roleData?.years_experience || ""} min={1} max={50} placeholder="Years in your field" className={inputClass} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn URL <span className="text-gray-400 font-normal">(optional)</span></label>
-                  <input type="url" name="linkedin_url" defaultValue={roleData.linkedin_url || ""} placeholder="https://linkedin.com/in/yourname" className={inputClass} />
+                  <input type="url" name="linkedin_url" defaultValue={roleData?.linkedin_url || ""} placeholder="https://linkedin.com/in/yourname" className={inputClass} />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Career Field</label>
-                <select name="career_field" defaultValue={roleData.career_field || ""} className={inputClass}>
+                <select name="career_field" defaultValue={roleData?.career_field || ""} className={inputClass}>
                   <option value="">Select your field</option>
                   {CAREER_FIELDS_FULL.map((field) => (
                     <option key={field} value={field}>{field}</option>
@@ -1092,7 +1090,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {MENTOR_TOPICS_FULL.map((topic) => (
                   <label key={topic} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
-                    <input type="checkbox" name="topics" value={topic} defaultChecked={roleData.topics?.includes(topic)} className="rounded text-emerald-600 flex-shrink-0" />
+                    <input type="checkbox" name="topics" value={topic} defaultChecked={roleData?.topics?.includes(topic)} className="rounded text-emerald-600 flex-shrink-0" />
                     <span className="text-gray-700">{topic}</span>
                   </label>
                 ))}
@@ -1105,7 +1103,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {PERSONALITY_TAGS_MENTOR.map((tag) => (
                   <label key={tag} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
-                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData.personality_tags?.includes(tag)} className="rounded text-emerald-600 flex-shrink-0" />
+                    <input type="checkbox" name="personality_tags" value={tag} defaultChecked={roleData?.personality_tags?.includes(tag)} className="rounded text-emerald-600 flex-shrink-0" />
                     <span className="text-gray-700">{tag}</span>
                   </label>
                 ))}

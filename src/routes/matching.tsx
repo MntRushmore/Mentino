@@ -220,7 +220,7 @@ matching.get("/matching", authMiddleware, async (c) => {
                 />
               </div>
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-                {["All", "Technology & Software", "Medicine & Healthcare", "Law & Legal Services", "Business & Management", "Engineering", "Finance & Accounting", "Sports & Athletics", "Arts & Design", "Science & Research", "Education & Teaching", "Psychology & Mental Health", "Media & Journalism"].map((cat) => (
+                {["All", "Tech", "Healthcare", "Law", "Business", "Engineering", "Finance", "Sports", "Creative", "Science", "Education", "Media"].map((cat) => (
                   <button
                     key={cat}
                     data-filter-cat={cat}
@@ -359,15 +359,31 @@ matching.get("/matching", authMiddleware, async (c) => {
     var noResults = document.getElementById('no-results-msg');
     var activeFilter = 'All';
 
+    var catKeywords = {
+      'Tech': ['tech','software','engineer','developer','coding','data','computer','it','digital','web','ai','cloud'],
+      'Healthcare': ['health','medical','medicine','doctor','nurse','hospital','clinical','pharma','biotech','therapy'],
+      'Law': ['law','legal','attorney','lawyer','court','compliance','policy','government','regulation'],
+      'Business': ['business','management','operations','strategy','startup','entrepreneur','product','consulting'],
+      'Engineering': ['engineer','mechanical','electrical','civil','chemical','aerospace','manufacturing','robotics'],
+      'Finance': ['finance','accounting','investment','banking','economics','trading','wealth','insurance','tax'],
+      'Sports': ['sports','athletics','fitness','coaching','performance','training','exercise'],
+      'Creative': ['design','art','creative','music','film','photography','fashion','architecture','ux','ui'],
+      'Science': ['science','research','biology','chemistry','physics','geology','environmental','neuroscience'],
+      'Education': ['education','teaching','academic','school','curriculum','tutoring','professor'],
+      'Media': ['media','journalism','marketing','communications','pr','social media','advertising','publishing','writing']
+    };
+
     function applyFilters() {
       var query = searchInput ? searchInput.value.toLowerCase().trim() : '';
       var cards = document.querySelectorAll('[data-mentor-search]');
       var visible = 0;
       cards.forEach(function(card) {
         var searchText = card.getAttribute('data-mentor-search') || '';
-        var field = card.getAttribute('data-mentor-field') || '';
         var matchesSearch = !query || searchText.includes(query);
-        var matchesFilter = activeFilter === 'All' || field === activeFilter;
+        var matchesFilter = activeFilter === 'All';
+        if (!matchesFilter && catKeywords[activeFilter]) {
+          matchesFilter = catKeywords[activeFilter].some(function(kw) { return searchText.includes(kw); });
+        }
         if (matchesSearch && matchesFilter) {
           card.style.display = '';
           visible++;

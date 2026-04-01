@@ -212,13 +212,14 @@ sessions.get("/sessions", authMiddleware, async (c) => {
                           </button>
                         </form>
                       )}
-                      {session.status === "completed" && !session.rating && (
-                        <a
-                          href={`/sessions/${session.id}`}
+                      {session.status === "completed" && !session.rating && user.role === "student" && (
+                        <button
+                          type="button"
+                          data-rate-session={session.id}
                           className="text-blue-600 hover:underline text-xs font-medium"
                         >
-                          Add Rating
-                        </a>
+                          Rate Session
+                        </button>
                       )}
                     </div>
                   </div>
@@ -228,6 +229,110 @@ sessions.get("/sessions", authMiddleware, async (c) => {
           </div>
         )}
       </div>
+
+      {/* Star Rating Modal */}
+      <div id="rating-modal" className="fixed inset-0 z-50 hidden items-center justify-center">
+        <div className="absolute inset-0 bg-black/50" id="rating-backdrop"></div>
+        <div className="relative bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4 z-10">
+          <h2 className="text-xl font-bold text-gray-900 mb-1">Rate this session</h2>
+          <p className="text-sm text-gray-500 mb-6">How was your mentoring session?</p>
+          <form id="rating-form" method="POST" className="space-y-5">
+            <div>
+              <div className="flex justify-center gap-2 mb-1" id="star-row">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <label key={n} className="cursor-pointer select-none">
+                    <input type="radio" name="rating" value={String(n)} className="sr-only" required />
+                    <span className="text-4xl transition-all" data-star={n}>☆</span>
+                  </label>
+                ))}
+              </div>
+              <p className="text-center text-xs text-gray-400 h-4" id="star-label"></p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Quick note <span className="text-gray-400 font-normal">(optional)</span></label>
+              <textarea
+                name="feedback"
+                rows={2}
+                placeholder="What did you get out of the session?"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none text-sm"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button type="submit" className="flex-1 bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                Submit Rating
+              </button>
+              <button type="button" id="rating-cancel" className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+        var modal = document.getElementById('rating-modal');
+        var form = document.getElementById('rating-form');
+        var backdrop = document.getElementById('rating-backdrop');
+        var cancelBtn = document.getElementById('rating-cancel');
+        var starLabel = document.getElementById('star-label');
+        var starLabels = ['','Terrible','Not great','Okay','Good','Amazing'];
+
+        function openRatingModal(sessionId) {
+          form.action = '/sessions/' + sessionId + '/complete';
+          // Reset stars
+          document.querySelectorAll('#star-row [data-star]').forEach(function(s) { s.textContent = '☆'; });
+          document.querySelectorAll('#star-row input[type=radio]').forEach(function(r) { r.checked = false; });
+          starLabel.textContent = '';
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeRatingModal() {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+
+        // Wire up rate-session buttons
+        document.querySelectorAll('[data-rate-session]').forEach(function(btn) {
+          btn.addEventListener('click', function() { openRatingModal(btn.getAttribute('data-rate-session')); });
+        });
+
+        // Star hover/click interactivity
+        document.querySelectorAll('#star-row [data-star]').forEach(function(star) {
+          var n = parseInt(star.getAttribute('data-star'));
+          var input = star.previousElementSibling;
+          star.addEventListener('mouseover', function() {
+            document.querySelectorAll('#star-row [data-star]').forEach(function(s) {
+              s.textContent = parseInt(s.getAttribute('data-star')) <= n ? '★' : '☆';
+              s.style.color = parseInt(s.getAttribute('data-star')) <= n ? '#f59e0b' : '#9ca3af';
+            });
+            starLabel.textContent = starLabels[n];
+          });
+          star.addEventListener('click', function() {
+            input.checked = true;
+            document.querySelectorAll('#star-row [data-star]').forEach(function(s) {
+              var sn = parseInt(s.getAttribute('data-star'));
+              s.textContent = sn <= n ? '★' : '☆';
+              s.style.color = sn <= n ? '#f59e0b' : '#9ca3af';
+            });
+            starLabel.textContent = starLabels[n];
+          });
+        });
+        document.getElementById('star-row').addEventListener('mouseleave', function() {
+          var checked = document.querySelector('#star-row input[type=radio]:checked');
+          var cn = checked ? parseInt(checked.value) : 0;
+          document.querySelectorAll('#star-row [data-star]').forEach(function(s) {
+            var sn = parseInt(s.getAttribute('data-star'));
+            s.textContent = sn <= cn ? '★' : '☆';
+            s.style.color = sn <= cn ? '#f59e0b' : '#9ca3af';
+          });
+          starLabel.textContent = cn ? starLabels[cn] : '';
+        });
+
+        backdrop.addEventListener('click', closeRatingModal);
+        cancelBtn.addEventListener('click', closeRatingModal);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeRatingModal(); });
+      `}} />
     </Layout>
   );
 });

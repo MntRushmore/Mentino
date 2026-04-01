@@ -343,6 +343,17 @@ profile.post("/reviews", authMiddleware, async (c) => {
       rating,
       feedback: encodeFeedback(meetAgain, comment),
     }).eq("id", session.id);
+  } else {
+    // No formal session yet — insert a chat-based rating (duration_minutes=0 marks it as non-session)
+    await supabase.from("sessions").insert({
+      match_id: match.id,
+      status: "completed",
+      scheduled_at: new Date().toISOString(),
+      duration_minutes: 0,
+      created_by: user.id,
+      rating,
+      feedback: encodeFeedback(meetAgain, comment),
+    });
   }
 
   return c.redirect(`/profile/${mentorUserId}?reviewed=1`);
@@ -582,6 +593,11 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                   Edit Profile
                 </a>
               )}
+              {!isOwn && currentUser && canReview && (
+                <a href="#reviews" className="bg-amber-400 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors">
+                  ★ Rate Mentor
+                </a>
+              )}
               {!isOwn && currentUser && (
                 <a href={`/reports/new?reported_id=${user.id}&from=/profile/${user.id}`} className="text-white/60 hover:text-white/90 text-xs transition-colors">
                   Report
@@ -766,7 +782,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
 
       {/* Reviews section — only for mentors */}
       {user.role === "mentor" && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <div id="reviews" className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <div className="flex items-center justify-between mb-5">
             <div>
               <h2 className="text-lg font-bold text-gray-900">Student Reviews</h2>

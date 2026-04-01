@@ -168,6 +168,17 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
     .neq("sender_id", user.id)
     .eq("is_read", false);
 
+  // Check if student should be prompted to rate this mentor (after 5+ messages, only once)
+  let showRatingPrompt = false;
+  if (isStudent && threadMessages && threadMessages.length >= 5) {
+    const { count: ratedCount } = await supabase
+      .from("sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("match_id", matchId)
+      .not("rating", "is", null);
+    if ((ratedCount || 0) === 0) showRatingPrompt = true;
+  }
+
   return html(
     <Layout title={`Chat with ${otherUser.first_name}`} user={user}>
       <div className="max-w-3xl mx-auto">
@@ -272,6 +283,114 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
           </button>
         </form>
       </div>
+
+      {/* Rating popup — shown to students after 5+ messages if not yet rated */}
+      {isStudent && (
+        <div id="chat-rating-modal" className="fixed inset-0 z-50 items-center justify-center" style={{ display: "none" }}>
+          <div className="absolute inset-0 bg-black/50" id="chat-rating-backdrop"></div>
+          <div className="relative bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4 z-10">
+            <div className="text-center mb-5">
+              <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">⭐</span>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-1">How's it going with {otherUser.first_name}?</h2>
+              <p className="text-sm text-gray-500">After {threadMessages?.length || 5}+ messages, your rating helps other students find great mentors.</p>
+            </div>
+            <form method="POST" action="/reviews" className="space-y-4">
+              <input type="hidden" name="mentor_user_id" value={otherUserId} />
+              <div>
+                <div className="flex justify-center gap-2 mb-1" id="chat-star-row">
+                  {[1,2,3,4,5].map((n) => (
+                    <label key={n} className="cursor-pointer select-none">
+                      <input type="radio" name="rating" value={String(n)} className="sr-only" required />
+                      <span className="text-4xl" data-chat-star={n}>☆</span>
+                    </label>
+                  ))}
+                </div>
+                <p className="text-center text-xs text-gray-400 h-4" id="chat-star-label"></p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">What's been helpful? <span className="text-gray-400 font-normal">(optional)</span></label>
+                <textarea
+                  name="comment"
+                  rows={2}
+                  placeholder="e.g. Great advice on college apps, very responsive..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none text-sm"
+                />
+              </div>
+              <div className="flex gap-3">
+                <button type="submit" className="flex-1 bg-amber-500 text-white py-2.5 rounded-lg font-medium hover:bg-amber-600 transition-colors">
+                  Submit Rating
+                </button>
+                <button type="button" id="chat-rating-dismiss" className="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                  Later
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <script dangerouslySetInnerHTML={{ __html: `
+        var chatModal = document.getElementById('chat-rating-modal');
+        var chatBackdrop = document.getElementById('chat-rating-backdrop');
+        var chatDismiss = document.getElementById('chat-rating-dismiss');
+        var chatStarLabel = document.getElementById('chat-star-label');
+        var chatStarLabels = ['','Terrible','Not great','Okay','Good','Amazing'];
+        var PROMPT_KEY = 'chat_rated_${matchId}';
+
+        // Auto-show if prompted and not dismissed before
+        if (${showRatingPrompt} && !sessionStorage.getItem(PROMPT_KEY)) {
+          setTimeout(function() {
+            if (chatModal) chatModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+          }, 2000);
+        }
+
+        function closeChatModal() {
+          if (chatModal) { chatModal.style.display = 'none'; document.body.style.overflow = ''; }
+          sessionStorage.setItem(PROMPT_KEY, '1');
+        }
+
+        if (chatBackdrop) chatBackdrop.addEventListener('click', closeChatModal);
+        if (chatDismiss) chatDismiss.addEventListener('click', closeChatModal);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeChatModal(); });
+
+        // Star interactivity
+        if (document.getElementById('chat-star-row')) {
+          document.querySelectorAll('#chat-star-row [data-chat-star]').forEach(function(star) {
+            var n = parseInt(star.getAttribute('data-chat-star'));
+            var input = star.previousElementSibling;
+            star.addEventListener('mouseover', function() {
+              document.querySelectorAll('#chat-star-row [data-chat-star]').forEach(function(s) {
+                var sn = parseInt(s.getAttribute('data-chat-star'));
+                s.textContent = sn <= n ? '★' : '☆';
+                s.style.color = sn <= n ? '#f59e0b' : '#9ca3af';
+              });
+              if (chatStarLabel) chatStarLabel.textContent = chatStarLabels[n];
+            });
+            star.addEventListener('click', function() {
+              input.checked = true;
+              document.querySelectorAll('#chat-star-row [data-chat-star]').forEach(function(s) {
+                var sn = parseInt(s.getAttribute('data-chat-star'));
+                s.textContent = sn <= n ? '★' : '☆';
+                s.style.color = sn <= n ? '#f59e0b' : '#9ca3af';
+              });
+              if (chatStarLabel) chatStarLabel.textContent = chatStarLabels[n];
+            });
+          });
+          document.getElementById('chat-star-row').addEventListener('mouseleave', function() {
+            var checked = document.querySelector('#chat-star-row input[type=radio]:checked');
+            var cn = checked ? parseInt(checked.value) : 0;
+            document.querySelectorAll('#chat-star-row [data-chat-star]').forEach(function(s) {
+              var sn = parseInt(s.getAttribute('data-chat-star'));
+              s.textContent = sn <= cn ? '★' : '☆';
+              s.style.color = sn <= cn ? '#f59e0b' : '#9ca3af';
+            });
+            if (chatStarLabel) chatStarLabel.textContent = cn ? chatStarLabels[cn] : '';
+          });
+        }
+      `}} />
     </Layout>
   );
 });

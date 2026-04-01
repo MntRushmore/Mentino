@@ -93,35 +93,43 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
         </div>
       </section>
 
-      {/* ── Testimonials ────────────────────────────────────────────────── */}
-      <section>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* ── Safety ──────────────────────────────────────────────────────── */}
+      <section className="bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-3xl p-6 sm:p-10">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-2">Built for safety — especially if you're under 18</h2>
+        <p className="text-gray-500 text-center text-sm mb-8 max-w-xl mx-auto">Mentino was designed from the ground up to be a safe place for students. Here's what that actually means.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
             {
-              quote: "I messaged my mentor before even knowing what I wanted to do. After one call I had a plan. Nobody at my school could've given me that.",
-              name: "10th grade student",
-              field: "Interested in Business",
-              color: "border-indigo-200 bg-indigo-50",
+              icon: (
+                <svg className="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              ),
+              bg: "bg-emerald-100",
+              title: "Verified Mentors",
+              desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand — no automation shortcuts.",
             },
             {
-              quote: "I picked technology because my mentor actually walked me through what his job looks like day-to-day. That's the kind of thing you can't get from YouTube.",
-              name: "High school junior",
-              field: "Pursuing Computer Science",
-              color: "border-violet-200 bg-violet-50",
+              icon: (
+                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              ),
+              bg: "bg-blue-100",
+              title: "Content Moderation",
+              desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it — and we take those seriously.",
             },
             {
-              quote: "I was going to apply to pre-med just to make my parents happy. Talking to a doctor for 30 minutes changed my whole perspective.",
-              name: "11th grade student",
-              field: "Rethinking career path",
-              color: "border-emerald-200 bg-emerald-50",
+              icon: (
+                <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+              ),
+              bg: "bg-amber-100",
+              title: "Parental Consent",
+              desc: "Students under 18 need parental consent to join. This isn't optional — it's how we keep younger students safe.",
             },
-          ].map((t, i) => (
-            <div key={i} className={`rounded-2xl border p-6 ${t.color}`}>
-              <p className="text-gray-700 text-sm leading-relaxed mb-4 italic">"{t.quote}"</p>
-              <div>
-                <p className="text-xs font-semibold text-gray-800">{t.name}</p>
-                <p className="text-xs text-gray-500">{t.field}</p>
+          ].map((item) => (
+            <div key={item.title} className="text-center">
+              <div className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+                {item.icon}
               </div>
+              <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>

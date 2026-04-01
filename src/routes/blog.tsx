@@ -221,6 +221,20 @@ const blogPosts = [
 
       <p class="source">Sources: Ewing Marion Kauffman Foundation, "State of Entrepreneurship" (2023). U.S. Small Business Administration, "Frequently Asked Questions About Small Business" (2023).</p>
 
+      <h3>Salary Growth Over a Career</h3>
+
+      <p>Starting salary is one data point. What matters more is the trajectory. The Bureau of Labor Statistics tracks median wages by age group — the gap between early career (25–34) and peak earning (45–54) tells you a lot about a field's growth ceiling.</p>
+
+      <p>In software and engineering roles, median wages nearly double between early and peak career. In education, growth is much flatter. In law and medicine, early salaries look modest (especially with student debt) but peak earnings are among the highest of any profession. The key question isn't "what does this pay now?" — it's "where does this go?"</p>
+
+      <h3>What the Numbers Miss</h3>
+
+      <p>Salary data is averages — and averages hide a lot. A software engineer at a startup making $85K and one at Google making $240K are both "software engineers." A pediatrician in rural Texas and an orthopedic surgeon in New York are both "doctors."</p>
+
+      <p>The factors that actually determine your individual outcome: location, specialization, the specific company or institution, how long you stay, and how aggressive you are about negotiating. Research from Linda Babcock at Carnegie Mellon found that not negotiating your first salary costs an average of $500,000 in lifetime earnings due to compounding raises. That's not a salary issue — it's a negotiation issue.</p>
+
+      <p class="source">Source: Babcock, L., & Laschever, S. (2003). <em>Women Don't Ask</em>. Princeton University Press. Carnegie Mellon University wage negotiation research (2001).</p>
+
       <h3>The Bottom Line for Students</h3>
 
       <p>A few things worth keeping in mind before you choose:</p>
@@ -230,7 +244,31 @@ const blogPosts = [
         <li><strong>STEM pays more on average</strong>, but the range inside every field is huge. A great attorney earns more than a mediocre software engineer. Field matters less than you'd think.</li>
         <li><strong>Talk to someone who actually does it.</strong> Salary data tells you the number, but it doesn't tell you what the job actually feels like at 10pm on a Tuesday. That's what mentors are for.</li>
         <li><strong>Think past the first paycheck:</strong> student debt, years of training, lifestyle, location, and where the field is headed in 10 years all matter.</li>
+        <li><strong>Learn to negotiate.</strong> The single highest-ROI skill for early career isn't technical — it's knowing how to ask for what you're worth.</li>
       </ol>
+
+      <h3>The Geographic Factor</h3>
+
+      <p>Where you work matters almost as much as what you do. A software engineer in San Francisco earns a median of $136,000. The same role in a mid-sized city like Austin or Denver pays around $105,000. In a smaller market, it could be $75,000. The national median is just an average of all of those.</p>
+
+      <p>This cuts both ways. Cost of living in San Francisco is dramatically higher than in Austin. MIT's Living Wage Calculator estimates a single adult in San Francisco needs around $72,000 just to cover basic expenses — before any discretionary spending or savings. The same calculation in Columbus, Ohio comes in under $35,000. A $105,000 salary in Columbus might actually leave you with more disposable income than $136,000 in San Francisco.</p>
+
+      <p>Remote work has changed this somewhat, but not completely. Most high-paying roles still pay location-adjusted salaries even for remote workers, and many require some in-office presence. Before you anchor on a salary number, look up what it actually buys in the city where you plan to live.</p>
+
+      <p class="source">Sources: MIT Living Wage Calculator (2024). Bureau of Labor Statistics, Occupational Employment Statistics by state (2023). Levels.fyi software engineering compensation data (2024).</p>
+
+      <h3>When to Ignore Salary Data</h3>
+
+      <p>There are a few cases where salary data is genuinely misleading and you should lean on lived experience instead:</p>
+
+      <ul>
+        <li><strong>Early-stage startups:</strong> Equity can be worth far more than salary, or nothing at all. You can't find this in BLS data.</li>
+        <li><strong>Commission-based roles:</strong> Sales, real estate, and finance roles often have wide variation. Top performers earn multiples of the median.</li>
+        <li><strong>Fields with long training ramps:</strong> Medicine and law look bad early (residency pays ~$60K) but look excellent at peak career. You need a 10-year view, not a first-year view.</li>
+        <li><strong>Non-profit and public sector:</strong> The salary ceiling is lower but benefits, stability, and loan forgiveness programs change the actual financial picture considerably.</li>
+      </ul>
+
+      <p>This is exactly why talking to someone who's actually in the field matters. They'll tell you what the spreadsheet can't.</p>
 
       <p>On Mentino, you can find professionals across 15+ career fields who'll give you the honest version, not the recruiting brochure version.</p>
     `,
@@ -321,11 +359,36 @@ const blogPosts = [
 
       <p>When mentors from diverse backgrounds share their experiences navigating career challenges specific to their identity, it creates a roadmap that formal education rarely provides.</p>
 
+      <h3>The Compound Effect</h3>
+
+      <p>The most interesting thing about mentorship data isn't any single outcome — it's how the effects stack. Mentored students are more likely to get good first jobs. Better first jobs mean better second jobs. Better career trajectories mean more opportunities to develop skills, build networks, and earn more. The gap between mentored and non-mentored professionals widens over time, not narrows.</p>
+
+      <p>A 2019 meta-analysis in the <em>Journal of Vocational Behavior</em> reviewed 27 studies covering over 11,000 participants and found consistent positive effects of mentoring on objective career outcomes (salary, promotions) and subjective outcomes (job satisfaction, career commitment). Crucially, the effects were strongest for mentees who had the relationship earliest in their careers.</p>
+
+      <p class="source">Source: Eby, L.T., Allen, T.D., et al. (2019). "An interdisciplinary meta-analysis of the potential antecedents, correlates, and consequences of protégé perceptions of mentoring." <em>Journal of Vocational Behavior</em>, 112, 358-390.</p>
+
       <h3>What This Means for Students</h3>
 
       <p>The data is consistent across decades of research: mentorship works. Not just a little: it moves the needle on salary, promotions, leadership, and job satisfaction in ways that compound over a whole career.</p>
 
       <p>And the earlier you start, the more runway you have. A mentor in high school or early college gives you time to actually use what you learn, to make better decisions before you've locked anything in.</p>
+
+      <h3>How to Actually Get Value From a Mentor</h3>
+
+      <p>A lot of students get matched with a mentor and don't know what to do with it. They either ask questions that are too broad ("what should I do with my career?") or they go silent after the first message. Here's what the research and practical experience say actually works:</p>
+
+      <ul>
+        <li><strong>Come with specific questions.</strong> "What does a typical Tuesday look like for you?" gets a more useful answer than "what's your job like?" Specificity signals respect for the mentor's time and gets you concrete information.</li>
+        <li><strong>Ask about the path, not just the destination.</strong> How did they get there? What would they do differently? What do most people misunderstand about the field? These questions can't be Googled.</li>
+        <li><strong>Follow through on what they suggest.</strong> If a mentor recommends reading something or trying a project, do it and report back. This turns a one-off conversation into a relationship.</li>
+        <li><strong>Don't wait until you have something impressive to share.</strong> Mentors don't need you to already be successful. They want to help you get there.</li>
+      </ul>
+
+      <p>A 2020 study from the Association for Talent Development found that the quality of mentor-mentee conversations mattered more than the quantity of sessions. One focused 30-minute conversation beats five aimless ones.</p>
+
+      <p class="source">Source: Association for Talent Development, "State of Mentoring" report (2020).</p>
+
+      <p>The students who get the most out of mentorship tend to share a few traits: they ask specific questions, they follow through on suggestions, and they stay in contact. You don't need to be impressive — you need to be curious and consistent.</p>
 
       <p>That's what Mentino is for. Sign up, find someone who's already where you're trying to go, and just ask them what you need to know.</p>
     `,
@@ -402,6 +465,22 @@ const blogPosts = [
 
       <h3>The short version</h3>
 
+      <h3>The Role of Identity in Career Choice</h3>
+
+      <p>A lot of career confusion isn't about the career — it's about identity. "Who am I?" is a harder question than "what job should I have?" and students often mix them up. Psychologist James Marcia's research on identity development found that most teenagers are either in "moratorium" (actively exploring, unsettled) or "foreclosure" (committed to an identity they didn't actually choose — often because their parents chose it for them).</p>
+
+      <p>If you feel pressure to commit to a path before you're ready, that pressure is usually external. Your parents, your school's college counselor, college apps — they all want a tidy story. But committing early to the wrong thing is a much more expensive mistake than taking time to explore.</p>
+
+      <p class="source">Source: Marcia, J.E. (1966). "Development and validation of ego-identity status." <em>Journal of Personality and Social Psychology</em>, 3(5), 551-558.</p>
+
+      <h3>What Actually Helps</h3>
+
+      <p>Career counselors, personality tests, and online quizzes are a starting point at best. The research consistently shows that the most effective career exploration happens through two things: direct experience and conversations with people who are already doing the work.</p>
+
+      <p>Direct experience means internships, part-time jobs, projects, competitions, or just building something related to the field. Not reading about it — doing a version of it. Conversations with people already in the field give you information you genuinely cannot get anywhere else: what a random Tuesday feels like, what skills actually matter vs. what looks good on paper, whether the day-to-day matches the hype.</p>
+
+      <p>Both of these require initiative. Nobody sends you an invitation. The good news is that reaching out to people is easier now than it's ever been — and most professionals are more willing to talk to curious students than you'd expect.</p>
+
       <p>Your career doesn't have to be a straight line, and it probably won't be. The most interesting ones rarely are. Explore, talk to real people, try things. Clarity comes from doing, not from sitting and thinking harder about it. Stop waiting to have it figured out and start having conversations with people who can help you figure it out.</p>
     `,
   },
@@ -459,9 +538,32 @@ const blogPosts = [
 
       <p>Third: keep the focus on impact. When things get frustrating (and they do), I come back to why I started. Someone's going to connect with the right mentor through this platform and it's going to change something for them. That's worth the hard days.</p>
 
+      <h3>The Technical Side</h3>
+
+      <p>A lot of people are surprised that a 15-year-old built this. I get it. But the tools available now make it genuinely possible — not easy, but possible. Mentino is built on Hono (a fast web framework), React for the UI, and Supabase for the database. I was learning most of this as I built it.</p>
+
+      <p>The hardest parts weren't the code. They were the decisions. How do you verify a mentor without asking for their social security number? How do you keep a platform safe for students under 18 without making it so locked down that nobody actually uses it? How do you build a matching algorithm that's actually useful and not just a feel-good percentage? These are design problems, not coding problems. You can't Google the answer — you have to think it through and make a call.</p>
+
+      <p>I shipped a lot of bad first versions. The first matching algorithm was a simple keyword match that returned nonsense. The first message system had no read receipts and no notifications, so conversations would just... die silently. The first profile page had no way to edit anything after signing up. Every one of those was a decision I made too fast that I had to go back and fix.</p>
+
+      <p>The lesson: ship early so you can find out what's broken, but be honest with yourself about what "early" means. Releasing something that actively works badly is different from releasing something that's incomplete. The former makes people not come back.</p>
+
+      <h3>What I'd Tell Other Young Builders</h3>
+
+      <p>If you're a student and you're thinking about building something:</p>
+
+      <ul>
+        <li><strong>Pick a problem you actually have.</strong> I used Mentino. That made every design decision easier — I could just ask myself what I would want.</li>
+        <li><strong>Don't wait until you're good enough.</strong> You get good enough by building things. There is no other path.</li>
+        <li><strong>The first version will be embarrassing.</strong> That's fine. Put it in front of real users anyway. The feedback is worth more than the embarrassment.</li>
+        <li><strong>Find one person who's already done what you want to do.</strong> I've gotten more useful direction from a handful of conversations with people who've built products before than from any tutorial. Which is, honestly, exactly the point of Mentino.</li>
+      </ul>
+
       <h3>What's next</h3>
 
       <p>I want a student to be able to open Mentino, find the right mentor for exactly where they're trying to go, and have a real conversation: not a form, not an algorithm pretending to care, just a real person with real experience. We're building toward that.</p>
+
+      <p>The next phase is growth — getting more real mentors from more fields, and making sure every student who signs up can find someone relevant to them. After that, features that make the relationship better over time: session notes, progress tracking, resources mentors can share with students.</p>
 
       <p>If you're a student, sign up. If you're someone who's figured something out and wants to give back, we need you. We're just getting started.</p>
     `,
@@ -546,6 +648,79 @@ blog.get("/blog", optionalAuth, (c) => {
             </div>
           </div>
         </a>
+
+        {/* Why Mentorship Works — stats panel */}
+        <div className="bg-gradient-to-br from-indigo-950 to-indigo-900 rounded-3xl p-8 md:p-12 mb-10 text-white">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-2">Why Mentorship Works</h2>
+            <p className="text-indigo-300 text-sm mb-8">The research keeps pointing the same direction. Mentored students and professionals consistently do better — not by a little.</p>
+
+            <div className="mb-8">
+              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Mentorship Impact by the Numbers</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {[
+                  { num: "5×", label: "More likely to be promoted", color: "text-amber-400" },
+                  { num: "55%", label: "More likely to enroll in college", color: "text-emerald-400" },
+                  { num: "23%", label: "More job offers before graduation", color: "text-blue-400" },
+                  { num: "4×", label: "More career satisfaction", color: "text-violet-400" },
+                  { num: "+$5,610", label: "Higher salary per year vs peers", color: "text-rose-400" },
+                  { num: "16M", label: "US students without a mentor right now", color: "text-orange-400" },
+                ].map((s) => (
+                  <div key={s.label} className="bg-white/10 rounded-2xl p-4">
+                    <div className={`text-2xl md:text-3xl font-extrabold ${s.color} leading-none`}>{s.num}</div>
+                    <div className="text-indigo-200 text-xs mt-1 leading-snug">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-indigo-400 text-xs mt-3">Sources: MENTOR, NACE, Journal of Applied Psychology, Gartner (2004–2024)</p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Career Outcomes Over Time</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { num: "71%", label: "Fortune 500 companies with mentoring programs" },
+                  { num: "130%", label: "More likely to hold leadership positions" },
+                  { num: "78%", label: "More likely to volunteer in their communities" },
+                  { num: "90%", label: "More interested in becoming a mentor themselves" },
+                ].map((s) => (
+                  <div key={s.label} className="bg-white/10 rounded-2xl p-4">
+                    <div className="text-xl md:text-2xl font-extrabold text-white leading-none">{s.num}</div>
+                    <div className="text-indigo-200 text-xs mt-1 leading-snug">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-indigo-400 text-xs mt-3">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014)</p>
+            </div>
+
+            <div>
+              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Salary by Career Field</h3>
+              <p className="text-indigo-300 text-xs mb-4">Median annual salaries by field (BLS, May 2023). Numbers tell you what, mentors tell you how.</p>
+              <div className="space-y-2">
+                {[
+                  { field: "Computer & IT", salary: "$104,420", pct: 100 },
+                  { field: "Legal", salary: "$84,910", pct: 82 },
+                  { field: "Engineering", salary: "$83,340", pct: 80 },
+                  { field: "Healthcare Practitioners", salary: "$77,600", pct: 74 },
+                  { field: "Business & Financial", salary: "$76,850", pct: 74 },
+                  { field: "Life Sciences", salary: "$68,830", pct: 66 },
+                  { field: "Education", salary: "$55,350", pct: 53 },
+                  { field: "Arts & Design", salary: "$50,710", pct: 49 },
+                ].map((row) => (
+                  <div key={row.field} className="flex items-center gap-3">
+                    <div className="w-36 text-xs text-indigo-200 flex-shrink-0">{row.field}</div>
+                    <div className="flex-1 bg-white/10 rounded-full h-5 overflow-hidden">
+                      <div className="h-5 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400 flex items-center justify-end pr-2" style={{ width: `${row.pct}%` }}>
+                        <span className="text-white text-xs font-bold">{row.salary}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-indigo-400 text-xs mt-3">Source: U.S. Bureau of Labor Statistics, Occupational Employment and Wages, May 2023</p>
+            </div>
+          </div>
+        </div>
 
         {/* Category row */}
         <div className="flex items-center gap-3 mb-8 flex-wrap">

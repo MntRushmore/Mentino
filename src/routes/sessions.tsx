@@ -44,6 +44,7 @@ sessions.get("/sessions", authMiddleware, async (c) => {
       .from("sessions")
       .select("*, matches!inner(students!inner(accounts!inner(first_name, last_name)), mentors!inner(accounts!user_id!inner(first_name, last_name)))")
       .in("match_id", matchIds)
+      .gt("duration_minutes", 0)
       .order("scheduled_at", { ascending: false });
     sessionData = data || [];
   }
@@ -57,6 +58,11 @@ sessions.get("/sessions", authMiddleware, async (c) => {
       .in("id", matchIds);
     activeMatches = data || [];
   }
+
+  // Find first completed unrated session for students to auto-prompt rating
+  const autoRateSessionId = user.role === "student"
+    ? (sessionData.find((s: any) => s.status === "completed" && !s.rating) as any)?.id ?? null
+    : null;
 
   return html(
     <Layout title="Sessions" user={user}>
@@ -332,6 +338,13 @@ sessions.get("/sessions", authMiddleware, async (c) => {
         backdrop.addEventListener('click', closeRatingModal);
         cancelBtn.addEventListener('click', closeRatingModal);
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeRatingModal(); });
+
+        // Auto-open for first completed unrated session (once per session)
+        var autoId = ${JSON.stringify(autoRateSessionId)};
+        if (autoId && !sessionStorage.getItem('rated_' + autoId)) {
+          sessionStorage.setItem('rated_' + autoId, '1');
+          setTimeout(function() { openRatingModal(autoId); }, 800);
+        }
       `}} />
     </Layout>
   );

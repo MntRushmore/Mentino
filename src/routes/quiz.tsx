@@ -76,7 +76,7 @@ function QuizPage() {
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <button {...{"onclick": "showDiscoverMode()"} as any} style={{
+            <button id="btn-discover" style={{
               background: "linear-gradient(135deg, rgba(236,72,153,0.1), rgba(139,92,246,0.12), rgba(59,130,246,0.08))",
               border: "1.5px solid rgba(139,92,246,0.4)", borderRadius: 20, padding: "28px 30px",
               cursor: "pointer", textAlign: "left", width: "100%", transition: "border-color 0.2s",
@@ -92,7 +92,7 @@ function QuizPage() {
                 </div>
               </div>
             </button>
-            <button {...{"onclick": "showDirectMode()"} as any} style={{
+            <button id="btn-direct" style={{
               background: "rgba(255,255,255,0.03)",
               border: "1.5px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "28px 30px",
               cursor: "pointer", textAlign: "left", width: "100%", transition: "border-color 0.2s",
@@ -132,12 +132,12 @@ function QuizPage() {
               }}
             />
             <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
-              <button {...{"onclick": "goBackToLanding()"} as any} style={{
+              <button id="btn-back-landing" style={{
                 padding: "13px 24px", background: "rgba(255,255,255,0.06)",
                 border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8",
                 borderRadius: 12, cursor: "pointer", fontSize: 15,
               }}>Back</button>
-              <button {...{"onclick": "submitDirectCareer()"} as any} style={{
+              <button id="btn-submit-direct" style={{
                 flex: 1, padding: "13px 24px",
                 background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
                 border: "none", color: "white", borderRadius: 12,
@@ -173,12 +173,12 @@ function QuizPage() {
 
         {/* Navigation (hidden initially, shown as flex when quiz starts) */}
         <div id="quiz-nav" style={{ justifyContent: "space-between", marginTop: 24, gap: 12, display: "none" }}>
-          <button id="btn-prev" {...{"onclick": "prevQuestion()"} as any} style={{
+          <button id="btn-prev" style={{
             padding: "12px 28px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
             color: "#94a3b8", borderRadius: 14, cursor: "pointer", fontSize: 15,
           }}>Back</button>
           <div style={{ flex: 1 }}></div>
-          <button id="btn-next" {...{"onclick": "nextQuestion()"} as any} style={{
+          <button id="btn-next" style={{
             padding: "12px 32px", background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
             border: "none", color: "white", borderRadius: 14, cursor: "pointer", fontSize: 15, fontWeight: 700,
           }}>Next</button>
@@ -561,6 +561,15 @@ function submitQuiz() {
   localStorage.setItem('quiz_completed', '1');
   window.location.href = '/quiz/results?cluster=' + encodeURIComponent(top);
 }
+
+// ---- Wire up all button click handlers via addEventListener ----
+// (React SSR strips lowercase onclick attributes, so we do this instead)
+document.getElementById('btn-discover').addEventListener('click', showDiscoverMode);
+document.getElementById('btn-direct').addEventListener('click', showDirectMode);
+document.getElementById('btn-back-landing').addEventListener('click', goBackToLanding);
+document.getElementById('btn-submit-direct').addEventListener('click', submitDirectCareer);
+document.getElementById('btn-prev').addEventListener('click', prevQuestion);
+document.getElementById('btn-next').addEventListener('click', nextQuestion);
       ` }} />
     </div>
   );

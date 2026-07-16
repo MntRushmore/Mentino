@@ -106,10 +106,9 @@ function MentorsPage({ mentors, ratingsMap, allFields, user }: {
             id="mentor-search"
             type="text"
             placeholder="Search by name, job title, or skill..."
-            {...{"oninput": "filterMentors()"} as any}
             className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
           />
-          <select id="field-filter" {...{"onchange": "filterMentors()"} as any}
+          <select id="field-filter"
             className="px-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white">
             <option value="">All fields</option>
             {allFields.map((f) => <option key={f} value={f}>{f}</option>)}
@@ -241,6 +240,11 @@ function filterMentors() {
   var noResults = document.getElementById('no-results');
   if (noResults) noResults.classList.toggle('hidden', visible > 0);
 }
+// Wire up search/filter (React SSR strips lowercase event attributes)
+var searchEl = document.getElementById('mentor-search');
+var filterEl = document.getElementById('field-filter');
+if (searchEl) searchEl.addEventListener('input', filterMentors);
+if (filterEl) filterEl.addEventListener('change', filterMentors);
       `}} />
     </div>
   );

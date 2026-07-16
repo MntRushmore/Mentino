@@ -369,7 +369,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
         }}>
           {/* close X */}
-          <button {...{"onclick": "dismissQuizPopup()"} as any} style={{
+          <button id="quiz-popup-close" style={{
             position: "absolute", top: 14, right: 14,
             background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8",
             width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 16, lineHeight: "30px",
@@ -393,7 +393,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
             color: "white", borderRadius: 14, fontWeight: 700, fontSize: 15, textDecoration: "none", marginBottom: 12,
           }}>Take the Free Quiz →</a>
-          <button {...{"onclick": "maybeLaterQuiz()"} as any} style={{
+          <button id="quiz-maybe-later" style={{
             background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 13,
           }}>Maybe Later</button>
         </div>
@@ -405,7 +405,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
         background: "linear-gradient(135deg, #0e0e2e, #1e1b4b)", border: "1px solid rgba(139,92,246,0.4)",
         borderRadius: 16, padding: "14px 18px", maxWidth: 260, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
       }}>
-        <button {...{"onclick": "dismissQuizFloat()"} as any} style={{
+        <button id="quiz-float-close" style={{
           position: "absolute", top: 8, right: 10,
           background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 16, lineHeight: 1,
         }}>×</button>
@@ -454,13 +454,17 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
     localStorage.setItem(DISMISSED_KEY, '1');
   }
 
-  window.dismissQuizPopup = dismissQuizPopup;
-  window.maybeLaterQuiz = maybeLaterQuiz;
-  window.dismissQuizFloat = dismissQuizFloat;
+  // Wire up buttons via addEventListener (React SSR strips lowercase onclick attributes)
+  var closeBtn = document.getElementById('quiz-popup-close');
+  var laterBtn = document.getElementById('quiz-maybe-later');
+  var floatClose = document.getElementById('quiz-float-close');
+  if (closeBtn) closeBtn.addEventListener('click', dismissQuizPopup);
+  if (laterBtn) laterBtn.addEventListener('click', maybeLaterQuiz);
+  if (floatClose) floatClose.addEventListener('click', dismissQuizFloat);
 
-  // Show popup on every visit unless permanently dismissed or quiz completed
+  // Show popup immediately (800ms) on every visit unless permanently dismissed or completed
   if (!alreadyDone()) {
-    setTimeout(showPopup, 2500);
+    setTimeout(showPopup, 800);
   }
 })();
       ` }} />

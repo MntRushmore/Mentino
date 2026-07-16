@@ -129,12 +129,14 @@ function MentorsPage({ mentors, ratingsMap, allFields, user }: {
             const searchStr = `${name} ${m.job_title || ""} ${m.company || ""} ${m.career_field || ""} ${(m.topics || []).join(" ")} ${acct?.bio || ""}`.toLowerCase();
 
             return (
-              <div
+              <a
                 key={m.id}
+                href={`/profile/${m.user_id}`}
                 data-mentor-card="1"
                 data-search={searchStr}
                 data-field={m.career_field || ""}
-                className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow flex flex-col"
+                className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg hover:border-indigo-200 transition-all flex flex-col no-underline cursor-pointer"
+                style={{ textDecoration: "none", display: "flex" }}
               >
                 {/* Avatar + name */}
                 <div className="flex items-center gap-3 mb-3">
@@ -177,18 +179,16 @@ function MentorsPage({ mentors, ratingsMap, allFields, user }: {
                 {/* CTA */}
                 <div className="mt-auto">
                   {user ? (
-                    <a href={`/profile/${m.user_id}`}
-                      className="block text-center bg-indigo-600 text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-indigo-700 transition-colors">
-                      View Profile
-                    </a>
+                    <div className="block text-center bg-indigo-600 text-white text-sm font-semibold py-2.5 rounded-xl">
+                      View Profile →
+                    </div>
                   ) : (
-                    <a href="/signup?role=student"
-                      className="block text-center bg-indigo-50 text-indigo-700 text-sm font-semibold py-2.5 rounded-xl hover:bg-indigo-100 transition-colors border border-indigo-200">
-                      Sign Up to Connect
-                    </a>
+                    <div className="block text-center bg-indigo-50 text-indigo-700 text-sm font-semibold py-2.5 rounded-xl border border-indigo-200">
+                      View Profile →
+                    </div>
                   )}
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>
@@ -233,7 +233,7 @@ function filterMentors() {
     var matchSearch = !q || card.getAttribute('data-search').includes(q);
     var matchField = !field || card.getAttribute('data-field') === field;
     var show = matchSearch && matchField;
-    card.style.display = show ? '' : 'none';
+    card.style.display = show ? 'flex' : 'none';
     if (show) visible++;
   });
   var countEl = document.getElementById('mentor-count');

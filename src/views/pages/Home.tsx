@@ -361,81 +361,96 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
     {/* ── Career Quiz Popup ───────────────────────────────────────────── */}
       <div id="quiz-popup" style={{
         display: "none", position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.7)", alignItems: "center", justifyContent: "center", padding: 20,
+        background: "rgba(0,0,0,0.75)", alignItems: "center", justifyContent: "center", padding: 20,
       }}>
         <div style={{
-          background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: 24, maxWidth: 480, width: "100%", padding: "40px 36px", position: "relative", textAlign: "center",
+          background: "linear-gradient(135deg, #0e0e2e, #1e1b4b)", border: "1px solid rgba(139,92,246,0.35)",
+          borderRadius: 24, maxWidth: 460, width: "100%", padding: "44px 36px", position: "relative", textAlign: "center",
+          boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
         }}>
+          {/* close X */}
           <button {...{"onclick": "dismissQuizPopup()"} as any} style={{
-            position: "absolute", top: 16, right: 16,
-            background: "rgba(255,255,255,0.06)", border: "none", color: "#94a3b8",
-            width: 32, height: 32, borderRadius: "50%", cursor: "pointer", fontSize: 18, lineHeight: "32px",
-          }}>x</button>
-          <div style={{ fontSize: 56, marginBottom: 16 }}>🎯</div>
-          <h2 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Discover Your Career Path</h2>
-          <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 28, lineHeight: 1.6 }}>
-            Answer 10 quick questions and find out which career field matches your personality, interests, and goals.
+            position: "absolute", top: 14, right: 14,
+            background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8",
+            width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 16, lineHeight: "30px",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>×</button>
+          {/* decorative blob */}
+          <div style={{ position: "absolute", top: -40, right: -40, width: 180, height: 180, background: "radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+          <div style={{ fontSize: 60, marginBottom: 18, filter: "drop-shadow(0 0 20px rgba(139,92,246,0.5))" }}>🧭</div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 99, padding: "4px 12px", marginBottom: 14 }}>
+            <span style={{ color: "#c4b5fd", fontSize: 12, fontWeight: 600, letterSpacing: 0.5 }}>Free Career Tool</span>
+          </div>
+          <h2 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 12, lineHeight: 1.2 }}>
+            Discover Your{" "}
+            <span style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Career Path</span>
+          </h2>
+          <p style={{ color: "#94a3b8", fontSize: 14, marginBottom: 28, lineHeight: 1.65 }}>
+            Answer 10 quick questions and find out which career field matches your personality, interests, and goals. Get curated books, videos, and mentor connections.
           </p>
           <a href="/quiz" style={{
-            display: "block", padding: "14px 0", background: "linear-gradient(135deg, #6366f1, #a855f7)",
-            color: "white", borderRadius: 14, fontWeight: 700, fontSize: 16, textDecoration: "none", marginBottom: 12,
+            display: "block", padding: "14px 0",
+            background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
+            color: "white", borderRadius: 14, fontWeight: 700, fontSize: 15, textDecoration: "none", marginBottom: 12,
           }}>Take the Free Quiz →</a>
           <button {...{"onclick": "maybeLaterQuiz()"} as any} style={{
-            background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 14,
+            background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 13,
           }}>Maybe Later</button>
         </div>
       </div>
 
-      {/* ── Career Quiz Floating Card ───────────────────────────────────── */}
+      {/* ── Career Quiz Floating Card (bottom-left, shows after Maybe Later) */}
       <div id="quiz-float" style={{
-        display: "none", position: "fixed", bottom: 24, right: 24, zIndex: 9998,
-        background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(99,102,241,0.4)",
-        borderRadius: 16, padding: "14px 18px", maxWidth: 280, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+        display: "none", position: "fixed", bottom: 24, left: 24, zIndex: 9998,
+        background: "linear-gradient(135deg, #0e0e2e, #1e1b4b)", border: "1px solid rgba(139,92,246,0.4)",
+        borderRadius: 16, padding: "14px 18px", maxWidth: 260, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
       }}>
         <button {...{"onclick": "dismissQuizFloat()"} as any} style={{
           position: "absolute", top: 8, right: 10,
           background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 16, lineHeight: 1,
-        }}>x</button>
+        }}>×</button>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <span style={{ fontSize: 26 }}>🎯</span>
+          <span style={{ fontSize: 22 }}>🧭</span>
           <span style={{ color: "white", fontWeight: 700, fontSize: 14 }}>Career Quiz</span>
         </div>
-        <p style={{ color: "#94a3b8", fontSize: 13, marginBottom: 12, lineHeight: 1.5 }}>Find your ideal career path in 10 questions.</p>
+        <p style={{ color: "#94a3b8", fontSize: 12, marginBottom: 10, lineHeight: 1.5 }}>Find your ideal career path in 10 questions.</p>
         <a href="/quiz" style={{
-          display: "block", padding: "9px 0", background: "linear-gradient(135deg, #6366f1, #a855f7)",
+          display: "block", padding: "8px 0", background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
           color: "white", borderRadius: 10, fontWeight: 600, fontSize: 13, textDecoration: "none", textAlign: "center",
-        }}>Take the Quiz</a>
+        }}>Take the Quiz →</a>
       </div>
 
       <script dangerouslySetInnerHTML={{ __html: `
 (function() {
-  var POPUP_KEY = 'quiz_popup_shown';
   var DISMISSED_KEY = 'quiz_dismissed';
   var COMPLETED_KEY = 'quiz_completed';
 
   function alreadyDone() {
-    return localStorage.getItem(DISMISSED_KEY) || localStorage.getItem(COMPLETED_KEY);
+    return localStorage.getItem(DISMISSED_KEY) === '1' || localStorage.getItem(COMPLETED_KEY) === '1';
   }
 
   function showPopup() {
     var el = document.getElementById('quiz-popup');
     if (el) { el.style.display = 'flex'; }
-    localStorage.setItem(POPUP_KEY, '1');
   }
 
   function dismissQuizPopup() {
-    document.getElementById('quiz-popup').style.display = 'none';
-    document.getElementById('quiz-float').style.display = 'block';
+    var pop = document.getElementById('quiz-popup');
+    var fl = document.getElementById('quiz-float');
+    if (pop) pop.style.display = 'none';
+    if (fl) fl.style.display = 'block';
   }
 
   function maybeLaterQuiz() {
-    document.getElementById('quiz-popup').style.display = 'none';
-    document.getElementById('quiz-float').style.display = 'block';
+    var pop = document.getElementById('quiz-popup');
+    var fl = document.getElementById('quiz-float');
+    if (pop) pop.style.display = 'none';
+    if (fl) fl.style.display = 'block';
   }
 
   function dismissQuizFloat() {
-    document.getElementById('quiz-float').style.display = 'none';
+    var fl = document.getElementById('quiz-float');
+    if (fl) fl.style.display = 'none';
     localStorage.setItem(DISMISSED_KEY, '1');
   }
 
@@ -443,11 +458,9 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
   window.maybeLaterQuiz = maybeLaterQuiz;
   window.dismissQuizFloat = dismissQuizFloat;
 
+  // Show popup on every visit unless permanently dismissed or quiz completed
   if (!alreadyDone()) {
-    var delay = localStorage.getItem(POPUP_KEY) ? 0 : 2500;
-    if (!localStorage.getItem(POPUP_KEY)) {
-      setTimeout(showPopup, delay);
-    }
+    setTimeout(showPopup, 2500);
   }
 })();
       ` }} />

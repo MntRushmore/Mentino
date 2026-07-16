@@ -346,8 +346,10 @@ staticPages.get("/founder", optionalAuth, (c) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Anthony */}
             <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100">
-                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover" />
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
+                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>A</div>
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-0.5">Anthony Branzuela</h3>
               <p className="text-indigo-600 text-sm font-semibold mb-3">Co-Advisor</p>
@@ -362,8 +364,10 @@ staticPages.get("/founder", optionalAuth, (c) => {
             </div>
             {/* Joanne */}
             <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100">
-                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover" />
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100 relative">
+                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #10b981, #059669)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>J</div>
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-0.5">Joanne Branzuela</h3>
               <p className="text-emerald-600 text-sm font-semibold mb-3">Co-Advisor</p>

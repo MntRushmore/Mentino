@@ -115,6 +115,19 @@ export function Layout({ title = "Mentino", children, user, flash, navBadges, cu
         )}
         <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 py-5 sm:py-8 w-full">{children}</main>
         <Footer />
+        {/* Persistent quiz button — bottom-left, hidden on the quiz page itself */}
+        {currentPath !== "/quiz" && (
+          <a href="/quiz" id="quiz-fab" style={{
+            position: "fixed", bottom: 22, left: 22, zIndex: 9990,
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+            color: "white", borderRadius: 99, padding: "10px 18px",
+            textDecoration: "none", fontWeight: 700, fontSize: 13,
+            boxShadow: "0 6px 24px rgba(139,92,246,0.45)",
+          }}>
+            🧭 Career Quiz
+          </a>
+        )}
       </body>
     </html>
   );

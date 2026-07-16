@@ -156,7 +156,7 @@ async function renderStudentDashboard(c: any, user: any) {
             {/* Level bar */}
             <div className="mb-3">
               <div className="flex items-center justify-between mb-1">
-                <span className={`text-xs font-bold ${studentLevel.color}`}>Level {studentLevel.number} — {studentLevel.label}</span>
+                <span className={`text-xs font-bold ${studentLevel.color}`}>Level {studentLevel.number}: {studentLevel.label}</span>
                 {studentLevel.nextThreshold ? (
                   <span className="text-xs text-gray-400">{completedCount}/{studentLevel.nextThreshold} sessions to Level {studentLevel.number + 1}</span>
                 ) : (
@@ -316,7 +316,7 @@ async function renderMentorDashboard(c: any, user: any) {
             </svg>
             <div>
               <p className="text-sm font-medium text-yellow-800">Profile under review</p>
-              <p className="text-sm text-yellow-700">Our team is verifying your profile — usually 24–48 hours. You can still receive and respond to mentee requests in the meantime.</p>
+              <p className="text-sm text-yellow-700">Our team is verifying your profile, usually within 24-48 hours. You can still receive and respond to mentee requests in the meantime.</p>
             </div>
           </div>
         )}

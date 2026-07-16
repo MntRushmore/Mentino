@@ -174,7 +174,7 @@ staticPages.get("/about", optionalAuth, (c) => {
 staticPages.get("/founder", optionalAuth, (c) => {
   const user = c.get("user");
   return html(
-    <Layout title="About the Founder" user={user} currentPath="/founder">
+    <Layout title="About Us | Mentino" user={user} currentPath="/founder">
       <div className="max-w-5xl mx-auto">
 
         {/* Hero with background image */}
@@ -191,10 +191,10 @@ staticPages.get("/founder", optionalAuth, (c) => {
             <div className="w-40 h-40 mx-auto mb-6 rounded-2xl border-4 border-indigo-400 overflow-hidden shadow-2xl">
               <img src="/images/founder.jpg" alt="Ethan Branzuela, Founder of Mentino" className="w-full h-full object-cover" />
             </div>
-            <h1 className="text-4xl font-extrabold mb-2">Ethan Branzuela</h1>
-            <p className="text-indigo-300 text-xl mb-5">Founder of Mentino</p>
+            <h1 className="text-4xl font-extrabold mb-2">About Us</h1>
+            <p className="text-indigo-300 text-xl mb-5">The people behind Mentino</p>
             <div className="flex justify-center flex-wrap gap-3 mb-6">
-              {["15 years old", "Bay Area, CA", "Sports Photographer", "Young Entrepreneur"].map((tag) => (
+              {["Founded by Ethan Branzuela", "Bay Area, CA", "Student-Built Platform"].map((tag) => (
                 <span key={tag} className="bg-white/15 border border-white/20 text-white text-sm px-4 py-1.5 rounded-full backdrop-blur-sm">
                   {tag}
                 </span>
@@ -210,7 +210,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              View Photography Portfolio
+              View Founder's Photography Portfolio
             </a>
           </div>
         </div>
@@ -220,8 +220,8 @@ staticPages.get("/founder", optionalAuth, (c) => {
           {[
             { num: "16M", label: "Young people without a mentor in the US", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
             { num: "5×", label: "More promotions for mentored employees", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-            { num: "Early", label: "Access — be one of the first students", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
-            { num: "Free", label: "Forever for students — no catch", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
+            { num: "Early", label: "Access: be one of the first students", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+            { num: "Free", label: "Always free for students", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
           ].map((s) => (
             <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
               <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
@@ -233,16 +233,17 @@ staticPages.get("/founder", optionalAuth, (c) => {
         {/* Story section with image */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10 items-start anim-fade-up anim-d2">
           <div className="md:col-span-3 bg-white rounded-2xl border border-gray-200 p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">The Story</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">The Story</h2>
+            <p className="text-indigo-500 text-sm font-medium mb-4">Ethan Branzuela, Founder</p>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                I'm Ethan Branzuela. I'm 15, I live in the Bay Area, and I shoot sports photography — mainly professional and collegiate athletes around the region. That's how I pay for equipment and honestly, it's what I love doing.
+                I'm Ethan, 15, from the Bay Area. I shoot sports photography for professional and collegiate athletes. When I was trying to get better, I cold-DM'd photographers I followed online. A few responded. Those conversations taught me more in a few weeks than years of tutorials ever did.
               </p>
               <p>
-                When I was trying to get better at photography, I started reaching out to photographers I followed online. Not in a formal way — just cold DMs, emails, stuff like that. A few of them actually responded. And those conversations taught me more in a few weeks than I learned in years of watching tutorials.
+                That experience made something obvious: one real conversation with someone who's already done the thing is worth more than any amount of research. I kept asking myself why this wasn't easier for every student.
               </p>
               <p>
-                I got better because someone who already knew what they were doing was willing to talk to me. That's it. And I kept thinking — why isn't this easier for everyone?
+                So I built Mentino. A free platform where any student can find a verified professional in their field and just talk to them. No connections required. No luck needed.
               </p>
             </div>
           </div>
@@ -259,7 +260,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
           <div className="relative z-10">
             <h2 className="text-2xl font-bold mb-4">That stuck with me.</h2>
             <p className="text-indigo-100 text-lg leading-relaxed max-w-3xl">
-              I started looking around and seeing it everywhere. Athletes who made it had coaches. Doctors who made it had mentors. Lawyers, engineers, founders — almost every person I looked up to had someone older who showed them how things actually worked. Not from a book. From real experience. That's the thing you can't Google.
+              I started looking around and seeing it everywhere. Athletes who made it had coaches. Doctors who made it had mentors. Lawyers, engineers, founders: almost every person I looked up to had someone older who showed them how things actually worked. Not from a book. From real experience. That's the thing you can't Google.
             </p>
           </div>
         </div>
@@ -286,7 +287,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
               {[
                 "If you want to become a CEO, you should speak to one.",
                 "If you want to become a doctor, you should learn from one.",
-                "If you want to work in sports, law, tech, or science — you should have direct access.",
+                "If you want to work in sports, law, tech, or science, you should have direct access.",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0" />
@@ -301,7 +302,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">The Challenges</h2>
           <p className="text-gray-600 leading-relaxed mb-4">
-            Building this at 15 has been genuinely hard. Getting people to take you seriously when you're a teenager asking them to volunteer their time — that's not easy. My reach is limited. I can only message so many people directly. And there's no playbook for this.
+            Building this at 15 has been genuinely hard. Getting people to take you seriously when you're a teenager asking them to volunteer their time is not easy. My reach is limited, and there's no playbook for this.
           </p>
           <p className="text-gray-600 leading-relaxed mb-4">
             But I've learned more building Mentino than I have sitting in a classroom. And every time I see a student get matched with someone they actually connect with, it feels worth it.
@@ -315,7 +316,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Trust Mentino?</h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            I'm 15. I'm not a career coach or a therapist or a guidance counselor. But I've seen firsthand what happens when someone who knows their field sits down and actually talks to you. It changes things. I built Mentino because I wanted more students to have that experience — not just the ones whose parents happen to know the right people.
+            I'm 15. I'm not a career coach or a therapist or a guidance counselor. But I've seen firsthand what happens when someone who knows their field sits down and actually talks to you. It changes things. I built Mentino because I wanted more students to have that experience, not just the ones whose parents happen to know the right people.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {[
@@ -335,10 +336,53 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </p>
         </div>
 
+        {/* Advisors */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Advisory Board</span>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Our Co-Advisors</h2>
+            <p className="text-gray-500 text-sm max-w-xl mx-auto">Mentino is guided by experienced leaders who bring decades of real-world expertise to help shape the platform and support its mission.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Anthony */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100">
+                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Anthony Branzuela</h3>
+              <p className="text-indigo-600 text-sm font-semibold mb-3">Co-Advisor</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Automotive Leadership", "Business Strategy", "30+ Years Experience"].map((t) => (
+                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy, and business operations. Throughout his career, he has led luxury and mainstream automotive brands, including Porsche, Audi, Lamborghini, and Ford, while driving operational growth and building high-performing sales teams. As an advisor to Mentino, Anthony provides guidance on entrepreneurship, business strategy, customer experience, and developing partnerships that help students connect with career opportunities.
+              </p>
+            </div>
+            {/* Joanne */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100">
+                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Joanne Branzuela</h3>
+              <p className="text-emerald-600 text-sm font-semibold mb-3">Co-Advisor</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Healthcare Leadership", "Registered Nurse", "Program Development"].map((t) => (
+                  <span key={t} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full border border-emerald-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Joanne is an experienced healthcare leader and registered nurse with expertise in nursing leadership, program development, and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams, driven quality improvement initiatives, and built high-performing healthcare organizations. As an advisor to Mentino, Joanne provides guidance on leadership, strategic planning, and creating meaningful experiences that empower students to explore their future careers.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* CTA */}
         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-10 text-center text-white">
           <h3 className="text-2xl font-bold mb-2">Come be part of it.</h3>
-          <p className="text-indigo-100 mb-6">If you're a student trying to figure out your path, sign up. If you're someone who's already figured something out and wants to share it — we genuinely need you.</p>
+          <p className="text-indigo-100 mb-6">If you're a student trying to figure out your path, sign up. If you're someone who's already figured something out and wants to share it, we genuinely need you.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <a href="/signup" className="bg-white text-indigo-600 font-bold px-7 py-3 rounded-full hover:bg-indigo-50 transition-colors">
               Sign Up as Student

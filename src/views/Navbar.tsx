@@ -12,15 +12,18 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
 
   const publicLinks = [
     { href: "/", label: "Home" },
-    { href: "/founder", label: "About the Founder" },
+    { href: "/mentors", label: "Mentors" },
+    { href: "/matching", label: "Matching" },
+    { href: "/founder", label: "About Us" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/blog", label: "Blog" },
   ];
 
   const authLinks = user
     ? [
+        { href: "/", label: "Home" },
         { href: "/dashboard", label: "Dashboard" },
-        ...(user.role === "student" ? [{ href: "/matching", label: "Find Mentors" }] : []),
+        ...(user.role === "student" ? [{ href: "/matching", label: "Matching" }] : []),
         { href: "/messages", label: "Messages", badge: unread },
         { href: "/sessions", label: "Sessions" },
         ...(user.role === "admin" ? [{ href: "/admin", label: "Admin" }] : []),
@@ -51,9 +54,9 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
                 ? authLinks.map((link) => (
                     <a key={link.href} href={link.href} className="text-gray-600 hover:text-indigo-600 font-medium relative text-sm">
                       {link.label}
-                      {link.badge > 0 && (
+                      {(link.badge ?? 0) > 0 && (
                         <span className="absolute -top-2 -right-4 bg-indigo-600 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                          {link.badge > 9 ? "9+" : link.badge}
+                          {(link.badge ?? 0) > 9 ? "9+" : link.badge}
                         </span>
                       )}
                     </a>
@@ -158,7 +161,7 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
                     className="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium text-sm"
                   >
                     {link.label}
-                    {link.badge > 0 && (
+                    {(link.badge ?? 0) > 0 && (
                       <span className="bg-indigo-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">{link.badge}</span>
                     )}
                   </a>

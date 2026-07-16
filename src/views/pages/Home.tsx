@@ -10,6 +10,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
   const mentorCount = stats?.mentors ?? 0;
 
   return (
+    <>
     <div className="space-y-10 sm:space-y-16 pb-12">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
@@ -33,7 +34,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           </h1>
 
           <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto anim-fade-up anim-d2">
-            Mentino matches students with verified professionals — for free.
+            Mentino matches students with verified professionals, for free.
             No connection needed. No luck required. Just the right conversation at the right time.
           </p>
 
@@ -78,12 +79,12 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
 
       {/* ── Early momentum — growing fast ───────────────────────────────── */}
       <section className="text-center">
-        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-widest mb-3">Growing fast — be an early member</p>
+        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-widest mb-3">Growing fast. Be an early member.</p>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
           {[
             { num: `${mentorCount}`, label: "Mentors across 40+ fields" },
             { num: `${studentCount}`, label: "Students already signed up" },
-            { num: "100%", label: "Free — always" },
+            { num: "100%", label: "Always free" },
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div className="text-3xl sm:text-4xl font-extrabold text-gray-900">{s.num}</div>
@@ -95,7 +96,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
 
       {/* ── Safety ──────────────────────────────────────────────────────── */}
       <section className="bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-3xl p-6 sm:p-10">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-2">Built for safety — especially if you're under 18</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-2">Built for safety, especially if you're under 18</h2>
         <p className="text-gray-500 text-center text-sm mb-8 max-w-xl mx-auto">Mentino was designed from the ground up to be a safe place for students. Here's what that actually means.</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
@@ -105,7 +106,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
               ),
               bg: "bg-emerald-100",
               title: "Verified Mentors",
-              desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand — no automation shortcuts.",
+              desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand. No automation shortcuts.",
             },
             {
               icon: (
@@ -113,7 +114,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
               ),
               bg: "bg-blue-100",
               title: "Content Moderation",
-              desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it — and we take those seriously.",
+              desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it, and we take those seriously.",
             },
             {
               icon: (
@@ -121,7 +122,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
               ),
               bg: "bg-amber-100",
               title: "Parental Consent",
-              desc: "Students under 18 need parental consent to join. This isn't optional — it's how we keep younger students safe.",
+              desc: "Students under 18 need parental consent to join. This isn't optional. It's how we keep younger students safe.",
             },
           ].map((item) => (
             <div key={item.title} className="text-center">
@@ -138,7 +139,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
       {/* ── Career fields ───────────────────────────────────────────────── */}
       <section>
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Explore career fields</h2>
-        <p className="text-gray-500 text-center mb-6 text-sm sm:text-base">Mentors across 40+ industries — find someone in your field.</p>
+        <p className="text-gray-500 text-center mb-6 text-sm sm:text-base">Mentors across 40+ industries. Find someone in your field.</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
           {[
             { name: "Technology", img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80", field: "Technology" },
@@ -165,16 +166,16 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           <div>
             <span className="inline-block bg-emerald-100 text-emerald-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">For Mentors</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
-              Give back — on your schedule.
+              Give back, on your schedule.
             </h2>
             <p className="text-gray-600 text-base leading-relaxed mb-6">
               You don't need to block off hours or commit to anything big. A few honest conversations can genuinely change a student's direction. Mentino makes it easy to share what you know with people who actually want to hear it.
             </p>
             <ul className="space-y-3 mb-8">
               {[
-                { icon: "🕐", text: "Fully flexible — mentor when you have time, pause when you don't" },
+                { icon: "🕐", text: "Fully flexible: mentor when you have time, pause when you don't" },
                 { icon: "🎯", text: "We match you with students in your specific field, not random requests" },
-                { icon: "⭐", text: "Build your reputation — students leave reviews on your public profile" },
+                { icon: "⭐", text: "Build your reputation. Students leave reviews on your public profile." },
                 { icon: "🆓", text: "Free to join. No commissions, no fees, ever." },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
@@ -211,8 +212,15 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
       {/* ── Featured mentors ────────────────────────────────────────────── */}
       {featuredMentors.length > 0 && (
         <section>
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 text-center">Meet some of our mentors</h2>
-          <p className="text-gray-500 text-center mb-6 text-sm">Real professionals who signed up to help — not algorithms or bots.</p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Meet some of our mentors</h2>
+              <p className="text-gray-500 text-sm">Real professionals who signed up to help. Not algorithms or bots.</p>
+            </div>
+            <a href="/mentors" className="text-indigo-600 font-semibold text-sm hover:underline whitespace-nowrap">
+              Browse all mentors →
+            </a>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {featuredMentors.map((m: any, i: number) => {
               const gradients = [
@@ -224,7 +232,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
                 "from-cyan-500 to-sky-500",
               ];
               return (
-                <div key={i} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow">
+                <a key={i} href="/mentors" className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-indigo-200 transition-all block">
                   <div className="flex items-center gap-3 mb-3">
                     {m.accounts?.avatar_url ? (
                       <img src={m.accounts.avatar_url} alt={m.accounts?.first_name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
@@ -238,19 +246,25 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
                       <p className="text-xs text-gray-500 truncate">{m.job_title}{m.company ? ` · ${m.company}` : ""}</p>
                     </div>
                   </div>
-                  <span className="bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full">{m.career_field}</span>
-                  {m.years_experience > 0 && (
-                    <span className="ml-1.5 bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full">{m.years_experience} yrs exp</span>
-                  )}
-                </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full">{m.career_field}</span>
+                    {m.years_experience > 0 && (
+                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full">{m.years_experience} yrs exp</span>
+                    )}
+                  </div>
+                </a>
               );
             })}
           </div>
-          <p className="text-center mt-5">
-            <a href="/signup" className="text-indigo-600 font-semibold hover:underline text-sm">
-              Sign up to see all mentors and get matched →
+          <div className="text-center mt-6">
+            <a href="/mentors"
+              className="inline-flex items-center gap-2 border border-indigo-200 text-indigo-600 font-semibold px-6 py-2.5 rounded-full hover:bg-indigo-50 transition-colors text-sm">
+              See all {mentorCount} mentors
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
             </a>
-          </p>
+          </div>
         </section>
       )}
 
@@ -262,15 +276,15 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           {[
             {
               q: "Is Mentino actually free?",
-              a: "Yes — free for students, free for mentors. No premium tiers, no subscriptions, no fees ever. We're a student-built platform focused on access, not profit."
+              a: "Yes, free for students and mentors. No premium tiers, no subscriptions, no fees ever. We're a student-built platform focused on access, not profit."
             },
             {
               q: "How does the matching work?",
-              a: "You fill out your profile — career interests, goals, schedule, and personality. Our algorithm finds mentors in your target fields who match your availability and style. You send them a short intro, they accept or decline. Simple."
+              a: "You fill out your profile: career interests, goals, schedule, and personality. Our algorithm finds mentors in your target fields who match your availability and style. You send them a short intro, they accept or decline. Simple."
             },
             {
               q: "Who are the mentors and how are they verified?",
-              a: "Working professionals who signed up to give back. Before going live, each mentor is reviewed by our team — we check that their experience is real and that they've agreed to our Code of Conduct. You'll see their field, job title, and reviews from students they've worked with."
+              a: "Working professionals who signed up to give back. Before going live, each mentor is reviewed by our team. We check that their experience is real and that they've agreed to our Code of Conduct. You'll see their field, job title, and reviews from students they've worked with."
             },
             {
               q: "I'm in high school — is this for me?",
@@ -278,7 +292,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             },
             {
               q: "What does a mentorship session actually look like?",
-              a: "It's a conversation — usually over video call or messages. You ask questions, the mentor shares their experience. There's no script. It could be about a day in their job, how to prepare for college, what skills matter, or just venting about not knowing what you want to do. It's real talk."
+              a: "It's a conversation, usually over video call or messages. You ask questions, the mentor shares their experience. There's no script. It could be about a day in their job, how to prepare for college, what skills matter, or just venting about not knowing what you want to do. It's real talk."
             },
             {
               q: "Can I message my mentor before scheduling a session?",
@@ -286,11 +300,11 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             },
             {
               q: "What if a mentor is rude or inappropriate?",
-              a: "Report them. Every profile has a report button. We take reports seriously — first offense is a 24-hour ban, escalating from there. All mentors agreed to our Code of Conduct when they signed up."
+              a: "Report them. Every profile has a report button. We take reports seriously. First offense is a 24-hour ban, escalating from there. All mentors agreed to our Code of Conduct when they signed up."
             },
             {
-              q: "I'm a professional — why should I become a mentor?",
-              a: "Honestly? Because it matters. One conversation can change a student's direction entirely. It's flexible — you set your own availability and how many students you take on. And students leave reviews, so you build a real reputation on the platform."
+              q: "I'm a professional. Why should I become a mentor?",
+              a: "Honestly? Because it matters. One conversation can change a student's direction entirely. It's flexible: you set your own availability and how many students you take on. And students leave reviews, so you build a real reputation on the platform."
             },
           ].map((item, i) => (
             <div key={i} className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
@@ -330,18 +344,113 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a href="/signup?role=student"
             className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-3.5 rounded-full font-bold hover:bg-indigo-50 transition-colors shadow-md">
-            I'm a Student — Get Matched
+            I'm a Student, Get Matched
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
           <a href="/signup?role=mentor"
             className="inline-flex items-center justify-center bg-white/10 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors">
-            I'm a Mentor — Give Back
+            I'm a Mentor, Give Back
           </a>
         </div>
       </section>
 
     </div>
+
+    {/* ── Career Quiz Popup ───────────────────────────────────────────── */}
+      <div id="quiz-popup" style={{
+        display: "none", position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,0,0,0.7)", alignItems: "center", justifyContent: "center", padding: 20,
+      }}>
+        <div style={{
+          background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 24, maxWidth: 480, width: "100%", padding: "40px 36px", position: "relative", textAlign: "center",
+        }}>
+          <button {...{"onclick": "dismissQuizPopup()"} as any} style={{
+            position: "absolute", top: 16, right: 16,
+            background: "rgba(255,255,255,0.06)", border: "none", color: "#94a3b8",
+            width: 32, height: 32, borderRadius: "50%", cursor: "pointer", fontSize: 18, lineHeight: "32px",
+          }}>x</button>
+          <div style={{ fontSize: 56, marginBottom: 16 }}>🎯</div>
+          <h2 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Discover Your Career Path</h2>
+          <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 28, lineHeight: 1.6 }}>
+            Answer 10 quick questions and find out which career field matches your personality, interests, and goals.
+          </p>
+          <a href="/quiz" style={{
+            display: "block", padding: "14px 0", background: "linear-gradient(135deg, #6366f1, #a855f7)",
+            color: "white", borderRadius: 14, fontWeight: 700, fontSize: 16, textDecoration: "none", marginBottom: 12,
+          }}>Take the Free Quiz →</a>
+          <button {...{"onclick": "maybeLaterQuiz()"} as any} style={{
+            background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 14,
+          }}>Maybe Later</button>
+        </div>
+      </div>
+
+      {/* ── Career Quiz Floating Card ───────────────────────────────────── */}
+      <div id="quiz-float" style={{
+        display: "none", position: "fixed", bottom: 24, right: 24, zIndex: 9998,
+        background: "linear-gradient(135deg, #1a1a2e, #16213e)", border: "1px solid rgba(99,102,241,0.4)",
+        borderRadius: 16, padding: "14px 18px", maxWidth: 280, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+      }}>
+        <button {...{"onclick": "dismissQuizFloat()"} as any} style={{
+          position: "absolute", top: 8, right: 10,
+          background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 16, lineHeight: 1,
+        }}>x</button>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <span style={{ fontSize: 26 }}>🎯</span>
+          <span style={{ color: "white", fontWeight: 700, fontSize: 14 }}>Career Quiz</span>
+        </div>
+        <p style={{ color: "#94a3b8", fontSize: 13, marginBottom: 12, lineHeight: 1.5 }}>Find your ideal career path in 10 questions.</p>
+        <a href="/quiz" style={{
+          display: "block", padding: "9px 0", background: "linear-gradient(135deg, #6366f1, #a855f7)",
+          color: "white", borderRadius: 10, fontWeight: 600, fontSize: 13, textDecoration: "none", textAlign: "center",
+        }}>Take the Quiz</a>
+      </div>
+
+      <script dangerouslySetInnerHTML={{ __html: `
+(function() {
+  var POPUP_KEY = 'quiz_popup_shown';
+  var DISMISSED_KEY = 'quiz_dismissed';
+  var COMPLETED_KEY = 'quiz_completed';
+
+  function alreadyDone() {
+    return localStorage.getItem(DISMISSED_KEY) || localStorage.getItem(COMPLETED_KEY);
+  }
+
+  function showPopup() {
+    var el = document.getElementById('quiz-popup');
+    if (el) { el.style.display = 'flex'; }
+    localStorage.setItem(POPUP_KEY, '1');
+  }
+
+  function dismissQuizPopup() {
+    document.getElementById('quiz-popup').style.display = 'none';
+    document.getElementById('quiz-float').style.display = 'block';
+  }
+
+  function maybeLaterQuiz() {
+    document.getElementById('quiz-popup').style.display = 'none';
+    document.getElementById('quiz-float').style.display = 'block';
+  }
+
+  function dismissQuizFloat() {
+    document.getElementById('quiz-float').style.display = 'none';
+    localStorage.setItem(DISMISSED_KEY, '1');
+  }
+
+  window.dismissQuizPopup = dismissQuizPopup;
+  window.maybeLaterQuiz = maybeLaterQuiz;
+  window.dismissQuizFloat = dismissQuizFloat;
+
+  if (!alreadyDone()) {
+    var delay = localStorage.getItem(POPUP_KEY) ? 0 : 2500;
+    if (!localStorage.getItem(POPUP_KEY)) {
+      setTimeout(showPopup, delay);
+    }
+  }
+})();
+      ` }} />
+    </>
   );
 }

@@ -488,7 +488,7 @@ function LevelBar({ level, completedSessions }: { level: Level; completedSession
   return (
     <div className="mt-3">
       <div className="flex items-center justify-between mb-1">
-        <span className={`text-xs font-bold ${level.color}`}>Level {level.number} — {level.label}</span>
+        <span className={`text-xs font-bold ${level.color}`}>Level {level.number}: {level.label}</span>
         {next && <span className="text-xs text-gray-400">{completedSessions}/{next} sessions to Level {level.number + 1}</span>}
         {!next && <span className="text-xs text-amber-500 font-semibold">Max Level Reached 🏆</span>}
       </div>
@@ -564,6 +564,19 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
               <div className="flex items-center flex-wrap gap-2 mt-2">
                 <Badge status={user.role} />
                 {roleData?.verification_status && <Badge status={roleData.verification_status} />}
+                {roleData?.linkedin_url && (
+                  <a href={roleData.linkedin_url} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 no-underline"
+                    style={{ background: "#0A66C2", borderRadius: 99, padding: "3px 10px 3px 7px", textDecoration: "none" }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="white" style={{ flexShrink: 0 }}>
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    <svg width="12" height="12" viewBox="0 0 20 20" fill="white" style={{ flexShrink: 0 }}>
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span style={{ color: "white", fontSize: 12, fontWeight: 700, lineHeight: 1 }}>LinkedIn Verified</span>
+                  </a>
+                )}
                 {avgRating && (
                   <span className="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-medium">
                     ★ {avgRating} ({ratedReviews.length} review{ratedReviews.length !== 1 ? "s" : ""})
@@ -633,8 +646,8 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                     <h3 className="text-xs font-semibold text-indigo-400 uppercase tracking-wide">Education</h3>
                     {isOwn && <PencilLink href="/profile/edit#school" />}
                   </div>
-                  <p className="text-gray-800 font-medium text-sm">{roleData.school_name || "—"}</p>
-                  <p className="text-gray-500 text-xs mt-0.5">{roleData.grade_or_year || "—"}</p>
+                  <p className="text-gray-800 font-medium text-sm">{roleData.school_name || "N/A"}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{roleData.grade_or_year || "N/A"}</p>
                 </div>
                 <div className="bg-blue-50 rounded-xl p-4 group relative">
                   <div className="flex items-center justify-between mb-2">
@@ -648,7 +661,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                       ))}
                     </div>
                   ) : (
-                    isOwn ? <a href="/profile/edit#interests" className="text-xs text-blue-400 hover:underline">+ Add interests</a> : <p className="text-xs text-gray-400">—</p>
+                    isOwn ? <a href="/profile/edit#interests" className="text-xs text-blue-400 hover:underline">+ Add interests</a> : <p className="text-xs text-gray-400">None listed</p>
                   )}
                 </div>
                 <div className="md:col-span-2 bg-violet-50 rounded-xl p-4 group relative">
@@ -659,7 +672,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                   {roleData.learning_goals ? (
                     <p className="text-gray-700 text-sm">{roleData.learning_goals}</p>
                   ) : (
-                    isOwn ? <a href="/profile/edit#goals" className="text-xs text-violet-400 hover:underline">+ Add your learning goals</a> : <p className="text-xs text-gray-400">—</p>
+                    isOwn ? <a href="/profile/edit#goals" className="text-xs text-violet-400 hover:underline">+ Add your learning goals</a> : <p className="text-xs text-gray-400">None listed</p>
                   )}
                 </div>
               </>
@@ -688,21 +701,37 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                       ))}
                     </div>
                   ) : (
-                    isOwn ? <a href="/profile/edit#topics" className="text-xs text-teal-500 hover:underline">+ Add topics</a> : <p className="text-xs text-gray-400">—</p>
+                    isOwn ? <a href="/profile/edit#topics" className="text-xs text-teal-500 hover:underline">+ Add topics</a> : <p className="text-xs text-gray-400">None listed</p>
                   )}
                 </div>
                 {(roleData.linkedin_url || isOwn) && (
-                  <div className="bg-blue-50 rounded-xl p-4 group relative">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide">LinkedIn</h3>
-                      {isOwn && <PencilLink href="/profile/edit#linkedin" />}
-                    </div>
+                  <div className="group relative">
+                    {isOwn && <div className="absolute top-2 right-2 z-10"><PencilLink href="/profile/edit#linkedin" /></div>}
                     {roleData.linkedin_url ? (
-                      <a href={roleData.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
-                        View LinkedIn Profile →
+                      <a
+                        href={roleData.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 bg-[#0A66C2] hover:bg-[#085099] text-white rounded-xl px-4 py-3 transition-colors no-underline"
+                        style={{ textDecoration: "none" }}
+                      >
+                        {/* LinkedIn logo */}
+                        <svg className="flex-shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="white">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        <div>
+                          <div className="text-xs font-semibold opacity-80 uppercase tracking-wide leading-none mb-0.5">Verified via LinkedIn</div>
+                          <div className="text-sm font-bold leading-none">View Profile</div>
+                        </div>
+                        <svg className="w-4 h-4 ml-auto opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                       </a>
                     ) : (
-                      <a href="/profile/edit#linkedin" className="text-xs text-blue-400 hover:underline">+ Add LinkedIn URL</a>
+                      <div className="bg-blue-50 rounded-xl p-4">
+                        <h3 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-2">LinkedIn</h3>
+                        <a href="/profile/edit#linkedin" className="text-xs text-blue-400 hover:underline">+ Add LinkedIn URL</a>
+                      </div>
                     )}
                   </div>
                 )}
@@ -723,7 +752,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                   ))}
                 </div>
               ) : (
-                isOwn ? <a href="/profile/edit#personality" className="text-xs text-purple-400 hover:underline">+ Add personality tags</a> : <p className="text-xs text-gray-400">—</p>
+                isOwn ? <a href="/profile/edit#personality" className="text-xs text-purple-400 hover:underline">+ Add personality tags</a> : <p className="text-xs text-gray-400">None listed</p>
               )}
             </div>
           </div>
@@ -843,7 +872,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
                   <label className="block text-xs font-medium text-gray-600 mb-1">Comment <span className="text-gray-400 font-normal">(optional)</span></label>
                   <textarea name="comment" rows={3} maxLength={500}
                     defaultValue={existingReview?._reviewText || ""}
-                    placeholder="Share your experience — what did you learn? Was the mentor helpful?"
+                    placeholder="Share your experience. What did you learn? Was the mentor helpful?"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-400 resize-none" />
                 </div>
                 <button type="submit" className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-colors">
@@ -859,7 +888,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
               <svg className="w-10 h-10 mx-auto mb-2 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
               </svg>
-              <p className="text-sm">No reviews yet — be the first!</p>
+              <p className="text-sm">No reviews yet. Be the first!</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -1027,7 +1056,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                   Upload Photo
                   <input type="file" id="avatar-file-input" accept="image/*" className="hidden" />
                 </label>
-                <p id="avatar-file-name" className="text-xs text-gray-400">Click photo or button — JPG/PNG, auto-resized.</p>
+                <p id="avatar-file-name" className="text-xs text-gray-400">Click photo or button. JPG/PNG, auto-resized.</p>
                 {user.avatar_url && (
                   <button type="button" id="avatar-remove-btn" className="text-xs text-red-400 hover:text-red-600 underline block">Remove photo</button>
                 )}
@@ -1043,7 +1072,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
         {/* About Me */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
           <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">About Me</h2>
-          <p className="text-xs text-gray-400 -mt-2">This shows at the top of your profile. Make it personal — mentors and students read this first.</p>
+          <p className="text-xs text-gray-400 -mt-2">This shows at the top of your profile. Make it personal. Mentors and students read this first.</p>
           <textarea
             id="bio"
             name="bio"
@@ -1052,8 +1081,8 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
             defaultValue={user.bio || ""}
             className={`${inputClass} resize-y`}
             placeholder={user.role === "student"
-              ? "Tell mentors about yourself — your interests, what drives you, what you're working toward, any hobbies or projects you're proud of..."
-              : "Tell students about yourself — your career story, what you care about, why you became a mentor, and what kind of students you connect best with..."}
+              ? "Tell mentors about yourself: your interests, what drives you, what you're working toward, any hobbies or projects you're proud of..."
+              : "Tell students about yourself: your career story, what you care about, why you became a mentor, and what kind of students you connect best with..."}
           />
           <p className="text-xs text-gray-400">There's no wrong way to write this. Just be honest.</p>
         </div>
@@ -1093,7 +1122,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
 
             <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
               <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">Career Interests</h2>
-              <p className="text-xs text-gray-400 -mt-2">Select everything you're curious about — even if you're unsure. This helps us find relevant mentors.</p>
+              <p className="text-xs text-gray-400 -mt-2">Select everything you're curious about, even if you're unsure. This helps us find relevant mentors.</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {CAREER_FIELDS_FULL.map((field) => (
                   <label key={field} className="flex items-center gap-2 p-2 border border-gray-100 rounded-lg cursor-pointer hover:bg-indigo-50 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-300 text-xs">
@@ -1117,7 +1146,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                 maxLength={2000}
                 defaultValue={roleData?.learning_goals || ""}
                 className={`${inputClass} resize-y`}
-                placeholder="e.g. I want to learn what it's actually like to work in medicine day-to-day. I'm trying to figure out if pre-med is right for me, and I want to hear from someone who's been through it — the hard parts included..."
+                placeholder="e.g. I want to learn what it's actually like to work in medicine day-to-day. I'm trying to figure out if pre-med is right for me, and I want to hear from someone who's been through it, the hard parts included..."
               />
             </div>
 
@@ -1136,7 +1165,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
 
             <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
               <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide">What You Need Help With</h2>
-              <p className="text-xs text-gray-400 -mt-2">Select all that apply — this feeds our matching algorithm.</p>
+              <p className="text-xs text-gray-400 -mt-2">Select all that apply. This feeds our matching algorithm.</p>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { value: "Need: college applications", label: "🎓 College applications" },
@@ -1286,7 +1315,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                     { value: "Best for: high schoolers", label: "🎒 High school students" },
                     { value: "Best for: college students", label: "🏛 College students" },
                     { value: "Best for: career changers", label: "🔄 Career changers" },
-                    { value: "Best for: any student", label: "🌍 Anyone — I'm flexible" },
+                    { value: "Best for: any student", label: "🌍 Anyone, I'm flexible" },
                   ].map((opt) => (
                     <label key={opt.value} className="flex items-center gap-2 p-2.5 border border-gray-100 rounded-lg cursor-pointer hover:bg-emerald-50 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-300 text-xs">
                       <input type="checkbox" name="mentor_best_for" value={opt.value} defaultChecked={roleData?.personality_tags?.includes(opt.value)} className="rounded text-emerald-600 flex-shrink-0" />
@@ -1340,7 +1369,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           fileInput.addEventListener('change', function(e) {
             var file = e.target.files[0];
             if (!file) return;
-            fileNameLabel.textContent = file.name + ' — processing...';
+            fileNameLabel.textContent = file.name + ' - processing...';
             var reader = new FileReader();
             reader.onload = function(ev) {
               var img = new Image();

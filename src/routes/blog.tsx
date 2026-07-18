@@ -13,8 +13,214 @@ function html(element: React.ReactElement, status = 200) {
   });
 }
 
+interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  author: string;
+  category: string;
+  categoryColor: string;
+  coverImage: string;
+  excerpt: string;
+  readTime: string;
+  content: string;
+  mentorAuthorId?: string;
+  mentorAuthorTitle?: string;
+}
+
 // Blog post data
-const blogPosts = [
+const blogPosts: BlogPost[] = [
+  {
+    slug: "family-law-attorney-qa",
+    title: "What Law Actually Looks Like: A Family Attorney Answers 7 Honest Questions",
+    date: "July 15, 2026",
+    author: "Dustin Vorsatz",
+    category: "Mentor Spotlight",
+    categoryColor: "indigo",
+    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
+    excerpt: "12 years in family law. The hardest part isn't the law — it's the humans. An attorney's unfiltered answers to the questions students actually want to ask.",
+    readTime: "9 min read",
+    mentorAuthorId: "38560524-3645-44e5-8ddb-8d790ff3b3d9",
+    mentorAuthorTitle: "Attorney · Law Offices of Vorsatz & Vorsatz, A PC",
+    content: `
+      <style>
+        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
+        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: white !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-block:last-of-type { border-bottom: none; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
+        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
+        .qa-answer { color: #374151; line-height: 1.85; }
+        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
+        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
+        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
+        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
+        .qa-resource-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-resource-title { font-size: 0.7rem; font-weight: 800; color: #065f46; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+        .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #d1fae5; }
+        .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .qa-resource-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+        .qa-resource-name { font-weight: 700; color: #065f46; font-size: 0.9rem; margin-bottom: 3px; }
+        .qa-resource-desc { color: #6b7280; font-size: 0.82rem; line-height: 1.55; }
+        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
+        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
+        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
+        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-close-box p:last-child { margin-bottom: 0 !important; }
+      </style>
+
+      <div class="qa-intro-box">
+        <p>I'm <strong>Dustin Vorsatz</strong>, an attorney at the Law Offices of Vorsatz &amp; Vorsatz in San Mateo, CA. I've been practicing family law for 12 years. Ethan at Mentino asked me seven questions about my career — and I answered them the way I'd want someone to have answered them when I was getting started.</p>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">1</div>
+          <div class="qa-q-text">What's one piece of advice you wish someone gave you when you were starting?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Don't stress out about where you want to land later in life.</p>
+          <p>There's a ton of pressure on kids to "figure out what you want to do when you're older," and that's ridiculous. Kids should be supported in pursuing reasonable interests regardless of where they may end up. Telling a kid "be a doctor, engineer, lawyer" puts a lot of stress on them.</p>
+          <div class="qa-pullquote">
+            <p>If a kid really likes biology, maybe they learn later in life they want to work with animals instead of humans, or work on habitat preservation. There are literally thousands of options in each field — you don't need to know where you want to end up when you start.</p>
+          </div>
+          <p>The interest matters. The specific destination can wait.</p>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">2</div>
+          <div class="qa-q-text">Can you walk me through a typical day in your current role?</div>
+        </div>
+        <div class="qa-answer">
+          <p>What's interesting about law is there's <em>no</em> typical day.</p>
+          <p>There's always some paperwork to do at the office, but there may be a client meeting, phone calls, a Zoom, a court appearance, research you can do, or work on marketing your business. Any given day can include all of those or none of them.</p>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">💡 What students usually miss</div>
+            <p>All of the law remains largely the same — the statutes don't change that often — but each client is completely different. So each problem is completely unique. You're applying a consistent framework to an endless variety of human situations. That's what makes it genuinely interesting after 12 years.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">3</div>
+          <div class="qa-q-text">What is the most challenging or surprising part of your job?</div>
+        </div>
+        <div class="qa-answer">
+          <p>The most challenging part is honestly the nature of humans.</p>
+          <p>I work 100% in family law, so the people I'm helping are emotionally charged and genuinely hurt. A lot of them want to actively harm the person they claimed they loved for years. The divorce process or custody dispute doesn't just surface their pain — it amplifies it.</p>
+          <div class="qa-pullquote">
+            <p>Getting around or through the emotional wall people put up is challenging. It's not what you'd expect if you're thinking about law as a purely technical career.</p>
+          </div>
+          <p>The law part I can handle. The human part is what keeps it hard — and what keeps it meaningful.</p>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">4</div>
+          <div class="qa-q-text">If you had six months to prepare for this job from scratch, how exactly would you spend your time?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Six months? Sheesh. Okay.</p>
+          <p>I'd start with the fundamentals that help you understand how the system actually works — not just what the rules say on paper.</p>
+          <div class="qa-resource-box">
+            <div class="qa-resource-title">📚 Resources Dustin Recommends</div>
+            <div class="qa-resource-item">
+              <div class="qa-resource-icon">📋</div>
+              <div>
+                <div class="qa-resource-name">The Judge's Bench Blotter</div>
+                <div class="qa-resource-desc">A guide a retired judge publishes each year. It runs through major family law topics and the law surrounding specific concepts — child support, move-aways, etc. A shortcut to understanding what judges actually care about, in their own words.</div>
+              </div>
+            </div>
+            <div class="qa-resource-item">
+              <div class="qa-resource-icon">🌐</div>
+              <div>
+                <div class="qa-resource-name">San Mateo Court Self Help Website</div>
+                <div class="qa-resource-desc">Breaks down the general process of individual matters — how to modify support, how to modify custody, etc. Invaluable for understanding what a client actually goes through, step by step, in plain language.</div>
+              </div>
+            </div>
+          </div>
+          <p>Beyond the reading: spend time in a courtroom. Watch real cases. The fastest way to understand how something actually works is to watch people do it in real conditions — not read about it.</p>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">5</div>
+          <div class="qa-q-text">What's one common misconception about your industry?</div>
+        </div>
+        <div class="qa-answer">
+          <p>That being a lawyer is anything like what you see on TV.</p>
+          <div class="qa-pullquote">
+            <p>There's maybe 1% of practicing attorneys that have careers like Suits or Lincoln Lawyer. Most lawyers are honest, ethical grinders who help clients move through a broken system.</p>
+          </div>
+          <div class="qa-stat-row">
+            <div class="qa-stat">
+              <div class="qa-stat-num">~1%</div>
+              <div class="qa-stat-label">Attorneys whose careers resemble TV drama</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">99%</div>
+              <div class="qa-stat-label">Honest grinders helping real clients</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">1.3M+</div>
+              <div class="qa-stat-label">Licensed attorneys in the US (ABA, 2023)</div>
+            </div>
+          </div>
+          <p>Some attorneys are unscrupulous — but those are rarer than TV would have you believe, too. The work is unglamorous most of the time. And I'd argue that's exactly what makes it meaningful: clients genuinely need you.</p>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">6</div>
+          <div class="qa-q-text">What's one skill students should start developing now?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Disconnecting from tech and learning how to problem-solve with your own skills.</p>
+          <p>So many attorneys are becoming reliant on AI or auto-research and aren't understanding <em>why</em> cases are decided the way they are. I don't have an issue with people who aren't strong writers using AI to check their work. But too much reliance on tech doing all of the heavy lifting means you simply don't understand why the system functions the way it does.</p>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">⚠️ The real risk</div>
+            <p>If you can't reason through a problem without a tool, you can't catch it when the tool is wrong. And tools are wrong more than people realize — especially on nuanced, jurisdiction-specific legal questions. The baseline has to be your own understanding. This isn't an AI-specific point; it applies to every shortcut in every field.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">7</div>
+          <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
+        </div>
+        <div class="qa-answer">
+          <p>I'd take more time to explore other topics. High school now is so much different than when I was in school — we didn't have elective classes. I'd take classes that give me life skills: shop class, home ec, statistics, tax classes.</p>
+          <p>These are all issues that crop up as a normal adult, and not everyone gets the luxury of saying "I make enough money to pay someone to do this for me."</p>
+          <div class="qa-pullquote">
+            <p>I think adults should know how to function basically — check your oil and change a tire, cook a healthy meal, understand how to budget your finances and figure out basic taxes.</p>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">🏫 The thing nobody says out loud about high school</div>
+            <p>High school as a system was built to acclimate humans to work an 8–9 hour day — working on 6–8 different tasks for approximately 50 minutes each. That's what it is. So you don't need to worry that "I didn't take AP Government, I'm never going to be a lawyer." That's not how any of this works. High school isn't the time to lock in your path. It's the time to learn how to show up consistently.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-close-box">
+        <p>If you're considering a career in law — or any field where you work directly with people — know that the human side of the job will be just as demanding as the technical side. The law itself is learnable. Understanding people is what you'll work on your whole career.</p>
+        <p>If you have questions about what life in law actually looks like, I'm on Mentino for exactly this reason.</p>
+      </div>
+    `,
+  },
   {
     slug: "why-mentorship-matters",
     title: "Why Mentorship Matters for Career Success",
@@ -590,7 +796,7 @@ blog.get("/blog", optionalAuth, (c) => {
               Mentino Blog
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Things worth knowing before you pick a career.</h1>
-            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real data, and honest takes. Written by Ethan Branzuela, the 15-year-old who built Mentino.</p>
+            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real mentor interviews, and honest takes — from the people actually doing the work.</p>
           </div>
         </div>
 
@@ -725,7 +931,7 @@ blog.get("/blog", optionalAuth, (c) => {
         {/* Category row */}
         <div className="flex items-center gap-3 mb-8 flex-wrap">
           <span className="text-gray-500 text-sm font-medium">Browse by topic:</span>
-          {["Mentorship", "Salary Data", "Career Outcomes", "Career Advice", "Behind the Scenes"].map((cat) => (
+          {["Mentor Spotlight", "Mentorship", "Salary Data", "Career Outcomes", "Career Advice", "Behind the Scenes"].map((cat) => (
             <span key={cat} className="bg-gray-100 hover:bg-indigo-50 hover:text-indigo-700 text-gray-600 text-sm px-3 py-1 rounded-full cursor-pointer transition-colors">
               {cat}
             </span>
@@ -761,7 +967,7 @@ blog.get("/blog", optionalAuth, (c) => {
   );
 });
 
-function BlogCard({ post, large = false }: { post: typeof blogPosts[number]; large?: boolean }) {
+function BlogCard({ post, large = false }: { post: BlogPost; large?: boolean }) {
   const categoryColors: Record<string, string> = {
     indigo: "bg-indigo-500 text-white",
     emerald: "bg-emerald-500 text-white",
@@ -808,10 +1014,21 @@ function BlogCard({ post, large = false }: { post: typeof blogPosts[number]; lar
           </p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full overflow-hidden border border-indigo-200">
-                <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
-              </div>
-              <span className="text-xs text-gray-500">{post.author}</span>
+              {post.mentorAuthorId ? (
+                <a href={`/profile/${post.mentorAuthorId}`} className="flex items-center gap-2 hover:opacity-80">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 border border-indigo-200 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                    {post.author[0]}
+                  </div>
+                  <span className="text-xs text-gray-500">{post.author}</span>
+                </a>
+              ) : (
+                <>
+                  <div className="w-6 h-6 rounded-full overflow-hidden border border-indigo-200">
+                    <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-xs text-gray-500">{post.author}</span>
+                </>
+              )}
             </div>
             <div className="flex items-center text-indigo-600 font-semibold text-sm">
               Read article
@@ -894,13 +1111,30 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
           <p className="text-xl text-gray-500 mb-6">{post.excerpt}</p>
           <div className="flex items-center gap-3 pb-6 border-b border-gray-200">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-200">
-              <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-gray-900">{post.author}</div>
-              <div className="text-xs text-gray-400">Founder of Mentino · {post.readTime}</div>
-            </div>
+            {post.mentorAuthorId ? (
+              <a href={`/profile/${post.mentorAuthorId}`} className="flex items-center gap-3 hover:opacity-80 group">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 border-2 border-indigo-200 flex items-center justify-center text-white font-bold text-base flex-shrink-0">
+                  {post.author[0]}
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors flex items-center gap-1.5">
+                    {post.author}
+                    <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-medium">Mentor</span>
+                  </div>
+                  <div className="text-xs text-gray-400">{post.mentorAuthorTitle} · {post.readTime}</div>
+                </div>
+              </a>
+            ) : (
+              <>
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-200">
+                  <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-900">{post.author}</div>
+                  <div className="text-xs text-gray-400">Founder of Mentino · {post.readTime}</div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -975,5 +1209,9 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
     </Layout>
   );
 });
+
+export function getBlogPostsByMentorId(mentorUserId: string): BlogPost[] {
+  return blogPosts.filter((p) => p.mentorAuthorId === mentorUserId);
+}
 
 export { blog, blogPosts };

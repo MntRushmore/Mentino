@@ -12,6 +12,7 @@ import {
   parseMeetAgain, parseReviewText, encodeFeedback,
   type MentorBadge, type StudentBadge, type Level,
 } from "../lib/badges";
+import { getBlogPostsByMentorId } from "./blog";
 
 const profile = new Hono();
 
@@ -281,6 +282,8 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
     mentorLevelP = getMentorLevel(completedCount, avg);
   }
 
+  const mentorBlogPosts = profileUser.role === "mentor" ? getBlogPostsByMentorId(profileUser.id) : [];
+
   return html(
     <Layout title={`${profileUser.first_name}'s Profile`} user={currentUser}>
       <ProfileView
@@ -288,6 +291,7 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
         currentUser={currentUser} reviews={reviews}
         canReview={canReview} existingReview={existingReview}
         mentorBadges={mentorBadgesP} mentorLevel={mentorLevelP}
+        blogPosts={mentorBlogPosts}
         flash={reviewed === "1" ? "Your review has been saved!" : undefined}
       />
     </Layout>
@@ -502,11 +506,12 @@ function LevelBar({ level, completedSessions }: { level: Level; completedSession
 
 function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canReview = false,
   existingReview = null, mentorBadges = [], mentorLevel = null,
-  studentBadges = [], studentLevel = null, flash }: {
+  studentBadges = [], studentLevel = null, blogPosts = [], flash }: {
   user: any; roleData: any; isOwn: boolean; currentUser?: any;
   reviews?: any[]; canReview?: boolean; existingReview?: any;
   mentorBadges?: MentorBadge[]; mentorLevel?: Level | null;
   studentBadges?: StudentBadge[]; studentLevel?: Level | null;
+  blogPosts?: any[];
   flash?: string;
 }) {
   const ratedReviews = reviews.filter((r: any) => r.rating);
@@ -921,6 +926,46 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Blog posts authored by this mentor */}
+      {blogPosts.length > 0 && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center">
+              <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-bold text-gray-900">Published on Mentino</h2>
+          </div>
+          <div className="p-6 flex flex-col gap-4">
+            {blogPosts.map((post: any) => (
+              <a key={post.slug} href={`/blog/${post.slug}`}
+                className="group flex gap-4 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition-all">
+                <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                  <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">{post.category}</span>
+                    <span className="text-xs text-gray-400">{post.date}</span>
+                  </div>
+                  <h3 className="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors text-sm leading-snug mb-1 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{post.excerpt}</p>
+                  <div className="flex items-center text-indigo-600 text-xs font-semibold mt-2">
+                    Read article
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       )}
     </div>

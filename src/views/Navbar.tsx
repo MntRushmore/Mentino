@@ -26,6 +26,8 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
         ...(user.role === "student" ? [{ href: "/matching", label: "Matching" }] : []),
         { href: "/messages", label: "Messages", badge: unread },
         { href: "/sessions", label: "Sessions" },
+        { href: "/mentors", label: "Mentors" },
+        { href: "/blog", label: "Blog" },
         ...(user.role === "admin" ? [{ href: "/admin", label: "Admin" }] : []),
       ]
     : [];

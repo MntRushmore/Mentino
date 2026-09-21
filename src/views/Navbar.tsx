@@ -17,6 +17,7 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
     { href: "/founder", label: "About Us" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/blog", label: "Blog" },
+    { href: "/resources", label: "Resources" },
   ];
 
   const authLinks = user
@@ -28,6 +29,7 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
         { href: "/sessions", label: "Sessions" },
         { href: "/mentors", label: "Mentors" },
         { href: "/blog", label: "Blog" },
+        { href: "/resources", label: "Resources" },
         ...(user.role === "admin" ? [{ href: "/admin", label: "Admin" }] : []),
       ]
     : [];

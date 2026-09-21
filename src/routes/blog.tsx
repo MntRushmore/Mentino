@@ -222,6 +222,373 @@ const blogPosts: BlogPost[] = [
     `,
   },
   {
+    slug: "physical-therapy-career-qa",
+    title: "The Real Work of Physical Therapy: A PT Answers 7 Honest Questions",
+    date: "September 20, 2026",
+    author: "Stephanie Leung",
+    category: "Mentor Spotlight",
+    categoryColor: "indigo",
+    coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
+    excerpt: "It's not just the physical recovery — you become a cheerleader, a coach, and sometimes someone's emotional anchor. A physical therapist shares what the job really demands.",
+    readTime: "8 min read",
+    mentorAuthorId: "2476738b-1066-4208-9c5b-7c5096c49f14",
+    mentorAuthorTitle: "Physical Therapist",
+    content: `
+      <style>
+        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
+        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: white !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-block:last-of-type { border-bottom: none; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
+        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
+        .qa-answer { color: #374151; line-height: 1.85; }
+        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
+        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
+        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
+        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
+        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
+        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
+        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
+        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-close-box p:last-child { margin-bottom: 0 !important; }
+        .qa-wellbeing-box { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #a7f3d0; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-wellbeing-label { font-size: 0.7rem; font-weight: 800; color: #065f46; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .qa-wellbeing-box p { color: #064e3b !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
+      </style>
+
+      <div class="qa-intro-box">
+        <p>I'm <strong>Stephanie Leung</strong>, a licensed physical therapist. Physical therapy is one of those careers where you think you know what it is — and then you actually do it. Ethan at Mentino asked me seven questions, and I answered them the way I'd want someone to have answered them for me when I was starting out.</p>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">1</div>
+          <div class="qa-q-text">What's one piece of advice you wish someone gave you when you were starting?</div>
+        </div>
+        <div class="qa-answer">
+          <p>This profession is rewarding, but it's really important to take care of yourself. As with most healthcare professions, it can be emotionally draining. Prioritize your health and well-being so you can better care for your patients.</p>
+          <div class="qa-pullquote">
+            <p>Forgive yourself. You will make mistakes as we all do. It doesn't help to beat yourself up because of your mistakes. You're human. Forgive yourself, learn and grow from it, and move forward.</p>
+          </div>
+          <div class="qa-wellbeing-box">
+            <div class="qa-wellbeing-label">💚 Why self-care isn't optional in healthcare</div>
+            <p>Burnout in healthcare is one of the most studied problems in the field. PT is no exception — the emotional labor of supporting patients through pain, frustration, and setbacks compounds over years. The practitioners who last longest are the ones who treat their own recovery as seriously as their patients'.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">2</div>
+          <div class="qa-q-text">Can you walk me through a typical day in your current role?</div>
+        </div>
+        <div class="qa-answer">
+          <p>A typical day starts with reviewing patient charts when I first get to work. Then I'll evaluate new patients or treat existing ones, prescribe and progress exercise programs, perform manual therapy as needed, and educate patients on their condition and recovery.</p>
+          <p>As patients meet their goals or if they plateau, I discharge them with a plan to help them maintain their progress and manage their condition independently.</p>
+          <div class="qa-stat-row">
+            <div class="qa-stat">
+              <div class="qa-stat-num">📋</div>
+              <div class="qa-stat-label">Chart review every morning</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">🏋️</div>
+              <div class="qa-stat-label">Prescribe & progress exercises</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">🎓</div>
+              <div class="qa-stat-label">Educate & discharge with a plan</div>
+            </div>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">🔍 What "manual therapy" actually means</div>
+            <p>Manual therapy is hands-on work — joint mobilizations, soft tissue manipulation, massage. It's one of the most direct tools a PT has, and it's also one of the things that makes PT distinct from just prescribing a set of exercises. It requires a trained clinical touch that takes years to develop.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">3</div>
+          <div class="qa-q-text">What is the most challenging or surprising part of your job?</div>
+        </div>
+        <div class="qa-answer">
+          <p>One of the biggest challenges is realizing that you can't change people, you can only guide them. Patients have to be willing to put in the work to recover. It's not passive. I guide them and they have to do the homework.</p>
+          <p>A big part of my job is getting patients to buy into the treatment plan by helping them understand why we're doing certain exercises or treatments.</p>
+          <div class="qa-pullquote">
+            <p>A surprising part of the job, beyond the physical recovery work, is becoming people's emotional support as well. Although you didn't sign up to be a mental health therapist, you end up being one anyway.</p>
+          </div>
+          <p>Losing physical function significantly affects people mentally and emotionally, and you are their cheerleader. It's rewarding, but can be draining as well.</p>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">💡 The therapist's dilemma</div>
+            <p>This dynamic — caring deeply but not being able to force progress — is one of the most psychologically demanding parts of healthcare. The most effective PTs learn to separate patient outcomes from their own self-worth. You can give everything, and still have a patient who doesn't follow through. That's not a failure of your skill; it's the reality of working with humans.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">4</div>
+          <div class="qa-q-text">If you had six months to prepare for this job from scratch, how would you spend your time?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Physical therapy school will teach you the clinical skills, but bedside manners aren't taught enough. Patients want to feel heard, respected, and understood. Practice active listening, show empathy, maintain eye contact to build genuine rapport.</p>
+          <p>These skills are just as important as your clinical skills because they help patients feel supported and motivated throughout their recovery. Ultimately, it'll help you become a better practitioner.</p>
+          <div class="qa-pullquote">
+            <p>Learning to communicate well during stressful situations will go a long way — staying calm, not reacting, responding tactfully and respectfully. The earlier you start practicing them, the more natural they'll feel by the time you start your career.</p>
+          </div>
+          <div class="qa-wellbeing-box">
+            <div class="qa-wellbeing-label">🎯 Skills PT school doesn't always teach</div>
+            <p>Active listening. Managing difficult conversations. De-escalating a frustrated patient. Reading body language. These are often treated as "soft skills" — meaning optional, secondary, learnable on the fly. In practice, they separate average practitioners from excellent ones. Start now: volunteer in healthcare settings, take an improv or communication class, practice having hard conversations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">5</div>
+          <div class="qa-q-text">What's one common misconception about your industry?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Many people assume physical therapy is one of the happier, less stressful professions, but they don't consider the mental and emotional demands of the job.</p>
+          <div class="qa-pullquote">
+            <p>It's rewarding, but burnout can run high. Recovery isn't always linear, and you're constantly supporting, educating, and encouraging people through difficult setbacks they don't always expect.</p>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">📊 What the data says about PT burnout</div>
+            <p>Studies show physical therapist burnout rates range from 30–40%, similar to other healthcare professions. The combination of high patient caseloads, administrative burden, emotional labor, and the physical demands of the job itself takes a toll. Knowing this before you enter the field — and building coping strategies early — is one of the best things a prospective PT can do.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">6</div>
+          <div class="qa-q-text">What's one skill students should start developing now?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Develop strong communication and critical thinking skills. It will serve you throughout your career and in life.</p>
+          <div class="qa-wellbeing-box">
+            <div class="qa-wellbeing-label">🧠 Why these two go together</div>
+            <p>Communication without critical thinking leads to confident-sounding advice that's wrong. Critical thinking without communication means you can diagnose a problem but can't get the patient to act on it. In PT — and honestly in most careers — you need both. Critical thinking helps you design the right treatment plan; communication is what gets the patient to follow it. Practice both deliberately, not just as side effects of other things you're doing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">7</div>
+          <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
+        </div>
+        <div class="qa-answer">
+          <p>If I could go back, I wouldn't just learn to get a good grade or pass a test. I'd try to learn for the joy of it — approach learning from a sense of wonder and curiosity. That will make learning more enjoyable.</p>
+          <div class="qa-pullquote">
+            <p>I'd also remind myself that it's okay to make mistakes. I used to be really hard on myself and spent too much time comparing myself to other people. That only held me back.</p>
+          </div>
+          <p>Everyone learns differently and has different strengths. Your unique talents and perspectives are what makes you who you are. Be proud of what makes you different. That's where your greatest strengths often come from.</p>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">✨ Learning for curiosity, not just grades</div>
+            <p>There's research on this: students who are intrinsically motivated (learning because they find it interesting) retain information better and perform better over the long run than students who are extrinsically motivated (learning for grades or external rewards). Stephanie's advice maps exactly onto what the science shows. If you can find a way to actually care about what you're studying — not just how it looks on your transcript — you'll get more out of it, and burn out less doing it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-close-box">
+        <p>Physical therapy is one of those careers that sounds straightforward until you're in it. The clinical work is learnable. What takes longer to develop is the patience, the communication, and the emotional resilience to guide people through some of the hardest periods of their lives — and still take care of yourself at the end of the day.</p>
+        <p>If you're considering PT or any healthcare field, I'm on Mentino to have exactly these kinds of conversations. The things that actually prepare you for this job are the ones most schools don't teach.</p>
+      </div>
+    `,
+  },
+  {
+    slug: "tech-career-qa-sean-ipakchi",
+    title: "Inside a Tech Career: A Software Engineer Answers 7 Honest Questions",
+    date: "September 20, 2026",
+    author: "Sean Ipakchi",
+    category: "Mentor Spotlight",
+    categoryColor: "indigo",
+    coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    excerpt: "Half the day is meetings. The other half is writing Python, SQL, or JavaScript with AI. A tech professional shares what the industry actually looks like — and what they wish students knew.",
+    readTime: "8 min read",
+    mentorAuthorId: "8a137b04-5e94-4bcf-be93-187547fd7530",
+    mentorAuthorTitle: "Software Engineer & AI/BI Analytics Specialist",
+    content: `
+      <style>
+        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
+        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: white !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-block:last-of-type { border-bottom: none; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
+        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
+        .qa-answer { color: #374151; line-height: 1.85; }
+        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
+        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
+        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
+        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
+        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
+        .qa-tech-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
+        .qa-tech-label { font-size: 0.7rem; font-weight: 800; color: #1e40af; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .qa-tech-box p { color: #1e3a8a !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
+        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
+        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
+        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-close-box p:last-child { margin-bottom: 0 !important; }
+      </style>
+
+      <div class="qa-intro-box">
+        <p>I'm <strong>Sean Ipakchi</strong>, a software engineer specializing in AI/BI analytics solutions. I work with tools like Claude Code, Sigma, Hex.tech, and Snowflake to build data products for clients. Ethan at Mentino asked me seven questions about what a career in tech actually looks like — here's the honest version.</p>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">1</div>
+          <div class="qa-q-text">What's one piece of advice you wish someone gave you when you were starting?</div>
+        </div>
+        <div class="qa-answer">
+          <p>The key to a successful career is to stay curious and cultivate a passion for learning. That's the main attribute that's allowed me to adapt and stay relevant in the fast-paced world of technology.</p>
+          <div class="qa-pullquote">
+            <p>Being humble, spending time on YouTube, reading blogs and company docs, listening to podcasts, attending trainings, and going for certifications has all paid off in the long run. The best investment is in yourself.</p>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">💡 Why "staying curious" isn't just a cliché</div>
+            <p>Tech moves fast enough that skills that made you hireable three years ago may already be table stakes or obsolete. The people who survive multiple technology cycles — from mobile, to cloud, to AI — aren't necessarily the smartest. They're the ones who never stopped learning. Curiosity is the engine; humility is what keeps it running.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">2</div>
+          <div class="qa-q-text">Can you walk me through a typical day in your current role?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Morning agile daily syncs with my engineering team to share key information and statuses. Analyzing the next priority features we're building and what's left in the backlog. Any blockers or decisions we should address.</p>
+          <p>Then plenty of development time along with specific collaboration meetings or business development meetings to pursue other client project work. Could be a demo presentation that day as well.</p>
+          <div class="qa-pullquote">
+            <p>I'd say half the day is meetings, the other half is writing Python, SQL, or JavaScript with AI.</p>
+          </div>
+          <div class="qa-stat-row">
+            <div class="qa-stat">
+              <div class="qa-stat-num">🔄</div>
+              <div class="qa-stat-label">Agile standups every morning</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">🤝</div>
+              <div class="qa-stat-label">Client demos & biz dev</div>
+            </div>
+            <div class="qa-stat">
+              <div class="qa-stat-num">🐍</div>
+              <div class="qa-stat-label">Python, SQL, JS with AI</div>
+            </div>
+          </div>
+          <div class="qa-tech-box">
+            <div class="qa-tech-label">🛠 What "writing code with AI" actually means</div>
+            <p>This isn't ChatGPT writing everything for you. It's using AI tools like Claude Code or GitHub Copilot as a pair programmer — you still need to understand the code, debug it, and make architectural decisions. AI speeds up the writing; the judgment of what to write is still entirely yours. That's why communication and critical thinking matter more than ever, not less.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">3</div>
+          <div class="qa-q-text">What is the most challenging or surprising part of your job?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Sometimes we really get the architecture direction on the project wrong and there's either leftover tech debt, or we have to acknowledge that in front of the client and redirect our solution to a better architecture — and explain why and how long that will take.</p>
+          <div class="qa-pullquote">
+            <p>There's no hiding from a bad architectural call. At some point you have to sit in front of a client, own it, and explain the path forward. That's genuinely hard.</p>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">🏗 What "tech debt" actually costs</div>
+            <p>Tech debt is what happens when you make fast decisions early that slow you down later. Every shortcut you take to ship quickly has interest — and at some point, the bill comes due. In consulting especially, you're accountable to a client who may not know the terminology but absolutely feels the slowdown. Learning to recognize architectural mistakes early — and communicating them honestly — is a skill that separates senior engineers from junior ones.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">4</div>
+          <div class="qa-q-text">If you had six months to prepare for this job from scratch, how would you spend your time?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Pick a niche within technology you want to focus your time on and then spend a lot of time learning it to become an expert in that technology.</p>
+          <div class="qa-pullquote">
+            <p>For me currently that's AI/BI Analytics solutions for clients involving Claude Code, Sigma, Hex.tech, and Snowflake. Go deep, not wide.</p>
+          </div>
+          <div class="qa-tech-box">
+            <div class="qa-tech-label">🎯 How to pick your niche in tech</div>
+            <p>The mistake most students make is trying to learn everything — a little JavaScript, a little Python, a little data science, a little cloud. You end up mediocre at all of it. Pick something that has real job demand, sits at an intersection you find interesting, and go deep enough that you can actually build things. The niche Sean works in — AI-powered business analytics — is a good example: it combines data engineering, business understanding, and AI tooling in a way that has serious market demand right now.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">5</div>
+          <div class="qa-q-text">What's one common misconception about your industry?</div>
+        </div>
+        <div class="qa-answer">
+          <p>That it's all tech bros. That there are always layoffs and something is wrong with the culture. That everyone is making a lot of money off stock and their salaries.</p>
+          <div class="qa-pullquote">
+            <p>That you have to be an engineer to succeed in tech.</p>
+          </div>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">📊 The full picture of who works in tech</div>
+            <p>Product managers, UX designers, technical writers, data analysts, sales engineers, solutions architects, program managers, security specialists, DevRel — tech is a massive ecosystem, and most of these roles don't require you to write production code every day. If you're drawn to technology but don't want to be a software engineer, there are more paths than most people realize. The common thread is comfort with technical concepts and change, not necessarily deep coding expertise.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">6</div>
+          <div class="qa-q-text">What's one skill students should start developing now?</div>
+        </div>
+        <div class="qa-answer">
+          <p>Reading comprehension, writing, and communication skills.</p>
+          <div class="qa-pullquote">
+            <p>To be successful with other people and AI, those are required skills.</p>
+          </div>
+          <div class="qa-tech-box">
+            <div class="qa-tech-label">✍️ Why writing matters more in an AI world</div>
+            <p>Counterintuitively, the rise of AI has made human communication skills more important, not less. AI tools respond to how clearly you can articulate what you want. Prompting is writing. Explaining a technical problem to a client is writing. Documenting a codebase so your team doesn't lose a week reverse-engineering your work is writing. The engineers and analysts who compound fastest are the ones who can translate between technical and human — and that's a writing and communication problem at its core.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-block">
+        <div class="qa-question">
+          <div class="qa-q-num">7</div>
+          <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
+        </div>
+        <div class="qa-answer">
+          <p>I would have largely done the same as I did. Get into honors/AP classes, play a ton of video games, bike and run, meet a great group of best friends I'm still hanging out with today. Maybe being nicer to my parents — it's tough, I know.</p>
+          <div class="qa-insight-box">
+            <div class="qa-insight-label">🤝 The one thing Sean would add</div>
+            <p>Reach out to others more often to pick their brain, learn about what they're working on, and ask for help. It's taken a long time for me to swallow my pride and independence and ask others for help or fully collaborate on solutions. The students who accelerate fastest aren't the most talented — they're the ones who ask the best questions and are willing to let other people help them get there. That's a skill you can start practicing in high school.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-close-box">
+        <p>Tech is bigger and more diverse than the stereotypes suggest. You don't have to be a certain type of person, come from a certain background, or know how to code on day one. What you do need is a genuine interest in learning, the willingness to go deep on something, and the communication skills to work with the humans — and the AI tools — around you.</p>
+        <p>If you're curious about what a career in tech, analytics, or AI actually looks like day to day, I'm on Mentino for exactly these kinds of conversations.</p>
+      </div>
+    `,
+  },
+  {
     slug: "why-mentorship-matters",
     title: "Why Mentorship Matters for Career Success",
     date: "March 15, 2026",

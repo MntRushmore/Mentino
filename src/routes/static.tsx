@@ -215,6 +215,53 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </div>
         </div>
 
+        {/* Co-Advisors — moved to top */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-12">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Advisory Board</span>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Our Co-Advisors</h2>
+            <p className="text-gray-500 text-sm max-w-xl mx-auto">Mentino is guided by experienced leaders who bring decades of real-world expertise to help shape the platform and support its mission.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Anthony */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
+                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>A</div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Anthony Branzuela</h3>
+              <p className="text-indigo-600 text-sm font-semibold mb-3">Co-Advisor</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Automotive Leadership", "Business Strategy", "30+ Years Experience"].map((t) => (
+                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy, and business operations. Throughout his career, he has led luxury and mainstream automotive brands, including Porsche, Audi, Lamborghini, and Ford, while driving operational growth and building high-performing sales teams. As an advisor to Mentino, Anthony provides guidance on entrepreneurship, business strategy, customer experience, and developing partnerships that help students connect with career opportunities.
+              </p>
+            </div>
+            {/* Joanne */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100 relative">
+                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #10b981, #059669)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>J</div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Joanne Branzuela</h3>
+              <p className="text-emerald-600 text-sm font-semibold mb-3">Co-Advisor</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Healthcare Leadership", "Registered Nurse", "Program Development"].map((t) => (
+                  <span key={t} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full border border-emerald-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Joanne is an experienced healthcare leader and registered nurse with expertise in nursing leadership, program development, and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams, driven quality improvement initiatives, and built high-performing healthcare organizations. As an advisor to Mentino, Joanne provides guidance on leadership, strategic planning, and creating meaningful experiences that empower students to explore their future careers.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Impact stats banner */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 anim-fade-up anim-d1">
           {[
@@ -237,7 +284,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
             <p className="text-indigo-500 text-sm font-medium mb-4">Ethan Branzuela, Founder</p>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                I'm Ethan, 15, from the Bay Area. I shoot sports photography for professional and collegiate athletes. When I was trying to get better, I cold-DM'd photographers I followed online. A few responded. Those conversations taught me more in a few weeks than years of tutorials ever did.
+                I'm Ethan, from the Bay Area. I shoot sports photography for professional and collegiate athletes. When I was trying to get better, I cold-DM'd photographers I followed online. A few responded. Those conversations taught me more in a few weeks than years of tutorials ever did.
               </p>
               <p>
                 That experience made something obvious: one real conversation with someone who's already done the thing is worth more than any amount of research. I kept asking myself why this wasn't easier for every student.
@@ -298,89 +345,19 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </div>
         </div>
 
-        {/* Challenges */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">The Challenges</h2>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Building this at 15 has been genuinely hard. Getting people to take you seriously when you're a teenager asking them to volunteer their time is not easy. My reach is limited, and there's no playbook for this.
-          </p>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            But I've learned more building Mentino than I have sitting in a classroom. And every time I see a student get matched with someone they actually connect with, it feels worth it.
-          </p>
-          <p className="text-gray-800 font-semibold">
-            Focus on impact. Growth follows.
-          </p>
-        </div>
-
-        {/* Why Trust */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Trust Mentino?</h2>
-          <p className="text-gray-600 leading-relaxed mb-6">
-            I'm 15. I'm not a career coach or a therapist or a guidance counselor. But I've seen firsthand what happens when someone who knows their field sits down and actually talks to you. It changes things. I built Mentino because I wanted more students to have that experience, not just the ones whose parents happen to know the right people.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            {[
-              { icon: "🌍", title: "Access", desc: "Every student deserves opportunity", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
-              { icon: "✅", title: "Authenticity", desc: "Real mentors with real experience", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
-              { icon: "🚀", title: "Impact", desc: "Conversations that create long-term growth", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
-            ].map((v) => (
-              <div key={v.title} className={`${v.bg} border ${v.border} rounded-xl p-5 text-center`}>
-                <div className="text-3xl mb-2">{v.icon}</div>
-                <h3 className={`font-bold ${v.h} text-lg mb-1`}>{v.title}</h3>
-                <p className={`${v.p} text-sm`}>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-gray-600 leading-relaxed">
-            This isn't about networking for status. It's about building bridges through conversation. And sometimes, <strong>one mentor is all it takes to change a life</strong>.
-          </p>
-        </div>
-
-        {/* Advisors */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Advisory Board</span>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Our Co-Advisors</h2>
-            <p className="text-gray-500 text-sm max-w-xl mx-auto">Mentino is guided by experienced leaders who bring decades of real-world expertise to help shape the platform and support its mission.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Anthony */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
-                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>A</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Anthony Branzuela</h3>
-              <p className="text-indigo-600 text-sm font-semibold mb-3">Co-Advisor</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Automotive Leadership", "Business Strategy", "30+ Years Experience"].map((t) => (
-                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy, and business operations. Throughout his career, he has led luxury and mainstream automotive brands, including Porsche, Audi, Lamborghini, and Ford, while driving operational growth and building high-performing sales teams. As an advisor to Mentino, Anthony provides guidance on entrepreneurship, business strategy, customer experience, and developing partnerships that help students connect with career opportunities.
-              </p>
+        {/* Access / Authenticity / Impact */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+          {[
+            { icon: "🌍", title: "Access", desc: "Every student deserves opportunity", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
+            { icon: "✅", title: "Authenticity", desc: "Real mentors with real experience", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
+            { icon: "🚀", title: "Impact", desc: "Conversations that create long-term growth", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
+          ].map((v) => (
+            <div key={v.title} className={`${v.bg} border ${v.border} rounded-xl p-5 text-center`}>
+              <div className="text-3xl mb-2">{v.icon}</div>
+              <h3 className={`font-bold ${v.h} text-lg mb-1`}>{v.title}</h3>
+              <p className={`${v.p} text-sm`}>{v.desc}</p>
             </div>
-            {/* Joanne */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100 relative">
-                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #10b981, #059669)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>J</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Joanne Branzuela</h3>
-              <p className="text-emerald-600 text-sm font-semibold mb-3">Co-Advisor</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Healthcare Leadership", "Registered Nurse", "Program Development"].map((t) => (
-                  <span key={t} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full border border-emerald-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Joanne is an experienced healthcare leader and registered nurse with expertise in nursing leadership, program development, and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams, driven quality improvement initiatives, and built high-performing healthcare organizations. As an advisor to Mentino, Joanne provides guidance on leadership, strategic planning, and creating meaningful experiences that empower students to explore their future careers.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* CTA */}

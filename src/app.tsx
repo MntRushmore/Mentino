@@ -16,6 +16,7 @@ import { staticPages } from "./routes/static";
 import { blog } from "./routes/blog";
 import { reports } from "./routes/reports";
 import { quiz } from "./routes/quiz";
+import { resources } from "./routes/resources";
 import { mentors as mentorsRoute } from "./routes/mentors";
 import { optionalAuth } from "./middleware/auth";
 import { supabase } from "./db";
@@ -166,6 +167,7 @@ app.route("/", reports);
 
 // Career quiz
 app.route("/quiz", quiz);
+app.route("/", resources);
 
 // Public mentor browse
 app.route("/", mentorsRoute);

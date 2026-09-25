@@ -83,7 +83,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             var cursor = document.getElementById('hero-cursor');
             var below = document.getElementById('hero-below');
             var i = 0;
-            var speed = 38;
+            var speed = 18;
             function type() {
               if (!el) return;
               if (i <= full.length) {

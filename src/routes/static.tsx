@@ -215,6 +215,53 @@ staticPages.get("/founder", optionalAuth, (c) => {
           </div>
         </div>
 
+        {/* Our Team */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-violet-50 text-violet-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">The Team</span>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">The People Building Mentino</h2>
+            <p className="text-gray-500 text-sm max-w-xl mx-auto">A small team with a big mission — making mentorship accessible to every student.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {/* Ethan */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-violet-100 relative">
+                <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #7c3aed, #6366f1)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>E</div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Ethan Branzuela</h3>
+              <p className="text-violet-600 text-sm font-semibold mb-3">Founder & Chief Executive Officer</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Founder", "Bay Area, CA", "Student-Built"].map((t) => (
+                  <span key={t} className="bg-violet-50 text-violet-700 text-xs px-2.5 py-0.5 rounded-full border border-violet-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Ethan founded Mentino to give every student access to real mentors in their field — without needing the right connections. He builds and runs the platform while still in high school.
+              </p>
+            </div>
+            {/* Zachary */}
+            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
+                <img src="/images/zachary-jasmer.jpg" alt="Zachary Jasmer" className="w-full h-full object-cover"
+                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
+                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #3b82f6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>Z</div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Zachary Jasmer</h3>
+              <p className="text-indigo-600 text-sm font-semibold mb-3">Chief Operating Officer</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                {["Operations", "Strategy", "Student Leader"].map((t) => (
+                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Zachary serves as Chief Operating Officer at Mentino, overseeing day-to-day operations and helping drive the platform's growth. He brings strategic focus and operational discipline to the team's mission.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Co-Advisors — moved to top */}
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-12">
           <div className="text-center mb-8">

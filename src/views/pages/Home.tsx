@@ -14,31 +14,31 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
     <div className="space-y-10 sm:space-y-16 pb-12">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative text-center py-14 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl bg-indigo-950">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-700 rounded-full opacity-30 blur-3xl" />
-          <div className="absolute -bottom-16 -left-16 w-72 h-72 bg-violet-700 rounded-full opacity-25 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-800 rounded-full opacity-10 blur-3xl" />
+      <section className="relative text-center py-14 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl">
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=80"
+            alt="Student being mentored"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/85 via-indigo-950/80 to-indigo-950/90" />
         </div>
 
         <div className="relative z-10 max-w-3xl mx-auto px-5">
-          {/* Origin hook — emotional grounding before the features */}
           <p className="text-indigo-300 text-sm sm:text-base font-medium mb-5 anim-fade-in max-w-xl mx-auto leading-relaxed">
             Most students don't know anyone in their dream field. Mentino changes that.
           </p>
 
-          {/* Primary headline — the strongest line, front and center */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight anim-fade-up">
             Get real advice from someone<br className="hidden sm:block" />
             <span className="text-indigo-300"> who's already there.</span>
           </h1>
 
           <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto anim-fade-up anim-d2">
-            Mentino matches students with verified professionals, for free.
-            No connection needed. No luck required. Just the right conversation at the right time.
+            Mentino connects students with verified professionals for free. No connections needed, no luck required.
           </p>
 
-          {/* Split CTA — student vs mentor */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center anim-fade-up anim-d3">
             <a href="/signup?role=student"
               className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-4 rounded-full text-base font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform">
@@ -54,7 +54,6 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           </div>
           <p className="text-slate-400 text-sm mt-3 anim-fade-up anim-d3">Free to join. Takes 5 minutes.</p>
 
-          {/* Trust badges */}
           <div className="flex flex-col sm:flex-row sm:justify-center gap-2 sm:gap-6 mt-8 anim-fade-up anim-d4">
             {[
               { text: "100% Free for Students" },
@@ -66,11 +65,6 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 {t.text}
-                {t.tooltip && (
-                  <svg className="w-3 h-3 text-slate-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
               </div>
             ))}
           </div>
@@ -169,18 +163,20 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
               Give back, on your schedule.
             </h2>
             <p className="text-gray-600 text-base leading-relaxed mb-6">
-              You don't need to block off hours or commit to anything big. A few honest conversations can genuinely change a student's direction. Mentino makes it easy to share what you know with people who actually want to hear it.
+              A few honest conversations can genuinely change a student's direction. Share what you know with people who actually want to hear it, on your own time.
             </p>
             <ul className="space-y-3 mb-8">
               {[
-                { icon: "🕐", text: "Fully flexible: mentor when you have time, pause when you don't" },
-                { icon: "🎯", text: "We match you with students in your specific field, not random requests" },
-                { icon: "⭐", text: "Build your reputation. Students leave reviews on your public profile." },
-                { icon: "🆓", text: "Free to join. No commissions, no fees, ever." },
-              ].map((item, i) => (
+                "Fully flexible — mentor when you have time, pause when you don't",
+                "We match you with students in your specific field, not random requests",
+                "Students leave reviews on your public profile, building your reputation",
+                "Free to join. No commissions, no fees, ever.",
+              ].map((text, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="text-xl flex-shrink-0">{item.icon}</span>
-                  <span className="text-gray-700 text-sm leading-relaxed">{item.text}</span>
+                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700 text-sm leading-relaxed">{text}</span>
                 </li>
               ))}
             </ul>
@@ -288,11 +284,11 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             },
             {
               q: "I'm in high school — is this for me?",
-              a: "Yes, 100%. Mentino was literally built by a 15-year-old. High school students are exactly who this is for. If you're trying to figure out what career you want or what it actually looks like day-to-day, this is the place."
+              a: "Yes. Mentino was built by a high school student for students exactly like you. If you're trying to figure out what career you want or what it actually looks like day-to-day, this is the place."
             },
             {
               q: "What does a mentorship session actually look like?",
-              a: "It's a conversation, usually over video call or messages. You ask questions, the mentor shares their experience. There's no script. It could be about a day in their job, how to prepare for college, what skills matter, or just venting about not knowing what you want to do. It's real talk."
+              a: "It's a conversation, usually over video call or messages. You ask questions, the mentor shares their experience. It could be about a day in their job, how to prepare for college, what skills matter — there's no script."
             },
             {
               q: "Can I message my mentor before scheduling a session?",

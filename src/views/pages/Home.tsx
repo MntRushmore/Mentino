@@ -83,24 +83,30 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             var cursor = document.getElementById('hero-cursor');
             var below = document.getElementById('hero-below');
             var i = 0;
-            var speed = 18;
-            function type() {
+            var interval = 22;
+            var last = 0;
+            function tick(ts) {
               if (!el) return;
-              if (i <= full.length) {
-                var typed = full.substring(0, i);
-                if (i <= part1.length) {
-                  el.textContent = typed;
+              if (!last) last = ts;
+              if (ts - last >= interval) {
+                last = ts;
+                if (i <= full.length) {
+                  var typed = full.substring(0, i);
+                  if (i <= part1.length) {
+                    el.textContent = typed;
+                  } else {
+                    el.innerHTML = part1 + '<span style="color:#a5b4fc">' + typed.substring(part1.length) + '</span>';
+                  }
+                  i++;
                 } else {
-                  el.innerHTML = part1 + '<span style="color:#a5b4fc">' + typed.substring(part1.length) + '</span>';
+                  if (cursor) { cursor.style.animation = 'none'; cursor.style.opacity = '0'; }
+                  if (below) below.style.opacity = '1';
+                  return;
                 }
-                i++;
-                setTimeout(type, speed);
-              } else {
-                if (cursor) cursor.style.display = 'none';
-                if (below) below.style.opacity = '1';
               }
+              requestAnimationFrame(tick);
             }
-            setTimeout(type, 300);
+            setTimeout(function() { requestAnimationFrame(tick); }, 250);
           })();
         `}} />
       </section>

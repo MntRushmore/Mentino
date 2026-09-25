@@ -22,8 +22,8 @@ export function Layout({ title = "Mentino", children, user, flash, navBadges, cu
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-            body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+            body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
             .line-clamp-2 {
               display: -webkit-box;
               -webkit-line-clamp: 2;

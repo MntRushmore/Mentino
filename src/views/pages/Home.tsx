@@ -18,7 +18,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
         {/* Background photo */}
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=80"
+            src="/images/hero-bg.jpg"
             alt="Student being mentored"
             className="w-full h-full object-cover object-center"
           />

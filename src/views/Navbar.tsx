@@ -41,16 +41,18 @@ export function Navbar({ user, badges, currentPath = "/" }: NavbarProps) {
           <div className="flex justify-between items-center h-16">
 
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 flex-shrink-0">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)" }}>
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2a7 7 0 00-4 12.75V17a1 1 0 001 1h6a1 1 0 001-1v-2.25A7 7 0 0012 2z" opacity="0.85" />
-                  <rect x="9" y="19" width="6" height="1.5" rx="0.75" opacity="0.9" />
-                  <rect x="9.5" y="21.5" width="5" height="1" rx="0.5" opacity="0.7" />
-                </svg>
-              </div>
-              <span className="text-xl font-extrabold tracking-tight" style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Mentino</span>
-            </a>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <a href="/signup" className="flex-shrink-0" title="Get started">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg hover:scale-105 transition-transform" style={{ background: "linear-gradient(135deg, #f43f5e 0%, #a855f7 50%, #2563eb 100%)", boxShadow: "0 4px 14px rgba(168,85,247,0.55)" }}>
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2a7 7 0 00-4 12.75V17a1 1 0 001 1h6a1 1 0 001-1v-2.25A7 7 0 0012 2z" opacity="0.95" />
+                    <rect x="9" y="19" width="6" height="1.5" rx="0.75" opacity="0.9" />
+                    <rect x="9.5" y="21.5" width="5" height="1" rx="0.5" opacity="0.75" />
+                  </svg>
+                </div>
+              </a>
+              <a href="/" className="text-xl font-extrabold tracking-tight hover:opacity-80 transition-opacity" style={{ background: "linear-gradient(90deg, #f43f5e, #a855f7, #2563eb)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Mentino</a>
+            </div>
 
             {/* Desktop nav links */}
             <div className="hidden md:flex items-center space-x-6">

@@ -30,45 +30,79 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             Most students don't know anyone in their dream field. Mentino changes that.
           </p>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight anim-fade-up">
-            Get real advice from someone<br className="hidden sm:block" />
-            <span className="text-indigo-300"> who's already there.</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight" style={{ minHeight: "1.2em" }}>
+            <span id="hero-typed"></span><span id="hero-cursor" style={{ borderRight: "3px solid #a5b4fc", marginLeft: "2px", animation: "heroBlink 0.7s step-end infinite" }}>&nbsp;</span>
           </h1>
 
-          <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto anim-fade-up anim-d2">
-            Mentino connects students with verified professionals for free. No connections needed, no luck required.
-          </p>
+          <div id="hero-below" style={{ opacity: 0, transition: "opacity 0.45s ease" }}>
+            <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto">
+              Mentino connects students with verified professionals for free. No connections needed, no luck required.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center anim-fade-up anim-d3">
-            <a href="/signup?role=student"
-              className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-4 rounded-full text-base font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform">
-              I'm a Student
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
-            <a href="/signup?role=mentor"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/25 text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-white/20 transition-all hover:-translate-y-0.5 transform">
-              I'm a Mentor
-            </a>
-          </div>
-          <p className="text-slate-400 text-sm mt-3 anim-fade-up anim-d3">Free to join. Takes 5 minutes.</p>
-
-          <div className="flex flex-col sm:flex-row sm:justify-center gap-2 sm:gap-6 mt-8 anim-fade-up anim-d4">
-            {[
-              { text: "100% Free for Students" },
-              { text: "Verified Professionals Only", tooltip: "Every mentor is reviewed by our team before going live" },
-              { text: "Safe for Students Under 18" },
-            ].map((t) => (
-              <div key={t.text} className="flex items-center justify-center gap-1.5 text-slate-300 text-xs sm:text-sm" title={t.tooltip || ""}>
-                <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a href="/signup?role=student"
+                className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-4 rounded-full text-base font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform">
+                I'm a Student
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-                {t.text}
-              </div>
-            ))}
+              </a>
+              <a href="/signup?role=mentor"
+                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/25 text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-white/20 transition-all hover:-translate-y-0.5 transform">
+                I'm a Mentor
+              </a>
+            </div>
+            <p className="text-slate-400 text-sm mt-3">Free to join. Takes 5 minutes.</p>
+
+            <div className="flex flex-col sm:flex-row sm:justify-center gap-2 sm:gap-6 mt-8">
+              {[
+                { text: "100% Free for Students" },
+                { text: "Verified Professionals Only" },
+                { text: "Safe for Students Under 18" },
+              ].map((t) => (
+                <div key={t.text} className="flex items-center justify-center gap-1.5 text-slate-300 text-xs sm:text-sm">
+                  <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {t.text}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes heroBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+        ` }} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            var part1 = "Get real advice from someone ";
+            var part2 = "who's already there.";
+            var full = part1 + part2;
+            var el = document.getElementById('hero-typed');
+            var cursor = document.getElementById('hero-cursor');
+            var below = document.getElementById('hero-below');
+            var i = 0;
+            var speed = 38;
+            function type() {
+              if (!el) return;
+              if (i <= full.length) {
+                var typed = full.substring(0, i);
+                if (i <= part1.length) {
+                  el.textContent = typed;
+                } else {
+                  el.innerHTML = part1 + '<span style="color:#a5b4fc">' + typed.substring(part1.length) + '</span>';
+                }
+                i++;
+                setTimeout(type, speed);
+              } else {
+                if (cursor) cursor.style.display = 'none';
+                if (below) below.style.opacity = '1';
+              }
+            }
+            setTimeout(type, 300);
+          })();
+        `}} />
       </section>
 
       {/* ── Early momentum — growing fast ───────────────────────────────── */}

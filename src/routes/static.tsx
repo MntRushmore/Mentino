@@ -108,16 +108,32 @@ function ArticleShell({ kicker, title, dek, byline, image, caption, children }: 
   );
 }
 
-function PersonRow({ img, name, role, children }: { img: string; name: string; role: string; children: React.ReactNode }) {
+interface Person { img: string; name: string; role: string; tags: string[]; bio: string }
+
+function PeopleSection({ eyebrow, title, lead, people }: { eyebrow: string; title: string; lead: string; people: Person[] }) {
   return (
-    <div className="flex gap-4 mb-8">
-      <img src={img} alt={name} className="w-14 h-14 rounded-full object-cover flex-shrink-0" />
-      <div>
-        <p className="text-base font-medium text-gray-900" style={{ marginBottom: 0 }}>{name}</p>
-        <p className="t-meta" style={{ marginBottom: 8 }}>{role}</p>
-        <p style={{ fontSize: 16, lineHeight: "26px", marginBottom: 0 }}>{children}</p>
+    <section className="card p-6 sm:p-8">
+      <div className="text-center mb-8">
+        <p className="t-eyebrow mb-4">{eyebrow}</p>
+        <h2 className="font-serif text-3xl text-gray-900">{title}</h2>
+        <p className="text-gray-600 text-sm mt-2 max-w-xl mx-auto">{lead}</p>
       </div>
-    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {people.map((p) => (
+          <div key={p.name} className="flex flex-col items-center text-center bg-panel rounded-xl p-6">
+            <img src={p.img} alt={p.name} className="w-32 h-32 rounded-xl object-cover mb-4" />
+            <h3 className="text-lg text-gray-900">{p.name}</h3>
+            <p className="text-sm font-medium mt-1 mb-4" style={{ color: "var(--forest)" }}>{p.role}</p>
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {p.tags.map((t) => (
+                <span key={t} className="inline-flex items-center h-6 px-2 rounded bg-white border border-gray-200 text-xs text-gray-700">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-600 text-sm">{p.bio}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -200,27 +216,61 @@ staticPages.get("/founder", optionalAuth, (c) => {
           Ethan runs the platform while still in high school. His photography work is at <a href="https://ebonthecam.mypixieset.com/" target="_blank" rel="noopener noreferrer">ebonthecam.mypixieset.com</a>.
         </p>
 
-        <h2>The team</h2>
-        <PersonRow img="/images/founder.jpg" name="Ethan Branzuela" role="Founder and Chief Executive Officer">
-          Ethan founded Mentino to give every student access to real mentors in their field without needing the right connections. He builds and runs the platform.
-        </PersonRow>
-        <PersonRow img="/images/zachary-jasmer.jpg" name="Zachary Jasmer" role="Chief Operating Officer">
-          Zachary oversees day-to-day operations and helps drive the platform's growth, bringing strategic focus and operational discipline to the team.
-        </PersonRow>
-
-        <h2>Advisors</h2>
-        <PersonRow img="/images/advisor-anthony.jpg" name="Anthony Branzuela" role="Co-Advisor">
-          Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy and business operations. He has led luxury and mainstream brands including Porsche, Audi, Lamborghini and Ford. He advises Mentino on entrepreneurship, business strategy, customer experience and partnerships that connect students with career opportunities.
-        </PersonRow>
-        <PersonRow img="/images/advisor-joanne.jpg" name="Joanne Branzuela" role="Co-Advisor">
-          Joanne is a healthcare leader and registered nurse with expertise in nursing leadership, program development and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams and quality improvement work. She advises Mentino on leadership, strategic planning and building experiences that help students explore their future careers.
-        </PersonRow>
-
-        <h2>Get involved</h2>
-        <p>
-          If you are a student trying to figure out your path, <a href="/signup?role=student">sign up</a>. If you have already figured something out and want to share it, <a href="/signup?role=mentor">become a mentor</a>. Questions go to <a href="mailto:hello@mentino.org">hello@mentino.org</a>.
-        </p>
       </ArticleShell>
+
+      <div className="max-w-5xl mx-auto mt-16 flex flex-col gap-8">
+        <PeopleSection
+          eyebrow="The Team"
+          title="The People Building Mentino"
+          lead="A small team with a big mission: making mentorship accessible to every student."
+          people={[
+            {
+              img: "/images/founder.jpg", name: "Ethan Branzuela", role: "Founder & Chief Executive Officer",
+              tags: ["Founder", "Bay Area, CA", "Student-Built"],
+              bio: "Ethan founded Mentino to give every student access to real mentors in their field, without needing the right connections. He builds and runs the platform while still in high school.",
+            },
+            {
+              img: "/images/zachary-jasmer.jpg", name: "Zachary Jasmer", role: "Chief Operating Officer",
+              tags: ["Operations", "Strategy", "Student Leader"],
+              bio: "Zachary serves as Chief Operating Officer at Mentino, overseeing day-to-day operations and helping drive the platform's growth. He brings strategic focus and operational discipline to the team's mission.",
+            },
+          ]}
+        />
+        <PeopleSection
+          eyebrow="Advisory Board"
+          title="Our Co-Advisors"
+          lead="Mentino is guided by experienced leaders who bring decades of real-world expertise to help shape the platform and support its mission."
+          people={[
+            {
+              img: "/images/advisor-anthony.jpg", name: "Anthony Branzuela", role: "Co-Advisor",
+              tags: ["Automotive Leadership", "Business Strategy", "30+ Years Experience"],
+              bio: "Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy, and business operations. Throughout his career, he has led luxury and mainstream automotive brands, including Porsche, Audi, Lamborghini, and Ford, while driving operational growth and building high-performing sales teams. As an advisor to Mentino, Anthony provides guidance on entrepreneurship, business strategy, customer experience, and developing partnerships that help students connect with career opportunities.",
+            },
+            {
+              img: "/images/advisor-joanne.jpg", name: "Joanne Branzuela", role: "Co-Advisor",
+              tags: ["Healthcare Leadership", "Registered Nurse", "Program Development"],
+              bio: "Joanne is an experienced healthcare leader and registered nurse with expertise in nursing leadership, program development, and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams, driven quality improvement initiatives, and built high-performing healthcare organizations. As an advisor to Mentino, Joanne provides guidance on leadership, strategic planning, and creating meaningful experiences that empower students to explore their future careers.",
+            },
+          ]}
+        />
+
+        <section aria-labelledby="contact-h" className="bg-sage rounded-xl p-8">
+          <h2 id="contact-h" className="font-serif text-3xl text-gray-900">Contact</h2>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+            {[
+              { name: "Ethan Branzuela", email: "ethanbranzuela123@gmail.com" },
+              { name: "Zach Jasmer", email: "jasmerzach@gmail.com" },
+            ].map((c) => (
+              <div key={c.email}>
+                <dt className="text-base font-medium text-gray-900">{c.name}</dt>
+                <dd className="mt-1">
+                  <a href={`mailto:${c.email}`} className="text-gray-800 underline underline-offset-4 break-all">{c.email}</a>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
     </Layout>
   );
 });

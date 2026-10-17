@@ -133,3 +133,17 @@ export function stageFromGrade(grade?: string | null): "high school" | "college"
 export function channelLink(name: string): string {
   return `https://www.youtube.com/results?search_query=${encodeURIComponent(name)}&sp=EgIQAg%253D%253D`;
 }
+
+/** Hand-picked, verified YouTube videos per career cluster (watch links, not searches). */
+export interface TopVideo { id: string; title: string; channel: string }
+
+export const TOP_VIDEOS: Record<string, TopVideo[]> = {
+  business: [
+    { id: "o7Ik1OB4TaE", title: "What Is Strategy? It's a Lot Simpler Than You Think", channel: "Harvard Business Review" },
+    { id: "bAhM3td5PzY", title: "6 tips on being a successful entrepreneur", channel: "TEDx Talks" },
+    { id: "HB3l1BPi7zo", title: "How Do Billion Dollar Startups Start?", channel: "Y Combinator" },
+    { id: "CBYhVcO4WgI", title: "How to Start a Startup, Lecture 1 (Sam Altman, Dustin Moskovitz)", channel: "Y Combinator" },
+    { id: "LZ2aHY4divg", title: "Careers for Business Students (and what they pay)", channel: "Kenji Explains" },
+    { id: "ZU9x1vFx5lI", title: "Stand Out in a Job Interview", channel: "Harvard Business Review" },
+  ],
+};

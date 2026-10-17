@@ -110,7 +110,7 @@ function QuizPage({ mode }: { mode: string }) {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #0e0e2e 0%, #1e1b4b 60%, #1a1035 100%)",
+        background: "#ffffff",
         position: "relative",
         overflow: "hidden",
       }}
@@ -123,7 +123,7 @@ function QuizPage({ mode }: { mode: string }) {
           right: -80,
           width: 420,
           height: 420,
-          background: "radial-gradient(circle, rgba(236,72,153,0.18) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,116,42,0.18) 0%, transparent 70%)",
           borderRadius: "50%",
           pointerEvents: "none",
         }}
@@ -135,7 +135,7 @@ function QuizPage({ mode }: { mode: string }) {
           left: -60,
           width: 320,
           height: 320,
-          background: "radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,116,42,0.2) 0%, transparent 70%)",
           borderRadius: "50%",
           pointerEvents: "none",
         }}
@@ -162,23 +162,23 @@ function QuizPage({ mode }: { mode: string }) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 6,
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: "#f5f5f4",
+                  border: "1px solid rgba(17,17,17,0.12)",
                   borderRadius: 99,
                   padding: "6px 16px",
                   marginBottom: 20,
                 }}
               >
-                <span style={{ fontSize: 14 }}>🧭</span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" strokeWidth={2} /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.5 8.5l-2 5-5 2 2-5 5-2z" /></svg>
                 <span
-                  style={{ color: "#c4b5fd", fontSize: 13, fontWeight: 600, letterSpacing: 0.5 }}
+                  style={{ color: "#b84d0c", fontSize: 13, fontWeight: 600, letterSpacing: 0.5 }}
                 >
                   Career Discovery
                 </span>
               </div>
               <h1
                 style={{
-                  color: "white",
+                  color: "#111111",
                   fontSize: 32,
                   fontWeight: 800,
                   margin: "0 0 14px",
@@ -188,7 +188,7 @@ function QuizPage({ mode }: { mode: string }) {
                 Find your{" "}
                 <span
                   style={{
-                    background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)",
+                    background: "linear-gradient(90deg, #e8742a, #e8742a, #e8742a)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -198,7 +198,7 @@ function QuizPage({ mode }: { mode: string }) {
               </h1>
               <p
                 style={{
-                  color: "#94a3b8",
+                  color: "#57534e",
                   fontSize: 16,
                   maxWidth: 460,
                   margin: "0 auto",
@@ -217,8 +217,8 @@ function QuizPage({ mode }: { mode: string }) {
                 style={{
                   display: "block",
                   background:
-                    "linear-gradient(135deg, rgba(236,72,153,0.1), rgba(139,92,246,0.12), rgba(59,130,246,0.08))",
-                  border: "1.5px solid rgba(139,92,246,0.4)",
+                    "linear-gradient(135deg, rgba(232,116,42,0.1), rgba(232,116,42,0.12), rgba(232,116,42,0.08))",
+                  border: "1.5px solid rgba(232,116,42,0.4)",
                   borderRadius: 20,
                   padding: "28px 30px",
                   textDecoration: "none",
@@ -232,7 +232,7 @@ function QuizPage({ mode }: { mode: string }) {
                       width: 52,
                       height: 52,
                       borderRadius: 14,
-                      background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+                      background: "linear-gradient(135deg, #e8742a, #e8742a)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -240,13 +240,13 @@ function QuizPage({ mode }: { mode: string }) {
                       flexShrink: 0,
                     }}
                   >
-                    🔍
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                   </div>
                   <div>
-                    <div style={{ color: "white", fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
+                    <div style={{ color: "#111111", fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
                       Help me discover my career
                     </div>
-                    <div style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.55 }}>
+                    <div style={{ color: "#57534e", fontSize: 14, lineHeight: 1.55 }}>
                       Answer 10 short questions and we'll match you to your best-fit career cluster
                       with personalized resources and mentor recommendations.
                     </div>
@@ -256,12 +256,12 @@ function QuizPage({ mode }: { mode: string }) {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: 6,
-                        background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+                        background: "linear-gradient(135deg, #e8742a, #e8742a)",
                         borderRadius: 99,
                         padding: "5px 14px",
                       }}
                     >
-                      <span style={{ color: "white", fontSize: 13, fontWeight: 600 }}>
+                      <span style={{ color: "#111111", fontSize: 13, fontWeight: 600 }}>
                         Start Quiz →
                       </span>
                     </div>
@@ -274,8 +274,8 @@ function QuizPage({ mode }: { mode: string }) {
                 href="/quiz?mode=direct"
                 style={{
                   display: "block",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1.5px solid rgba(255,255,255,0.1)",
+                  background: "#faf9f7",
+                  border: "1.5px solid rgba(17,17,17,0.12)",
                   borderRadius: 20,
                   padding: "28px 30px",
                   textDecoration: "none",
@@ -289,8 +289,8 @@ function QuizPage({ mode }: { mode: string }) {
                       width: 52,
                       height: 52,
                       borderRadius: 14,
-                      background: "rgba(255,255,255,0.07)",
-                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "#f5f5f4",
+                      border: "1px solid rgba(17,17,17,0.12)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -298,17 +298,17 @@ function QuizPage({ mode }: { mode: string }) {
                       flexShrink: 0,
                     }}
                   >
-                    ⚡
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </div>
                   <div>
-                    <div style={{ color: "white", fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
+                    <div style={{ color: "#111111", fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
                       I already know my career
                     </div>
-                    <div style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.55 }}>
+                    <div style={{ color: "#57534e", fontSize: 14, lineHeight: 1.55 }}>
                       Tell us the career you have in mind and instantly get curated books, articles,
                       and videos to explore it.
                     </div>
-                    <div style={{ marginTop: 12, color: "#64748b", fontSize: 13 }}>
+                    <div style={{ marginTop: 12, color: "#6b6762", fontSize: 13 }}>
                       Skip the quiz, go straight to resources
                     </div>
                   </div>
@@ -329,34 +329,34 @@ function QuizPage({ mode }: { mode: string }) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 6,
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: "#f5f5f4",
+                  border: "1px solid rgba(17,17,17,0.12)",
                   borderRadius: 99,
                   padding: "6px 16px",
                   marginBottom: 20,
                 }}
               >
-                <span style={{ fontSize: 14 }}>⚡</span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 <span
-                  style={{ color: "#c4b5fd", fontSize: 13, fontWeight: 600 }}
+                  style={{ color: "#b84d0c", fontSize: 13, fontWeight: 600 }}
                 >
                   Direct Career Search
                 </span>
               </div>
               <h1
-                style={{ color: "white", fontSize: 26, fontWeight: 800, margin: "0 0 10px" }}
+                style={{ color: "#111111", fontSize: 26, fontWeight: 800, margin: "0 0 10px" }}
               >
                 What career are you interested in?
               </h1>
-              <p style={{ color: "#64748b", fontSize: 15 }}>
+              <p style={{ color: "#6b6762", fontSize: 15 }}>
                 Type a career and we'll find the best resources for you right away.
               </p>
             </div>
 
             <div
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(139,92,246,0.2)",
+                background: "#f7f6f4",
+                border: "1px solid rgba(232,116,42,0.2)",
                 borderRadius: 20,
                 padding: "36px 32px",
               }}
@@ -370,10 +370,10 @@ function QuizPage({ mode }: { mode: string }) {
                   style={{
                     width: "100%",
                     padding: "16px 18px",
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1.5px solid rgba(139,92,246,0.25)",
+                    background: "#f5f5f4",
+                    border: "1.5px solid rgba(232,116,42,0.25)",
                     borderRadius: 14,
-                    color: "white",
+                    color: "#111111",
                     fontSize: 16,
                     outline: "none",
                     boxSizing: "border-box",
@@ -385,9 +385,9 @@ function QuizPage({ mode }: { mode: string }) {
                     href="/quiz"
                     style={{
                       padding: "13px 24px",
-                      background: "rgba(255,255,255,0.06)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "#94a3b8",
+                      background: "#f5f5f4",
+                      border: "1px solid rgba(17,17,17,0.1)",
+                      color: "#57534e",
                       borderRadius: 12,
                       fontSize: 15,
                       textDecoration: "none",
@@ -402,7 +402,7 @@ function QuizPage({ mode }: { mode: string }) {
                     style={{
                       flex: 1,
                       padding: "13px 24px",
-                      background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
+                      background: "linear-gradient(135deg, #e8742a, #e8742a, #e8742a)",
                       border: "none",
                       color: "white",
                       borderRadius: 12,
@@ -434,13 +434,13 @@ function QuizPage({ mode }: { mode: string }) {
                   marginBottom: 10,
                 }}
               >
-                <span id="progress-label" style={{ color: "#94a3b8", fontSize: 14 }}>
+                <span id="progress-label" style={{ color: "#57534e", fontSize: 14 }}>
                   Question 1 of 10
                 </span>
                 <span
                   id="progress-pct"
                   style={{
-                    background: "linear-gradient(90deg, #ec4899, #8b5cf6)",
+                    background: "linear-gradient(90deg, #e8742a, #e8742a)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     fontSize: 14,
@@ -450,13 +450,13 @@ function QuizPage({ mode }: { mode: string }) {
                   10%
                 </span>
               </div>
-              <div style={{ height: 6, background: "rgba(255,255,255,0.08)", borderRadius: 99 }}>
+              <div style={{ height: 6, background: "rgba(17,17,17,0.08)", borderRadius: 99 }}>
                 <div
                   id="progress-bar"
                   style={{
                     height: "100%",
                     width: "10%",
-                    background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)",
+                    background: "linear-gradient(90deg, #e8742a, #e8742a, #e8742a)",
                     borderRadius: 99,
                     transition: "width 0.4s ease",
                   }}
@@ -468,8 +468,8 @@ function QuizPage({ mode }: { mode: string }) {
             <div
               id="question-card"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(139,92,246,0.2)",
+                background: "#f7f6f4",
+                border: "1px solid rgba(232,116,42,0.2)",
                 borderRadius: 24,
                 padding: "40px 36px",
                 minHeight: 400,
@@ -493,9 +493,9 @@ function QuizPage({ mode }: { mode: string }) {
                 id="btn-prev"
                 style={{
                   padding: "12px 28px",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#94a3b8",
+                  background: "#f5f5f4",
+                  border: "1px solid rgba(17,17,17,0.1)",
+                  color: "#57534e",
                   borderRadius: 14,
                   cursor: "pointer",
                   fontSize: 15,
@@ -509,7 +509,7 @@ function QuizPage({ mode }: { mode: string }) {
                 id="btn-next"
                 style={{
                   padding: "12px 32px",
-                  background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
+                  background: "linear-gradient(135deg, #e8742a, #e8742a, #e8742a)",
                   border: "none",
                   color: "white",
                   borderRadius: 14,
@@ -534,39 +534,39 @@ function QuizPage({ mode }: { mode: string }) {
         .quiz-opt-btn {
           display: flex; align-items: center; gap: 14px;
           width: 100%; padding: 16px 20px; margin-bottom: 10px;
-          background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.08);
+          background: #faf9f7; border: 1.5px solid rgba(17,17,17,0.08);
           border-radius: 16px; cursor: pointer; text-align: left;
-          color: #e2e8f0; font-size: 15px; font-family: inherit;
+          color: #111111; font-size: 15px; font-family: inherit;
           transition: all 0.2s; box-sizing: border-box;
         }
-        .quiz-opt-btn:hover { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.4); transform: translateY(-1px); }
+        .quiz-opt-btn:hover { background: rgba(232,116,42,0.1); border-color: rgba(232,116,42,0.4); transform: translateY(-1px); }
         .quiz-opt-btn.selected {
-          background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(139,92,246,0.15));
-          border-color: #8b5cf6; color: white;
-          box-shadow: 0 0 20px rgba(139,92,246,0.2);
+          background: linear-gradient(135deg, rgba(232,116,42,0.15), rgba(232,116,42,0.15));
+          border-color: #e8742a; color: #111111;
+          box-shadow: 0 0 20px rgba(232,116,42,0.2);
         }
-        .q-title { color: white; font-size: 22px; font-weight: 800; margin-bottom: 8px; line-height: 1.4; }
-        .q-sub { color: #94a3b8; font-size: 15px; margin-bottom: 28px; }
+        .q-title { color: #111111; font-size: 22px; font-weight: 800; margin-bottom: 8px; line-height: 1.4; }
+        .q-sub { color: #57534e; font-size: 15px; margin-bottom: 28px; }
         .slider-wrap { padding: 16px 4px; }
         .slider-wrap input[type=range] {
           -webkit-appearance: none; width: 100%; height: 6px;
-          background: linear-gradient(90deg, #8b5cf6 var(--val,50%), rgba(255,255,255,0.08) var(--val,50%));
+          background: linear-gradient(90deg, #e8742a var(--val,50%), rgba(17,17,17,0.08) var(--val,50%));
           border-radius: 99px; outline: none;
         }
         .slider-wrap input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none; width: 24px; height: 24px;
-          background: linear-gradient(135deg, #ec4899, #8b5cf6); border-radius: 50%;
-          box-shadow: 0 0 12px rgba(139,92,246,0.7); cursor: pointer;
+          background: linear-gradient(135deg, #e8742a, #e8742a); border-radius: 50%;
+          box-shadow: 0 0 12px rgba(232,116,42,0.7); cursor: pointer;
         }
-        .slider-labels { display: flex; justify-content: space-between; color: #64748b; font-size: 13px; margin-top: 10px; }
+        .slider-labels { display: flex; justify-content: space-between; color: #6b6762; font-size: 13px; margin-top: 10px; }
         .quiz-textarea {
-          width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.04);
-          border: 1.5px solid rgba(139,92,246,0.2); border-radius: 14px;
-          color: white; font-size: 15px; outline: none; box-sizing: border-box;
+          width: 100%; padding: 14px 16px; background: #f7f6f4;
+          border: 1.5px solid rgba(232,116,42,0.2); border-radius: 14px;
+          color: #111111; font-size: 15px; outline: none; box-sizing: border-box;
           font-family: inherit; resize: vertical; min-height: 80px;
         }
-        .quiz-textarea:focus { border-color: #8b5cf6; background: rgba(139,92,246,0.08); }
-        .quiz-textarea::placeholder { color: #475569; }
+        .quiz-textarea:focus { border-color: #e8742a; background: rgba(232,116,42,0.08); }
+        .quiz-textarea::placeholder { color: #6b6762; }
         @media (max-width: 600px) {
           #quiz-app { padding: 24px 16px 60px !important; }
           #question-card { padding: 28px 20px !important; }
@@ -872,7 +872,7 @@ function ResultsPage({
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #0e0e2e 0%, #1e1b4b 60%, #1a1035 100%)",
+        background: "#ffffff",
         paddingBottom: 80,
         position: "relative",
         overflow: "hidden",
@@ -885,7 +885,7 @@ function ResultsPage({
           right: -60,
           width: 380,
           height: 380,
-          background: "radial-gradient(circle, rgba(236,72,153,0.16) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,116,42,0.16) 0%, transparent 70%)",
           borderRadius: "50%",
           pointerEvents: "none",
         }}
@@ -897,7 +897,7 @@ function ResultsPage({
           left: -80,
           width: 300,
           height: 300,
-          background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,116,42,0.18) 0%, transparent 70%)",
           borderRadius: "50%",
           pointerEvents: "none",
         }}
@@ -916,7 +916,7 @@ function ResultsPage({
           style={{
             fontSize: 76,
             marginBottom: 20,
-            filter: "drop-shadow(0 0 30px rgba(139,92,246,0.4))",
+            filter: "drop-shadow(0 0 30px rgba(232,116,42,0.4))",
           }}
         >
           {cluster.emoji}
@@ -926,8 +926,8 @@ function ResultsPage({
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            background: "rgba(255,255,255,0.07)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "#f5f5f4",
+            border: "1px solid rgba(17,17,17,0.12)",
             borderRadius: 99,
             padding: "6px 16px",
             marginBottom: 18,
@@ -935,7 +935,7 @@ function ResultsPage({
         >
           <span
             style={{
-              color: "#c4b5fd",
+              color: "#b84d0c",
               fontSize: 13,
               fontWeight: 600,
               textTransform: "uppercase",
@@ -947,7 +947,7 @@ function ResultsPage({
         </div>
         <h1
           style={{
-            color: "white",
+            color: "#111111",
             fontSize: 44,
             fontWeight: 800,
             margin: "0 0 20px",
@@ -956,7 +956,7 @@ function ResultsPage({
         >
           <span
             style={{
-              background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)",
+              background: "linear-gradient(90deg, #e8742a, #e8742a, #e8742a)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -966,7 +966,7 @@ function ResultsPage({
         </h1>
         <p
           style={{
-            color: "#94a3b8",
+            color: "#57534e",
             fontSize: 17,
             maxWidth: 560,
             margin: "0 auto 36px",
@@ -995,7 +995,7 @@ function ResultsPage({
               gap: 8,
               padding: "13px 26px",
               background: "#ef4444",
-              color: "white",
+              color: "#111111",
               borderRadius: 14,
               textDecoration: "none",
               fontWeight: 700,
@@ -1013,7 +1013,7 @@ function ResultsPage({
               alignItems: "center",
               gap: 8,
               padding: "13px 26px",
-              background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
+              background: "linear-gradient(135deg, #e8742a, #e8742a, #e8742a)",
               color: "white",
               borderRadius: 14,
               textDecoration: "none",
@@ -1021,7 +1021,7 @@ function ResultsPage({
               fontSize: 15,
             }}
           >
-            🔍 Explore Careers
+            Explore Careers
           </a>
           <a
             href="/quiz"
@@ -1030,9 +1030,9 @@ function ResultsPage({
               alignItems: "center",
               gap: 8,
               padding: "13px 26px",
-              background: "rgba(255,255,255,0.06)",
-              color: "#94a3b8",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "#f5f5f4",
+              color: "#57534e",
+              border: "1px solid rgba(17,17,17,0.1)",
               borderRadius: 14,
               textDecoration: "none",
               fontSize: 15,
@@ -1055,15 +1055,15 @@ function ResultsPage({
         {/* Related careers */}
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(139,92,246,0.2)",
+            background: "#f7f6f4",
+            border: "1px solid rgba(232,116,42,0.2)",
             borderRadius: 20,
             padding: "32px",
             marginBottom: 20,
             boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
           }}
         >
-          <h2 style={{ color: "white", fontSize: 20, fontWeight: 800, marginBottom: 20 }}>
+          <h2 style={{ color: "#111111", fontSize: 20, fontWeight: 800, marginBottom: 20 }}>
             Related Careers to Explore
           </h2>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
@@ -1075,10 +1075,10 @@ function ResultsPage({
                 rel="noopener noreferrer"
                 style={{
                   padding: "8px 18px",
-                  background: "rgba(139,92,246,0.12)",
-                  border: "1px solid rgba(139,92,246,0.3)",
+                  background: "rgba(232,116,42,0.12)",
+                  border: "1px solid rgba(232,116,42,0.3)",
                   borderRadius: 99,
-                  color: "#c4b5fd",
+                  color: "#b84d0c",
                   textDecoration: "none",
                   fontSize: 14,
                   fontWeight: 500,
@@ -1093,18 +1093,18 @@ function ResultsPage({
         {/* Resources */}
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(139,92,246,0.2)",
+            background: "#f7f6f4",
+            border: "1px solid rgba(232,116,42,0.2)",
             borderRadius: 20,
             padding: "32px",
             marginBottom: 20,
             boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
           }}
         >
-          <h2 style={{ color: "white", fontSize: 20, fontWeight: 800, marginBottom: 6 }}>
+          <h2 style={{ color: "#111111", fontSize: 20, fontWeight: 800, marginBottom: 6 }}>
             Recommended Resources
           </h2>
-          <p style={{ color: "#64748b", fontSize: 14, marginBottom: 32 }}>
+          <p style={{ color: "#6b6762", fontSize: 14, marginBottom: 32 }}>
             Curated books, articles, and videos for {cluster.name} careers.
           </p>
 
@@ -1112,7 +1112,7 @@ function ResultsPage({
           <div style={{ marginBottom: 32 }}>
             <div
               style={{
-                color: "#a5b4fc",
+                color: "#b84d0c",
                 fontSize: 13,
                 fontWeight: 700,
                 textTransform: "uppercase",
@@ -1132,21 +1132,21 @@ function ResultsPage({
                   style={{
                     display: "block",
                     padding: "16px 18px",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "#faf9f7",
+                    border: "1px solid #f5f5f4",
                     borderRadius: 14,
                     textDecoration: "none",
                   }}
                 >
                   <div
-                    style={{ color: "white", fontWeight: 600, fontSize: 15, marginBottom: 2 }}
+                    style={{ color: "#111111", fontWeight: 600, fontSize: 15, marginBottom: 2 }}
                   >
                     {book.title}
                   </div>
-                  <div style={{ color: "#64748b", fontSize: 13, marginBottom: 6 }}>
+                  <div style={{ color: "#6b6762", fontSize: 13, marginBottom: 6 }}>
                     by {book.author}
                   </div>
-                  <div style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.5 }}>
+                  <div style={{ color: "#57534e", fontSize: 13, lineHeight: 1.5 }}>
                     {book.why}
                   </div>
                 </a>
@@ -1158,7 +1158,7 @@ function ResultsPage({
           <div style={{ marginBottom: 32 }}>
             <div
               style={{
-                color: "#34d399",
+                color: "#e8742a",
                 fontSize: 13,
                 fontWeight: 700,
                 textTransform: "uppercase",
@@ -1180,21 +1180,21 @@ function ResultsPage({
                     alignItems: "center",
                     gap: 14,
                     padding: "14px 18px",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "#faf9f7",
+                    border: "1px solid #f5f5f4",
                     borderRadius: 14,
                     textDecoration: "none",
                   }}
                 >
                   <div style={{ flex: 1 }}>
                     <div
-                      style={{ color: "white", fontWeight: 600, fontSize: 14, marginBottom: 3 }}
+                      style={{ color: "#111111", fontWeight: 600, fontSize: 14, marginBottom: 3 }}
                     >
                       {article.title}
                     </div>
-                    <div style={{ color: "#64748b", fontSize: 13 }}>{article.source}</div>
+                    <div style={{ color: "#6b6762", fontSize: 13 }}>{article.source}</div>
                   </div>
-                  <div style={{ color: "#475569", fontSize: 20, flexShrink: 0 }}>→</div>
+                  <div style={{ color: "#6b6762", fontSize: 20, flexShrink: 0 }}>→</div>
                 </a>
               ))}
             </div>
@@ -1226,8 +1226,8 @@ function ResultsPage({
                     alignItems: "center",
                     gap: 14,
                     padding: "14px 18px",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "#faf9f7",
+                    border: "1px solid #f5f5f4",
                     borderRadius: 14,
                     textDecoration: "none",
                   }}
@@ -1242,13 +1242,13 @@ function ResultsPage({
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      color: "white",
+                      color: "#111111",
                       fontSize: 16,
                     }}
                   >
                     ▶
                   </div>
-                  <div style={{ color: "white", fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>
+                  <div style={{ color: "#111111", fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>
                     {video.title}
                   </div>
                 </a>
@@ -1260,24 +1260,24 @@ function ResultsPage({
         {/* Mentors */}
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(139,92,246,0.2)",
+            background: "#f7f6f4",
+            border: "1px solid rgba(232,116,42,0.2)",
             borderRadius: 20,
             padding: "32px",
             marginBottom: 20,
             boxShadow: "0 4px 24px rgba(0,0,0,0.2)",
           }}
         >
-          <h2 style={{ color: "white", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>
+          <h2 style={{ color: "#111111", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>
             Mentors in {cluster.name}
           </h2>
-          <p style={{ color: "#64748b", fontSize: 14, marginBottom: 24 }}>
+          <p style={{ color: "#6b6762", fontSize: 14, marginBottom: 24 }}>
             Connect with real mentors who work in this field.
             {!user && " Create a free account to send a message."}
           </p>
 
           {mentors.length === 0 ? (
-            <p style={{ color: "#475569", textAlign: "center", padding: "20px 0" }}>
+            <p style={{ color: "#6b6762", textAlign: "center", padding: "20px 0" }}>
               No mentors in this field yet. Check back soon!
             </p>
           ) : (
@@ -1292,8 +1292,8 @@ function ResultsPage({
                       display: "flex",
                       alignItems: "center",
                       gap: 16,
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      background: "#faf9f7",
+                      border: "1px solid #f5f5f4",
                       borderRadius: 14,
                       padding: "18px 20px",
                     }}
@@ -1303,7 +1303,7 @@ function ResultsPage({
                         width: 48,
                         height: 48,
                         borderRadius: "50%",
-                        background: "linear-gradient(135deg, #6366f1, #a855f7)",
+                        background: "linear-gradient(135deg, #e8742a, #e8742a)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -1316,10 +1316,10 @@ function ResultsPage({
                       {name[0] || "M"}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ color: "white", fontWeight: 600, marginBottom: 2 }}>
+                      <div style={{ color: "#111111", fontWeight: 600, marginBottom: 2 }}>
                         {name}
                       </div>
-                      <div style={{ color: "#64748b", fontSize: 13 }}>
+                      <div style={{ color: "#6b6762", fontSize: 13 }}>
                         {m.job_title}
                         {m.company ? ` at ${m.company}` : ""}
                       </div>
@@ -1329,7 +1329,7 @@ function ResultsPage({
                         href={`/profile/${m.user_id}`}
                         style={{
                           padding: "8px 18px",
-                          background: "linear-gradient(135deg, #6366f1, #a855f7)",
+                          background: "linear-gradient(135deg, #e8742a, #e8742a)",
                           color: "white",
                           borderRadius: 10,
                           textDecoration: "none",
@@ -1345,9 +1345,9 @@ function ResultsPage({
                         href="/login"
                         style={{
                           padding: "8px 18px",
-                          background: "rgba(99,102,241,0.15)",
-                          color: "#a5b4fc",
-                          border: "1px solid rgba(99,102,241,0.3)",
+                          background: "rgba(232,116,42,0.15)",
+                          color: "#b84d0c",
+                          border: "1px solid rgba(232,116,42,0.3)",
                           borderRadius: 10,
                           textDecoration: "none",
                           fontSize: 14,
@@ -1371,7 +1371,7 @@ function ResultsPage({
                 style={{
                   display: "inline-block",
                   padding: "12px 28px",
-                  background: "linear-gradient(135deg, #6366f1, #a855f7)",
+                  background: "linear-gradient(135deg, #e8742a, #e8742a)",
                   color: "white",
                   borderRadius: 12,
                   textDecoration: "none",
@@ -1380,9 +1380,9 @@ function ResultsPage({
               >
                 Create Free Account
               </a>
-              <span style={{ color: "#475569", fontSize: 13, marginLeft: 12 }}>
+              <span style={{ color: "#6b6762", fontSize: 13, marginLeft: 12 }}>
                 Already have one?{" "}
-                <a href="/login" style={{ color: "#6366f1" }}>
+                <a href="/login" style={{ color: "#e8742a" }}>
                   Log in
                 </a>
               </span>
@@ -1397,13 +1397,13 @@ function ResultsPage({
             style={{
               display: "inline-block",
               padding: "15px 36px",
-              background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
+              background: "linear-gradient(135deg, #e8742a, #e8742a, #e8742a)",
               color: "white",
               borderRadius: 14,
               textDecoration: "none",
               fontWeight: 700,
               fontSize: 16,
-              boxShadow: "0 8px 32px rgba(139,92,246,0.4)",
+              boxShadow: "0 8px 32px rgba(232,116,42,0.4)",
             }}
           >
             {user ? "Browse All Mentors →" : "Find a Mentor →"}

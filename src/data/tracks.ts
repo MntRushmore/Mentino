@@ -15,19 +15,30 @@
 
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 
+/** "verified": link opened and title/creator matched when added. "needs review": could not be checked automatically. */
+export type ReviewStatus = "verified" | "needs review";
+
 export interface Lesson {
   id: string;
   title: string;
-  kind: "video" | "article";
+  /** "video" and "article" lessons require notes; "reading" is marked done without notes. */
+  kind: "video" | "article" | "reading";
+  /** Estimated minutes to complete (video length, or reading time). */
+  minutes: number;
   /** YouTube video id, for kind "video". */
   youtubeId?: string;
-  /** External link, for kind "article". */
+  /** External link, for articles and readings (or a channel/search link when no single page fits). */
   url?: string;
+  /** Shown instead of a resource when none could be verified, e.g. "[ADD VIDEO: topic]". */
+  placeholder?: string;
   /** Who made it, shown under the title. */
   source: string;
   summary: string;
   /** Question shown above the notes box to guide what to write. */
   notePrompt: string;
+  /** Extra instruction shown with the link, e.g. what to search for on a main page. */
+  linkNote?: string;
+  status: ReviewStatus;
 }
 
 export interface QuizQuestion {
@@ -44,14 +55,16 @@ export interface Week {
   title: string;
   goal: string;
   lessons: Lesson[];
-  assignment: { id: string; title: string; prompt: string; minWords: number };
-  quiz: { id: string; passPercent: number; questions: QuizQuestion[] };
+  assignment: { id: string; title: string; prompt: string; minWords: number; minutes: number; finalProject?: boolean };
+  quiz: { id: string; passPercent: number; minutes: number; questions: QuizQuestion[] };
 }
 
 export interface Track {
   slug: string;
   title: string;
   career: string;
+  /** Signup interest categories this track belongs to (must match CAREER_FIELDS at signup). */
+  categories: string[];
   shortDescription: string;
   description: string;
   difficulty: Difficulty;
@@ -64,11 +77,37 @@ export interface Track {
   weeks: Week[];
 }
 
+/** Lessons that need written notes before they can be marked complete. */
+export function requiresNotes(lesson: Lesson): boolean {
+  return lesson.kind !== "reading";
+}
+
+/** Estimated minutes to write the required notes for a lesson. */
+export const NOTES_MINUTES = 10;
+
+/** Total time for a lesson: the video or article, plus note-taking when notes are required. */
+export function lessonMinutes(lesson: Lesson): number {
+  return lesson.minutes + (requiresNotes(lesson) ? NOTES_MINUTES : 0);
+}
+
+export function weekMinutes(week: Week): number {
+  return week.lessons.reduce((n, l) => n + lessonMinutes(l), 0) + week.assignment.minutes + week.quiz.minutes;
+}
+
+export function formatMinutes(min: number): string {
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60), m = min % 60;
+  return m ? `${h} hr ${m} min` : `${h} hr`;
+}
+
+import { CAREER_TRACKS } from "./careerTracks";
+
 export const TRACKS: Track[] = [
   {
     slug: "intro-to-marketing",
     title: "Intro to Marketing",
     career: "Marketing",
+    categories: ["Business & Management", "Media & Journalism"],
     shortDescription: "Learn how companies find customers, what marketers do all day, and how to plan a real campaign.",
     description:
       "Marketing is how a business figures out who its customers are, what they need, and how to reach them. In four weeks you will learn the core ideas every marketer uses, practice them on brands you already know, and finish with a short plan you can show in a college application or internship interview.",
@@ -95,6 +134,8 @@ export const TRACKS: Track[] = [
             id: "m1-what-is-marketing",
             title: "What is marketing?",
             kind: "video",
+            minutes: 1,
+            status: "verified",
             youtubeId: "PRjqwpDFAqw",
             source: "Neil Patel",
             summary: "A plain definition of marketing and why every business depends on it.",
@@ -104,6 +145,8 @@ export const TRACKS: Track[] = [
             id: "m1-marketing-in-3-minutes",
             title: "Marketing in 3 minutes",
             kind: "video",
+            minutes: 3,
+            status: "verified",
             youtubeId: "QusJ4fpWQwA",
             source: "Shane Hummus",
             summary: "A fast overview of the main parts of marketing and the kinds of jobs inside it.",
@@ -113,6 +156,8 @@ export const TRACKS: Track[] = [
             id: "m1-digital-marketing",
             title: "What is digital marketing?",
             kind: "article",
+            minutes: 20,
+            status: "verified",
             url: "https://blog.hubspot.com/marketing/what-is-digital-marketing",
             source: "HubSpot",
             summary: "How marketing works online: search, social, email, content and paid ads.",
@@ -125,10 +170,12 @@ export const TRACKS: Track[] = [
           prompt:
             "Pick one brand you bought from or used this month. Explain who you think the brand is trying to reach, what message convinced you, and where you saw it (in a store, an app, social media, or from a friend). End with one thing the brand could do better.",
           minWords: 120,
+          minutes: 45,
         },
         quiz: {
           id: "m1-quiz",
           passPercent: 60,
+          minutes: 10,
           questions: [
             {
               id: "q1",
@@ -180,6 +227,8 @@ export const TRACKS: Track[] = [
             id: "m2-segmentation",
             title: "Market segmentation with real examples",
             kind: "video",
+            minutes: 11,
+            status: "verified",
             youtubeId: "IrJ1cNIfmsk",
             source: "Business School 101",
             summary: "The four common ways to split a market: by demographics, location, behavior and attitudes.",
@@ -189,6 +238,8 @@ export const TRACKS: Track[] = [
             id: "m2-stp",
             title: "Segmentation, targeting and positioning (STP)",
             kind: "video",
+            minutes: 8,
+            status: "verified",
             youtubeId: "iGOw39GWDaI",
             source: "EPM",
             summary: "How marketers move from a whole market to one chosen group and one clear message.",
@@ -198,6 +249,8 @@ export const TRACKS: Track[] = [
             id: "m2-personas",
             title: "How to research a buyer persona",
             kind: "article",
+            minutes: 20,
+            status: "verified",
             url: "https://blog.hubspot.com/marketing/buyer-persona-research",
             source: "HubSpot",
             summary: "How teams turn interviews and data into a profile of a typical customer.",
@@ -210,10 +263,12 @@ export const TRACKS: Track[] = [
           prompt:
             "Choose a local business near you (a cafe, gym, tutoring center or store). Write a persona for its most important customer: age, school or job, what they care about, what problem the business solves for them, and where they spend time online. Then say which segmentation type you used and why.",
           minWords: 150,
+          minutes: 45,
         },
         quiz: {
           id: "m2-quiz",
           passPercent: 60,
+          minutes: 10,
           questions: [
             {
               id: "q1",
@@ -265,6 +320,8 @@ export const TRACKS: Track[] = [
             id: "m3-four-ps",
             title: "The 4 Ps with real world examples",
             kind: "video",
+            minutes: 9,
+            status: "verified",
             youtubeId: "g_gEOf0UePw",
             source: "Business School 101",
             summary: "Product, price, place and promotion, shown through well known brands.",
@@ -274,6 +331,8 @@ export const TRACKS: Track[] = [
             id: "m3-four-ps-campaigns",
             title: "Using the 4 Ps to plan campaigns",
             kind: "video",
+            minutes: 7,
+            status: "verified",
             youtubeId: "HFjbrjWjUWc",
             source: "HubSpot Marketing",
             summary: "How marketers use the 4 Ps as a checklist before launching a campaign.",
@@ -283,6 +342,8 @@ export const TRACKS: Track[] = [
             id: "m3-positioning-video",
             title: "What is brand positioning?",
             kind: "video",
+            minutes: 10,
+            status: "verified",
             youtubeId: "Rcv-J6534oE",
             source: "Brand Master Academy",
             summary: "Why customers choose one brand over another and how companies claim a spot in their minds.",
@@ -292,6 +353,8 @@ export const TRACKS: Track[] = [
             id: "m3-positioning-reading",
             title: "Positioning (marketing)",
             kind: "article",
+            minutes: 20,
+            status: "verified",
             url: "https://en.wikipedia.org/wiki/Positioning_(marketing)",
             source: "Wikipedia",
             summary: "The history of positioning and the standard parts of a positioning statement.",
@@ -304,10 +367,12 @@ export const TRACKS: Track[] = [
           prompt:
             "Pick two brands that compete (for example two sneaker, phone or streaming brands). Compare them using the 4 Ps in a short paragraph for each P. Then write one positioning statement for the brand you think is weaker, using this format: For [target customer] who [need], [brand] is the [category] that [key benefit] because [reason to believe].",
           minWords: 180,
+          minutes: 45,
         },
         quiz: {
           id: "m3-quiz",
           passPercent: 60,
+          minutes: 10,
           questions: [
             {
               id: "q1",
@@ -361,6 +426,8 @@ export const TRACKS: Track[] = [
             id: "m4-plan-video",
             title: "A 5 step system for a marketing plan",
             kind: "video",
+            minutes: 5,
+            status: "verified",
             youtubeId: "lDdTW0o7N6Q",
             source: "HubSpot Marketing",
             summary: "The steps marketers follow to turn goals into a plan they can measure.",
@@ -370,6 +437,8 @@ export const TRACKS: Track[] = [
             id: "m4-plan-template",
             title: "Marketing plan template",
             kind: "article",
+            minutes: 20,
+            status: "verified",
             url: "https://blog.hubspot.com/marketing/marketing-plan-template-generator",
             source: "HubSpot",
             summary: "The sections of a real marketing plan, with examples you can copy.",
@@ -379,22 +448,28 @@ export const TRACKS: Track[] = [
             id: "m4-careers",
             title: "Marketing managers: pay, outlook and how to get there",
             kind: "article",
+            minutes: 20,
+            status: "needs review",
             url: "https://www.bls.gov/ooh/management/advertising-promotions-and-marketing-managers.htm",
             source: "U.S. Bureau of Labor Statistics",
+            linkNote: "bls.gov blocks automated checks; confirm this page opens.",
             summary: "Official data on what marketing managers do, the education they need and what they earn.",
             notePrompt: "What degree and experience do marketing managers usually have? What is the median pay?",
           },
         ],
         assignment: {
           id: "m4-assignment",
-          title: "Research a marketing company",
+          title: "Final project: Research a marketing company",
+          finalProject: true,
           prompt:
             "Research one company that sells marketing products or services (for example an ad agency, HubSpot, Canva or Mailchimp). Explain how it makes money, who its customers are, and one marketing job you could have there. Finish with a three sentence plan to promote one of its products to students: the goal, the channel, and the metric you would track.",
           minWords: 180,
+          minutes: 45,
         },
         quiz: {
           id: "m4-quiz",
           passPercent: 60,
+          minutes: 10,
           questions: [
             {
               id: "q1",
@@ -450,6 +525,8 @@ export const TRACKS: Track[] = [
     ],
   },
 ];
+
+TRACKS.push(...CAREER_TRACKS);
 
 export function getTrack(slug: string): Track | undefined {
   return TRACKS.find((t) => t.slug === slug);

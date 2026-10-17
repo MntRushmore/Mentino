@@ -100,8 +100,8 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
               Free mentorship from verified professionals, plus career courses and research tools built for students.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 mt-8 anim-fade-up anim-d3">
-              <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
-              <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+              <a href="/signup?role=student" className="btn btn-glass btn-lg">I'm a Student</a>
+              <a href="/signup?role=mentor" className="btn btn-glass-light btn-lg">I'm a Mentor</a>
             </div>
             <ul className="flex flex-col sm:flex-row gap-2 sm:gap-6 mt-6 anim-fade-up anim-d3">
               {["Free for students", "Verified professionals", "Safe for under 18"].map((t) => (
@@ -121,14 +121,14 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
       <section className={`${WRAP} py-8`}>
         <dl className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-gray-200 py-8">
           {[
-            { num: `${mentorCount}`, label: "Mentors across 40+ fields" },
-            { num: `${studentCount}`, label: "Students signed up" },
+            { num: `${mentorCount}`, count: mentorCount, label: "Mentors across 40+ fields" },
+            { num: `${studentCount}`, count: studentCount, label: "Students signed up" },
             { num: "$0", label: "Cost for students" },
-            { num: "16M", label: "US students without a mentor" },
+            { num: "16M", count: 16, suffix: "M", label: "US students without a mentor" },
           ].map((s) => (
             <div key={s.label} className="flex flex-col-reverse gap-1">
               <dt className="text-sm text-gray-600">{s.label}</dt>
-              <dd className="text-4xl text-gray-900 tabular-nums">{s.num}</dd>
+              <dd className="text-4xl text-gray-900 tabular-nums" data-count={s.count} data-suffix={s.suffix}>{s.num}</dd>
             </div>
           ))}
         </dl>
@@ -141,7 +141,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           {OFFERS.map((o) => (
             <a key={o.title} href={o.href} className="card card-interactive overflow-hidden flex flex-col">
               <span className="block skeleton aspect-[4/3]">
-                <img src={o.img} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
+                <img src={o.img} alt="" loading="lazy" className="w-full h-full object-cover zoom-on-hover" data-fade />
               </span>
               <span className="p-6 flex flex-col flex-1">
                 <span className="text-xl text-gray-900">{o.title}</span>
@@ -198,7 +198,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
           {FIELDS.map((f) => (
             <a key={f.name} href={`/signup?role=student&interest=${encodeURIComponent(f.field)}`} className="group block">
               <span className="block skeleton rounded-xl overflow-hidden aspect-[4/3]">
-                <img src={f.img} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
+                <img src={f.img} alt="" loading="lazy" className="w-full h-full object-cover zoom-on-hover" data-fade />
               </span>
               <span className="block text-base text-gray-900 mt-2 group-hover:underline underline-offset-4">{f.name}</span>
             </a>
@@ -252,7 +252,7 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
                 </li>
               ))}
             </ul>
-            <a href="/signup?role=mentor" className="btn btn-primary btn-lg mt-8">Become a mentor</a>
+            <a href="/signup?role=mentor" className="btn btn-glass btn-lg mt-8">Become a mentor</a>
           </div>
         </div>
       </section>
@@ -296,8 +296,8 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
             <p className="text-gray-700 mt-2">Set up a profile in 5 minutes. Free for students.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
-            <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+            <a href="/signup?role=student" className="btn btn-glass btn-lg">I'm a Student</a>
+            <a href="/signup?role=mentor" className="btn btn-glass-light btn-lg">I'm a Mentor</a>
           </div>
         </div>
       </section>

@@ -3,7 +3,8 @@ import React from "react";
 import { render } from "../app";
 import { Layout } from "../views/Layout";
 import { authMiddleware, optionalAuth } from "../middleware/auth";
-import { TRACKS, getTrack, type Track, type Week, type Difficulty } from "../data/tracks";
+import { TRACKS, getTrack, formatMinutes, lessonMinutes, requiresNotes, NOTES_MINUTES, weekMinutes, type Track, type Week, type Difficulty } from "../data/tracks";
+import { supabase } from "../db";
 import {
   ASSIGNMENT_MAX_CHARS,
   NOTE_MAX_CHARS,
@@ -17,6 +18,7 @@ import {
   listEnrollments,
   nextStep,
   notesQualify,
+  canComplete,
   progress,
   saveState,
   wordCount,
@@ -41,7 +43,7 @@ function ProgressBar({ percent, label }: { percent: number; label?: string }) {
         <span className="font-medium text-gray-900 tabular-nums">{percent}%</span>
       </div>
       <div className="h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
-        <div className="h-full bg-forest rounded-full" style={{ width: `${percent}%` }} />
+        <div className="progress-fill h-full bg-forest rounded-full" style={{ width: `${percent}%` }} />
       </div>
     </div>
   );
@@ -82,14 +84,27 @@ tracks.get("/tracks", optionalAuth, async (c) => {
   const user = c.get("user");
   const q = (c.req.query("q") || "").trim();
   const difficulty = (c.req.query("difficulty") || "") as Difficulty | "";
+  const category = (c.req.query("category") || "").trim();
+  const allCategories = [...new Set(TRACKS.flatMap((t) => t.categories))].sort();
 
   const needle = q.toLowerCase();
   const results = TRACKS.filter(
     (t) =>
       (!difficulty || t.difficulty === difficulty) &&
+      (!category || t.categories.includes(category)) &&
       (!needle ||
-        [t.title, t.career, t.shortDescription, ...t.keywords].some((s) => s.toLowerCase().includes(needle)))
+        [t.title, t.career, t.shortDescription, ...t.keywords, ...t.categories].some((s) => s.toLowerCase().includes(needle)))
   );
+
+  // Students see the tracks that match the interests they picked at signup first.
+  let interests: string[] = [];
+  if (user?.role === "student") {
+    const { data: student } = await supabase.from("students").select("career_interests").eq("user_id", user.id).maybeSingle();
+    interests = student?.career_interests || [];
+  }
+  const recommended = interests.length && !q && !category && !difficulty
+    ? TRACKS.filter((t) => t.categories.some((cat) => interests.includes(cat)))
+    : [];
 
   let mine: Enrollment[] = [];
   let unavailable = false;
@@ -133,6 +148,11 @@ tracks.get("/tracks", optionalAuth, async (c) => {
           <label htmlFor="track-q" className="sr-only">Search tracks</label>
           <input id="track-q" type="search" name="q" defaultValue={q} placeholder="Search a career, like marketing"
             className="flex-1 h-10 px-4 border text-sm" />
+          <label htmlFor="track-category" className="sr-only">Category</label>
+          <select id="track-category" name="category" defaultValue={category} className="h-10 px-3 border text-sm sm:w-56">
+            <option value="">All categories</option>
+            {allCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
           <label htmlFor="track-difficulty" className="sr-only">Difficulty</label>
           <select id="track-difficulty" name="difficulty" defaultValue={difficulty} className="h-10 px-3 border text-sm sm:w-44">
             <option value="">All levels</option>
@@ -140,6 +160,18 @@ tracks.get("/tracks", optionalAuth, async (c) => {
           </select>
           <button type="submit" className="btn btn-primary">Search</button>
         </form>
+
+        {recommended.length > 0 && (
+          <section className="mb-12" aria-labelledby="rec-h">
+            <h2 id="rec-h" className="text-xl text-gray-900 mb-1">Recommended for you</h2>
+            <p className="text-sm text-gray-600 mb-4">Based on the interests you picked: {interests.join(", ")}.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {recommended.map((t) => <TrackCard key={t.slug} t={t} user={user} enrolled={enrolledSlugs.has(t.slug)} />)}
+            </div>
+          </section>
+        )}
+
+        {recommended.length > 0 && <h2 className="text-xl text-gray-900 mb-4">All tracks</h2>}
 
         {results.length === 0 ? (
           <div className="card p-8 text-center">
@@ -150,43 +182,40 @@ tracks.get("/tracks", optionalAuth, async (c) => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {results.map((t) => (
-              <article key={t.slug} className="card overflow-hidden flex flex-col">
-                <a href={`/tracks/${t.slug}`} className="block skeleton aspect-[16/9]">
-                  <img src={t.image} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
-                </a>
-                <div className="p-6 flex flex-col flex-1">
-                  <p className="t-eyebrow mb-2">{t.career}</p>
-                  <h2 className="text-xl text-gray-900"><a href={`/tracks/${t.slug}`} className="hover:underline underline-offset-4">{t.title}</a></h2>
-                  <p className="text-sm text-gray-600 mt-2 flex-1">{t.shortDescription}</p>
-                  <div className="mt-4"><Meta track={t} /></div>
-                  <div className="mt-6">
-                    {enrolledSlugs.has(t.slug) ? (
-                      <a href={`/tracks/${t.slug}`} className="btn btn-secondary btn-block">Continue</a>
-                    ) : user ? (
-                      <form method="POST" action={`/tracks/${t.slug}/enroll`}>
-                        <button type="submit" className="btn btn-primary btn-block">Enroll</button>
-                      </form>
-                    ) : (
-                      <a href="/signup?role=student" className="btn btn-primary btn-block">Enroll</a>
-                    )}
-                  </div>
-                </div>
-              </article>
-            ))}
-            <aside className="bg-sand rounded-xl p-6 flex flex-col justify-between">
-              <div>
-                <h2 className="text-lg text-gray-900">More tracks are coming</h2>
-                <p className="text-sm text-gray-700 mt-2">Finance, nursing, software engineering and law are next. Until then, Resources has videos, books and mentors for any career.</p>
-              </div>
-              <a href="/resources" className="btn btn-secondary mt-6 self-start">Search Resources</a>
-            </aside>
+            {results.map((t) => <TrackCard key={t.slug} t={t} user={user} enrolled={enrolledSlugs.has(t.slug)} />)}
           </div>
         )}
       </div>
     </Layout>
   );
 });
+
+function TrackCard({ t, user, enrolled }: { t: Track; user: any; enrolled: boolean }) {
+  return (
+    <article className="card card-interactive overflow-hidden flex flex-col">
+      <a href={`/tracks/${t.slug}`} className="block skeleton aspect-[16/9] overflow-hidden">
+        <img src={t.image} alt="" loading="lazy" className="w-full h-full object-cover zoom-on-hover" data-fade />
+      </a>
+      <div className="p-6 flex flex-col flex-1">
+        <p className="t-eyebrow mb-2">{t.categories[0] ?? t.career}</p>
+        <h2 className="text-xl text-gray-900"><a href={`/tracks/${t.slug}`} className="hover:underline underline-offset-4">{t.title}</a></h2>
+        <p className="text-sm text-gray-600 mt-2 flex-1">{t.shortDescription}</p>
+        <div className="mt-4"><Meta track={t} /></div>
+        <div className="mt-6">
+          {enrolled ? (
+            <a href={`/tracks/${t.slug}`} className="btn btn-secondary btn-block">Continue</a>
+          ) : user ? (
+            <form method="POST" action={`/tracks/${t.slug}/enroll`}>
+              <button type="submit" className="btn btn-dark btn-block">Enroll</button>
+            </form>
+          ) : (
+            <a href="/signup?role=student" className="btn btn-dark btn-block">Enroll</a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function MyTracksList({ enrollments }: { enrollments: Enrollment[] }) {
   return (
@@ -329,11 +358,11 @@ tracks.get("/tracks/:slug", optionalAuth, async (c) => {
             </div>
           ) : user ? (
             <form method="POST" action={`/tracks/${track.slug}/enroll`}>
-              <button type="submit" className="btn btn-primary btn-lg">Start Track</button>
+              <button type="submit" className="btn btn-glass btn-lg">Start Track</button>
             </form>
           ) : (
             <div className="flex flex-wrap items-center gap-4">
-              <a href="/signup?role=student" className="btn btn-primary btn-lg">Start Track</a>
+              <a href="/signup?role=student" className="btn btn-glass btn-lg">Start Track</a>
               <span className="text-sm text-gray-600">Free. <a href="/login" className="underline underline-offset-4">Log in</a> if you already have an account.</span>
             </div>
           )}
@@ -444,6 +473,7 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
         </p>
         <h1 className="font-serif text-4xl text-gray-900">Week {week.number}: {week.title}</h1>
         <p className="text-lg text-gray-700 mt-4">{week.goal}</p>
+        <p className="t-meta mt-2">About {formatMinutes(weekMinutes(week))} this week: {formatMinutes(week.lessons.reduce((n, l) => n + lessonMinutes(l), 0))} of lessons and notes, {formatMinutes(week.assignment.minutes)} {week.assignment.finalProject ? "final project" : "assignment"}, {formatMinutes(week.quiz.minutes)} quiz</p>
         <div className="mt-6"><ProgressBar percent={p.percent} label="Track progress" /></div>
 
         <nav aria-label="Weeks" className="flex flex-wrap gap-2 mt-6">
@@ -500,20 +530,29 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
                       <div className="p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <p className="t-meta">Lesson {i + 1} · {l.kind === "video" ? "Video" : "Reading"} · {l.source}</p>
+                            <p className="t-meta">{l.kind === "reading" ? "Reading" : `Lesson ${i + 1}`} · {l.kind === "video" ? "Video" : "Article"} · {l.source} · {formatMinutes(l.minutes)}{requiresNotes(l) ? ` + ${NOTES_MINUTES} min notes` : ""}</p>
                             <h3 className="text-xl text-gray-900 mt-1">{l.title}</h3>
                           </div>
                           {done && <span className="t-meta inline-flex items-center h-6 px-2 rounded bg-sage flex-shrink-0" style={{ color: "var(--ink)" }}>Complete</span>}
                         </div>
                         <p className="text-gray-700 mt-2">{l.summary}</p>
-                        {l.kind === "article" && l.url && (
+                        {l.kind !== "video" && l.url && (
                           <a href={l.url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-4">
-                            Open the reading <span aria-hidden="true">↗</span>
+                            Open the {l.kind === "reading" ? "reading" : "article"} <span aria-hidden="true">↗</span>
                           </a>
+                        )}
+                        {l.kind === "video" && !l.youtubeId && l.url && (
+                          <a href={l.url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-4">
+                            {l.url.includes("results?search_query") ? "Search YouTube" : "Watch on YouTube"} <span aria-hidden="true">↗</span>
+                          </a>
+                        )}
+                        {l.linkNote && <p className="t-meta mt-2">{l.linkNote}</p>}
+                        {l.placeholder && !l.url && !l.youtubeId && (
+                          <p className="mt-4 text-sm text-gray-700 bg-panel rounded p-4">This resource is being added. You can still take notes on the topic and mark the lesson complete.</p>
                         )}
 
                         <form method="POST" action={`/tracks/${track.slug}/lessons/${l.id}/complete`} className="mt-6" data-lesson-form>
-                          <label htmlFor={`notes-${l.id}`} className="block text-sm font-medium text-gray-900">Your notes</label>
+                          <label htmlFor={`notes-${l.id}`} className="block text-sm font-medium text-gray-900">Your notes{requiresNotes(l) ? "" : " (optional)"}</label>
                           <p className="text-sm text-gray-600 mt-1">{l.notePrompt}</p>
                           <textarea
                             id={`notes-${l.id}`}
@@ -523,19 +562,20 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
                             defaultValue={ls?.notes ?? ""}
                             data-autosave={`/tracks/${track.slug}/lessons/${l.id}/notes`}
                             className="w-full mt-2 px-4 py-3 border text-base"
-                            placeholder="Write at least 3 full sentences in your own words."
+                            placeholder={requiresNotes(l) ? "Write at least 3 full sentences in your own words." : "Optional notes on the reading."}
+                            data-required={requiresNotes(l) ? "1" : "0"}
                           />
                           <div className="flex flex-wrap items-center justify-between gap-4 mt-2">
                             <p className="t-meta" data-note-status aria-live="polite">
                               {ls?.notesUpdatedAt ? "Saved" : "Notes save automatically"}
                             </p>
                             <p className="t-meta" data-note-count>
-                              {NOTE_MIN_SENTENCES} sentences needed to complete
+                              {requiresNotes(l) ? `${NOTE_MIN_SENTENCES} sentences needed to complete` : "Notes optional for readings"}
                             </p>
                           </div>
                           {!done && (
-                            <button type="submit" className="btn btn-primary mt-4" data-complete-btn disabled={!notesQualify(ls?.notes ?? "")}>
-                              Mark lesson complete
+                            <button type="submit" className="btn btn-primary mt-4" data-complete-btn disabled={!canComplete(l, ls?.notes ?? "")}>
+                              {requiresNotes(l) ? "Mark lesson complete" : "Mark as read"}
                             </button>
                           )}
                         </form>
@@ -548,10 +588,13 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
 
             {/* Assignment */}
             <section id="assignment" className="mt-16 scroll-mt-24" aria-labelledby="assignment-h">
-              <h2 id="assignment-h" className="text-2xl text-gray-900 mb-4">Assignment: {week.assignment.title}</h2>
+              <div className="flex items-baseline justify-between gap-4 mb-4">
+                <h2 id="assignment-h" className="text-2xl text-gray-900">{week.assignment.finalProject ? "Final project" : "Assignment"}: {week.assignment.title.replace(/^Final project: /, "")}</h2>
+                <span className="t-meta flex-shrink-0">{formatMinutes(week.assignment.minutes)}</span>
+              </div>
               <div className="card p-6">
                 <p className="text-gray-700">{week.assignment.prompt}</p>
-                <p className="t-meta mt-2">At least {week.assignment.minWords} words</p>
+                <p className="t-meta mt-2">At least {week.assignment.minWords} words{week.assignment.finalProject ? " · Submitting your final project unlocks your certificate" : ""}</p>
                 {!status.allLessonsDone ? (
                   <p className="text-sm text-gray-600 mt-6 bg-panel rounded p-4">Complete all {status.lessonsTotal} lessons above to open the assignment.</p>
                 ) : (
@@ -584,7 +627,7 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
             <section id="quiz" className="mt-16 scroll-mt-24" aria-labelledby="quiz-h">
               <div className="flex items-baseline justify-between mb-4">
                 <h2 id="quiz-h" className="text-2xl text-gray-900">Week {week.number} quiz</h2>
-                <span className="t-meta">Pass with {week.quiz.passPercent}% or higher</span>
+                <span className="t-meta">{week.quiz.questions.length} questions · {formatMinutes(week.quiz.minutes)}</span>
               </div>
               <div className="card p-6">
                 {!status.assignmentDone ? (
@@ -617,7 +660,7 @@ tracks.get("/tracks/:slug/week/:n", authMiddleware, async (c) => {
                   {nextUnlocked && <a href={`/tracks/${track.slug}/week/${nextWeek.number}`} className="btn btn-primary">Go to Week {nextWeek.number}</a>}
                 </>
               ) : (
-                <p className="text-gray-700">Pass every quiz to finish the track and get your certificate.</p>
+                <p className="text-gray-700">Submit the final project above to unlock your certificate.</p>
               )}
             </div>
           </>
@@ -683,8 +726,9 @@ function weekPageScript() {
     var timer = null, lastSaved = ta.value;
     function update() {
       var n = sentences(ta.value);
-      var ok = n >= MIN_S && ta.value.trim().length >= MIN_C;
-      count.textContent = ok ? 'Ready to complete' : (Math.min(n, MIN_S) + ' of ' + MIN_S + ' sentences');
+      var required = ta.getAttribute('data-required') !== '0';
+      var ok = !required || (n >= MIN_S && ta.value.trim().length >= MIN_C);
+      count.textContent = !required ? 'Notes optional for readings' : ok ? 'Ready to complete' : (Math.min(n, MIN_S) + ' of ' + MIN_S + ' sentences');
       if (btn) btn.disabled = !ok;
     }
     function save() {
@@ -781,7 +825,7 @@ tracks.post("/tracks/:slug/lessons/:lessonId/complete", authMiddleware, async (c
   const now = new Date().toISOString();
   state.lessons[found.lesson.id] = { ...state.lessons[found.lesson.id], notes, notesUpdatedAt: now };
 
-  if (!notesQualify(notes)) {
+  if (!canComplete(found.lesson, notes)) {
     await saveState(enrollment, track, state);
     const err = encodeURIComponent(`Write at least ${NOTE_MIN_SENTENCES} full sentences of notes for "${found.lesson.title}" before marking it complete.`);
     return c.redirect(`${back}?err=${err}#lesson-${found.lesson.id}`);
@@ -812,6 +856,7 @@ tracks.post("/tracks/:slug/week/:n/assignment", authMiddleware, async (c) => {
   const state = enrollment.state;
   state.assignments[week.assignment.id] = { response, submittedAt: new Date().toISOString() };
   await saveState(enrollment, track, state);
+  if (week.assignment.finalProject && isComplete(track, state)) return c.redirect(`/tracks/${track.slug}/certificate`);
   const nextWeek = track.weeks.find((w) => w.number === week.number + 1);
   const msg = encodeURIComponent(nextWeek ? `Assignment submitted. Week ${nextWeek.number} is unlocked. Take the quiz below to finish this week.` : "Assignment submitted. Take the quiz below.");
   return c.redirect(`${back}?msg=${msg}#quiz`);
@@ -835,7 +880,6 @@ tracks.post("/tracks/:slug/week/:n/quiz", authMiddleware, async (c) => {
   const state = enrollment.state;
   state.quizzes[week.quiz.id] = { score, total, passed, answers, attemptedAt: new Date().toISOString() };
   await saveState(enrollment, track, state);
-  if (passed && isComplete(track, state)) return c.redirect(`/tracks/${track.slug}/certificate`);
   return c.redirect(`${back}#quiz`);
 });
 

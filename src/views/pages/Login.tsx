@@ -9,14 +9,8 @@ export function Login({ error }: LoginProps) {
     <div className="min-h-[80vh] flex items-center justify-center py-6 px-3 sm:px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg" style={{ background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)" }}>
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2a7 7 0 00-4 12.75V17a1 1 0 001 1h6a1 1 0 001-1v-2.25A7 7 0 0012 2z" opacity="0.85" />
-              <rect x="9" y="19" width="6" height="1.5" rx="0.75" opacity="0.9" />
-              <rect x="9.5" y="21.5" width="5" height="1" rx="0.5" opacity="0.7" />
-            </svg>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mb-1" style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Welcome back</h1>
+          <img src="/images/logo.svg" alt="Mentino" width={56} height={56} className="w-14 h-14 mx-auto mb-4" />
+          <h1 className="font-serif text-3xl sm:text-4xl text-gray-900 mb-2">Welcome back</h1>
           <p className="text-gray-500 text-sm sm:text-base">Log in to your Mentino account</p>
         </div>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 sm:p-8">

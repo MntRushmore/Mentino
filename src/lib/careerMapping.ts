@@ -25,7 +25,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Software Engineer", "Data Scientist", "Cybersecurity Analyst", "UX Designer", "AI/ML Engineer", "Product Manager", "Cloud Architect", "DevOps Engineer"],
     youtubeQuery: "technology careers for teenagers",
     googleQuery: "technology career paths for high school students",
-    color: "#6366f1",
+    color: "#e8742a",
     resources: {
       books: [
         { title: "The Pragmatic Programmer", author: "David Thomas & Andrew Hunt", why: "The bible for anyone learning to code professionally. Teaches you how to think like a real engineer." },
@@ -106,7 +106,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Civil Engineer", "Mechanical Engineer", "Electrical Engineer", "Aerospace Engineer", "Chemical Engineer", "Biomedical Engineer", "Environmental Engineer", "Robotics Engineer"],
     youtubeQuery: "engineering careers for teenagers day in the life",
     googleQuery: "engineering career paths for high school students",
-    color: "#3b82f6",
+    color: "#e8742a",
     resources: {
       books: [
         { title: "The Art of Problem Solving (Vol. 1)", author: "Sandor Lehoczky & Richard Rusczyk", why: "The go-to math book for students who want to think like engineers." },
@@ -133,7 +133,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Graphic Designer", "Film Director", "Architect", "Fashion Designer", "Illustrator", "Art Director", "Animator", "Interior Designer"],
     youtubeQuery: "creative arts design careers for teenagers",
     googleQuery: "creative design career paths for high school students",
-    color: "#ec4899",
+    color: "#e8742a",
     resources: {
       books: [
         { title: "Steal Like an Artist", author: "Austin Kleon", why: "How creativity actually works and how to develop your own style. Quick read, massive impact." },
@@ -160,7 +160,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Teacher", "School Counselor", "Social Worker", "Child Psychologist", "Educational Administrator", "Speech Therapist", "Youth Program Director", "Curriculum Designer"],
     youtubeQuery: "education social work careers for teenagers",
     googleQuery: "education social services career paths high school",
-    color: "#10b981",
+    color: "#c2540f",
     resources: {
       books: [
         { title: "Educated", author: "Tara Westover", why: "A memoir about the transformative power of education. Reminds you why teaching matters." },
@@ -187,7 +187,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Lawyer", "Judge", "Politician", "Public Policy Analyst", "Paralegal", "FBI Agent", "Diplomat", "City Planner"],
     youtubeQuery: "law government policy careers for teenagers",
     googleQuery: "law government career paths for high school students",
-    color: "#8b5cf6",
+    color: "#e8742a",
     resources: {
       books: [
         { title: "Just Mercy", author: "Bryan Stevenson", why: "A lawyer fighting for justice in the criminal system. Possibly the most compelling argument for a legal career." },
@@ -241,7 +241,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Biologist", "Chemist", "Physicist", "Geologist", "Marine Scientist", "Astronomer", "Neuroscientist", "Environmental Scientist"],
     youtubeQuery: "science research careers for teenagers",
     googleQuery: "science research career paths for high school students",
-    color: "#06b6d4",
+    color: "#c2540f",
     resources: {
       books: [
         { title: "The Double Helix", author: "James Watson", why: "The story of discovering DNA. A first-person account of what science actually feels like." },
@@ -268,7 +268,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
     relatedCareers: ["Journalist", "Content Creator", "Public Relations Specialist", "Broadcaster", "Podcast Producer", "Social Media Manager", "Copywriter", "Photographer"],
     youtubeQuery: "media communications journalism careers for teenagers",
     googleQuery: "media communications career paths for high school students",
-    color: "#0ea5e9",
+    color: "#c2540f",
     resources: {
       books: [
         { title: "On Writing", author: "Stephen King", why: "The best book about writing ever made. Applies to journalists, copywriters, content creators, and anyone who communicates for a living." },

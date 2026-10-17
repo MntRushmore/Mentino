@@ -5,7 +5,7 @@ import { Layout } from "../views/Layout";
 import { optionalAuth } from "../middleware/auth";
 import { supabase } from "../db";
 import { CAREER_CLUSTERS, KEYWORD_MAP } from "../lib/careerMapping";
-import { CHANNELS, STUDENT_STEPS, channelLink, stageFromGrade } from "../lib/resourceExtras";
+import { CHANNELS, STUDENT_STEPS, TOP_VIDEOS, channelLink, stageFromGrade } from "../lib/resourceExtras";
 import { tracksForSearch, type Track } from "../data/tracks";
 
 export const resources = new Hono();
@@ -155,6 +155,7 @@ function ResourcesPage({
   const curatedArticles = cluster?.resources.articles ?? [];
   const articles = (specific ? [...tailoredArticles, ...curatedArticles] : [...curatedArticles, ...tailoredArticles]).slice(0, 6);
   const channels = cluster ? CHANNELS[cluster.id] ?? [] : [];
+  const topVideos = cluster ? TOP_VIDEOS[cluster.id] ?? [] : [];
   const steps = cluster ? STUDENT_STEPS[cluster.id] : null;
   const stepOrder: ("highSchool" | "college")[] = stage === "college" ? ["college", "highSchool"] : ["highSchool", "college"];
 
@@ -246,8 +247,30 @@ function ResourcesPage({
             </section>
           )}
 
+          {topVideos.length > 0 && (
+            <section aria-labelledby="top-videos-h">
+              <SectionTitle title={`Top videos in ${cluster.name}`} count={topVideos.length} note="Opens YouTube" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {topVideos.map((v) => (
+                  <a key={v.id} href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer" className="card card-interactive overflow-hidden flex flex-col group" data-reveal>
+                    <span className="relative block skeleton aspect-video overflow-hidden">
+                      <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" className="w-full h-full object-cover zoom-on-hover" data-fade />
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <YouTubeMark className="w-16 h-12 drop-shadow-md transition-transform duration-200 group-hover:scale-110" />
+                      </span>
+                    </span>
+                    <span className="p-4">
+                      <span className="block text-sm font-medium text-gray-900 line-clamp-2">{v.title}</span>
+                      <span className="t-meta block mt-1">{v.channel}</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
           <section aria-labelledby="videos-h">
-            <SectionTitle title="Videos to watch" count={videos.length} note="Opens YouTube" />
+            <SectionTitle title={topVideos.length ? "Search YouTube for more" : "Videos to watch"} count={videos.length} note="Opens YouTube" />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {videos.map((v: any, i: number) => (
                 <a key={i} href={ytSearch(v.query)} target="_blank" rel="noopener noreferrer" className="card card-interactive overflow-hidden flex flex-col">

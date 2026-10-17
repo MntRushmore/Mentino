@@ -1,5 +1,5 @@
 import { supabase } from "../db";
-import type { Track, Week } from "../data/tracks";
+import { requiresNotes, type Lesson, type Track, type Week } from "../data/tracks";
 
 /** A lesson needs at least this much note-taking before it can be marked complete. */
 export const NOTE_MIN_SENTENCES = 3;
@@ -53,6 +53,11 @@ export function notesQualify(text: string): boolean {
   return text.trim().length >= NOTE_MIN_CHARS && countSentences(text) >= NOTE_MIN_SENTENCES;
 }
 
+/** Whether a lesson can be marked complete with these notes (readings need no notes). */
+export function canComplete(lesson: Lesson, notes: string): boolean {
+  return !requiresNotes(lesson) || notesQualify(notes);
+}
+
 export interface WeekStatus {
   week: Week;
   unlocked: boolean;
@@ -85,7 +90,7 @@ export function weekStatuses(track: Track, state: TrackState): WeekStatus[] {
       quizPassed: !!quiz?.passed,
       quizAttempted: !!quiz,
       gateCleared,
-      complete: gateCleared && !!quiz?.passed,
+      complete: gateCleared && !!quiz,
     });
   });
   return out;
@@ -97,13 +102,18 @@ export function progress(track: Track, state: TrackState) {
   let total = 0;
   for (const s of statuses) {
     total += s.lessonsTotal + 2;
-    done += s.lessonsDone + (s.assignmentDone ? 1 : 0) + (s.quizPassed ? 1 : 0);
+    done += s.lessonsDone + (s.assignmentDone ? 1 : 0) + (s.quizAttempted ? 1 : 0);
   }
   return { done, total, percent: total ? Math.round((done / total) * 100) : 0, statuses };
 }
 
+/**
+ * The certificate unlocks when the final project is submitted. Weeks unlock in order
+ * (lessons + assignment), so a submitted final project means every lesson and
+ * assignment before it is done too. Quizzes check understanding but do not block it.
+ */
 export function isComplete(track: Track, state: TrackState): boolean {
-  return weekStatuses(track, state).every((s) => s.complete);
+  return weekStatuses(track, state).every((s) => s.gateCleared);
 }
 
 /** The single next thing the student should do, with a link straight to it. */
@@ -114,7 +124,7 @@ export function nextStep(track: Track, state: TrackState): { label: string; href
     const lesson = s.week.lessons.find((l) => !state.lessons[l.id]?.completedAt);
     if (lesson) return { label: `Lesson: ${lesson.title}`, href: `${base}#lesson-${lesson.id}`, weekNumber: s.week.number };
     if (!s.assignmentDone) return { label: `Assignment: ${s.week.assignment.title}`, href: `${base}#assignment`, weekNumber: s.week.number };
-    if (!s.quizPassed) return { label: `Week ${s.week.number} quiz`, href: `${base}#quiz`, weekNumber: s.week.number };
+    if (!s.quizAttempted) return { label: `Week ${s.week.number} quiz`, href: `${base}#quiz`, weekNumber: s.week.number };
   }
   return null;
 }

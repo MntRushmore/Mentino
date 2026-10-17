@@ -4,7 +4,7 @@ const linkClass = "text-gray-900 hover:underline underline-offset-4 decoration-1
 
 export function Footer() {
   return (
-    <footer className="mt-auto bg-sage overflow-hidden" aria-label="Footer">
+    <footer className="mt-auto bg-white border-t border-gray-200 overflow-hidden" aria-label="Footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
@@ -53,7 +53,7 @@ export function Footer() {
 
         {/* Oversized wordmark, cropped by the bottom edge */}
         <p aria-hidden="true" className="font-semibold select-none leading-none mt-8 -mb-[0.18em]"
-          style={{ fontSize: "clamp(96px, 21vw, 320px)", letterSpacing: "-0.05em", color: "var(--forest)", opacity: 0.9 }}>
+          style={{ fontSize: "clamp(96px, 21vw, 320px)", letterSpacing: "-0.05em", color: "var(--ink)" }}>
           Mentino
         </p>
       </div>

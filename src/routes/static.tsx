@@ -87,22 +87,27 @@ function ArticleShell({ kicker, title, dek, byline, image, caption, children }: 
 }) {
   return (
     <article className="max-w-2xl mx-auto">
-      <p className="t-eyebrow mb-4">{kicker}</p>
-      <h1 className="font-serif text-4xl sm:text-5xl text-gray-900">{title}</h1>
-      <p className="text-xl text-gray-600 mt-4">{dek}</p>
-      <p className="text-sm text-gray-600 mt-6 pb-6 border-b border-gray-200">{byline}</p>
+      <header className="anim-fade-up">
+        <span className="block w-12 h-1 rounded-full mb-6" style={{ background: "var(--forest)" }} aria-hidden="true" />
+        <p className="t-eyebrow mb-2">{kicker}</p>
+        <h1 className="font-serif serif-bold text-4xl sm:text-5xl text-gray-900">{title}</h1>
+        <p className="text-lg text-gray-600 mt-4 max-w-xl">{dek}</p>
+        <p className="t-meta mt-4">{byline}</p>
+      </header>
       {image && (
-        <figure className="mt-8 -mx-4 sm:mx-0">
-          <img src={image.src} alt={image.alt} className="w-full aspect-[3/2] object-cover sm:rounded-xl" />
-          {caption && <figcaption className="text-sm text-gray-600 mt-2 px-4 sm:px-0">{caption}</figcaption>}
+        <figure className="mt-10 -mx-4 sm:mx-0 anim-fade-up anim-d2">
+          <div className="sm:rounded-xl overflow-hidden">
+            <img src={image.src} alt={image.alt} className="w-full aspect-[16/10] object-cover object-top" />
+          </div>
+          {caption && <figcaption className="t-meta mt-2 px-4 sm:px-0">{caption}</figcaption>}
         </figure>
       )}
       <div className="article-body mt-8">{children}</div>
       <style dangerouslySetInnerHTML={{ __html: `
         .article-body p { font-size: 18px; line-height: 32px; color: var(--ink); margin-bottom: 24px; }
-        .article-body h2 { font-family: "Newsreader", Georgia, serif; font-weight: 400 !important; font-size: 28px; line-height: 36px; color: var(--ink); margin: 48px 0 16px; }
+        .article-body h2 { font-weight: 700 !important; font-size: 26px; letter-spacing: -0.02em; line-height: 36px; color: var(--ink); margin: 48px 0 16px; }
         .article-body a { text-decoration: underline; text-underline-offset: 4px; }
-        .article-body blockquote { border-left: 2px solid var(--forest); padding-left: 24px; margin: 40px 0; font-family: "Newsreader", Georgia, serif; font-size: 26px; line-height: 36px; color: var(--ink); }
+        .article-body blockquote { border-left: 2px solid var(--forest); padding-left: 24px; margin: 40px 0; font-size: 24px; line-height: 34px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
       ` }} />
     </article>
   );
@@ -115,14 +120,14 @@ function PeopleSection({ eyebrow, title, lead, people }: { eyebrow: string; titl
     <section className="card p-6 sm:p-8">
       <div className="text-center mb-8">
         <p className="t-eyebrow mb-4">{eyebrow}</p>
-        <h2 className="font-serif text-3xl text-gray-900">{title}</h2>
+        <h2 className="font-serif serif-bold text-3xl text-gray-900">{title}</h2>
         <p className="text-gray-600 text-sm mt-2 max-w-xl mx-auto">{lead}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {people.map((p) => (
           <div key={p.name} className="flex flex-col items-center text-center bg-panel rounded-xl p-6">
             <img src={p.img} alt={p.name} className="w-32 h-32 rounded-xl object-cover mb-4" />
-            <h3 className="text-lg text-gray-900">{p.name}</h3>
+            <h3 className="text-lg font-bold text-gray-900">{p.name}</h3>
             <p className="text-sm font-medium mt-1 mb-4" style={{ color: "var(--forest)" }}>{p.role}</p>
             <div className="flex flex-wrap justify-center gap-2 mb-4">
               {p.tags.map((t) => (
@@ -190,7 +195,7 @@ staticPages.get("/founder", optionalAuth, (c) => {
         dek="Mentino connects students with verified professionals at no cost. Here is how it started, and the people who run it."
         byline="By the Mentino team · Bay Area, California"
         image={{ src: "/images/founder.jpg", alt: "Ethan Branzuela, founder of Mentino" }}
-        caption="Ethan Branzuela, founder and CEO of Mentino, at Serra Track & Field."
+        caption="Ethan Branzuela, founder and CEO of Mentino."
       >
         <p>
           Ethan Branzuela shoots sports photography for professional and collegiate athletes. When he was trying to get better, he sent cold messages to photographers he followed online. A few responded, and those conversations taught him more in a few weeks than years of tutorials ever did.
@@ -255,14 +260,14 @@ staticPages.get("/founder", optionalAuth, (c) => {
         />
 
         <section aria-labelledby="contact-h" className="bg-sage rounded-xl p-8">
-          <h2 id="contact-h" className="font-serif text-3xl text-gray-900">Contact</h2>
+          <h2 id="contact-h" className="font-serif serif-bold text-3xl text-gray-900">Contact</h2>
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
             {[
               { name: "Ethan Branzuela", email: "ethanbranzuela123@gmail.com" },
               { name: "Zach Jasmer", email: "jasmerzach@gmail.com" },
             ].map((c) => (
               <div key={c.email}>
-                <dt className="text-base font-medium text-gray-900">{c.name}</dt>
+                <dt className="text-base font-bold text-gray-900">{c.name}</dt>
                 <dd className="mt-1">
                   <a href={`mailto:${c.email}`} className="text-gray-800 underline underline-offset-4 break-all">{c.email}</a>
                 </dd>
@@ -375,7 +380,7 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
                   <span className="text-gray-600 tabular-nums">{w.pct}%</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-forest rounded-full" style={{ width: `${w.pct * 2}%` }} />
+                  <div className="progress-fill h-full bg-forest rounded-full" style={{ width: `${w.pct * 2}%` }} />
                 </div>
               </li>
             ))}
@@ -440,8 +445,8 @@ staticPages.get("/how-it-works", optionalAuth, (c) => {
             <p className="text-gray-700 mt-2">Set up your profile in 5 minutes. It is free.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
-            <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+            <a href="/signup?role=student" className="btn btn-glass btn-lg">I'm a Student</a>
+            <a href="/signup?role=mentor" className="btn btn-glass-light btn-lg">I'm a Mentor</a>
           </div>
         </section>
       </div>

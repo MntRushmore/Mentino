@@ -1,7 +1,7 @@
 import { createMiddleware } from "hono/factory";
 import { getCookie, deleteCookie } from "hono/cookie";
 import { config } from "../config";
-import { verifyToken } from "../lib/jwt";
+import { verifyToken, renewSessionIfStale } from "../lib/jwt";
 import { supabase } from "../db";
 import type { User } from "../types";
 
@@ -42,6 +42,7 @@ export const authMiddleware = createMiddleware(async (c, next) => {
   }
 
   c.set("user", user as User);
+  await renewSessionIfStale(c, payload);
   await next();
 });
 
@@ -60,6 +61,7 @@ export const optionalAuth = createMiddleware(async (c, next) => {
 
       if (user && !user.is_banned && user.is_active) {
         c.set("user", user as User);
+        await renewSessionIfStale(c, payload);
       }
     }
   }

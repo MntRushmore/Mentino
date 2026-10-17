@@ -7,7 +7,7 @@ import { Login } from "../views/pages/Login";
 import { Signup } from "../views/pages/Signup";
 import { supabase } from "../db";
 import { hashPassword, verifyPassword } from "../lib/password";
-import { signToken } from "../lib/jwt";
+import { setSessionCookie } from "../lib/jwt";
 import { signupSchema, loginSchema } from "../lib/validation";
 import { moderateUsername } from "../lib/moderation";
 import { config } from "../config";
@@ -76,14 +76,7 @@ auth.post("/login", async (c) => {
     );
   }
 
-  const token = await signToken(user.id, user.role);
-  setCookie(c, config.cookieName, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Lax",
-    maxAge: config.jwtExpiryDays * 24 * 60 * 60,
-    path: "/",
-  });
+  await setSessionCookie(c, user.id, user.role);
 
   return c.redirect("/dashboard");
 });
@@ -165,14 +158,7 @@ auth.post("/signup", async (c) => {
     );
   }
 
-  const token = await signToken(user.id, user.role);
-  setCookie(c, config.cookieName, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Lax",
-    maxAge: config.jwtExpiryDays * 24 * 60 * 60,
-    path: "/",
-  });
+  await setSessionCookie(c, user.id, user.role);
 
   return c.redirect("/dashboard");
 });

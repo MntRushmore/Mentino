@@ -64,7 +64,7 @@ export function Navbar({ user, badges, currentPath = "/", overlay = false }: Nav
               <a href="/" className="flex-shrink-0" aria-label="Mentino home">
                 <img src="/images/logo.svg" alt="" width={32} height={32} className="w-8 h-8" />
               </a>
-              <a href="/" className="text-lg font-semibold tracking-tight text-gray-900">Mentino</a>
+              <a href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900">Mentino<span className="beta-badge">Beta</span></a>
             </div>
 
             {/* Desktop nav links + actions, grouped to the right */}
@@ -118,7 +118,7 @@ export function Navbar({ user, badges, currentPath = "/", overlay = false }: Nav
               ) : (
                 <>
                   <a href="/login" className="btn btn-ghost btn-sm">Log in</a>
-                  <a href="/signup" className="btn btn-primary btn-sm btn-dot">Sign Up Free</a>
+                  <a href="/signup" className="btn btn-glass btn-sm btn-dot">Sign Up Free</a>
                 </>
               )}
             </div>

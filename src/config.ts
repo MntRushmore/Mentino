@@ -8,5 +8,6 @@ export const config = {
   // Public origin (e.g. https://mentino.org) used for absolute OG/canonical URLs.
   siteUrl: (env.SITE_URL || "").replace(/\/$/, ""),
   cookieName: "auth_token",
-  jwtExpiryDays: 7,
+  // Sessions last 60 days and renew on each visit, so active users stay logged in.
+  jwtExpiryDays: 60,
 };

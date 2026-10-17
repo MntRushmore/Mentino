@@ -49,14 +49,14 @@ const blogPosts: BlogPost[] = [
         .qa-intro-box strong { color: #1f2420 !important; }
         .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
-        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #b84d0c; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #b84d0c; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
         .qa-answer { color: #35332f; line-height: 1.8; }
         .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
-        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote { border-left: 2px solid #b84d0c; padding: 4px 0 4px 24px; margin: 24px 0; }
         .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
-        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-box { background: #fdf1e3; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
         .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
         .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
         .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -239,14 +239,14 @@ const blogPosts: BlogPost[] = [
         .qa-intro-box strong { color: #1f2420 !important; }
         .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
-        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #b84d0c; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #b84d0c; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
         .qa-answer { color: #35332f; line-height: 1.8; }
         .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
-        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote { border-left: 2px solid #b84d0c; padding: 4px 0 4px 24px; margin: 24px 0; }
         .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
-        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-box { background: #fdf1e3; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
         .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
         .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
         .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -426,14 +426,14 @@ const blogPosts: BlogPost[] = [
         .qa-intro-box strong { color: #1f2420 !important; }
         .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
-        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #b84d0c; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #b84d0c; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
         .qa-answer { color: #35332f; line-height: 1.8; }
         .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
-        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote { border-left: 2px solid #b84d0c; padding: 4px 0 4px 24px; margin: 24px 0; }
         .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
-        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-box { background: #fdf1e3; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
         .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
         .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
         .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -623,19 +623,19 @@ const blogPosts: BlogPost[] = [
       </ul>
 
       <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Mentored vs Non-Mentored Employees</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#b84d0c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Mentored vs Non-Mentored Employees</div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career promotions</span><span style="font-weight:700;color:#2c4a3e">5×</span></div>
-            <div style="background:#dbeafe;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:100%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career promotions</span><span style="font-weight:700;color:#b84d0c">5×</span></div>
+            <div style="background:#dbeafe;border-radius:99px;height:10px"><div style="background:#b84d0c;height:10px;border-radius:99px;width:100%"></div></div>
           </div>
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career satisfaction</span><span style="font-weight:700;color:#2c4a3e">4×</span></div>
-            <div style="background:#e7e2d8;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:80%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career satisfaction</span><span style="font-weight:700;color:#b84d0c">4×</span></div>
+            <div style="background:#e7e2d8;border-radius:99px;height:10px"><div style="background:#b84d0c;height:10px;border-radius:99px;width:80%"></div></div>
           </div>
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Higher avg salary vs peers</span><span style="font-weight:700;color:#2c4a3e">+$5,610/yr</span></div>
-            <div style="background:#f4f1ea;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:60%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Higher avg salary vs peers</span><span style="font-weight:700;color:#b84d0c">+$5,610/yr</span></div>
+            <div style="background:#f4f1ea;border-radius:99px;height:10px"><div style="background:#b84d0c;height:10px;border-radius:99px;width:60%"></div></div>
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Job offers before graduation</span><span style="font-weight:700;color:#ef4444">+23%</span></div>
@@ -657,18 +657,18 @@ const blogPosts: BlogPost[] = [
       </ul>
 
       <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Key Stats for Young People with Mentors</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#b84d0c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Key Stats for Young People with Mentors</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">55%</div>
+            <div style="font-size:2rem;font-weight:900;color:#b84d0c;line-height:1">55%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to enroll in college</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">130%</div>
+            <div style="font-size:2rem;font-weight:900;color:#b84d0c;line-height:1">130%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to hold leadership positions</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">78%</div>
+            <div style="font-size:2rem;font-weight:900;color:#b84d0c;line-height:1">78%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to volunteer in communities</div>
           </div>
         </div>
@@ -743,14 +743,14 @@ const blogPosts: BlogPost[] = [
       <div style="background:#f4f1ea;border-radius:12px;padding:24px;margin:24px 0;border:1px solid #e7e2d8">
         <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Median Annual Salary by Field (BLS, May 2023)</div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Computer & IT</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$104,420</span></div></div><div style="font-size:0.7rem;background:#dbeafe;color:#2c4a3e;padding:2px 7px;border-radius:99px;white-space:nowrap">+15%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Legal</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:82%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$84,910</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Engineering</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:80%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$83,340</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+7%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Healthcare</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:75%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$77,600</span></div></div><div style="font-size:0.7rem;background:#e7e2d8;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+13%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Business & Financial</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:74%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$76,850</span></div></div><div style="font-size:0.7rem;background:#ccfbf1;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Life Sciences</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:66%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$68,830</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+5%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Education</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#0284c7);height:28px;border-radius:99px;width:53%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$55,350</span></div></div><div style="font-size:0.7rem;background:#e0f2fe;color:#0c4a6e;padding:2px 7px;border-radius:99px;white-space:nowrap">+4%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Arts & Design</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#db2777);height:28px;border-radius:99px;width:49%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$50,710</span></div></div><div style="font-size:0.7rem;background:#fce7f3;color:#831843;padding:2px 7px;border-radius:99px;white-space:nowrap">+3%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Computer & IT</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$104,420</span></div></div><div style="font-size:0.7rem;background:#dbeafe;color:#b84d0c;padding:2px 7px;border-radius:99px;white-space:nowrap">+15%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Legal</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:82%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$84,910</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Engineering</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:80%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$83,340</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+7%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Healthcare</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:75%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$77,600</span></div></div><div style="font-size:0.7rem;background:#e7e2d8;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+13%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Business & Financial</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:74%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$76,850</span></div></div><div style="font-size:0.7rem;background:#ccfbf1;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Life Sciences</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#b84d0c);height:28px;border-radius:99px;width:66%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$68,830</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+5%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Education</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#0284c7);height:28px;border-radius:99px;width:53%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$55,350</span></div></div><div style="font-size:0.7rem;background:#e0f2fe;color:#0c4a6e;padding:2px 7px;border-radius:99px;white-space:nowrap">+4%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Arts & Design</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#b84d0c,#db2777);height:28px;border-radius:99px;width:49%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$50,710</span></div></div><div style="font-size:0.7rem;background:#fce7f3;color:#831843;padding:2px 7px;border-radius:99px;white-space:nowrap">+3%</div></div>
         </div>
         <div style="font-size:0.7rem;color:#94a3b8;margin-top:12px">% growth = projected 2022–2032 job growth rate. Source: BLS Occupational Outlook Handbook 2024</div>
       </div>
@@ -865,18 +865,18 @@ const blogPosts: BlogPost[] = [
       <p>There's a version of career success that comes from grinding alone, and a version that comes from knowing the right person at the right time. Most people who made it had both, but the second one is a lot harder to get by accident.</p>
 
       <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
+        <div style="font-size:0.75rem;font-weight:700;color:#b84d0c;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
           <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
-            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">23%</div>
+            <div style="font-size:1.8rem;font-weight:900;color:#b84d0c">23%</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More likely to get a job offer before graduation</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
-            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">71%</div>
+            <div style="font-size:1.8rem;font-weight:900;color:#b84d0c">71%</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">Fortune 500 companies with formal mentoring programs</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
-            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">5×</div>
+            <div style="font-size:1.8rem;font-weight:900;color:#b84d0c">5×</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More promotions over a career</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
@@ -992,11 +992,11 @@ const blogPosts: BlogPost[] = [
 
       <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:20px;margin:24px 0;display:flex;flex-wrap:wrap;gap:10px">
         <div style="font-size:0.7rem;font-weight:700;color:#1f2420;text-transform:uppercase;letter-spacing:0.08em;width:100%;margin-bottom:4px">5 Things That Actually Help</div>
-        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">1. Follow your curiosity</span>
-        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">2. Talk to real people</span>
-        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">3. Try before committing</span>
-        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">4. Build flexible skills</span>
-        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">5. Don't specialize too soon</span>
+        <span style="background:#b84d0c;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">1. Follow your curiosity</span>
+        <span style="background:#b84d0c;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">2. Talk to real people</span>
+        <span style="background:#b84d0c;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">3. Try before committing</span>
+        <span style="background:#b84d0c;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">4. Build flexible skills</span>
+        <span style="background:#b84d0c;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">5. Don't specialize too soon</span>
       </div>
 
       <h3>1. Follow what you're actually curious about</h3>

@@ -25,16 +25,16 @@ const DEFAULT_DESCRIPTION =
  * Spacing   4pt scale only (Tailwind whole-number units: 1 = 4px). No half steps.
  * Type      Newsreader (serif) for display headings · Inter for body and UI ·
  *           IBM Plex Mono for button labels and small metadata only.
- * Color     Warm neutrals: canvas #fbfaf7 · panel #f4f1ea · sand · sage · clay · butter.
- *           Forest #2c4a3e is the action color; terracotta #b4532a is the small accent.
- *           The purple/blue gradient belongs to the logo only.
+ * Color     Warm neutrals: canvas #fbf8f2 · panel #f4f1ea · sand · sage · clay · butter.
+ *           Pumpkin #b84d0c is the action color (class name `forest`/`pumpkin`), on pale cream.
+ *           The logo is a white bulb on a pumpkin orange tile.
  * Radius    4px controls (buttons, inputs, tags) · 12px containers (cards, panels, modals)
  * Elevation hairline borders; one overlay shadow for floating layers only
  * Motion    150ms for hover/state, 240ms for enter; one easing curve; honours reduced motion
  */
 const TAILWIND_CONFIG = `
 (function(){
-  var forest = { 50:"#eef3ef",100:"#dce7df",200:"#bcd0c2",300:"#93b29d",400:"#5f8a6e",500:"#3f6b55",600:"#2c4a3e",700:"#223b31",800:"#1a2e26",900:"#13221c",950:"#0c1612" };
+  var forest = { 50:"#fdf3ea",100:"#fbe6d3",200:"#f6cba5",300:"#f0a96f",400:"#e8742a",500:"#d9661c",600:"#b84d0c",700:"#9a400a",800:"#7c340a",900:"#5f280a",950:"#3f1a06" };
   var warm   = { 50:"#faf8f4",100:"#f4f1ea",200:"#e7e2d8",300:"#d5cfc2",400:"#6e6a62",500:"#5a5650",600:"#46433e",700:"#35332f",800:"#262522",900:"#1f2420",950:"#151714" };
   var none = "none";
   var hairline = "0 1px 0 rgba(31,36,32,0.04)";
@@ -43,8 +43,8 @@ const TAILWIND_CONFIG = `
       colors: {
         indigo: forest, blue: forest, primary: forest, violet: forest, purple: forest,
         gray: warm, slate: warm, neutral: warm, zinc: warm, stone: warm,
-        canvas: "#fbfaf7", panel: "#f4f1ea", ink: "#1f2420", accent: "#b4532a",
-        forest: "#2c4a3e", sand: "#ece4d4", sage: "#e3eadf", clay: "#f3e4d7", butter: "#f6edcf", terracotta: "#b4532a",
+        canvas: "#fbf8f2", panel: "#f4f1ea", ink: "#1f2420", accent: "#b4532a",
+        forest: "#b84d0c", pumpkin: "#b84d0c", sand: "#f3e7d3", sage: "#fdf1e3", clay: "#f8dfc8", butter: "#f8eccb", terracotta: "#b4532a",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
@@ -73,7 +73,7 @@ const TAILWIND_CONFIG = `
 
 const BASE_CSS = `
 :root {
-  --canvas: #fbfaf7;
+  --canvas: #fbf8f2;
   --surface: #ffffff;
   --panel: #f4f1ea;
   --sunken: #f4f1ea;
@@ -83,13 +83,13 @@ const BASE_CSS = `
   --subtle: #6e6a62;
   --line: rgba(31,36,32,0.10);
   --line-strong: rgba(31,36,32,0.22);
-  --forest: #2c4a3e;
-  --forest-strong: #223b31;
+  --forest: #b84d0c;
+  --forest-strong: #9a400a;
   --accent: #b4532a;
-  --sand: #ece4d4;
-  --sage: #e3eadf;
-  --clay: #f3e4d7;
-  --butter: #f6edcf;
+  --sand: #f3e7d3;
+  --sage: #fdf1e3;
+  --clay: #f8dfc8;
+  --butter: #f8eccb;
   --radius-control: 4px;
   --radius-container: 12px;
   --shadow-overlay: 0 16px 40px -16px rgba(31,36,32,0.28);
@@ -125,7 +125,7 @@ input:not([type=checkbox]):not([type=radio]), select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   border-color: var(--ink) !important;
-  box-shadow: 0 0 0 3px rgba(44,74,62,0.14) !important;
+  box-shadow: 0 0 0 3px rgba(184,77,12,0.18) !important;
   --tw-ring-shadow: 0 0 #0000 !important;
 }
 input[type=checkbox], input[type=radio] { accent-color: var(--ink); }
@@ -178,7 +178,7 @@ input[type=checkbox], input[type=radio] { accent-color: var(--ink); }
 .overlay { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-container); box-shadow: var(--shadow-overlay); }
 
 /* Site navigation: transparent over the home hero, solid once scrolled */
-.site-nav { background: rgba(251,250,247,0.9); border-bottom: 1px solid var(--line); backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px);
+.site-nav { background: rgba(251,248,242,0.9); border-bottom: 1px solid var(--line); backdrop-filter: saturate(180%) blur(12px); -webkit-backdrop-filter: saturate(180%) blur(12px);
   transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
 .site-nav.nav-overlay:not(.is-scrolled):not(.is-open) { background: transparent; border-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
@@ -294,7 +294,7 @@ export function Layout({ title = "Mentino", description = DEFAULT_DESCRIPTION, c
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{fullTitle}</title>
         <meta name="description" content={description} />
-        <meta name="theme-color" content="#fbfaf7" />
+        <meta name="theme-color" content="#fbf8f2" />
         {pageUrl && <link rel="canonical" href={pageUrl} />}
         <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
         <link rel="apple-touch-icon" href="/images/logo-icon.png" />

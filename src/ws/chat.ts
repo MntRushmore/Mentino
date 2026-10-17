@@ -1,4 +1,4 @@
-// WebSocket chat handler — stub for real-time messaging
+// WebSocket chat handler: stub for real-time messaging
 // In production, this would manage WebSocket connections for live message delivery
 
 interface ConnectedClient {

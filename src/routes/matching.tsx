@@ -39,7 +39,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-// GET /matching — Browse potential matches
+// GET /matching: Browse potential matches
 matching.get("/matching", authMiddleware, async (c) => {
   const user = c.get("user");
 
@@ -47,19 +47,18 @@ matching.get("/matching", authMiddleware, async (c) => {
     return html(
       <Layout title="Complete Your Profile" user={user}>
         <div className="max-w-2xl mx-auto mt-12">
-          <div className="relative bg-gradient-to-br from-indigo-600 to-blue-600 rounded-3xl p-12 text-center text-white overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
+          <div className="relative bg-sage rounded-xl p-12 text-center overflow-hidden">
             <div className="relative z-10">
-              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold mb-3">Complete Your Profile First</h1>
-              <p className="text-indigo-100 mb-6 max-w-md mx-auto">
-                To find the best mentor matches, we need to know a bit more about you — your interests, goals, and availability.
+              <h1 className="font-serif text-3xl text-gray-900 mb-3">Complete Your Profile First</h1>
+              <p className="text-gray-700 mb-6 max-w-md mx-auto">
+                To find the best mentor matches, we need to know a bit more about you, your interests, goals, and availability.
               </p>
-              <a href={`/register/step/${user.registration_step}`} className="inline-block bg-white text-indigo-700 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition-colors">
+              <a href={`/register/step/${user.registration_step}`} className="btn btn-primary btn-lg">
                 Complete Profile
               </a>
             </div>
@@ -119,18 +118,10 @@ matching.get("/matching", authMiddleware, async (c) => {
       <Layout title="Find a Mentor" user={user}>
         <div>
           {/* Page header */}
-          <div className="relative bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 mb-8 text-white overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <circle cx="80" cy="20" r="40" fill="white" />
-                <circle cx="10" cy="80" r="30" fill="white" />
-              </svg>
-            </div>
-            <div className="relative z-10">
-              <h1 className="text-3xl font-bold mb-1">Find Your Mentor</h1>
-              <p className="text-indigo-100">All available mentors — sorted by how well they match your profile.</p>
-            </div>
-          </div>
+          <header className="mb-8">
+            <h1 className="font-serif text-4xl text-gray-900">Find Your Mentor</h1>
+            <p className="text-gray-600 mt-2">All available mentors, sorted by how well they match your profile.</p>
+          </header>
 
           {results.length === 0 ? (
             <div>
@@ -142,7 +133,7 @@ matching.get("/matching", authMiddleware, async (c) => {
                     </svg>
                   </div>
                   <p className="text-gray-700 font-semibold text-lg mb-1">No mentors have signed up yet</p>
-                  <p className="text-gray-400 text-sm">Check back soon — mentors are joining regularly.</p>
+                  <p className="text-gray-400 text-sm">Check back soon, mentors are joining regularly.</p>
                 </div>
               ) : (
                 <div>
@@ -180,7 +171,7 @@ matching.get("/matching", authMiddleware, async (c) => {
                               <div>
                                 <textarea
                                   name="intro_message"
-                                  placeholder="Introduce yourself — at least 30 characters"
+                                  placeholder="Introduce yourself (at least 30 characters)"
                                   rows={3}
                                   minLength={30}
                                   maxLength={500}
@@ -325,7 +316,7 @@ matching.get("/matching", authMiddleware, async (c) => {
                             <div>
                               <textarea
                                 name="intro_message"
-                                placeholder="Introduce yourself — at least 30 characters (what would you like help with?)"
+                                placeholder="Introduce yourself (at least 30 characters) (what would you like help with?)"
                                 rows={3}
                                 minLength={30}
                                 maxLength={500}
@@ -422,7 +413,7 @@ matching.get("/matching", authMiddleware, async (c) => {
   return c.redirect("/dashboard");
 });
 
-// POST /matching/request — Student requests a match
+// POST /matching/request: Student requests a match
 matching.post("/matching/request", authMiddleware, async (c) => {
   const user = c.get("user");
   const body = await c.req.parseBody();
@@ -464,7 +455,7 @@ matching.post("/matching/request", authMiddleware, async (c) => {
   return c.redirect("/dashboard");
 });
 
-// POST /matching/respond — Mentor accepts/rejects
+// POST /matching/respond: Mentor accepts/rejects
 matching.post("/matching/respond", authMiddleware, async (c) => {
   const user = c.get("user");
   const body = await c.req.parseBody();

@@ -111,7 +111,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                 {stepLabels[step - 1]}
               </h1>
               <p className="text-white/70 text-sm">
-                Step {step} of 5 &mdash; {role === "student" ? "Student" : "Mentor"} registration
+                Step {step} of 5: {role === "student" ? "Student" : "Mentor"} registration
               </p>
             </div>
           </div>
@@ -202,7 +202,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                   What do you hope to learn from a mentor?{" "}
                   <span className="text-gray-400 font-normal">(optional)</span>
                 </label>
-                <p className="text-xs text-gray-400 mb-2">Be specific — the more detail you give, the better your match will be.</p>
+                <p className="text-xs text-gray-400 mb-2">Be specific: the more detail you give, the better your match will be.</p>
                 <textarea
                   name="learning_goals"
                   placeholder="e.g. I want to understand what a day as a doctor actually looks like. I'm deciding between pre-med and nursing, and I'd love help preparing for college applications and picking the right major..."
@@ -213,12 +213,12 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                 />
               </div>
 
-              {/* Specific needs — improves match accuracy */}
+              {/* Specific needs: improves match accuracy */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   What do you most need help with right now? <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-gray-400 mb-2">Select all that apply — this directly feeds our matching algorithm.</p>
+                <p className="text-xs text-gray-400 mb-2">Select all that apply. This directly feeds our matching algorithm.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { value: "Need: college applications", label: "🎓 College applications" },
@@ -358,7 +358,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Not listed? Write your field{" "}
-                  <span className="text-gray-400 font-normal">(optional — overrides selection above)</span>
+                  <span className="text-gray-400 font-normal">(optional, overrides selection above)</span>
                 </label>
                 <input
                   type="text"
@@ -397,7 +397,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                   Bio{" "}
                   <span className="text-gray-400 font-normal">(optional)</span>
                 </label>
-                <p className="text-xs text-gray-400 mb-2">Minimum 80 characters — students read this before deciding to connect with you, so give them a real picture of who you are.</p>
+                <p className="text-xs text-gray-400 mb-2">Minimum 80 characters, students read this before deciding to connect with you, so give them a real picture of who you are.</p>
                 <textarea
                   name="bio"
                   placeholder="e.g. I'm a software engineer at Google with 6 years of experience. I grew up without mentors and want to change that for the next generation. I can help with interview prep, breaking into tech, navigating college CS programs, and career growth."
@@ -413,7 +413,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   How do you typically mentor? <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-gray-400 mb-2">Select all that apply — this helps us match you with compatible students.</p>
+                <p className="text-xs text-gray-400 mb-2">Select all that apply. This helps us match you with compatible students.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { value: "Approach: structured sessions", label: "📋 Structured sessions" },
@@ -442,7 +442,7 @@ export function RegisterStep({ step, role, error, user, student, mentor }: Regis
                     { value: "Best for: high schoolers", label: "🎒 High school students" },
                     { value: "Best for: college students", label: "🏛 College students" },
                     { value: "Best for: career changers", label: "🔄 Career changers" },
-                    { value: "Best for: any student", label: "🌍 Anyone — I'm flexible" },
+                    { value: "Best for: any student", label: "🌍 Anyone, I'm flexible" },
                   ].map((opt) => {
                     const isSelected = mentor?.personality_tags?.includes(opt.value);
                     return (
@@ -597,9 +597,9 @@ function StudentReview({ user, student }: { user: User; student?: Partial<Studen
         <div className="flex items-start gap-3">
           <span className="text-2xl flex-shrink-0">💡</span>
           <div>
-            <h3 className="font-bold text-indigo-900 text-sm mb-1">Before your first session — prepare 3–5 questions</h3>
+            <h3 className="font-bold text-indigo-900 text-sm mb-1">Before your first session, prepare 3–5 questions</h3>
             <p className="text-indigo-700 text-xs leading-relaxed mb-3">
-              Sessions go way better when you come prepared. Your mentor's time is valuable — showing up with real questions makes a strong first impression and gets you real answers.
+              Sessions go way better when you come prepared. Your mentor's time is valuable, showing up with real questions makes a strong first impression and gets you real answers.
             </p>
             <p className="text-xs font-semibold text-indigo-800 mb-1">Good question starters:</p>
             <ul className="text-xs text-indigo-700 space-y-0.5 list-disc list-inside">
@@ -673,7 +673,7 @@ function MentorReview({ user, mentor }: { user: User; mentor?: Partial<Mentor> }
             </p>
             <p className="text-xs text-emerald-800 font-semibold">Your first message to a new mentee can set the tone:</p>
             <div className="mt-2 bg-white/60 rounded-lg p-3 text-xs text-emerald-700 italic border border-emerald-200">
-              "Before our first session, come with 3–5 questions. Think about what you actually want to know — the more specific, the better the conversation."
+              "Before our first session, come with 3–5 questions. Think about what you actually want to know: the more specific, the better the conversation."
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Drop existing tables (in reverse dependency order)
+DROP TABLE IF EXISTS public.track_enrollments CASCADE;
 DROP TABLE IF EXISTS public.audit_log CASCADE;
 DROP TABLE IF EXISTS public.reports CASCADE;
 DROP TABLE IF EXISTS public.sessions CASCADE;
@@ -185,3 +186,16 @@ CREATE INDEX idx_messages_match_id ON public.messages(match_id);
 CREATE INDEX idx_messages_created_at ON public.messages(match_id, created_at DESC);
 CREATE INDEX idx_sessions_match ON public.sessions(match_id);
 CREATE INDEX idx_reports_status ON public.reports(status);
+
+-- CAREER TRACK ENROLLMENTS (content lives in src/data/tracks.ts)
+CREATE TABLE public.track_enrollments (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES public.accounts(id) ON DELETE CASCADE,
+    track_slug VARCHAR(100) NOT NULL,
+    state JSONB NOT NULL DEFAULT '{}'::JSONB,
+    started_at TIMESTAMPTZ DEFAULT NOW(),
+    completed_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (user_id, track_slug)
+);
+CREATE INDEX idx_track_enrollments_user ON public.track_enrollments(user_id);

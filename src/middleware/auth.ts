@@ -45,7 +45,7 @@ export const authMiddleware = createMiddleware(async (c, next) => {
   await next();
 });
 
-// Optional auth — sets user if logged in but doesn't require it
+// Optional auth: sets user if logged in but doesn't require it
 export const optionalAuth = createMiddleware(async (c, next) => {
   const token = getCookie(c, config.cookieName);
 

@@ -8,7 +8,7 @@ import { CAREER_CLUSTERS, KEYWORD_MAP } from "../lib/careerMapping";
 
 export const quiz = new Hono();
 
-// GET /quiz — landing or mode-specific screen based on ?mode=
+// GET /quiz: landing or mode-specific screen based on ?mode=
 quiz.get("/", optionalAuth, async (c) => {
   const user = c.get("user");
   const mode = c.req.query("mode") || "landing";
@@ -19,7 +19,7 @@ quiz.get("/", optionalAuth, async (c) => {
   );
 });
 
-// POST /quiz/direct-career — server-side matching, redirect to results
+// POST /quiz/direct-career: server-side matching, redirect to results
 quiz.post("/direct-career", optionalAuth, async (c) => {
   const body = await c.req.parseBody();
   const text = ((body.career as string) || "").trim();
@@ -99,7 +99,7 @@ quiz.get("/results", optionalAuth, async (c) => {
 });
 
 // ---------------------------------------------------------------------------
-// Quiz page component — mode: "landing" | "discover" | "direct"
+// Quiz page component: mode: "landing" | "discover" | "direct"
 // ---------------------------------------------------------------------------
 
 function QuizPage({ mode }: { mode: string }) {
@@ -152,7 +152,7 @@ function QuizPage({ mode }: { mode: string }) {
         }}
       >
         {/* ----------------------------------------------------------------
-            LANDING SCREEN — pure HTML links, zero JavaScript required
+            LANDING SCREEN, pure HTML links, zero JavaScript required
         ---------------------------------------------------------------- */}
         {!isDiscover && !isDirect && (
           <div id="landing-screen">
@@ -211,7 +211,7 @@ function QuizPage({ mode }: { mode: string }) {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {/* Option 1 — full card is a link */}
+              {/* Option 1: full card is a link */}
               <a
                 href="/quiz?mode=discover"
                 style={{
@@ -269,7 +269,7 @@ function QuizPage({ mode }: { mode: string }) {
                 </div>
               </a>
 
-              {/* Option 2 — full card is a link */}
+              {/* Option 2: full card is a link */}
               <a
                 href="/quiz?mode=direct"
                 style={{
@@ -319,7 +319,7 @@ function QuizPage({ mode }: { mode: string }) {
         )}
 
         {/* ----------------------------------------------------------------
-            DIRECT CAREER SCREEN — HTML form POST, zero JavaScript required
+            DIRECT CAREER SCREEN, HTML form POST, zero JavaScript required
         ---------------------------------------------------------------- */}
         {isDirect && (
           <div id="direct-career-screen">
@@ -420,7 +420,7 @@ function QuizPage({ mode }: { mode: string }) {
         )}
 
         {/* ----------------------------------------------------------------
-            DISCOVER / QUIZ SCREEN — visible immediately, JS renders questions
+            DISCOVER / QUIZ SCREEN, visible immediately, JS renders questions
         ---------------------------------------------------------------- */}
         {isDiscover && (
           <>
@@ -577,7 +577,7 @@ function QuizPage({ mode }: { mode: string }) {
       />
 
       {/* ----------------------------------------------------------------
-          Quiz JS — only rendered in discover mode
+          Quiz JS, only rendered in discover mode
       ---------------------------------------------------------------- */}
       {isDiscover && (
         <script

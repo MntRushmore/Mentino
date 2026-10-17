@@ -1,8 +1,85 @@
 import React from "react";
+import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from "../components/Icons";
 
 interface HomeProps {
   featuredMentors?: any[];
   stats?: { students: number; mentors: number; activeMatches: number };
+}
+
+const WRAP = "max-w-6xl mx-auto px-4 sm:px-6";
+
+const OFFERS = [
+  {
+    title: "A mentor in your field",
+    body: "Get matched with a verified professional who already does the job you want. Message them and set up video calls.",
+    href: "/mentors",
+    cta: "Browse mentors",
+    img: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=900&q=80",
+  },
+  {
+    title: "Career Tracks",
+    body: "Free 4 to 6 week courses for one career. Watch lessons, take notes, do a weekly assignment, earn a certificate.",
+    href: "/tracks",
+    cta: "See tracks",
+    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80",
+  },
+  {
+    title: "Resources for any career",
+    body: "Search a job and get videos, YouTube channels, books and the steps to take now in high school or college.",
+    href: "/resources",
+    cta: "Search a career",
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80",
+  },
+];
+
+const STEPS = [
+  "Create a free profile in about 5 minutes",
+  "See mentors ranked by how well they fit you",
+  "Send a request and start messaging",
+  "Meet on video and ask your questions",
+];
+
+const SAFETY = [
+  { title: "Verified mentors", desc: "Every mentor is reviewed by hand before they can talk to anyone." },
+  { title: "Moderated messages", desc: "Flagged content is reviewed quickly, and every profile has a report button." },
+  { title: "Parental consent", desc: "Students under 18 need a parent's consent to join." },
+];
+
+const FIELDS = [
+  { name: "Technology", img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=640&q=80", field: "Technology" },
+  { name: "Medicine & Healthcare", img: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=640&q=80", field: "Medicine & Healthcare" },
+  { name: "Law", img: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=640&q=80", field: "Law" },
+  { name: "Business & Finance", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=640&q=80", field: "Business" },
+  { name: "Sports & Athletics", img: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=640&q=80", field: "Sports & Athletics" },
+  { name: "Arts & Design", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=640&q=80", field: "Arts & Design" },
+];
+
+const MENTOR_BENEFITS = [
+  "Mentor when you have time, pause when you don't",
+  "Only students in your field, not random requests",
+  "Student reviews build your public profile",
+  "Free. No commissions or fees, ever",
+];
+
+const FAQS = [
+  { q: "Is Mentino actually free?", a: "Yes, for students and mentors. No premium tiers, no subscriptions, no fees." },
+  { q: "How does matching work?", a: "You share your career interests, goals, schedule and learning style. Mentino ranks mentors in your field who fit, and you send a short intro to the ones you like. They accept or decline." },
+  { q: "Who are the mentors?", a: "Working professionals who signed up to give back. Our team reviews each one before they go live, and they agree to our Code of Conduct." },
+  { q: "I'm in high school. Is this for me?", a: "Yes. Mentino was built by a high school student for students figuring out what career they want and what it is really like." },
+  { q: "What does a session look like?", a: "A conversation over video or messages. You ask questions; the mentor shares their experience. There is no script." },
+  { q: "What if a mentor is inappropriate?", a: "Report them from their profile. We review every report, and bans start at 24 hours and escalate from there." },
+];
+
+const HOME_CSS = `
+.faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-enter) var(--ease); }
+.faq-panel > div { overflow: hidden; }
+.faq-item.is-open .faq-panel { grid-template-rows: 1fr; }
+.faq-item .faq-icon { transition: transform var(--dur-enter) var(--ease); }
+.faq-item.is-open .faq-icon { transform: rotate(180deg); }
+`;
+
+function initials(m: any) {
+  return `${m.accounts?.first_name?.[0] ?? ""}${m.accounts?.last_name?.[0] ?? ""}`;
 }
 
 export function Home({ featuredMentors = [], stats }: HomeProps) {
@@ -11,348 +88,190 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
 
   return (
     <>
-    <div className="space-y-10 sm:space-y-16 pb-12">
+      <style dangerouslySetInnerHTML={{ __html: HOME_CSS }} />
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative text-center py-14 sm:py-28 overflow-hidden rounded-2xl sm:rounded-3xl">
-        {/* Background photo */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/hero-bg.jpg"
-            alt="Student being mentored"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/85 via-indigo-950/80 to-indigo-950/90" />
-        </div>
-
-        <div className="relative z-10 max-w-3xl mx-auto px-5">
-          <p className="text-indigo-300 text-sm sm:text-base font-medium mb-5 anim-fade-in max-w-xl mx-auto leading-relaxed">
-            Most students don't know anyone in their dream field. Mentino changes that.
-          </p>
-
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight" style={{ minHeight: "1.2em" }}>
-            <span id="hero-typed"></span><span id="hero-cursor" style={{ borderRight: "3px solid #a5b4fc", marginLeft: "2px", animation: "heroBlink 0.7s step-end infinite" }}>&nbsp;</span>
-          </h1>
-
-          <div id="hero-below" style={{ opacity: 0, transition: "opacity 0.45s ease" }}>
-            <p className="text-base sm:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto">
-              Mentino connects students with verified professionals for free. No connections needed, no luck required.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="/signup?role=student"
-                className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-4 rounded-full text-base font-bold hover:bg-indigo-50 transition-all shadow-2xl hover:-translate-y-0.5 transform">
-                I'm a Student
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-              <a href="/signup?role=mentor"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/25 text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-white/20 transition-all hover:-translate-y-0.5 transform">
-                I'm a Mentor
-              </a>
-            </div>
-            <p className="text-slate-400 text-sm mt-3">Free to join. Takes 5 minutes.</p>
-
-            <div className="flex flex-col sm:flex-row sm:justify-center gap-2 sm:gap-6 mt-8">
-              {[
-                { text: "100% Free for Students" },
-                { text: "Verified Professionals Only" },
-                { text: "Safe for Students Under 18" },
-              ].map((t) => (
-                <div key={t.text} className="flex items-center justify-center gap-1.5 text-slate-300 text-xs sm:text-sm">
-                  <svg className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  {t.text}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes heroBlink { 0%,100%{opacity:1} 50%{opacity:0} }
-        ` }} />
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function() {
-            var part1 = "Get real advice from someone ";
-            var part2 = "who's already there.";
-            var full = part1 + part2;
-            var el = document.getElementById('hero-typed');
-            var cursor = document.getElementById('hero-cursor');
-            var below = document.getElementById('hero-below');
-            var i = 0;
-            var interval = 22;
-            var last = 0;
-            function tick(ts) {
-              if (!el) return;
-              if (!last) last = ts;
-              if (ts - last >= interval) {
-                last = ts;
-                if (i <= full.length) {
-                  var typed = full.substring(0, i);
-                  if (i <= part1.length) {
-                    el.textContent = typed;
-                  } else {
-                    el.innerHTML = part1 + '<span style="color:#a5b4fc">' + typed.substring(part1.length) + '</span>';
-                  }
-                  i++;
-                } else {
-                  if (cursor) { cursor.style.animation = 'none'; cursor.style.opacity = '0'; }
-                  if (below) below.style.opacity = '1';
-                  return;
-                }
-              }
-              requestAnimationFrame(tick);
-            }
-            setTimeout(function() { requestAnimationFrame(tick); }, 250);
-          })();
-        `}} />
-      </section>
-
-      {/* ── Early momentum — growing fast ───────────────────────────────── */}
-      <section className="text-center">
-        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-widest mb-3">Growing fast. Be an early member.</p>
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
-          {[
-            { num: `${mentorCount}`, label: "Mentors across 40+ fields" },
-            { num: `${studentCount}`, label: "Students already signed up" },
-            { num: "100%", label: "Always free" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl sm:text-4xl font-extrabold text-gray-900">{s.num}</div>
-              <div className="text-sm text-gray-400 mt-0.5">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Safety ──────────────────────────────────────────────────────── */}
-      <section className="bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-3xl p-6 sm:p-10">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-2">Built for safety, especially if you're under 18</h2>
-        <p className="text-gray-500 text-center text-sm mb-8 max-w-xl mx-auto">Mentino was designed from the ground up to be a safe place for students. Here's what that actually means.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {[
-            {
-              icon: (
-                <svg className="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-              ),
-              bg: "bg-emerald-100",
-              title: "Verified Mentors",
-              desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand. No automation shortcuts.",
-            },
-            {
-              icon: (
-                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-              ),
-              bg: "bg-blue-100",
-              title: "Content Moderation",
-              desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it, and we take those seriously.",
-            },
-            {
-              icon: (
-                <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-              ),
-              bg: "bg-amber-100",
-              title: "Parental Consent",
-              desc: "Students under 18 need parental consent to join. This isn't optional. It's how we keep younger students safe.",
-            },
-          ].map((item) => (
-            <div key={item.title} className="text-center">
-              <div className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                {item.icon}
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Career fields ───────────────────────────────────────────────── */}
-      <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Explore career fields</h2>
-        <p className="text-gray-500 text-center mb-6 text-sm sm:text-base">Mentors across 40+ industries. Find someone in your field.</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-          {[
-            { name: "Technology", img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80", field: "Technology" },
-            { name: "Medicine & Healthcare", img: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&q=80", field: "Medicine & Healthcare" },
-            { name: "Law", img: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=500&q=80", field: "Law" },
-            { name: "Business & Finance", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80", field: "Business" },
-            { name: "Sports & Athletics", img: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=500&q=80", field: "Sports & Athletics" },
-            { name: "Arts & Design", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=500&q=80", field: "Arts & Design" },
-          ].map((field) => (
-            <a key={field.name} href={`/signup?role=student&interest=${encodeURIComponent(field.field)}`}
-              className="group relative rounded-xl sm:rounded-2xl overflow-hidden h-28 sm:h-36 block">
-              <img src={field.img} alt={field.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-              <span className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 text-white font-bold text-xs sm:text-sm">{field.name}</span>
-            </a>
-          ))}
-        </div>
-        <p className="text-center text-gray-400 text-xs sm:text-sm mt-3">+ Engineering, Psychology, Media, Gaming, and many more</p>
-      </section>
-
-      {/* ── For Mentors — distinct visual block ─────────────────────────── */}
-      <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl sm:rounded-3xl p-5 sm:p-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+      {/* Hero */}
+      <section className="-mt-14 pt-14" style={{ background: "linear-gradient(180deg, #f3ece0 0%, #fbfaf7 100%)" }}>
+        <div className={`${WRAP} py-12 sm:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center`}>
           <div>
-            <span className="inline-block bg-emerald-100 text-emerald-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">For Mentors</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
-              Give back, on your schedule.
-            </h2>
-            <p className="text-gray-600 text-base leading-relaxed mb-6">
-              A few honest conversations can genuinely change a student's direction. Share what you know with people who actually want to hear it, on your own time.
+            <p className="text-sm text-gray-700 mb-4 anim-fade-up">Most students don't know anyone in their dream field. Mentino changes that.</p>
+            <h1 className="font-serif text-5xl sm:text-6xl text-gray-900 anim-fade-up anim-d1">Get real advice from someone who's already there.</h1>
+            <p className="text-lg text-gray-700 mt-6 max-w-xl anim-fade-up anim-d2">
+              Free mentorship from verified professionals, plus career courses and research tools built for students.
             </p>
-            <ul className="space-y-3 mb-8">
-              {[
-                "Fully flexible — mentor when you have time, pause when you don't",
-                "We match you with students in your specific field, not random requests",
-                "Students leave reviews on your public profile, building your reputation",
-                "Free to join. No commissions, no fees, ever.",
-              ].map((text, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-gray-700 text-sm leading-relaxed">{text}</span>
+            <div className="flex flex-col sm:flex-row gap-2 mt-8 anim-fade-up anim-d3">
+              <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
+              <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+            </div>
+            <ul className="flex flex-col sm:flex-row gap-2 sm:gap-6 mt-6 anim-fade-up anim-d3">
+              {["Free for students", "Verified professionals", "Safe for under 18"].map((t) => (
+                <li key={t} className="flex items-center gap-2 text-sm text-gray-700">
+                  <CheckIcon className="w-4 h-4 text-forest flex-shrink-0" />{t}
                 </li>
               ))}
             </ul>
-            <a href="/signup?role=mentor"
-              className="block sm:inline-block text-center bg-emerald-600 text-white px-7 py-3 rounded-full font-bold hover:bg-emerald-700 transition-colors shadow-sm">
-              Become a Mentor
-            </a>
           </div>
-          {/* Impact stats — with "16M" tied to a CTA */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-2xl border border-rose-100 p-5 shadow-sm">
-              <div className="text-3xl font-extrabold text-rose-600 mb-1">16M</div>
-              <div className="text-gray-500 text-sm mb-3">US students currently without a mentor</div>
-              <a href="/signup?role=student" className="text-rose-600 text-xs font-semibold hover:underline">
-                Be one of the few who has one →
-              </a>
-            </div>
-            <div className="bg-white rounded-2xl border border-amber-100 p-5 shadow-sm">
-              <div className="text-3xl font-extrabold text-amber-600 mb-1">5×</div>
-              <div className="text-gray-500 text-sm">
-                More likely to be promoted with a mentor{" "}
-                <span className="text-gray-400 text-xs">(LinkedIn Workplace Study, 2022)</span>
-              </div>
-            </div>
+          <div className="skeleton rounded-xl overflow-hidden aspect-[4/3] anim-fade-up anim-d2">
+            <img src="/images/hero-bg.jpg" alt="A student talking with a mentor" className="w-full h-full object-cover" data-fade />
           </div>
         </div>
       </section>
 
-      {/* ── Featured mentors ────────────────────────────────────────────── */}
-      {featuredMentors.length > 0 && (
-        <section>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Meet some of our mentors</h2>
-              <p className="text-gray-500 text-sm">Real professionals who signed up to help. Not algorithms or bots.</p>
+      {/* Stats */}
+      <section className={`${WRAP} py-8`}>
+        <dl className="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-gray-200 py-8">
+          {[
+            { num: `${mentorCount}`, label: "Mentors across 40+ fields" },
+            { num: `${studentCount}`, label: "Students signed up" },
+            { num: "$0", label: "Cost for students" },
+            { num: "16M", label: "US students without a mentor" },
+          ].map((s) => (
+            <div key={s.label} className="flex flex-col-reverse gap-1">
+              <dt className="text-sm text-gray-600">{s.label}</dt>
+              <dd className="text-4xl text-gray-900 tabular-nums">{s.num}</dd>
             </div>
-            <a href="/mentors" className="text-indigo-600 font-semibold text-sm hover:underline whitespace-nowrap">
-              Browse all mentors →
+          ))}
+        </dl>
+      </section>
+
+      {/* What you get */}
+      <section className={`${WRAP} py-16 sm:py-24`}>
+        <h2 className="font-serif text-4xl text-gray-900 max-w-2xl">Three ways Mentino helps you pick a career.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          {OFFERS.map((o) => (
+            <a key={o.title} href={o.href} className="card card-interactive overflow-hidden flex flex-col">
+              <span className="block skeleton aspect-[4/3]">
+                <img src={o.img} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
+              </span>
+              <span className="p-6 flex flex-col flex-1">
+                <span className="text-xl text-gray-900">{o.title}</span>
+                <span className="text-gray-600 mt-2 flex-1">{o.body}</span>
+                <span className="inline-flex items-center gap-2 text-sm font-medium text-forest mt-4">{o.cta} <ArrowRightIcon /></span>
+              </span>
             </a>
+          ))}
+        </div>
+        <p className="text-sm text-gray-600 mt-6">
+          Not sure where to start? Take the <a href="/quiz" className="text-gray-900 underline underline-offset-4">10 question Career Quiz</a>.
+        </p>
+      </section>
+
+      {/* How it works + safety */}
+      <section className="bg-sage">
+        <div className={`${WRAP} py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12`}>
+          <div>
+            <h2 className="font-serif text-4xl text-gray-900">How it works</h2>
+            <ol className="mt-8 flex flex-col gap-4">
+              {STEPS.map((s, i) => (
+                <li key={s} className="flex items-center gap-4">
+                  <span className="w-8 h-8 rounded-full bg-forest text-white text-sm font-medium flex items-center justify-center flex-shrink-0">{i + 1}</span>
+                  <span className="text-lg text-gray-900">{s}</span>
+                </li>
+              ))}
+            </ol>
+            <a href="/how-it-works" className="btn btn-secondary mt-8">Full details</a>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {featuredMentors.map((m: any, i: number) => {
-              const gradients = [
-                "from-indigo-500 to-blue-500",
-                "from-emerald-500 to-teal-500",
-                "from-violet-500 to-purple-500",
-                "from-amber-500 to-orange-500",
-                "from-rose-500 to-pink-500",
-                "from-cyan-500 to-sky-500",
-              ];
-              return (
-                <a key={i} href="/mentors" className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-indigo-200 transition-all block">
-                  <div className="flex items-center gap-3 mb-3">
-                    {m.accounts?.avatar_url ? (
-                      <img src={m.accounts.avatar_url} alt={m.accounts?.first_name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
-                    ) : (
-                      <div className={`w-12 h-12 bg-gradient-to-br ${gradients[i % gradients.length]} rounded-full flex items-center justify-center text-white font-bold text-base flex-shrink-0`}>
-                        {m.accounts?.first_name?.[0]}{m.accounts?.last_name?.[0]}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{m.accounts?.first_name} {m.accounts?.last_name}</p>
-                      <p className="text-xs text-gray-500 truncate">{m.job_title}{m.company ? ` · ${m.company}` : ""}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full">{m.career_field}</span>
-                    {m.years_experience > 0 && (
-                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full">{m.years_experience} yrs exp</span>
-                    )}
-                  </div>
-                </a>
-              );
-            })}
+          <div>
+            <h2 className="font-serif text-4xl text-gray-900">Built for safety</h2>
+            <ul className="mt-8 flex flex-col gap-6">
+              {SAFETY.map((s) => (
+                <li key={s.title}>
+                  <p className="text-lg text-gray-900">{s.title}</p>
+                  <p className="text-gray-700 mt-1">{s.desc}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="text-center mt-6">
-            <a href="/mentors"
-              className="inline-flex items-center gap-2 border border-indigo-200 text-indigo-600 font-semibold px-6 py-2.5 rounded-full hover:bg-indigo-50 transition-colors text-sm">
-              See all {mentorCount} mentors
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+        </div>
+      </section>
+
+      {/* Career fields */}
+      <section className={`${WRAP} py-16 sm:py-24`}>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h2 className="font-serif text-4xl text-gray-900">Explore career fields</h2>
+            <p className="text-gray-600 mt-2">Mentors across 40+ industries, including engineering, psychology, media and gaming.</p>
+          </div>
+          <a href="/resources" className="btn btn-secondary self-start md:self-auto">Search any career</a>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+          {FIELDS.map((f) => (
+            <a key={f.name} href={`/signup?role=student&interest=${encodeURIComponent(f.field)}`} className="group block">
+              <span className="block skeleton rounded-xl overflow-hidden aspect-[4/3]">
+                <img src={f.img} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
+              </span>
+              <span className="block text-base text-gray-900 mt-2 group-hover:underline underline-offset-4">{f.name}</span>
             </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured mentors */}
+      {featuredMentors.length > 0 && (
+        <section className={`${WRAP} pb-16 sm:pb-24`}>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+            <div>
+              <h2 className="font-serif text-4xl text-gray-900">Meet some of our mentors</h2>
+              <p className="text-gray-600 mt-2">Real professionals who signed up to help.</p>
+            </div>
+            <a href="/mentors" className="btn btn-secondary self-start md:self-auto">See all {mentorCount} mentors</a>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featuredMentors.map((m: any, i: number) => (
+              <a key={i} href="/mentors" className="card card-interactive p-6 flex items-center gap-4">
+                {m.accounts?.avatar_url ? (
+                  <img src={m.accounts.avatar_url} alt="" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
+                ) : (
+                  <span className="w-12 h-12 bg-clay rounded-full flex items-center justify-center text-gray-900 font-medium text-sm flex-shrink-0" aria-hidden="true">{initials(m)}</span>
+                )}
+                <span className="min-w-0">
+                  <span className="block font-medium text-gray-900 truncate">{m.accounts?.first_name} {m.accounts?.last_name}</span>
+                  <span className="block text-sm text-gray-600 truncate">{m.job_title}{m.company ? ` · ${m.company}` : ""}</span>
+                  <span className="block t-meta truncate mt-1">{m.career_field}{m.years_experience > 0 ? ` · ${m.years_experience} yrs` : ""}</span>
+                </span>
+              </a>
+            ))}
           </div>
         </section>
       )}
 
-      {/* ── FAQ ─────────────────────────────────────────────────────────── */}
-      <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Common questions</h2>
-        <p className="text-gray-500 text-center mb-8 text-sm sm:text-base">Straight answers, no fluff.</p>
-        <div className="space-y-3 max-w-3xl mx-auto" id="faq-list">
-          {[
-            {
-              q: "Is Mentino actually free?",
-              a: "Yes, free for students and mentors. No premium tiers, no subscriptions, no fees ever. We're a student-built platform focused on access, not profit."
-            },
-            {
-              q: "How does the matching work?",
-              a: "You fill out your profile: career interests, goals, schedule, and personality. Our algorithm finds mentors in your target fields who match your availability and style. You send them a short intro, they accept or decline. Simple."
-            },
-            {
-              q: "Who are the mentors and how are they verified?",
-              a: "Working professionals who signed up to give back. Before going live, each mentor is reviewed by our team. We check that their experience is real and that they've agreed to our Code of Conduct. You'll see their field, job title, and reviews from students they've worked with."
-            },
-            {
-              q: "I'm in high school — is this for me?",
-              a: "Yes. Mentino was built by a high school student for students exactly like you. If you're trying to figure out what career you want or what it actually looks like day-to-day, this is the place."
-            },
-            {
-              q: "What does a mentorship session actually look like?",
-              a: "It's a conversation, usually over video call or messages. You ask questions, the mentor shares their experience. It could be about a day in their job, how to prepare for college, what skills matter — there's no script."
-            },
-            {
-              q: "Can I message my mentor before scheduling a session?",
-              a: "Once a mentor accepts your match request, you get a full messaging thread. You can ask anything before scheduling a formal session. Most students use this to break the ice first."
-            },
-            {
-              q: "What if a mentor is rude or inappropriate?",
-              a: "Report them. Every profile has a report button. We take reports seriously. First offense is a 24-hour ban, escalating from there. All mentors agreed to our Code of Conduct when they signed up."
-            },
-            {
-              q: "I'm a professional. Why should I become a mentor?",
-              a: "Honestly? Because it matters. One conversation can change a student's direction entirely. It's flexible: you set your own availability and how many students you take on. And students leave reviews, so you build a real reputation on the platform."
-            },
-          ].map((item, i) => (
-            <div key={i} className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-              <button type="button" data-faq-btn={i}
-                className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4 max-w-prose">{item.q}</span>
-                <svg data-faq-icon={i} className="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div data-faq-panel={i} className="hidden px-6 pb-5">
-                <p className="text-gray-600 text-sm leading-relaxed max-w-prose">{item.a}</p>
+      {/* For mentors */}
+      <section className="bg-sand">
+        <div className={`${WRAP} py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center`}>
+          <div className="skeleton rounded-xl overflow-hidden aspect-[4/3] order-last lg:order-first">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1000&q=80" alt="A professional advising a student" loading="lazy" className="w-full h-full object-cover" data-fade />
+          </div>
+          <div>
+            <p className="t-eyebrow mb-4" style={{ color: "var(--ink)" }}>For mentors</p>
+            <h2 className="font-serif text-4xl text-gray-900">Give back, on your schedule.</h2>
+            <p className="text-lg text-gray-700 mt-4">A few honest conversations can change a student's direction.</p>
+            <ul className="mt-6 flex flex-col gap-2">
+              {MENTOR_BENEFITS.map((b) => (
+                <li key={b} className="flex items-center gap-2 text-gray-800">
+                  <CheckIcon className="w-4 h-4 text-forest flex-shrink-0" />{b}
+                </li>
+              ))}
+            </ul>
+            <a href="/signup?role=mentor" className="btn btn-primary btn-lg mt-8">Become a mentor</a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={`${WRAP} py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-3 gap-8`}>
+        <h2 className="font-serif text-4xl text-gray-900">Common questions</h2>
+        <div className="lg:col-span-2 border-t border-gray-200">
+          {FAQS.map((item, i) => (
+            <div key={i} className="faq-item border-b border-gray-200">
+              <h3>
+                <button type="button" data-faq-btn={i} id={`faq-btn-${i}`} aria-expanded="false" aria-controls={`faq-panel-${i}`}
+                  className="w-full text-left py-6 flex items-center justify-between gap-4 text-gray-900 hover:text-gray-600 transition-colors">
+                  <span className="text-lg">{item.q}</span>
+                  <ChevronDownIcon className="faq-icon w-5 h-5 text-gray-500 flex-shrink-0" />
+                </button>
+              </h3>
+              <div className="faq-panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-btn-${i}`}>
+                <div><p className="text-gray-600 pb-6 max-w-prose">{item.a}</p></div>
               </div>
             </div>
           ))}
@@ -360,150 +279,28 @@ export function Home({ featuredMentors = [], stats }: HomeProps) {
         <script dangerouslySetInnerHTML={{ __html: `
     document.querySelectorAll('[data-faq-btn]').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var i = this.getAttribute('data-faq-btn');
-        var panel = document.querySelector('[data-faq-panel="' + i + '"]');
-        var icon = document.querySelector('[data-faq-icon="' + i + '"]');
-        var isOpen = !panel.classList.contains('hidden');
-        panel.classList.toggle('hidden', isOpen);
-        if (icon) icon.style.transform = isOpen ? '' : 'rotate(180deg)';
+        var item = this.closest('.faq-item');
+        var open = !item.classList.contains('is-open');
+        item.classList.toggle('is-open', open);
+        this.setAttribute('aria-expanded', String(open));
       });
     });
   ` }} />
       </section>
 
-      {/* ── Bottom CTA ──────────────────────────────────────────────────── */}
-      <section className="bg-indigo-950 rounded-2xl p-10 text-center text-white">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2">Ready to find your mentor?</h2>
-        <p className="text-indigo-300 text-sm sm:text-base mb-8 max-w-md mx-auto">
-          Set up a profile in 5 minutes and get matched with someone who's already in your dream career.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="/signup?role=student"
-            className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-3.5 rounded-full font-bold hover:bg-indigo-50 transition-colors shadow-md">
-            I'm a Student, Get Matched
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
-          <a href="/signup?role=mentor"
-            className="inline-flex items-center justify-center bg-white/10 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors">
-            I'm a Mentor, Give Back
-          </a>
+      {/* CTA */}
+      <section className={`${WRAP} pb-16 sm:pb-24`}>
+        <div className="bg-clay rounded-xl p-8 sm:p-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h2 className="font-serif text-3xl sm:text-4xl text-gray-900">Ready to find your mentor?</h2>
+            <p className="text-gray-700 mt-2">Set up a profile in 5 minutes. Free for students.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
+            <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+          </div>
         </div>
       </section>
-
-    </div>
-
-    {/* ── Career Quiz Popup ───────────────────────────────────────────── */}
-      <div id="quiz-popup" style={{
-        display: "none", position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.75)", alignItems: "center", justifyContent: "center", padding: 20,
-      }}>
-        <div style={{
-          background: "linear-gradient(135deg, #0e0e2e, #1e1b4b)", border: "1px solid rgba(139,92,246,0.35)",
-          borderRadius: 24, maxWidth: 460, width: "100%", padding: "44px 36px", position: "relative", textAlign: "center",
-          boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
-        }}>
-          {/* close X */}
-          <button id="quiz-popup-close" style={{
-            position: "absolute", top: 14, right: 14,
-            background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8",
-            width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 16, lineHeight: "30px",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>×</button>
-          {/* decorative blob */}
-          <div style={{ position: "absolute", top: -40, right: -40, width: 180, height: 180, background: "radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-          <div style={{ fontSize: 60, marginBottom: 18, filter: "drop-shadow(0 0 20px rgba(139,92,246,0.5))" }}>🧭</div>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 99, padding: "4px 12px", marginBottom: 14 }}>
-            <span style={{ color: "#c4b5fd", fontSize: 12, fontWeight: 600, letterSpacing: 0.5 }}>Free Career Tool</span>
-          </div>
-          <h2 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 12, lineHeight: 1.2 }}>
-            Discover Your{" "}
-            <span style={{ background: "linear-gradient(90deg, #ec4899, #8b5cf6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Career Path</span>
-          </h2>
-          <p style={{ color: "#94a3b8", fontSize: 14, marginBottom: 28, lineHeight: 1.65 }}>
-            Answer 10 quick questions and find out which career field matches your personality, interests, and goals. Get curated books, videos, and mentor connections.
-          </p>
-          <a href="/quiz" style={{
-            display: "block", padding: "14px 0",
-            background: "linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)",
-            color: "white", borderRadius: 14, fontWeight: 700, fontSize: 15, textDecoration: "none", marginBottom: 12,
-          }}>Take the Free Quiz →</a>
-          <button id="quiz-maybe-later" style={{
-            background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 13,
-          }}>Maybe Later</button>
-        </div>
-      </div>
-
-      {/* ── Career Quiz Floating Card (bottom-left, shows after Maybe Later) */}
-      <div id="quiz-float" style={{
-        display: "none", position: "fixed", bottom: 24, left: 24, zIndex: 9998,
-        background: "linear-gradient(135deg, #0e0e2e, #1e1b4b)", border: "1px solid rgba(139,92,246,0.4)",
-        borderRadius: 16, padding: "14px 18px", maxWidth: 260, boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-      }}>
-        <button id="quiz-float-close" style={{
-          position: "absolute", top: 8, right: 10,
-          background: "none", border: "none", color: "#64748b", cursor: "pointer", fontSize: 16, lineHeight: 1,
-        }}>×</button>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <span style={{ fontSize: 22 }}>🧭</span>
-          <span style={{ color: "white", fontWeight: 700, fontSize: 14 }}>Career Quiz</span>
-        </div>
-        <p style={{ color: "#94a3b8", fontSize: 12, marginBottom: 10, lineHeight: 1.5 }}>Find your ideal career path in 10 questions.</p>
-        <a href="/quiz" style={{
-          display: "block", padding: "8px 0", background: "linear-gradient(135deg, #ec4899, #8b5cf6)",
-          color: "white", borderRadius: 10, fontWeight: 600, fontSize: 13, textDecoration: "none", textAlign: "center",
-        }}>Take the Quiz →</a>
-      </div>
-
-      <script dangerouslySetInnerHTML={{ __html: `
-(function() {
-  var DISMISSED_KEY = 'quiz_dismissed';
-  var COMPLETED_KEY = 'quiz_completed';
-
-  function alreadyDone() {
-    return localStorage.getItem(DISMISSED_KEY) === '1' || localStorage.getItem(COMPLETED_KEY) === '1';
-  }
-
-  function showPopup() {
-    var el = document.getElementById('quiz-popup');
-    if (el) { el.style.display = 'flex'; }
-  }
-
-  function dismissQuizPopup() {
-    var pop = document.getElementById('quiz-popup');
-    var fl = document.getElementById('quiz-float');
-    if (pop) pop.style.display = 'none';
-    if (fl) fl.style.display = 'block';
-  }
-
-  function maybeLaterQuiz() {
-    var pop = document.getElementById('quiz-popup');
-    var fl = document.getElementById('quiz-float');
-    if (pop) pop.style.display = 'none';
-    if (fl) fl.style.display = 'block';
-  }
-
-  function dismissQuizFloat() {
-    var fl = document.getElementById('quiz-float');
-    if (fl) fl.style.display = 'none';
-    localStorage.setItem(DISMISSED_KEY, '1');
-  }
-
-  // Wire up buttons via addEventListener (React SSR strips lowercase onclick attributes)
-  var closeBtn = document.getElementById('quiz-popup-close');
-  var laterBtn = document.getElementById('quiz-maybe-later');
-  var floatClose = document.getElementById('quiz-float-close');
-  if (closeBtn) closeBtn.addEventListener('click', dismissQuizPopup);
-  if (laterBtn) laterBtn.addEventListener('click', maybeLaterQuiz);
-  if (floatClose) floatClose.addEventListener('click', dismissQuizFloat);
-
-  // Show popup immediately (800ms) on every visit unless permanently dismissed or completed
-  if (!alreadyDone()) {
-    setTimeout(showPopup, 800);
-  }
-})();
-      ` }} />
     </>
   );
 }

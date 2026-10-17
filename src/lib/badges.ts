@@ -144,7 +144,7 @@ const STUDENT_BADGE_DEFS: Record<string, Omit<StudentBadge, "id">> = {
   },
   "consistent": {
     label: "Consistent Learner",
-    description: "Completed 5+ sessions — you're committed!",
+    description: "Completed 5+ sessions, you're committed!",
     color: "bg-violet-100",
     textColor: "text-violet-800",
     icon: "📚",

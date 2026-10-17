@@ -13,7 +13,7 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-// Registration step schemas — Student
+// Registration step schemas: Student
 export const studentStep1Schema = z.object({
   age: z.coerce.number().min(10, "Must be at least 10").max(30, "Must be 30 or younger"),
   school_name: z.string().max(255).optional(),
@@ -41,7 +41,7 @@ export const studentStep5Schema = z.object({
   parent_email: z.string().email().optional(),
 });
 
-// Registration step schemas — Mentor
+// Registration step schemas: Mentor
 export const mentorStep1Schema = z.object({
   job_title: z.string().min(1, "Job title is required").max(255),
   company: z.string().max(255).optional(),

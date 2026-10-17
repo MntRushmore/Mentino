@@ -73,7 +73,7 @@ reports.get("/reports/new", authMiddleware, async (c) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Details <span className="text-gray-400 font-normal">(optional — the more context, the better)</span>
+                  Details <span className="text-gray-400 font-normal">(optional: the more context, the better)</span>
                 </label>
                 <textarea
                   name="description"
@@ -195,7 +195,7 @@ reports.post("/reports", authMiddleware, async (c) => {
   );
 });
 
-// POST /reviews — Student leaves a review on a mentor
+// POST /reviews: Student leaves a review on a mentor
 reports.post("/reviews", authMiddleware, async (c) => {
   const user = c.get("user");
   if (user.role !== "student") return c.redirect("/dashboard");

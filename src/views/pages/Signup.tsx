@@ -121,7 +121,7 @@ export function Signup({ error }: SignupProps) {
                 rows={3}
                 maxLength={500}
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm resize-none"
-                placeholder="A quick intro — who you are, what you're interested in, what you're hoping to get from Mentino..."
+                placeholder="A quick intro, who you are, what you're interested in, what you're hoping to get from Mentino..."
               />
               <p className="text-xs text-gray-400 mt-1">You can always add more later in your profile.</p>
             </div>

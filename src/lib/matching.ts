@@ -48,7 +48,7 @@ const STYLE_TO_APPROACH: Record<string, string> = {
   "Style: advice on demand": "Approach: available when needed",
 };
 
-// Career field keyword map — enables partial/keyword matching
+// Career field keyword map: enables partial/keyword matching
 // Maps a broad field label → keywords that appear in mentor career_field or bio
 const CAREER_KEYWORDS: Record<string, string[]> = {
   "Technology": ["tech", "software", "engineer", "developer", "coding", "programming", "computer", "it ", "data", "ai", "machine learning", "cyber", "cloud", "devops", "product"],
@@ -257,7 +257,7 @@ function calculateScore(
   const reasons: string[] = [];
 
   // ── 1. Career Alignment (30 pts) ──────────────────────────────────────────
-  // Keyword-based partial matching — not just exact field comparison
+  // Keyword-based partial matching: not just exact field comparison
   const studentInterests: string[] = student.career_interests || [];
   const mentorField: string = (mentor.career_field || "").toLowerCase();
   const mentorBio: string = (mentor.accounts?.bio || "").toLowerCase();
@@ -302,7 +302,7 @@ function calculateScore(
   const topicScore = mentorTopics.length > 0 ? (topicMatches / mentorTopics.length) * 20 : 0;
   if (topicMatches > 0) reasons.push(`${topicMatches} topic(s) match your goals`);
 
-  // ── 3. Goal Alignment (20 pts) — NEW ──────────────────────────────────────
+  // ── 3. Goal Alignment (20 pts): NEW ──────────────────────────────────────
   // Compares student's free-text goals against mentor's bio, topics, career field
   const studentGoal = (student.learning_goals || "").toLowerCase();
   const mentorSignalText = `${mentorSearchText} ${mentorTopics.join(" ").toLowerCase()}`;

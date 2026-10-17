@@ -23,7 +23,7 @@ function html(element: React.ReactElement, status = 200) {
   });
 }
 
-// GET /profile — own profile
+// GET /profile: own profile
 profile.get("/profile", authMiddleware, async (c) => {
   const user = c.get("user");
   const roleData = await loadRoleData(user.id, user.role);
@@ -220,7 +220,7 @@ profile.post("/profile/edit", authMiddleware, async (c) => {
   return c.redirect("/profile");
 });
 
-// GET /profile/:userId — view another user's profile
+// GET /profile/:userId: view another user's profile
 profile.get("/profile/:userId", authMiddleware, async (c) => {
   const currentUser = c.get("user");
   const userId = c.req.param("userId");
@@ -298,7 +298,7 @@ profile.get("/profile/:userId", authMiddleware, async (c) => {
   );
 });
 
-// POST /reviews — save a review for a mentor (stored in their most recent completed session)
+// POST /reviews: save a review for a mentor (stored in their most recent completed session)
 profile.post("/reviews", authMiddleware, async (c) => {
   const user = c.get("user");
   if (user.role !== "student") return c.redirect("/dashboard");
@@ -348,7 +348,7 @@ profile.post("/reviews", authMiddleware, async (c) => {
       feedback: encodeFeedback(meetAgain, comment),
     }).eq("id", session.id);
   } else {
-    // No formal session yet — insert a chat-based rating (duration_minutes=0 marks it as non-session)
+    // No formal session yet: insert a chat-based rating (duration_minutes=0 marks it as non-session)
     await supabase.from("sessions").insert({
       match_id: match.id,
       status: "completed",
@@ -497,7 +497,7 @@ function LevelBar({ level, completedSessions }: { level: Level; completedSession
         {!next && <span className="text-xs text-amber-500 font-semibold">Max Level Reached 🏆</span>}
       </div>
       <div className="w-full bg-gray-100 rounded-full h-2">
-        <div className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all"
+        <div className="h-2 rounded-full bg-forest transition-all"
           style={{ width: `${progress}%` }} />
       </div>
     </div>
@@ -534,7 +534,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         <div className={`relative px-8 py-10 overflow-hidden ${user.role === "mentor" ? "bg-gradient-to-r from-emerald-600 to-teal-600" : "bg-gradient-to-r from-indigo-600 to-blue-600"}`}>
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
           <div className="relative z-10 flex items-center gap-6">
-            {/* Avatar — click to edit if own profile */}
+            {/* Avatar: click to edit if own profile */}
             {isOwn ? (
               <a href="/profile/edit" className="relative group flex-shrink-0" title="Change photo">
                 {user.avatar_url ? (
@@ -768,7 +768,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         </div>
       </div>
 
-      {/* Badges & Level section — mentor only, when there are badges */}
+      {/* Badges & Level section: mentor only, when there are badges */}
       {user.role === "mentor" && (mentorBadges.length > 0 || mentorLevel) && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Achievements</h2>
@@ -791,7 +791,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         </div>
       )}
 
-      {/* Student badges & level — own profile only */}
+      {/* Student badges & level: own profile only */}
       {user.role === "student" && (studentBadges.length > 0 || studentLevel) && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Your Progress</h2>
@@ -814,7 +814,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
         </div>
       )}
 
-      {/* Reviews section — only for mentors */}
+      {/* Reviews section: only for mentors */}
       {user.role === "mentor" && (
         <div id="reviews" className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <div className="flex items-center justify-between mb-5">
@@ -839,7 +839,7 @@ function ProfileView({ user, roleData, isOwn, currentUser, reviews = [], canRevi
             </div>
           </div>
 
-          {/* Review form — only for matched students */}
+          {/* Review form: only for matched students */}
           {canReview && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
               <h3 className="font-semibold text-gray-900 text-sm mb-3">
@@ -1076,7 +1076,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
             <div className="flex items-center gap-4">
-              {/* Single avatar preview element — no duplicate ids */}
+              {/* Single avatar preview element: no duplicate ids */}
               <div id="avatar-wrap" className="flex-shrink-0 relative group cursor-pointer">
                 {user.avatar_url ? (
                   <img id="avatar-preview" src={user.avatar_url} alt="" className="w-20 h-20 rounded-full object-cover border-2 border-gray-200" />
@@ -1439,7 +1439,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
                   newImg.className = 'w-20 h-20 rounded-full object-cover border-2 border-indigo-300';
                   if (existing) existing.replaceWith(newImg);
                 }
-                fileNameLabel.textContent = '\u2713 ' + file.name + ' — ready to save';
+                fileNameLabel.textContent = '\u2713 ' + file.name + ' is ready to save';
               };
               img.src = ev.target.result;
             };
@@ -1457,7 +1457,7 @@ function ProfileEditView({ user, roleData, error }: { user: any; roleData: any; 
               initials.textContent = hiddenInput.dataset.initials || '?';
               existing.replaceWith(initials);
             }
-            fileNameLabel.textContent = 'Photo removed — save to confirm.';
+            fileNameLabel.textContent = 'Photo removed. Save to confirm.';
             removeBtn.style.display = 'none';
           });
         })();

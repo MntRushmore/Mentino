@@ -346,7 +346,7 @@ export const CAREER_CLUSTERS: CareerCluster[] = [
 // Scoring weights: question index → cluster scores
 // Each answer option has a map of cluster IDs to points added
 export const QUESTION_WEIGHTS: Record<number, Record<string, Record<string, number>>> = {
-  // Q0: Grade level — minimal direct influence, just metadata
+  // Q0: Grade level: minimal direct influence, just metadata
   0: {},
   // Q1: After-school activities
   1: {
@@ -475,42 +475,42 @@ export function computeTopClusters(answers: Record<string, any>): { cluster: Car
   const init = () => CAREER_CLUSTERS.forEach(c => { if (!scores[c.id]) scores[c.id] = 0; });
   init();
 
-  // Salary importance (Q4, 0-100 slider) — higher = finance/business/technology boost
+  // Salary importance (Q4, 0-100 slider): higher = finance/business/technology boost
   const salary = parseInt(answers["salary"] ?? "50", 10);
   if (salary >= 70) { scores["finance"] += 2; scores["business"] += 1; scores["technology"] += 1; }
   if (salary >= 90) { scores["finance"] += 2; scores["business"] += 1; }
   if (salary <= 30) { scores["education"] += 1; scores["law"] += 1; scores["science"] += 1; }
 
-  // Activity (Q1) — multi-select
+  // Activity (Q1): multi-select
   const activities: string[] = Array.isArray(answers["activities"]) ? answers["activities"] : [];
   for (const act of activities) {
     const w = QUESTION_WEIGHTS[1]?.[act] ?? {};
     for (const [c, pts] of Object.entries(w)) scores[c] = (scores[c] || 0) + pts;
   }
 
-  // Subject (Q2) — multi-select
+  // Subject (Q2): multi-select
   const subjects: string[] = Array.isArray(answers["subjects"]) ? answers["subjects"] : [];
   for (const sub of subjects) {
     const w = QUESTION_WEIGHTS[2]?.[sub] ?? {};
     for (const [c, pts] of Object.entries(w)) scores[c] = (scores[c] || 0) + pts;
   }
 
-  // Environment (Q3) — single
+  // Environment (Q3): single
   const env = answers["environment"] ?? "";
   const envW = QUESTION_WEIGHTS[3]?.[env] ?? {};
   for (const [c, pts] of Object.entries(envW)) scores[c] = (scores[c] || 0) + pts;
 
-  // Social (Q5) — single
+  // Social (Q5): single
   const social = answers["social"] ?? "";
   const socialW = QUESTION_WEIGHTS[5]?.[social] ?? {};
   for (const [c, pts] of Object.entries(socialW)) scores[c] = (scores[c] || 0) + pts;
 
-  // Career priority (Q6) — single
+  // Career priority (Q6): single
   const priority = answers["priority"] ?? "";
   const prioW = QUESTION_WEIGHTS[6]?.[priority] ?? {};
   for (const [c, pts] of Object.entries(prioW)) scores[c] = (scores[c] || 0) + pts;
 
-  // Personality (Q7) — single
+  // Personality (Q7): single
   const personality = answers["personality"] ?? "";
   const persW = QUESTION_WEIGHTS[7]?.[personality] ?? {};
   for (const [c, pts] of Object.entries(persW)) scores[c] = (scores[c] || 0) + pts;

@@ -16,7 +16,7 @@ function html(element: React.ReactElement, status = 200) {
   });
 }
 
-// GET /sessions — List sessions
+// GET /sessions: List sessions
 sessions.get("/sessions", authMiddleware, async (c) => {
   const user = c.get("user");
   const matchId = c.req.query("match_id");
@@ -401,7 +401,7 @@ sessions.post("/sessions/create", authMiddleware, async (c) => {
   return c.redirect("/sessions");
 });
 
-// GET /sessions/:id — Session room (video stub)
+// GET /sessions/:id: Session room (video stub)
 sessions.get("/sessions/:id", authMiddleware, async (c) => {
   const user = c.get("user");
   const sessionId = c.req.param("id");
@@ -499,7 +499,7 @@ sessions.get("/sessions/:id", authMiddleware, async (c) => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Written Review <span className="text-gray-400 font-normal text-xs">(optional — shown on mentor profile)</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Written Review <span className="text-gray-400 font-normal text-xs">(optional, shown on mentor profile)</span></label>
                 <textarea
                   name="feedback"
                   rows={2}

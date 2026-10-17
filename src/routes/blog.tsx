@@ -38,46 +38,45 @@ const blogPosts: BlogPost[] = [
     category: "Mentor Spotlight",
     categoryColor: "indigo",
     coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
-    excerpt: "12 years in family law. The hardest part isn't the law — it's the humans. An attorney's unfiltered answers to the questions students actually want to ask.",
+    excerpt: "12 years in family law. The hardest part isn't the law. It's the humans. An attorney's unfiltered answers to the questions students actually want to ask.",
     readTime: "9 min read",
     mentorAuthorId: "38560524-3645-44e5-8ddb-8d790ff3b3d9",
     mentorAuthorTitle: "Attorney · Law Offices of Vorsatz & Vorsatz, A PC",
     content: `
       <style>
-        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
-        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
-        .qa-intro-box strong { color: white !important; }
-        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-intro-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-bottom: 32px; }
+        .qa-intro-box p { color: #1f2420 !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: #1f2420 !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
-        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
-        .qa-answer { color: #374151; line-height: 1.85; }
-        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
-        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
-        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
-        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
-        .qa-resource-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-resource-title { font-size: 0.7rem; font-weight: 800; color: #065f46; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
-        .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #d1fae5; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
+        .qa-answer { color: #35332f; line-height: 1.8; }
+        .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
+        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
+        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+        .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
         .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .qa-resource-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
-        .qa-resource-name { font-weight: 700; color: #065f46; font-size: 0.9rem; margin-bottom: 3px; }
-        .qa-resource-desc { color: #6b7280; font-size: 0.82rem; line-height: 1.55; }
-        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
-        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
-        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
-        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
-        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
-        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-resource-icon { display: none; }
+        .qa-resource-name { font-weight: 600; color: #1f2420; font-size: 15px; margin-bottom: 4px; }
+        .qa-resource-desc { color: #46433e; font-size: 14px; line-height: 1.55; }
+        .qa-insight-box { background: #f6edcf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-insight-label { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #1f2420 !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 15px; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+        .qa-stat { background: #fff; border: 1px solid #e7e2d8; border-radius: 12px; padding: 16px; text-align: center; }
+        .qa-stat-num { font-size: 28px; font-weight: 500; color: #1f2420; line-height: 1; }
+        .qa-stat-label { font-size: 12px; color: #5a5650; margin-top: 8px; line-height: 1.4; }
+        .qa-close-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-top: 8px; }
+        .qa-close-box p { color: #1f2420 !important; line-height: 1.8; margin-bottom: 12px !important; }
         .qa-close-box p:last-child { margin-bottom: 0 !important; }
       </style>
 
       <div class="qa-intro-box">
-        <p>I'm <strong>Dustin Vorsatz</strong>, an attorney at the Law Offices of Vorsatz &amp; Vorsatz in San Mateo, CA. I've been practicing family law for 12 years. Ethan at Mentino asked me seven questions about my career — and I answered them the way I'd want someone to have answered them when I was getting started.</p>
+        <p>I'm <strong>Dustin Vorsatz</strong>, an attorney at the Law Offices of Vorsatz &amp; Vorsatz in San Mateo, CA. I've been practicing family law for 12 years. Ethan at Mentino asked me seven questions about my career, and I answered them the way I'd want someone to have answered them when I was getting started.</p>
       </div>
 
       <div class="qa-block">
@@ -89,7 +88,7 @@ const blogPosts: BlogPost[] = [
           <p>Don't stress out about where you want to land later in life.</p>
           <p>There's a ton of pressure on kids to "figure out what you want to do when you're older," and that's ridiculous. Kids should be supported in pursuing reasonable interests regardless of where they may end up. Telling a kid "be a doctor, engineer, lawyer" puts a lot of stress on them.</p>
           <div class="qa-pullquote">
-            <p>If a kid really likes biology, maybe they learn later in life they want to work with animals instead of humans, or work on habitat preservation. There are literally thousands of options in each field — you don't need to know where you want to end up when you start.</p>
+            <p>If a kid really likes biology, maybe they learn later in life they want to work with animals instead of humans, or work on habitat preservation. There are literally thousands of options in each field. You don't need to know where you want to end up when you start.</p>
           </div>
           <p>The interest matters. The specific destination can wait.</p>
         </div>
@@ -104,8 +103,8 @@ const blogPosts: BlogPost[] = [
           <p>What's interesting about law is there's <em>no</em> typical day.</p>
           <p>There's always some paperwork to do at the office, but there may be a client meeting, phone calls, a Zoom, a court appearance, research you can do, or work on marketing your business. Any given day can include all of those or none of them.</p>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">💡 What students usually miss</div>
-            <p>All of the law remains largely the same — the statutes don't change that often — but each client is completely different. So each problem is completely unique. You're applying a consistent framework to an endless variety of human situations. That's what makes it genuinely interesting after 12 years.</p>
+            <div class="qa-insight-label">What students usually miss</div>
+            <p>All of the law remains largely the same, the statutes don't change that often, but each client is completely different. So each problem is completely unique. You're applying a consistent framework to an endless variety of human situations. That's what makes it genuinely interesting after 12 years.</p>
           </div>
         </div>
       </div>
@@ -117,11 +116,11 @@ const blogPosts: BlogPost[] = [
         </div>
         <div class="qa-answer">
           <p>The most challenging part is honestly the nature of humans.</p>
-          <p>I work 100% in family law, so the people I'm helping are emotionally charged and genuinely hurt. A lot of them want to actively harm the person they claimed they loved for years. The divorce process or custody dispute doesn't just surface their pain — it amplifies it.</p>
+          <p>I work 100% in family law, so the people I'm helping are emotionally charged and genuinely hurt. A lot of them want to actively harm the person they claimed they loved for years. The divorce process or custody dispute doesn't just surface their pain. It amplifies it.</p>
           <div class="qa-pullquote">
             <p>Getting around or through the emotional wall people put up is challenging. It's not what you'd expect if you're thinking about law as a purely technical career.</p>
           </div>
-          <p>The law part I can handle. The human part is what keeps it hard — and what keeps it meaningful.</p>
+          <p>The law part I can handle. The human part is what keeps it hard, and what keeps it meaningful.</p>
         </div>
       </div>
 
@@ -132,25 +131,25 @@ const blogPosts: BlogPost[] = [
         </div>
         <div class="qa-answer">
           <p>Six months? Sheesh. Okay.</p>
-          <p>I'd start with the fundamentals that help you understand how the system actually works — not just what the rules say on paper.</p>
+          <p>I'd start with the fundamentals that help you understand how the system actually works, not just what the rules say on paper.</p>
           <div class="qa-resource-box">
-            <div class="qa-resource-title">📚 Resources Dustin Recommends</div>
+            <div class="qa-resource-title">Resources Dustin Recommends</div>
             <div class="qa-resource-item">
-              <div class="qa-resource-icon">📋</div>
+              <div class="qa-resource-icon"></div>
               <div>
                 <div class="qa-resource-name">The Judge's Bench Blotter</div>
-                <div class="qa-resource-desc">A guide a retired judge publishes each year. It runs through major family law topics and the law surrounding specific concepts — child support, move-aways, etc. A shortcut to understanding what judges actually care about, in their own words.</div>
+                <div class="qa-resource-desc">A guide a retired judge publishes each year. It runs through major family law topics and the law surrounding specific concepts: child support, move-aways, etc. A shortcut to understanding what judges actually care about, in their own words.</div>
               </div>
             </div>
             <div class="qa-resource-item">
-              <div class="qa-resource-icon">🌐</div>
+              <div class="qa-resource-icon"></div>
               <div>
                 <div class="qa-resource-name">San Mateo Court Self Help Website</div>
-                <div class="qa-resource-desc">Breaks down the general process of individual matters — how to modify support, how to modify custody, etc. Invaluable for understanding what a client actually goes through, step by step, in plain language.</div>
+                <div class="qa-resource-desc">Breaks down the general process of individual matters: how to modify support, how to modify custody, etc. Invaluable for understanding what a client actually goes through, step by step, in plain language.</div>
               </div>
             </div>
           </div>
-          <p>Beyond the reading: spend time in a courtroom. Watch real cases. The fastest way to understand how something actually works is to watch people do it in real conditions — not read about it.</p>
+          <p>Beyond the reading: spend time in a courtroom. Watch real cases. The fastest way to understand how something actually works is to watch people do it in real conditions, not read about it.</p>
         </div>
       </div>
 
@@ -178,7 +177,7 @@ const blogPosts: BlogPost[] = [
               <div class="qa-stat-label">Licensed attorneys in the US (ABA, 2023)</div>
             </div>
           </div>
-          <p>Some attorneys are unscrupulous — but those are rarer than TV would have you believe, too. The work is unglamorous most of the time. And I'd argue that's exactly what makes it meaningful: clients genuinely need you.</p>
+          <p>Some attorneys are unscrupulous, but those are rarer than TV would have you believe, too. The work is unglamorous most of the time. And I'd argue that's exactly what makes it meaningful: clients genuinely need you.</p>
         </div>
       </div>
 
@@ -191,8 +190,8 @@ const blogPosts: BlogPost[] = [
           <p>Disconnecting from tech and learning how to problem-solve with your own skills.</p>
           <p>So many attorneys are becoming reliant on AI or auto-research and aren't understanding <em>why</em> cases are decided the way they are. I don't have an issue with people who aren't strong writers using AI to check their work. But too much reliance on tech doing all of the heavy lifting means you simply don't understand why the system functions the way it does.</p>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">⚠️ The real risk</div>
-            <p>If you can't reason through a problem without a tool, you can't catch it when the tool is wrong. And tools are wrong more than people realize — especially on nuanced, jurisdiction-specific legal questions. The baseline has to be your own understanding. This isn't an AI-specific point; it applies to every shortcut in every field.</p>
+            <div class="qa-insight-label">The real risk</div>
+            <p>If you can't reason through a problem without a tool, you can't catch it when the tool is wrong. And tools are wrong more than people realize, especially on nuanced, jurisdiction-specific legal questions. The baseline has to be your own understanding. This isn't an AI-specific point; it applies to every shortcut in every field.</p>
           </div>
         </div>
       </div>
@@ -203,20 +202,20 @@ const blogPosts: BlogPost[] = [
           <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
         </div>
         <div class="qa-answer">
-          <p>I'd take more time to explore other topics. High school now is so much different than when I was in school — we didn't have elective classes. I'd take classes that give me life skills: shop class, home ec, statistics, tax classes.</p>
+          <p>I'd take more time to explore other topics. High school now is so much different than when I was in school. We didn't have elective classes. I'd take classes that give me life skills: shop class, home ec, statistics, tax classes.</p>
           <p>These are all issues that crop up as a normal adult, and not everyone gets the luxury of saying "I make enough money to pay someone to do this for me."</p>
           <div class="qa-pullquote">
-            <p>I think adults should know how to function basically — check your oil and change a tire, cook a healthy meal, understand how to budget your finances and figure out basic taxes.</p>
+            <p>I think adults should know how to function basically: check your oil and change a tire, cook a healthy meal, understand how to budget your finances and figure out basic taxes.</p>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">🏫 The thing nobody says out loud about high school</div>
-            <p>High school as a system was built to acclimate humans to work an 8–9 hour day — working on 6–8 different tasks for approximately 50 minutes each. That's what it is. So you don't need to worry that "I didn't take AP Government, I'm never going to be a lawyer." That's not how any of this works. High school isn't the time to lock in your path. It's the time to learn how to show up consistently.</p>
+            <div class="qa-insight-label">The thing nobody says out loud about high school</div>
+            <p>High school as a system was built to acclimate humans to work an 8–9 hour day: working on 6–8 different tasks for approximately 50 minutes each. That's what it is. So you don't need to worry that "I didn't take AP Government, I'm never going to be a lawyer." That's not how any of this works. High school isn't the time to lock in your path. It's the time to learn how to show up consistently.</p>
           </div>
         </div>
       </div>
 
       <div class="qa-close-box">
-        <p>If you're considering a career in law — or any field where you work directly with people — know that the human side of the job will be just as demanding as the technical side. The law itself is learnable. Understanding people is what you'll work on your whole career.</p>
+        <p>If you're considering a career in law, or any field where you work directly with people, know that the human side of the job will be just as demanding as the technical side. The law itself is learnable. Understanding people is what you'll work on your whole career.</p>
         <p>If you have questions about what life in law actually looks like, I'm on Mentino for exactly this reason.</p>
       </div>
     `,
@@ -229,42 +228,45 @@ const blogPosts: BlogPost[] = [
     category: "Mentor Spotlight",
     categoryColor: "indigo",
     coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-    excerpt: "It's not just the physical recovery — you become a cheerleader, a coach, and sometimes someone's emotional anchor. A physical therapist shares what the job really demands.",
+    excerpt: "It's not just the physical recovery. You become a cheerleader, a coach, and sometimes someone's emotional anchor. A physical therapist shares what the job really demands.",
     readTime: "8 min read",
     mentorAuthorId: "2476738b-1066-4208-9c5b-7c5096c49f14",
     mentorAuthorTitle: "Physical Therapist",
     content: `
       <style>
-        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
-        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
-        .qa-intro-box strong { color: white !important; }
-        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-intro-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-bottom: 32px; }
+        .qa-intro-box p { color: #1f2420 !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: #1f2420 !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
-        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
-        .qa-answer { color: #374151; line-height: 1.85; }
-        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
-        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
-        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
-        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
-        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
-        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
-        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
-        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
-        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
-        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
+        .qa-answer { color: #35332f; line-height: 1.8; }
+        .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
+        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
+        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+        .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
+        .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .qa-resource-icon { display: none; }
+        .qa-resource-name { font-weight: 600; color: #1f2420; font-size: 15px; margin-bottom: 4px; }
+        .qa-resource-desc { color: #46433e; font-size: 14px; line-height: 1.55; }
+        .qa-insight-box { background: #f6edcf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-insight-label { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #1f2420 !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 15px; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+        .qa-stat { background: #fff; border: 1px solid #e7e2d8; border-radius: 12px; padding: 16px; text-align: center; }
+        .qa-stat-num { font-size: 28px; font-weight: 500; color: #1f2420; line-height: 1; }
+        .qa-stat-label { font-size: 12px; color: #5a5650; margin-top: 8px; line-height: 1.4; }
+        .qa-close-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-top: 8px; }
+        .qa-close-box p { color: #1f2420 !important; line-height: 1.8; margin-bottom: 12px !important; }
         .qa-close-box p:last-child { margin-bottom: 0 !important; }
-        .qa-wellbeing-box { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #a7f3d0; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-wellbeing-label { font-size: 0.7rem; font-weight: 800; color: #065f46; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .qa-wellbeing-box p { color: #064e3b !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
       </style>
 
       <div class="qa-intro-box">
-        <p>I'm <strong>Stephanie Leung</strong>, a licensed physical therapist. Physical therapy is one of those careers where you think you know what it is — and then you actually do it. Ethan at Mentino asked me seven questions, and I answered them the way I'd want someone to have answered them for me when I was starting out.</p>
+        <p>I'm <strong>Stephanie Leung</strong>, a licensed physical therapist. Physical therapy is one of those careers where you think you know what it is, and then you actually do it. Ethan at Mentino asked me seven questions, and I answered them the way I'd want someone to have answered them for me when I was starting out.</p>
       </div>
 
       <div class="qa-block">
@@ -278,8 +280,8 @@ const blogPosts: BlogPost[] = [
             <p>Forgive yourself. You will make mistakes as we all do. It doesn't help to beat yourself up because of your mistakes. You're human. Forgive yourself, learn and grow from it, and move forward.</p>
           </div>
           <div class="qa-wellbeing-box">
-            <div class="qa-wellbeing-label">💚 Why self-care isn't optional in healthcare</div>
-            <p>Burnout in healthcare is one of the most studied problems in the field. PT is no exception — the emotional labor of supporting patients through pain, frustration, and setbacks compounds over years. The practitioners who last longest are the ones who treat their own recovery as seriously as their patients'.</p>
+            <div class="qa-wellbeing-label">Why self-care isn't optional in healthcare</div>
+            <p>Burnout in healthcare is one of the most studied problems in the field. PT is no exception: the emotional labor of supporting patients through pain, frustration, and setbacks compounds over years. The practitioners who last longest are the ones who treat their own recovery as seriously as their patients'.</p>
           </div>
         </div>
       </div>
@@ -294,21 +296,21 @@ const blogPosts: BlogPost[] = [
           <p>As patients meet their goals or if they plateau, I discharge them with a plan to help them maintain their progress and manage their condition independently.</p>
           <div class="qa-stat-row">
             <div class="qa-stat">
-              <div class="qa-stat-num">📋</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Chart review every morning</div>
             </div>
             <div class="qa-stat">
-              <div class="qa-stat-num">🏋️</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Prescribe & progress exercises</div>
             </div>
             <div class="qa-stat">
-              <div class="qa-stat-num">🎓</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Educate & discharge with a plan</div>
             </div>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">🔍 What "manual therapy" actually means</div>
-            <p>Manual therapy is hands-on work — joint mobilizations, soft tissue manipulation, massage. It's one of the most direct tools a PT has, and it's also one of the things that makes PT distinct from just prescribing a set of exercises. It requires a trained clinical touch that takes years to develop.</p>
+            <div class="qa-insight-label">What "manual therapy" actually means</div>
+            <p>Manual therapy is hands-on work: joint mobilizations, soft tissue manipulation, massage. It's one of the most direct tools a PT has, and it's also one of the things that makes PT distinct from just prescribing a set of exercises. It requires a trained clinical touch that takes years to develop.</p>
           </div>
         </div>
       </div>
@@ -326,8 +328,8 @@ const blogPosts: BlogPost[] = [
           </div>
           <p>Losing physical function significantly affects people mentally and emotionally, and you are their cheerleader. It's rewarding, but can be draining as well.</p>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">💡 The therapist's dilemma</div>
-            <p>This dynamic — caring deeply but not being able to force progress — is one of the most psychologically demanding parts of healthcare. The most effective PTs learn to separate patient outcomes from their own self-worth. You can give everything, and still have a patient who doesn't follow through. That's not a failure of your skill; it's the reality of working with humans.</p>
+            <div class="qa-insight-label">The therapist's dilemma</div>
+            <p>This dynamic, caring deeply but not being able to force progress, is one of the most psychologically demanding parts of healthcare. The most effective PTs learn to separate patient outcomes from their own self-worth. You can give everything, and still have a patient who doesn't follow through. That's not a failure of your skill; it's the reality of working with humans.</p>
           </div>
         </div>
       </div>
@@ -341,11 +343,11 @@ const blogPosts: BlogPost[] = [
           <p>Physical therapy school will teach you the clinical skills, but bedside manners aren't taught enough. Patients want to feel heard, respected, and understood. Practice active listening, show empathy, maintain eye contact to build genuine rapport.</p>
           <p>These skills are just as important as your clinical skills because they help patients feel supported and motivated throughout their recovery. Ultimately, it'll help you become a better practitioner.</p>
           <div class="qa-pullquote">
-            <p>Learning to communicate well during stressful situations will go a long way — staying calm, not reacting, responding tactfully and respectfully. The earlier you start practicing them, the more natural they'll feel by the time you start your career.</p>
+            <p>Learning to communicate well during stressful situations will go a long way: staying calm, not reacting, responding tactfully and respectfully. The earlier you start practicing them, the more natural they'll feel by the time you start your career.</p>
           </div>
           <div class="qa-wellbeing-box">
-            <div class="qa-wellbeing-label">🎯 Skills PT school doesn't always teach</div>
-            <p>Active listening. Managing difficult conversations. De-escalating a frustrated patient. Reading body language. These are often treated as "soft skills" — meaning optional, secondary, learnable on the fly. In practice, they separate average practitioners from excellent ones. Start now: volunteer in healthcare settings, take an improv or communication class, practice having hard conversations.</p>
+            <div class="qa-wellbeing-label">Skills PT school doesn't always teach</div>
+            <p>Active listening. Managing difficult conversations. De-escalating a frustrated patient. Reading body language. These are often treated as "soft skills", meaning optional, secondary, learnable on the fly. In practice, they separate average practitioners from excellent ones. Start now: volunteer in healthcare settings, take an improv or communication class, practice having hard conversations.</p>
           </div>
         </div>
       </div>
@@ -361,8 +363,8 @@ const blogPosts: BlogPost[] = [
             <p>It's rewarding, but burnout can run high. Recovery isn't always linear, and you're constantly supporting, educating, and encouraging people through difficult setbacks they don't always expect.</p>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">📊 What the data says about PT burnout</div>
-            <p>Studies show physical therapist burnout rates range from 30–40%, similar to other healthcare professions. The combination of high patient caseloads, administrative burden, emotional labor, and the physical demands of the job itself takes a toll. Knowing this before you enter the field — and building coping strategies early — is one of the best things a prospective PT can do.</p>
+            <div class="qa-insight-label">What the data says about PT burnout</div>
+            <p>Studies show physical therapist burnout rates range from 30–40%, similar to other healthcare professions. The combination of high patient caseloads, administrative burden, emotional labor, and the physical demands of the job itself takes a toll. Knowing this before you enter the field, and building coping strategies early, is one of the best things a prospective PT can do.</p>
           </div>
         </div>
       </div>
@@ -375,8 +377,8 @@ const blogPosts: BlogPost[] = [
         <div class="qa-answer">
           <p>Develop strong communication and critical thinking skills. It will serve you throughout your career and in life.</p>
           <div class="qa-wellbeing-box">
-            <div class="qa-wellbeing-label">🧠 Why these two go together</div>
-            <p>Communication without critical thinking leads to confident-sounding advice that's wrong. Critical thinking without communication means you can diagnose a problem but can't get the patient to act on it. In PT — and honestly in most careers — you need both. Critical thinking helps you design the right treatment plan; communication is what gets the patient to follow it. Practice both deliberately, not just as side effects of other things you're doing.</p>
+            <div class="qa-wellbeing-label">Why these two go together</div>
+            <p>Communication without critical thinking leads to confident-sounding advice that's wrong. Critical thinking without communication means you can diagnose a problem but can't get the patient to act on it. In PT, and honestly in most careers, you need both. Critical thinking helps you design the right treatment plan; communication is what gets the patient to follow it. Practice both deliberately, not just as side effects of other things you're doing.</p>
           </div>
         </div>
       </div>
@@ -387,20 +389,20 @@ const blogPosts: BlogPost[] = [
           <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
         </div>
         <div class="qa-answer">
-          <p>If I could go back, I wouldn't just learn to get a good grade or pass a test. I'd try to learn for the joy of it — approach learning from a sense of wonder and curiosity. That will make learning more enjoyable.</p>
+          <p>If I could go back, I wouldn't just learn to get a good grade or pass a test. I'd try to learn for the joy of it: approach learning from a sense of wonder and curiosity. That will make learning more enjoyable.</p>
           <div class="qa-pullquote">
             <p>I'd also remind myself that it's okay to make mistakes. I used to be really hard on myself and spent too much time comparing myself to other people. That only held me back.</p>
           </div>
           <p>Everyone learns differently and has different strengths. Your unique talents and perspectives are what makes you who you are. Be proud of what makes you different. That's where your greatest strengths often come from.</p>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">✨ Learning for curiosity, not just grades</div>
-            <p>There's research on this: students who are intrinsically motivated (learning because they find it interesting) retain information better and perform better over the long run than students who are extrinsically motivated (learning for grades or external rewards). Stephanie's advice maps exactly onto what the science shows. If you can find a way to actually care about what you're studying — not just how it looks on your transcript — you'll get more out of it, and burn out less doing it.</p>
+            <div class="qa-insight-label">Learning for curiosity, not just grades</div>
+            <p>There's research on this: students who are intrinsically motivated (learning because they find it interesting) retain information better and perform better over the long run than students who are extrinsically motivated (learning for grades or external rewards). Stephanie's advice maps exactly onto what the science shows. If you can find a way to actually care about what you're studying, not just how it looks on your transcript, you'll get more out of it, and burn out less doing it.</p>
           </div>
         </div>
       </div>
 
       <div class="qa-close-box">
-        <p>Physical therapy is one of those careers that sounds straightforward until you're in it. The clinical work is learnable. What takes longer to develop is the patience, the communication, and the emotional resilience to guide people through some of the hardest periods of their lives — and still take care of yourself at the end of the day.</p>
+        <p>Physical therapy is one of those careers that sounds straightforward until you're in it. The clinical work is learnable. What takes longer to develop is the patience, the communication, and the emotional resilience to guide people through some of the hardest periods of their lives, and still take care of yourself at the end of the day.</p>
         <p>If you're considering PT or any healthcare field, I'm on Mentino to have exactly these kinds of conversations. The things that actually prepare you for this job are the ones most schools don't teach.</p>
       </div>
     `,
@@ -413,42 +415,45 @@ const blogPosts: BlogPost[] = [
     category: "Mentor Spotlight",
     categoryColor: "indigo",
     coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
-    excerpt: "Half the day is meetings. The other half is writing Python, SQL, or JavaScript with AI. A tech professional shares what the industry actually looks like — and what they wish students knew.",
+    excerpt: "Half the day is meetings. The other half is writing Python, SQL, or JavaScript with AI. A tech professional shares what the industry actually looks like, and what they wish students knew.",
     readTime: "8 min read",
     mentorAuthorId: "8a137b04-5e94-4bcf-be93-187547fd7530",
     mentorAuthorTitle: "Software Engineer & AI/BI Analytics Specialist",
     content: `
       <style>
-        .qa-intro-box { background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 20px; padding: 28px 32px; margin-bottom: 36px; }
-        .qa-intro-box p { color: #c7d2fe !important; line-height: 1.7; margin-bottom: 0 !important; }
-        .qa-intro-box strong { color: white !important; }
-        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #f3f4f6; }
+        .qa-intro-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-bottom: 32px; }
+        .qa-intro-box p { color: #1f2420 !important; line-height: 1.7; margin-bottom: 0 !important; }
+        .qa-intro-box strong { color: #1f2420 !important; }
+        .qa-block { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #e7e2d8; }
         .qa-block:last-of-type { border-bottom: none; }
-        .qa-question { display: flex; align-items: flex-start; gap: 12px; background: linear-gradient(135deg, #eff6ff, #eef2ff); border-left: 4px solid #6366f1; border-radius: 0 16px 16px 0; padding: 16px 20px; margin-bottom: 20px; }
-        .qa-q-num { background: #6366f1; color: white; font-size: 0.7rem; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-        .qa-q-text { font-size: 1rem; font-weight: 700; color: #1e1b4b; line-height: 1.5; }
-        .qa-answer { color: #374151; line-height: 1.85; }
-        .qa-answer p { margin-bottom: 14px !important; color: #374151 !important; }
-        .qa-pullquote { background: linear-gradient(135deg, #0f172a, #1e1b4b); border-radius: 16px; padding: 28px 28px 28px 52px; margin: 20px 0; position: relative; }
-        .qa-pullquote::before { content: '"'; font-size: 5rem; color: #6366f1; position: absolute; top: 4px; left: 16px; line-height: 1; font-family: Georgia, serif; }
-        .qa-pullquote p { color: #e2e8f0 !important; font-size: 1rem; font-style: italic; line-height: 1.75; margin-bottom: 0 !important; }
-        .qa-insight-box { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fde68a; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-insight-label { font-size: 0.7rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .qa-insight-box p { color: #78350f !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
-        .qa-tech-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; border-radius: 16px; padding: 20px 24px; margin: 20px 0; }
-        .qa-tech-label { font-size: 0.7rem; font-weight: 800; color: #1e40af; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .qa-tech-box p { color: #1e3a8a !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 0.9rem; }
-        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
-        .qa-stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        .qa-stat-num { font-size: 1.6rem; font-weight: 900; color: #6366f1; line-height: 1; }
-        .qa-stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 6px; line-height: 1.4; }
-        .qa-close-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 28px 32px; margin-top: 8px; border: 1px solid #e2e8f0; }
-        .qa-close-box p { color: #374151 !important; line-height: 1.8; margin-bottom: 12px !important; }
+        .qa-question { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #2c4a3e; padding: 4px 0 4px 16px; margin-bottom: 16px; }
+        .qa-q-num { background: #2c4a3e; color: #fff; font-size: 12px; font-weight: 600; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qa-q-text { font-size: 18px; font-weight: 500; color: #1f2420; line-height: 1.5; }
+        .qa-answer { color: #35332f; line-height: 1.8; }
+        .qa-answer p { margin-bottom: 16px !important; color: #35332f !important; }
+        .qa-pullquote { border-left: 2px solid #2c4a3e; padding: 4px 0 4px 24px; margin: 24px 0; }
+        .qa-pullquote p { font-family: "Newsreader", Georgia, serif; color: #1f2420 !important; font-size: 22px; line-height: 1.5; margin-bottom: 0 !important; }
+        .qa-resource-box { background: #e3eadf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-resource-title { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+        .qa-resource-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(31,36,32,0.1); }
+        .qa-resource-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .qa-resource-icon { display: none; }
+        .qa-resource-name { font-weight: 600; color: #1f2420; font-size: 15px; margin-bottom: 4px; }
+        .qa-resource-desc { color: #46433e; font-size: 14px; line-height: 1.55; }
+        .qa-insight-box { background: #f6edcf; border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+        .qa-insight-label { font-size: 12px; font-weight: 600; color: #1f2420; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+        .qa-insight-box p { color: #1f2420 !important; line-height: 1.65; margin-bottom: 0 !important; font-size: 15px; }
+        .qa-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+        .qa-stat { background: #fff; border: 1px solid #e7e2d8; border-radius: 12px; padding: 16px; text-align: center; }
+        .qa-stat-num { font-size: 28px; font-weight: 500; color: #1f2420; line-height: 1; }
+        .qa-stat-label { font-size: 12px; color: #5a5650; margin-top: 8px; line-height: 1.4; }
+        .qa-close-box { background: #f4f1ea; border-radius: 12px; padding: 24px 28px; margin-top: 8px; }
+        .qa-close-box p { color: #1f2420 !important; line-height: 1.8; margin-bottom: 12px !important; }
         .qa-close-box p:last-child { margin-bottom: 0 !important; }
       </style>
 
       <div class="qa-intro-box">
-        <p>I'm <strong>Sean Ipakchi</strong>, a software engineer specializing in AI/BI analytics solutions. I work with tools like Claude Code, Sigma, Hex.tech, and Snowflake to build data products for clients. Ethan at Mentino asked me seven questions about what a career in tech actually looks like — here's the honest version.</p>
+        <p>I'm <strong>Sean Ipakchi</strong>, a software engineer specializing in AI/BI analytics solutions. I work with tools like Claude Code, Sigma, Hex.tech, and Snowflake to build data products for clients. Ethan at Mentino asked me seven questions about what a career in tech actually looks like. Here's the honest version.</p>
       </div>
 
       <div class="qa-block">
@@ -462,8 +467,8 @@ const blogPosts: BlogPost[] = [
             <p>Being humble, spending time on YouTube, reading blogs and company docs, listening to podcasts, attending trainings, and going for certifications has all paid off in the long run. The best investment is in yourself.</p>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">💡 Why "staying curious" isn't just a cliché</div>
-            <p>Tech moves fast enough that skills that made you hireable three years ago may already be table stakes or obsolete. The people who survive multiple technology cycles — from mobile, to cloud, to AI — aren't necessarily the smartest. They're the ones who never stopped learning. Curiosity is the engine; humility is what keeps it running.</p>
+            <div class="qa-insight-label">Why "staying curious" isn't just a cliché</div>
+            <p>Tech moves fast enough that skills that made you hireable three years ago may already be table stakes or obsolete. The people who survive multiple technology cycles, from mobile, to cloud, to AI, aren't necessarily the smartest. They're the ones who never stopped learning. Curiosity is the engine; humility is what keeps it running.</p>
           </div>
         </div>
       </div>
@@ -481,21 +486,21 @@ const blogPosts: BlogPost[] = [
           </div>
           <div class="qa-stat-row">
             <div class="qa-stat">
-              <div class="qa-stat-num">🔄</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Agile standups every morning</div>
             </div>
             <div class="qa-stat">
-              <div class="qa-stat-num">🤝</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Client demos & biz dev</div>
             </div>
             <div class="qa-stat">
-              <div class="qa-stat-num">🐍</div>
+              <div class="qa-stat-num"></div>
               <div class="qa-stat-label">Python, SQL, JS with AI</div>
             </div>
           </div>
           <div class="qa-tech-box">
-            <div class="qa-tech-label">🛠 What "writing code with AI" actually means</div>
-            <p>This isn't ChatGPT writing everything for you. It's using AI tools like Claude Code or GitHub Copilot as a pair programmer — you still need to understand the code, debug it, and make architectural decisions. AI speeds up the writing; the judgment of what to write is still entirely yours. That's why communication and critical thinking matter more than ever, not less.</p>
+            <div class="qa-tech-label">What "writing code with AI" actually means</div>
+            <p>This isn't ChatGPT writing everything for you. It's using AI tools like Claude Code or GitHub Copilot as a pair programmer. You still need to understand the code, debug it, and make architectural decisions. AI speeds up the writing; the judgment of what to write is still entirely yours. That's why communication and critical thinking matter more than ever, not less.</p>
           </div>
         </div>
       </div>
@@ -506,13 +511,13 @@ const blogPosts: BlogPost[] = [
           <div class="qa-q-text">What is the most challenging or surprising part of your job?</div>
         </div>
         <div class="qa-answer">
-          <p>Sometimes we really get the architecture direction on the project wrong and there's either leftover tech debt, or we have to acknowledge that in front of the client and redirect our solution to a better architecture — and explain why and how long that will take.</p>
+          <p>Sometimes we really get the architecture direction on the project wrong and there's either leftover tech debt, or we have to acknowledge that in front of the client and redirect our solution to a better architecture, and explain why and how long that will take.</p>
           <div class="qa-pullquote">
             <p>There's no hiding from a bad architectural call. At some point you have to sit in front of a client, own it, and explain the path forward. That's genuinely hard.</p>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">🏗 What "tech debt" actually costs</div>
-            <p>Tech debt is what happens when you make fast decisions early that slow you down later. Every shortcut you take to ship quickly has interest — and at some point, the bill comes due. In consulting especially, you're accountable to a client who may not know the terminology but absolutely feels the slowdown. Learning to recognize architectural mistakes early — and communicating them honestly — is a skill that separates senior engineers from junior ones.</p>
+            <div class="qa-insight-label">What "tech debt" actually costs</div>
+            <p>Tech debt is what happens when you make fast decisions early that slow you down later. Every shortcut you take to ship quickly has interest, and at some point, the bill comes due. In consulting especially, you're accountable to a client who may not know the terminology but absolutely feels the slowdown. Learning to recognize architectural mistakes early, and communicating them honestly, is a skill that separates senior engineers from junior ones.</p>
           </div>
         </div>
       </div>
@@ -528,8 +533,8 @@ const blogPosts: BlogPost[] = [
             <p>For me currently that's AI/BI Analytics solutions for clients involving Claude Code, Sigma, Hex.tech, and Snowflake. Go deep, not wide.</p>
           </div>
           <div class="qa-tech-box">
-            <div class="qa-tech-label">🎯 How to pick your niche in tech</div>
-            <p>The mistake most students make is trying to learn everything — a little JavaScript, a little Python, a little data science, a little cloud. You end up mediocre at all of it. Pick something that has real job demand, sits at an intersection you find interesting, and go deep enough that you can actually build things. The niche Sean works in — AI-powered business analytics — is a good example: it combines data engineering, business understanding, and AI tooling in a way that has serious market demand right now.</p>
+            <div class="qa-tech-label">How to pick your niche in tech</div>
+            <p>The mistake most students make is trying to learn everything: a little JavaScript, a little Python, a little data science, a little cloud. You end up mediocre at all of it. Pick something that has real job demand, sits at an intersection you find interesting, and go deep enough that you can actually build things. The niche Sean works in, AI-powered business analytics, is a good example: it combines data engineering, business understanding, and AI tooling in a way that has serious market demand right now.</p>
           </div>
         </div>
       </div>
@@ -545,8 +550,8 @@ const blogPosts: BlogPost[] = [
             <p>That you have to be an engineer to succeed in tech.</p>
           </div>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">📊 The full picture of who works in tech</div>
-            <p>Product managers, UX designers, technical writers, data analysts, sales engineers, solutions architects, program managers, security specialists, DevRel — tech is a massive ecosystem, and most of these roles don't require you to write production code every day. If you're drawn to technology but don't want to be a software engineer, there are more paths than most people realize. The common thread is comfort with technical concepts and change, not necessarily deep coding expertise.</p>
+            <div class="qa-insight-label">The full picture of who works in tech</div>
+            <p>Product managers, UX designers, technical writers, data analysts, sales engineers, solutions architects, program managers, security specialists, DevRel. Tech is a massive ecosystem, and most of these roles don't require you to write production code every day. If you're drawn to technology but don't want to be a software engineer, there are more paths than most people realize. The common thread is comfort with technical concepts and change, not necessarily deep coding expertise.</p>
           </div>
         </div>
       </div>
@@ -562,8 +567,8 @@ const blogPosts: BlogPost[] = [
             <p>To be successful with other people and AI, those are required skills.</p>
           </div>
           <div class="qa-tech-box">
-            <div class="qa-tech-label">✍️ Why writing matters more in an AI world</div>
-            <p>Counterintuitively, the rise of AI has made human communication skills more important, not less. AI tools respond to how clearly you can articulate what you want. Prompting is writing. Explaining a technical problem to a client is writing. Documenting a codebase so your team doesn't lose a week reverse-engineering your work is writing. The engineers and analysts who compound fastest are the ones who can translate between technical and human — and that's a writing and communication problem at its core.</p>
+            <div class="qa-tech-label">Why writing matters more in an AI world</div>
+            <p>Counterintuitively, the rise of AI has made human communication skills more important, not less. AI tools respond to how clearly you can articulate what you want. Prompting is writing. Explaining a technical problem to a client is writing. Documenting a codebase so your team doesn't lose a week reverse-engineering your work is writing. The engineers and analysts who compound fastest are the ones who can translate between technical and human, and that's a writing and communication problem at its core.</p>
           </div>
         </div>
       </div>
@@ -574,16 +579,16 @@ const blogPosts: BlogPost[] = [
           <div class="qa-q-text">If you were in high school again, what would you do differently?</div>
         </div>
         <div class="qa-answer">
-          <p>I would have largely done the same as I did. Get into honors/AP classes, play a ton of video games, bike and run, meet a great group of best friends I'm still hanging out with today. Maybe being nicer to my parents — it's tough, I know.</p>
+          <p>I would have largely done the same as I did. Get into honors/AP classes, play a ton of video games, bike and run, meet a great group of best friends I'm still hanging out with today. Maybe being nicer to my parents. It's tough, I know.</p>
           <div class="qa-insight-box">
-            <div class="qa-insight-label">🤝 The one thing Sean would add</div>
-            <p>Reach out to others more often to pick their brain, learn about what they're working on, and ask for help. It's taken a long time for me to swallow my pride and independence and ask others for help or fully collaborate on solutions. The students who accelerate fastest aren't the most talented — they're the ones who ask the best questions and are willing to let other people help them get there. That's a skill you can start practicing in high school.</p>
+            <div class="qa-insight-label">The one thing Sean would add</div>
+            <p>Reach out to others more often to pick their brain, learn about what they're working on, and ask for help. It's taken a long time for me to swallow my pride and independence and ask others for help or fully collaborate on solutions. The students who accelerate fastest aren't the most talented. They're the ones who ask the best questions and are willing to let other people help them get there. That's a skill you can start practicing in high school.</p>
           </div>
         </div>
       </div>
 
       <div class="qa-close-box">
-        <p>Tech is bigger and more diverse than the stereotypes suggest. You don't have to be a certain type of person, come from a certain background, or know how to code on day one. What you do need is a genuine interest in learning, the willingness to go deep on something, and the communication skills to work with the humans — and the AI tools — around you.</p>
+        <p>Tech is bigger and more diverse than the stereotypes suggest. You don't have to be a certain type of person, come from a certain background, or know how to code on day one. What you do need is a genuine interest in learning, the willingness to go deep on something, and the communication skills to work with the humans, and the AI tools, around you.</p>
         <p>If you're curious about what a career in tech, analytics, or AI actually looks like day to day, I'm on Mentino for exactly these kinds of conversations.</p>
       </div>
     `,
@@ -596,7 +601,7 @@ const blogPosts: BlogPost[] = [
     category: "Mentorship",
     categoryColor: "indigo",
     coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-    excerpt: "Confidence, networking, and professional growth — what the research says.",
+    excerpt: "Confidence, networking, and professional growth: what the research says.",
     readTime: "6 min read",
     content: `
       <p>You can learn almost anything online. Free courses, YouTube tutorials, research papers: information has never been more accessible. So why does mentorship still matter?</p>
@@ -617,20 +622,20 @@ const blogPosts: BlogPost[] = [
         <li><strong>More promotions</strong> at a significantly higher rate</li>
       </ul>
 
-      <div style="background:linear-gradient(135deg,#eff6ff,#eef2ff);border:1px solid #bfdbfe;border-radius:20px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Mentored vs Non-Mentored Employees</div>
+      <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Mentored vs Non-Mentored Employees</div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career promotions</span><span style="font-weight:700;color:#4f46e5">5×</span></div>
-            <div style="background:#dbeafe;border-radius:99px;height:10px"><div style="background:#4f46e5;height:10px;border-radius:99px;width:100%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career promotions</span><span style="font-weight:700;color:#2c4a3e">5×</span></div>
+            <div style="background:#dbeafe;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:100%"></div></div>
           </div>
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career satisfaction</span><span style="font-weight:700;color:#059669">4×</span></div>
-            <div style="background:#d1fae5;border-radius:99px;height:10px"><div style="background:#059669;height:10px;border-radius:99px;width:80%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Career satisfaction</span><span style="font-weight:700;color:#2c4a3e">4×</span></div>
+            <div style="background:#e7e2d8;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:80%"></div></div>
           </div>
           <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Higher avg salary vs peers</span><span style="font-weight:700;color:#d97706">+$5,610/yr</span></div>
-            <div style="background:#fef3c7;border-radius:99px;height:10px"><div style="background:#d97706;height:10px;border-radius:99px;width:60%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Higher avg salary vs peers</span><span style="font-weight:700;color:#2c4a3e">+$5,610/yr</span></div>
+            <div style="background:#f4f1ea;border-radius:99px;height:10px"><div style="background:#2c4a3e;height:10px;border-radius:99px;width:60%"></div></div>
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px"><span style="color:#374151">Job offers before graduation</span><span style="font-weight:700;color:#ef4444">+23%</span></div>
@@ -651,19 +656,19 @@ const blogPosts: BlogPost[] = [
         <li><strong>130% more likely</strong> to hold leadership positions</li>
       </ul>
 
-      <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:20px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Key Stats for Young People with Mentors</div>
+      <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Key Stats for Young People with Mentors</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#6366f1;line-height:1">55%</div>
+            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">55%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to enroll in college</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#10b981;line-height:1">130%</div>
+            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">130%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to hold leadership positions</div>
           </div>
           <div style="background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-            <div style="font-size:2rem;font-weight:900;color:#f59e0b;line-height:1">78%</div>
+            <div style="font-size:2rem;font-weight:900;color:#2c4a3e;line-height:1">78%</div>
             <div style="font-size:0.72rem;color:#6b7280;margin-top:6px;line-height:1.4">More likely to volunteer in communities</div>
           </div>
         </div>
@@ -718,12 +723,12 @@ const blogPosts: BlogPost[] = [
       <p>But these numbers need context. "STEM" includes everything from software engineers ($127,260 median) to agricultural technicians ($40,160 median). The range within STEM is enormous.</p>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
-        <div style="background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:20px;padding:24px;color:white;text-align:center">
+        <div style="background:#f4f1ea;border-radius:12px;padding:24px;color:white;text-align:center">
           <div style="font-size:0.7rem;font-weight:700;opacity:0.8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">STEM Median</div>
           <div style="font-size:2.5rem;font-weight:900;line-height:1">$100,900</div>
           <div style="font-size:0.75rem;opacity:0.8;margin-top:6px">per year (BLS, 2023)</div>
         </div>
-        <div style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:20px;padding:24px;color:white;text-align:center">
+        <div style="background:#f4f1ea;border-radius:12px;padding:24px;color:white;text-align:center">
           <div style="font-size:0.7rem;font-weight:700;opacity:0.8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Non-STEM Median</div>
           <div style="font-size:2.5rem;font-weight:900;line-height:1">$40,120</div>
           <div style="font-size:0.75rem;opacity:0.8;margin-top:6px">per year (BLS, 2023)</div>
@@ -735,17 +740,17 @@ const blogPosts: BlogPost[] = [
 
       <p>Here's a breakdown of median annual salaries by major occupation group (BLS, May 2023):</p>
 
-      <div style="background:#f8fafc;border-radius:20px;padding:24px;margin:24px 0;border:1px solid #e2e8f0">
+      <div style="background:#f4f1ea;border-radius:12px;padding:24px;margin:24px 0;border:1px solid #e7e2d8">
         <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Median Annual Salary by Field (BLS, May 2023)</div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Computer & IT</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#3b82f6,#6366f1);height:28px;border-radius:99px;width:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$104,420</span></div></div><div style="font-size:0.7rem;background:#dbeafe;color:#1d4ed8;padding:2px 7px;border-radius:99px;white-space:nowrap">+15%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Legal</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#f59e0b,#d97706);height:28px;border-radius:99px;width:82%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$84,910</span></div></div><div style="font-size:0.7rem;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Engineering</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#6366f1,#8b5cf6);height:28px;border-radius:99px;width:80%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$83,340</span></div></div><div style="font-size:0.7rem;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+7%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Healthcare</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#10b981,#059669);height:28px;border-radius:99px;width:75%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$77,600</span></div></div><div style="font-size:0.7rem;background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:99px;white-space:nowrap">+13%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Business & Financial</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#14b8a6,#0d9488);height:28px;border-radius:99px;width:74%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$76,850</span></div></div><div style="font-size:0.7rem;background:#ccfbf1;color:#065f46;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Life Sciences</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#8b5cf6,#7c3aed);height:28px;border-radius:99px;width:66%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$68,830</span></div></div><div style="font-size:0.7rem;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+5%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Education</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#0ea5e9,#0284c7);height:28px;border-radius:99px;width:53%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$55,350</span></div></div><div style="font-size:0.7rem;background:#e0f2fe;color:#0c4a6e;padding:2px 7px;border-radius:99px;white-space:nowrap">+4%</div></div>
-          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Arts & Design</div><div style="flex:1;background:#e2e8f0;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#ec4899,#db2777);height:28px;border-radius:99px;width:49%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$50,710</span></div></div><div style="font-size:0.7rem;background:#fce7f3;color:#831843;padding:2px 7px;border-radius:99px;white-space:nowrap">+3%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Computer & IT</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$104,420</span></div></div><div style="font-size:0.7rem;background:#dbeafe;color:#2c4a3e;padding:2px 7px;border-radius:99px;white-space:nowrap">+15%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Legal</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:82%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$84,910</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Engineering</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:80%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$83,340</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+7%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Healthcare</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:75%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$77,600</span></div></div><div style="font-size:0.7rem;background:#e7e2d8;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+13%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Business & Financial</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:74%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$76,850</span></div></div><div style="font-size:0.7rem;background:#ccfbf1;color:#1f2420;padding:2px 7px;border-radius:99px;white-space:nowrap">+8%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Life Sciences</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#2c4a3e);height:28px;border-radius:99px;width:66%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$68,830</span></div></div><div style="font-size:0.7rem;background:#f4f1ea;color:#5b21b6;padding:2px 7px;border-radius:99px;white-space:nowrap">+5%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Education</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#0284c7);height:28px;border-radius:99px;width:53%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$55,350</span></div></div><div style="font-size:0.7rem;background:#e0f2fe;color:#0c4a6e;padding:2px 7px;border-radius:99px;white-space:nowrap">+4%</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font-size:0.78rem;color:#374151;width:140px;flex-shrink:0">Arts & Design</div><div style="flex:1;background:#e7e2d8;border-radius:99px;height:28px;overflow:hidden"><div style="background:linear-gradient(90deg,#2c4a3e,#db2777);height:28px;border-radius:99px;width:49%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px"><span style="color:white;font-weight:700;font-size:0.75rem">$50,710</span></div></div><div style="font-size:0.7rem;background:#fce7f3;color:#831843;padding:2px 7px;border-radius:99px;white-space:nowrap">+3%</div></div>
         </div>
         <div style="font-size:0.7rem;color:#94a3b8;margin-top:12px">% growth = projected 2022–2032 job growth rate. Source: BLS Occupational Outlook Handbook 2024</div>
       </div>
@@ -796,15 +801,15 @@ const blogPosts: BlogPost[] = [
 
       <h3>Salary Growth Over a Career</h3>
 
-      <p>Starting salary is one data point. What matters more is the trajectory. The Bureau of Labor Statistics tracks median wages by age group — the gap between early career (25–34) and peak earning (45–54) tells you a lot about a field's growth ceiling.</p>
+      <p>Starting salary is one data point. What matters more is the trajectory. The Bureau of Labor Statistics tracks median wages by age group: the gap between early career (25–34) and peak earning (45–54) tells you a lot about a field's growth ceiling.</p>
 
-      <p>In software and engineering roles, median wages nearly double between early and peak career. In education, growth is much flatter. In law and medicine, early salaries look modest (especially with student debt) but peak earnings are among the highest of any profession. The key question isn't "what does this pay now?" — it's "where does this go?"</p>
+      <p>In software and engineering roles, median wages nearly double between early and peak career. In education, growth is much flatter. In law and medicine, early salaries look modest (especially with student debt) but peak earnings are among the highest of any profession. The key question isn't "what does this pay now?" It's "where does this go?"</p>
 
       <h3>What the Numbers Miss</h3>
 
-      <p>Salary data is averages — and averages hide a lot. A software engineer at a startup making $85K and one at Google making $240K are both "software engineers." A pediatrician in rural Texas and an orthopedic surgeon in New York are both "doctors."</p>
+      <p>Salary data is averages, and averages hide a lot. A software engineer at a startup making $85K and one at Google making $240K are both "software engineers." A pediatrician in rural Texas and an orthopedic surgeon in New York are both "doctors."</p>
 
-      <p>The factors that actually determine your individual outcome: location, specialization, the specific company or institution, how long you stay, and how aggressive you are about negotiating. Research from Linda Babcock at Carnegie Mellon found that not negotiating your first salary costs an average of $500,000 in lifetime earnings due to compounding raises. That's not a salary issue — it's a negotiation issue.</p>
+      <p>The factors that actually determine your individual outcome: location, specialization, the specific company or institution, how long you stay, and how aggressive you are about negotiating. Research from Linda Babcock at Carnegie Mellon found that not negotiating your first salary costs an average of $500,000 in lifetime earnings due to compounding raises. That's not a salary issue. It's a negotiation issue.</p>
 
       <p class="source">Source: Babcock, L., & Laschever, S. (2003). <em>Women Don't Ask</em>. Princeton University Press. Carnegie Mellon University wage negotiation research (2001).</p>
 
@@ -817,14 +822,14 @@ const blogPosts: BlogPost[] = [
         <li><strong>STEM pays more on average</strong>, but the range inside every field is huge. A great attorney earns more than a mediocre software engineer. Field matters less than you'd think.</li>
         <li><strong>Talk to someone who actually does it.</strong> Salary data tells you the number, but it doesn't tell you what the job actually feels like at 10pm on a Tuesday. That's what mentors are for.</li>
         <li><strong>Think past the first paycheck:</strong> student debt, years of training, lifestyle, location, and where the field is headed in 10 years all matter.</li>
-        <li><strong>Learn to negotiate.</strong> The single highest-ROI skill for early career isn't technical — it's knowing how to ask for what you're worth.</li>
+        <li><strong>Learn to negotiate.</strong> The single highest-ROI skill for early career isn't technical. It's knowing how to ask for what you're worth.</li>
       </ol>
 
       <h3>The Geographic Factor</h3>
 
       <p>Where you work matters almost as much as what you do. A software engineer in San Francisco earns a median of $136,000. The same role in a mid-sized city like Austin or Denver pays around $105,000. In a smaller market, it could be $75,000. The national median is just an average of all of those.</p>
 
-      <p>This cuts both ways. Cost of living in San Francisco is dramatically higher than in Austin. MIT's Living Wage Calculator estimates a single adult in San Francisco needs around $72,000 just to cover basic expenses — before any discretionary spending or savings. The same calculation in Columbus, Ohio comes in under $35,000. A $105,000 salary in Columbus might actually leave you with more disposable income than $136,000 in San Francisco.</p>
+      <p>This cuts both ways. Cost of living in San Francisco is dramatically higher than in Austin. MIT's Living Wage Calculator estimates a single adult in San Francisco needs around $72,000 just to cover basic expenses, before any discretionary spending or savings. The same calculation in Columbus, Ohio comes in under $35,000. A $105,000 salary in Columbus might actually leave you with more disposable income than $136,000 in San Francisco.</p>
 
       <p>Remote work has changed this somewhat, but not completely. Most high-paying roles still pay location-adjusted salaries even for remote workers, and many require some in-office presence. Before you anchor on a salary number, look up what it actually buys in the city where you plan to live.</p>
 
@@ -859,22 +864,22 @@ const blogPosts: BlogPost[] = [
     content: `
       <p>There's a version of career success that comes from grinding alone, and a version that comes from knowing the right person at the right time. Most people who made it had both, but the second one is a lot harder to get by accident.</p>
 
-      <div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #ddd6fe;border-radius:20px;padding:24px;margin:28px 0">
-        <div style="font-size:0.75rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
+      <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:24px;margin:28px 0">
+        <div style="font-size:0.75rem;font-weight:700;color:#2c4a3e;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px">Measured Career Outcomes</div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
-          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
-            <div style="font-size:1.8rem;font-weight:900;color:#7c3aed">23%</div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
+            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">23%</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More likely to get a job offer before graduation</div>
           </div>
-          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
-            <div style="font-size:1.8rem;font-weight:900;color:#059669">71%</div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
+            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">71%</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">Fortune 500 companies with formal mentoring programs</div>
           </div>
-          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
-            <div style="font-size:1.8rem;font-weight:900;color:#d97706">5×</div>
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
+            <div style="font-size:1.8rem;font-weight:900;color:#2c4a3e">5×</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">More promotions over a career</div>
           </div>
-          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #ede9fe">
+          <div style="background:white;border-radius:14px;padding:16px;border:1px solid #f4f1ea">
             <div style="font-size:1.8rem;font-weight:900;color:#ef4444">+$5,610</div>
             <div style="font-size:0.75rem;color:#6b7280;margin-top:4px">Higher average salary per year</div>
           </div>
@@ -934,7 +939,7 @@ const blogPosts: BlogPost[] = [
 
       <h3>The Compound Effect</h3>
 
-      <p>The most interesting thing about mentorship data isn't any single outcome — it's how the effects stack. Mentored students are more likely to get good first jobs. Better first jobs mean better second jobs. Better career trajectories mean more opportunities to develop skills, build networks, and earn more. The gap between mentored and non-mentored professionals widens over time, not narrows.</p>
+      <p>The most interesting thing about mentorship data isn't any single outcome. It's how the effects stack. Mentored students are more likely to get good first jobs. Better first jobs mean better second jobs. Better career trajectories mean more opportunities to develop skills, build networks, and earn more. The gap between mentored and non-mentored professionals widens over time, not narrows.</p>
 
       <p>A 2019 meta-analysis in the <em>Journal of Vocational Behavior</em> reviewed 27 studies covering over 11,000 participants and found consistent positive effects of mentoring on objective career outcomes (salary, promotions) and subjective outcomes (job satisfaction, career commitment). Crucially, the effects were strongest for mentees who had the relationship earliest in their careers.</p>
 
@@ -961,7 +966,7 @@ const blogPosts: BlogPost[] = [
 
       <p class="source">Source: Association for Talent Development, "State of Mentoring" report (2020).</p>
 
-      <p>The students who get the most out of mentorship tend to share a few traits: they ask specific questions, they follow through on suggestions, and they stay in contact. You don't need to be impressive — you need to be curious and consistent.</p>
+      <p>The students who get the most out of mentorship tend to share a few traits: they ask specific questions, they follow through on suggestions, and they stay in contact. You don't need to be impressive. You need to be curious and consistent.</p>
 
       <p>That's what Mentino is for. Sign up, find someone who's already where you're trying to go, and just ask them what you need to know.</p>
     `,
@@ -985,13 +990,13 @@ const blogPosts: BlogPost[] = [
 
       <p>Figuring out your path is a process, not a decision you make once and stick to. Here's what actually helps.</p>
 
-      <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fde68a;border-radius:20px;padding:20px;margin:24px 0;display:flex;flex-wrap:wrap;gap:10px">
-        <div style="font-size:0.7rem;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.08em;width:100%;margin-bottom:4px">5 Things That Actually Help</div>
-        <span style="background:#d97706;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">1. Follow your curiosity</span>
-        <span style="background:#7c3aed;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">2. Talk to real people</span>
-        <span style="background:#059669;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">3. Try before committing</span>
-        <span style="background:#2563eb;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">4. Build flexible skills</span>
-        <span style="background:#e11d48;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">5. Don't specialize too soon</span>
+      <div style="background:#f4f1ea;border:1px solid #e7e2d8;border-radius:12px;padding:20px;margin:24px 0;display:flex;flex-wrap:wrap;gap:10px">
+        <div style="font-size:0.7rem;font-weight:700;color:#1f2420;text-transform:uppercase;letter-spacing:0.08em;width:100%;margin-bottom:4px">5 Things That Actually Help</div>
+        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">1. Follow your curiosity</span>
+        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">2. Talk to real people</span>
+        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">3. Try before committing</span>
+        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">4. Build flexible skills</span>
+        <span style="background:#2c4a3e;color:white;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:99px">5. Don't specialize too soon</span>
       </div>
 
       <h3>1. Follow what you're actually curious about</h3>
@@ -1040,9 +1045,9 @@ const blogPosts: BlogPost[] = [
 
       <h3>The Role of Identity in Career Choice</h3>
 
-      <p>A lot of career confusion isn't about the career — it's about identity. "Who am I?" is a harder question than "what job should I have?" and students often mix them up. Psychologist James Marcia's research on identity development found that most teenagers are either in "moratorium" (actively exploring, unsettled) or "foreclosure" (committed to an identity they didn't actually choose — often because their parents chose it for them).</p>
+      <p>A lot of career confusion isn't about the career. It's about identity. "Who am I?" is a harder question than "what job should I have?" and students often mix them up. Psychologist James Marcia's research on identity development found that most teenagers are either in "moratorium" (actively exploring, unsettled) or "foreclosure" (committed to an identity they didn't actually choose, often because their parents chose it for them).</p>
 
-      <p>If you feel pressure to commit to a path before you're ready, that pressure is usually external. Your parents, your school's college counselor, college apps — they all want a tidy story. But committing early to the wrong thing is a much more expensive mistake than taking time to explore.</p>
+      <p>If you feel pressure to commit to a path before you're ready, that pressure is usually external. Your parents, your school's college counselor, college apps. They all want a tidy story. But committing early to the wrong thing is a much more expensive mistake than taking time to explore.</p>
 
       <p class="source">Source: Marcia, J.E. (1966). "Development and validation of ego-identity status." <em>Journal of Personality and Social Psychology</em>, 3(5), 551-558.</p>
 
@@ -1050,9 +1055,9 @@ const blogPosts: BlogPost[] = [
 
       <p>Career counselors, personality tests, and online quizzes are a starting point at best. The research consistently shows that the most effective career exploration happens through two things: direct experience and conversations with people who are already doing the work.</p>
 
-      <p>Direct experience means internships, part-time jobs, projects, competitions, or just building something related to the field. Not reading about it — doing a version of it. Conversations with people already in the field give you information you genuinely cannot get anywhere else: what a random Tuesday feels like, what skills actually matter vs. what looks good on paper, whether the day-to-day matches the hype.</p>
+      <p>Direct experience means internships, part-time jobs, projects, competitions, or just building something related to the field. Not reading about it. Doing a version of it. Conversations with people already in the field give you information you genuinely cannot get anywhere else: what a random Tuesday feels like, what skills actually matter vs. what looks good on paper, whether the day-to-day matches the hype.</p>
 
-      <p>Both of these require initiative. Nobody sends you an invitation. The good news is that reaching out to people is easier now than it's ever been — and most professionals are more willing to talk to curious students than you'd expect.</p>
+      <p>Both of these require initiative. Nobody sends you an invitation. The good news is that reaching out to people is easier now than it's ever been, and most professionals are more willing to talk to curious students than you'd expect.</p>
 
       <p>Your career doesn't have to be a straight line, and it probably won't be. The most interesting ones rarely are. Explore, talk to real people, try things. Clarity comes from doing, not from sitting and thinking harder about it. Stop waiting to have it figured out and start having conversations with people who can help you figure it out.</p>
     `,
@@ -1078,8 +1083,8 @@ const blogPosts: BlogPost[] = [
 
       <p>About 1 in 3 young people in the U.S. will grow up without a mentor. That's 16 million people figuring things out alone when they don't have to.</p>
 
-      <div style="background:linear-gradient(135deg,#0f172a,#1e1b4b);border-radius:20px;padding:28px;margin:28px 0;text-align:center;color:white">
-        <div style="font-size:4rem;font-weight:900;background:linear-gradient(135deg,#f472b6,#fb7185,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">16M</div>
+      <div style="background:#f4f1ea;border-radius:12px;padding:28px;margin:28px 0;text-align:center;color:white">
+        <div style="font-size:4rem;font-weight:900;background:#f4f1ea;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">16M</div>
         <div style="font-size:1rem;color:#cbd5e1;margin-top:8px">young people in the U.S. growing up without a mentor</div>
         <div style="display:flex;justify-content:center;gap:24px;margin-top:20px">
           <div style="text-align:center"><div style="font-size:1.3rem;font-weight:700;color:#f472b6">1 in 3</div><div style="font-size:0.7rem;color:#94a3b8;margin-top:2px">young Americans</div></div>
@@ -1113,9 +1118,9 @@ const blogPosts: BlogPost[] = [
 
       <h3>The Technical Side</h3>
 
-      <p>A lot of people are surprised that a 15-year-old built this. I get it. But the tools available now make it genuinely possible — not easy, but possible. Mentino is built on Hono (a fast web framework), React for the UI, and Supabase for the database. I was learning most of this as I built it.</p>
+      <p>A lot of people are surprised that a 15-year-old built this. I get it. But the tools available now make it genuinely possible, not easy, but possible. Mentino is built on Hono (a fast web framework), React for the UI, and Supabase for the database. I was learning most of this as I built it.</p>
 
-      <p>The hardest parts weren't the code. They were the decisions. How do you verify a mentor without asking for their social security number? How do you keep a platform safe for students under 18 without making it so locked down that nobody actually uses it? How do you build a matching algorithm that's actually useful and not just a feel-good percentage? These are design problems, not coding problems. You can't Google the answer — you have to think it through and make a call.</p>
+      <p>The hardest parts weren't the code. They were the decisions. How do you verify a mentor without asking for their social security number? How do you keep a platform safe for students under 18 without making it so locked down that nobody actually uses it? How do you build a matching algorithm that's actually useful and not just a feel-good percentage? These are design problems, not coding problems. You can't Google the answer. You have to think it through and make a call.</p>
 
       <p>I shipped a lot of bad first versions. The first matching algorithm was a simple keyword match that returned nonsense. The first message system had no read receipts and no notifications, so conversations would just... die silently. The first profile page had no way to edit anything after signing up. Every one of those was a decision I made too fast that I had to go back and fix.</p>
 
@@ -1126,7 +1131,7 @@ const blogPosts: BlogPost[] = [
       <p>If you're a student and you're thinking about building something:</p>
 
       <ul>
-        <li><strong>Pick a problem you actually have.</strong> I used Mentino. That made every design decision easier — I could just ask myself what I would want.</li>
+        <li><strong>Pick a problem you actually have.</strong> I used Mentino. That made every design decision easier. I could just ask myself what I would want.</li>
         <li><strong>Don't wait until you're good enough.</strong> You get good enough by building things. There is no other path.</li>
         <li><strong>The first version will be embarrassing.</strong> That's fine. Put it in front of real users anyway. The feedback is worth more than the embarrassment.</li>
         <li><strong>Find one person who's already done what you want to do.</strong> I've gotten more useful direction from a handful of conversations with people who've built products before than from any tutorial. Which is, honestly, exactly the point of Mentino.</li>
@@ -1136,286 +1141,74 @@ const blogPosts: BlogPost[] = [
 
       <p>I want a student to be able to open Mentino, find the right mentor for exactly where they're trying to go, and have a real conversation: not a form, not an algorithm pretending to care, just a real person with real experience. We're building toward that.</p>
 
-      <p>The next phase is growth — getting more real mentors from more fields, and making sure every student who signs up can find someone relevant to them. After that, features that make the relationship better over time: session notes, progress tracking, resources mentors can share with students.</p>
+      <p>The next phase is growth: getting more real mentors from more fields, and making sure every student who signs up can find someone relevant to them. After that, features that make the relationship better over time: session notes, progress tracking, resources mentors can share with students.</p>
 
       <p>If you're a student, sign up. If you're someone who's figured something out and wants to give back, we need you. We're just getting started.</p>
     `,
   },
 ];
 
-// GET /blog — Blog index
+// GET /blog: Blog index
 blog.get("/blog", optionalAuth, (c) => {
   const user = c.get("user");
-  const featured = blogPosts[0];
-  const rest = blogPosts.slice(1);
+  const category = (c.req.query("category") || "").trim();
+  const categories = [...new Set(blogPosts.map((p) => p.category))];
+  const posts = category ? blogPosts.filter((p) => p.category === category) : blogPosts;
 
   return html(
-    <Layout title="Blog" user={user} currentPath="/blog">
-      <div className="max-w-5xl mx-auto">
+    <Layout title="Blog" description="Career research, mentor interviews and honest advice for students choosing a career." user={user} currentPath="/blog">
+      <div className="max-w-6xl mx-auto">
+        <header className="max-w-2xl mb-8">
+          <p className="t-eyebrow mb-4">Mentino Blog</p>
+          <h1 className="font-serif text-4xl sm:text-5xl text-gray-900">Things worth knowing before you pick a career.</h1>
+          <p className="text-lg text-gray-600 mt-4">Career research, mentor interviews and honest takes from people doing the work.</p>
+        </header>
 
-        {/* Magazine masthead */}
-        <div className="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950 rounded-3xl overflow-hidden mb-10 px-8 py-14 text-white">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/10 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" />
-          <div className="relative z-10 text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-sm font-medium mb-5">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              Mentino Blog
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Things worth knowing before you pick a career.</h1>
-            <p className="text-lg text-slate-300 max-w-xl mx-auto">Career research, real mentor interviews, and honest takes — from the people actually doing the work.</p>
-          </div>
-        </div>
-
-        {/* Colorful data strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-          {[
-            { num: "16M", label: "US youth without a mentor", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
-            { num: "5×", label: "More promotions with a mentor", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
-            { num: "$60K", label: "Median bachelor's degree salary", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-            { num: "71%", label: "Fortune 500 companies run mentoring", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
-          ].map((s) => (
-            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 flex items-center gap-3`}>
-              <div className={`w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm`}>
-                <svg className={`w-5 h-5 ${s.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={s.icon} />
-                </svg>
-              </div>
-              <div>
-                <div className={`text-2xl font-extrabold ${s.color} leading-none`}>{s.num}</div>
-                <div className="text-gray-500 text-xs mt-0.5 leading-snug">{s.label}</div>
-              </div>
-            </div>
+        <nav aria-label="Topics" className="flex flex-wrap gap-2 mb-8">
+          <a href="/blog" aria-current={!category ? "page" : undefined} className={`btn btn-sm ${!category ? "btn-primary" : "btn-secondary"}`}>All</a>
+          {categories.map((cat) => (
+            <a key={cat} href={`/blog?category=${encodeURIComponent(cat)}`} aria-current={category === cat ? "page" : undefined}
+              className={`btn btn-sm ${category === cat ? "btn-primary" : "btn-secondary"}`}>{cat}</a>
           ))}
+        </nav>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => <BlogCard key={post.slug} post={post} />)}
         </div>
 
-        {/* Featured Post — hero style */}
-        <a href={`/blog/${featured.slug}`} className="group block mb-10">
-          <div className="relative rounded-3xl overflow-hidden h-80 md:h-96">
-            <img
-              src={featured.coverImage}
-              alt={featured.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  {featured.category}
-                </span>
-                <span className="text-white/60 text-sm">{featured.date}</span>
-                <span className="text-white/60 text-sm">{featured.readTime}</span>
-              </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-2 group-hover:text-indigo-300 transition-colors">
-                {featured.title}
-              </h2>
-              <p className="text-white/70 text-sm md:text-base max-w-2xl">
-                {featured.excerpt}
-              </p>
-              <div className="flex items-center text-indigo-300 font-semibold text-sm mt-4">
-                Read article
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
+        <section className="mt-16 bg-sage rounded-xl p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h2 className="font-serif text-2xl text-gray-900">Stop reading. Start talking to someone.</h2>
+            <p className="text-gray-700 mt-2">One honest conversation beats all the research in the world.</p>
           </div>
-        </a>
-
-        {/* Why Mentorship Works — stats panel */}
-        <div className="bg-gradient-to-br from-indigo-950 to-indigo-900 rounded-3xl p-8 md:p-12 mb-10 text-white">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-extrabold mb-2">Why Mentorship Works</h2>
-            <p className="text-indigo-300 text-sm mb-8">The research keeps pointing the same direction. Mentored students and professionals consistently do better — not by a little.</p>
-
-            <div className="mb-8">
-              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Mentorship Impact by the Numbers</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {[
-                  { num: "5×", label: "More likely to be promoted", color: "text-amber-400" },
-                  { num: "55%", label: "More likely to enroll in college", color: "text-emerald-400" },
-                  { num: "23%", label: "More job offers before graduation", color: "text-blue-400" },
-                  { num: "4×", label: "More career satisfaction", color: "text-violet-400" },
-                  { num: "+$5,610", label: "Higher salary per year vs peers", color: "text-rose-400" },
-                  { num: "16M", label: "US students without a mentor right now", color: "text-orange-400" },
-                ].map((s) => (
-                  <div key={s.label} className="bg-white/10 rounded-2xl p-4">
-                    <div className={`text-2xl md:text-3xl font-extrabold ${s.color} leading-none`}>{s.num}</div>
-                    <div className="text-indigo-200 text-xs mt-1 leading-snug">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-indigo-400 text-xs mt-3">Sources: MENTOR, NACE, Journal of Applied Psychology, Gartner (2004–2024)</p>
-            </div>
-
-            <div className="mb-8">
-              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Career Outcomes Over Time</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {[
-                  { num: "71%", label: "Fortune 500 companies with mentoring programs" },
-                  { num: "130%", label: "More likely to hold leadership positions" },
-                  { num: "78%", label: "More likely to volunteer in their communities" },
-                  { num: "90%", label: "More interested in becoming a mentor themselves" },
-                ].map((s) => (
-                  <div key={s.label} className="bg-white/10 rounded-2xl p-4">
-                    <div className="text-xl md:text-2xl font-extrabold text-white leading-none">{s.num}</div>
-                    <div className="text-indigo-200 text-xs mt-1 leading-snug">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-indigo-400 text-xs mt-3">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014)</p>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-4">Salary by Career Field</h3>
-              <p className="text-indigo-300 text-xs mb-4">Median annual salaries by field (BLS, May 2023). Numbers tell you what, mentors tell you how.</p>
-              <div className="space-y-2">
-                {[
-                  { field: "Computer & IT", salary: "$104,420", pct: 100 },
-                  { field: "Legal", salary: "$84,910", pct: 82 },
-                  { field: "Engineering", salary: "$83,340", pct: 80 },
-                  { field: "Healthcare Practitioners", salary: "$77,600", pct: 74 },
-                  { field: "Business & Financial", salary: "$76,850", pct: 74 },
-                  { field: "Life Sciences", salary: "$68,830", pct: 66 },
-                  { field: "Education", salary: "$55,350", pct: 53 },
-                  { field: "Arts & Design", salary: "$50,710", pct: 49 },
-                ].map((row) => (
-                  <div key={row.field} className="flex items-center gap-3">
-                    <div className="w-36 text-xs text-indigo-200 flex-shrink-0">{row.field}</div>
-                    <div className="flex-1 bg-white/10 rounded-full h-5 overflow-hidden">
-                      <div className="h-5 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400 flex items-center justify-end pr-2" style={{ width: `${row.pct}%` }}>
-                        <span className="text-white text-xs font-bold">{row.salary}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-indigo-400 text-xs mt-3">Source: U.S. Bureau of Labor Statistics, Occupational Employment and Wages, May 2023</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Category row */}
-        <div className="flex items-center gap-3 mb-8 flex-wrap">
-          <span className="text-gray-500 text-sm font-medium">Browse by topic:</span>
-          {["Mentor Spotlight", "Mentorship", "Salary Data", "Career Outcomes", "Career Advice", "Behind the Scenes"].map((cat) => (
-            <span key={cat} className="bg-gray-100 hover:bg-indigo-50 hover:text-indigo-700 text-gray-600 text-sm px-3 py-1 rounded-full cursor-pointer transition-colors">
-              {cat}
-            </span>
-          ))}
-        </div>
-
-        {/* Rest of posts grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-10">
-          {rest.map((post) => (
-            <BlogCard key={post.slug} post={post} large />
-          ))}
-        </div>
-
-        {/* CTA Banner */}
-        <div className="relative rounded-3xl overflow-hidden mt-4">
-          <img
-            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80"
-            alt="Mentorship in action"
-            className="w-full h-56 object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/92 to-violet-900/88 flex items-center justify-center">
-            <div className="text-center text-white px-6">
-              <h3 className="text-2xl font-bold mb-2">Stop reading. Start talking to someone.</h3>
-              <p className="text-indigo-200 mb-5">All the research in the world doesn't beat one honest conversation with someone who's actually done it.</p>
-              <a href="/signup" className="bg-white text-indigo-700 font-bold px-8 py-3 rounded-full hover:bg-indigo-50 transition-colors">
-                Get Started Free
-              </a>
-            </div>
-          </div>
-        </div>
+          <a href="/signup" className="btn btn-primary btn-lg">Get started free</a>
+        </section>
       </div>
     </Layout>
   );
 });
 
-function BlogCard({ post, large = false }: { post: BlogPost; large?: boolean }) {
-  const categoryColors: Record<string, string> = {
-    indigo: "bg-indigo-500 text-white",
-    emerald: "bg-emerald-500 text-white",
-    violet: "bg-violet-500 text-white",
-    amber: "bg-amber-500 text-white",
-    rose: "bg-rose-500 text-white",
-  };
-
-  const accentColors: Record<string, string> = {
-    indigo: "#6366f1",
-    emerald: "#10b981",
-    violet: "#8b5cf6",
-    amber: "#f59e0b",
-    rose: "#f43f5e",
-  };
-
+function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <a href={`/blog/${post.slug}`} className="group block">
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-        {/* Cover Image */}
-        <div className={`relative ${large ? "h-56" : "h-48"} overflow-hidden`}>
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <span className={`absolute bottom-3 left-3 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm ${categoryColors[post.categoryColor] || "bg-gray-600 text-white"}`}>
-            {post.category}
-          </span>
-          <span className="absolute top-3 right-3 bg-black/50 text-white/80 text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
-            {post.readTime}
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="p-6 flex-1 flex flex-col">
-          <div className="text-xs text-gray-400 mb-2">{post.date}</div>
-          <h3 className={`font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2 leading-snug ${large ? "text-xl" : "text-lg"}`}>
-            {post.title}
-          </h3>
-          <p className="text-gray-500 text-sm mb-4 flex-1 leading-relaxed">
-            {post.excerpt}
-          </p>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {post.mentorAuthorId ? (
-                <a href={`/profile/${post.mentorAuthorId}`} className="flex items-center gap-2 hover:opacity-80">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 border border-indigo-200 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                    {post.author[0]}
-                  </div>
-                  <span className="text-xs text-gray-500">{post.author}</span>
-                </a>
-              ) : (
-                <>
-                  <div className="w-6 h-6 rounded-full overflow-hidden border border-indigo-200">
-                    <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
-                  </div>
-                  <span className="text-xs text-gray-500">{post.author}</span>
-                </>
-              )}
-            </div>
-            <div className="flex items-center text-indigo-600 font-semibold text-sm">
-              Read article
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </div>
-          {/* Category accent bar */}
-          <div
-            className="h-1 rounded-full mt-3"
-            style={{ background: accentColors[post.categoryColor] || "#6b7280" }}
-          />
-        </div>
+    <article className="card card-interactive overflow-hidden flex flex-col">
+      <a href={`/blog/${post.slug}`} className="block skeleton aspect-[16/10]">
+        <img src={post.coverImage} alt="" loading="lazy" className="w-full h-full object-cover" data-fade />
+      </a>
+      <div className="p-6 flex flex-col flex-1">
+        <p className="t-meta">{post.category} · {post.readTime}</p>
+        <h2 className="text-lg text-gray-900 mt-2 line-clamp-2">
+          <a href={`/blog/${post.slug}`} className="hover:underline underline-offset-4">{post.title}</a>
+        </h2>
+        <p className="text-sm text-gray-600 mt-2 line-clamp-3 flex-1">{post.excerpt}</p>
+        <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-gray-200">
+          {post.mentorAuthorId ? <a href={`/profile/${post.mentorAuthorId}`} className="hover:underline">{post.author}</a> : post.author} · {post.date}
+        </p>
       </div>
-    </a>
+    </article>
   );
 }
 
-// GET /blog/:slug — Individual blog post
+// GET /blog/:slug: Individual blog post
 blog.get("/blog/:slug", optionalAuth, (c) => {
   const user = c.get("user");
   const slug = c.req.param("slug");
@@ -1456,44 +1249,36 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
         </a>
 
         {/* Cover Image */}
-        <div className="rounded-2xl overflow-hidden mb-8 h-64 md:h-80">
+        <div className="rounded-xl overflow-hidden mb-8 aspect-[16/9]">
           <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
         </div>
 
         {/* Post header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-              post.categoryColor === "indigo" ? "bg-indigo-100 text-indigo-700" :
-              post.categoryColor === "emerald" ? "bg-emerald-100 text-emerald-700" :
-              post.categoryColor === "violet" ? "bg-violet-100 text-violet-700" :
-              post.categoryColor === "amber" ? "bg-amber-100 text-amber-700" :
-              "bg-rose-100 text-rose-700"
-            }`}>
-              {post.category}
-            </span>
+            <a href={`/blog?category=${encodeURIComponent(post.category)}`} className="t-meta hover:underline">{post.category}</a>
             <span className="text-sm text-gray-400">{post.date}</span>
             <span className="text-sm text-gray-400">{post.readTime}</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
+          <h1 className="font-serif text-4xl sm:text-5xl text-gray-900 mb-4">{post.title}</h1>
           <p className="text-xl text-gray-500 mb-6">{post.excerpt}</p>
           <div className="flex items-center gap-3 pb-6 border-b border-gray-200">
             {post.mentorAuthorId ? (
               <a href={`/profile/${post.mentorAuthorId}`} className="flex items-center gap-3 hover:opacity-80 group">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 border-2 border-indigo-200 flex items-center justify-center text-white font-bold text-base flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-panel flex items-center justify-center text-gray-900 font-medium text-sm flex-shrink-0">
                   {post.author[0]}
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors flex items-center gap-1.5">
                     {post.author}
-                    <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-medium">Mentor</span>
+                    <span className="t-meta">Mentor</span>
                   </div>
                   <div className="text-xs text-gray-400">{post.mentorAuthorTitle} · {post.readTime}</div>
                 </div>
               </a>
             ) : (
               <>
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-200">
+                <div className="w-10 h-10 rounded-full overflow-hidden">
                   <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover" />
                 </div>
                 <div>
@@ -1505,22 +1290,14 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
           </div>
         </div>
 
-        {/* Key Insight Callout */}
-        <div className="bg-gradient-to-r from-indigo-50 to-violet-50 border border-indigo-100 rounded-2xl px-6 py-4 mb-8 flex items-start gap-3">
-          <svg className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
-          <p className="text-indigo-800 text-sm font-medium italic leading-relaxed">{post.excerpt}</p>
-        </div>
-
         {/* Post content */}
         <div
           className="prose prose-lg max-w-none mb-12"
           dangerouslySetInnerHTML={{
             __html: `
               <style>
-                .prose h3 { font-size: 1.35rem; font-weight: 700; color: #111827; margin-top: 2rem; margin-bottom: 0.75rem; }
-                .prose p { color: #4b5563; line-height: 1.8; margin-bottom: 1.25rem; }
+                .prose h3 { font-family: 'Newsreader', Georgia, serif; font-size: 1.6rem; font-weight: 400; color: #1f2420; margin-top: 2rem; margin-bottom: 0.75rem; }
+                .prose p { color: #35332f; line-height: 1.8; margin-bottom: 1.25rem; }
                 .prose ul, .prose ol { color: #4b5563; margin-bottom: 1.25rem; padding-left: 1.5rem; }
                 .prose li { margin-bottom: 0.5rem; line-height: 1.7; }
                 .prose strong { color: #111827; }
@@ -1557,19 +1334,14 @@ blog.get("/blog/:slug", optionalAuth, (c) => {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-8 text-center text-white">
-          <h3 className="text-2xl font-bold mb-2">Ready to find your mentor?</h3>
-          <p className="text-indigo-100 mb-2">
-            Join Mentino and connect with professionals who can help guide your career.
-          </p>
-          <p className="text-indigo-200/70 text-sm mb-6">Free for all students. Verified professionals only. No cold emailing required.</p>
-          <div className="flex items-center justify-center gap-3 flex-wrap">
-            <a href="/signup" className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors">
-              Get Started Free
-            </a>
-            <a href="/blog" className="inline-block border border-white/30 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
-              Read More Articles
-            </a>
+        <div className="mt-12 bg-sage rounded-xl p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <h3 className="font-serif text-2xl text-gray-900">Ready to find your mentor?</h3>
+            <p className="text-gray-700 mt-2">Free for students. Verified professionals only.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <a href="/signup" className="btn btn-primary">Get started free</a>
+            <a href="/blog" className="btn btn-secondary">More articles</a>
           </div>
         </div>
       </article>

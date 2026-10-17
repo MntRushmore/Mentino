@@ -16,7 +16,7 @@ function html(element: React.ReactElement, status = 200) {
   });
 }
 
-// GET /messages — List all conversations
+// GET /messages: List all conversations
 messages.get("/messages", authMiddleware, async (c) => {
   const user = c.get("user");
 
@@ -132,7 +132,7 @@ messages.get("/messages", authMiddleware, async (c) => {
   );
 });
 
-// GET /messages/:matchId — View message thread
+// GET /messages/:matchId: View message thread
 messages.get("/messages/:matchId", authMiddleware, async (c) => {
   const user = c.get("user");
   const matchId = c.req.param("matchId");
@@ -284,7 +284,7 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
         </form>
       </div>
 
-      {/* Rating popup — shown to students after 5+ messages if not yet rated */}
+      {/* Rating popup: shown to students after 5+ messages if not yet rated */}
       {isStudent && (
         <div id="chat-rating-modal" className="fixed inset-0 z-50 items-center justify-center" style={{ display: "none" }}>
           <div className="absolute inset-0 bg-black/50" id="chat-rating-backdrop"></div>
@@ -395,7 +395,7 @@ messages.get("/messages/:matchId", authMiddleware, async (c) => {
   );
 });
 
-// POST /messages/:matchId — Send a message
+// POST /messages/:matchId: Send a message
 messages.post("/messages/:matchId", authMiddleware, async (c) => {
   const user = c.get("user");
   const matchId = c.req.param("matchId");

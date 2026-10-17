@@ -13,24 +13,6 @@ function html(element: React.ReactElement, status = 200) {
   });
 }
 
-// Donut chart segments pre-computed
-// r=65, C = 2π×65 ≈ 408.41
-const C = 2 * Math.PI * 65;
-const matchSegs = [
-  { pct: 35, color: "#6366f1", label: "Career Alignment", textColor: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-  { pct: 25, color: "#10b981", label: "Topic Relevance",  textColor: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
-  { pct: 20, color: "#8b5cf6", label: "Schedule Match",   textColor: "text-violet-600",  bg: "bg-violet-50",  border: "border-violet-100" },
-  { pct: 15, color: "#f59e0b", label: "Personality Fit",  textColor: "text-amber-600",   bg: "bg-amber-50",   border: "border-amber-100" },
-  { pct: 5,  color: "#f43f5e", label: "Mentor Capacity",  textColor: "text-rose-600",    bg: "bg-rose-50",    border: "border-rose-100" },
-];
-let _cum = 0;
-const computedSegs = matchSegs.map((s) => {
-  const dash = (s.pct / 100) * C;
-  const result = { ...s, dash, offset: _cum };
-  _cum += dash;
-  return result;
-});
-
 // GET /code-of-conduct
 staticPages.get("/code-of-conduct", optionalAuth, (c) => {
   const user = c.get("user");
@@ -99,660 +81,319 @@ staticPages.get("/code-of-conduct", optionalAuth, (c) => {
   );
 });
 
+// Shared article layout for About pages: one column, news style.
+function ArticleShell({ kicker, title, dek, byline, image, caption, children }: {
+  kicker: string; title: string; dek: string; byline: string; image?: { src: string; alt: string }; caption?: string; children: React.ReactNode;
+}) {
+  return (
+    <article className="max-w-2xl mx-auto">
+      <p className="t-eyebrow mb-4">{kicker}</p>
+      <h1 className="font-serif text-4xl sm:text-5xl text-gray-900">{title}</h1>
+      <p className="text-xl text-gray-600 mt-4">{dek}</p>
+      <p className="text-sm text-gray-600 mt-6 pb-6 border-b border-gray-200">{byline}</p>
+      {image && (
+        <figure className="mt-8 -mx-4 sm:mx-0">
+          <img src={image.src} alt={image.alt} className="w-full aspect-[3/2] object-cover sm:rounded-xl" />
+          {caption && <figcaption className="text-sm text-gray-600 mt-2 px-4 sm:px-0">{caption}</figcaption>}
+        </figure>
+      )}
+      <div className="article-body mt-8">{children}</div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .article-body p { font-size: 18px; line-height: 32px; color: var(--ink); margin-bottom: 24px; }
+        .article-body h2 { font-family: "Newsreader", Georgia, serif; font-weight: 400 !important; font-size: 28px; line-height: 36px; color: var(--ink); margin: 48px 0 16px; }
+        .article-body a { text-decoration: underline; text-underline-offset: 4px; }
+        .article-body blockquote { border-left: 2px solid var(--forest); padding-left: 24px; margin: 40px 0; font-family: "Newsreader", Georgia, serif; font-size: 26px; line-height: 36px; color: var(--ink); }
+      ` }} />
+    </article>
+  );
+}
+
+function PersonRow({ img, name, role, children }: { img: string; name: string; role: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4 mb-8">
+      <img src={img} alt={name} className="w-14 h-14 rounded-full object-cover flex-shrink-0" />
+      <div>
+        <p className="text-base font-medium text-gray-900" style={{ marginBottom: 0 }}>{name}</p>
+        <p className="t-meta" style={{ marginBottom: 8 }}>{role}</p>
+        <p style={{ fontSize: 16, lineHeight: "26px", marginBottom: 0 }}>{children}</p>
+      </div>
+    </div>
+  );
+}
+
 // GET /about
 staticPages.get("/about", optionalAuth, (c) => {
   const user = c.get("user");
   return html(
-    <Layout title="About" user={user} currentPath="/about">
-      <div className="max-w-4xl mx-auto">
-        {/* Colorful hero banner */}
-        <div className="relative rounded-3xl overflow-hidden mb-10">
-          <div className="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80" alt="Team collaborating" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/85 to-violet-900/80" />
-          </div>
-          <div className="relative z-10 text-center text-white py-16 px-8">
-            <span className="inline-block bg-white/20 border border-white/30 text-white text-sm font-semibold px-5 py-2 rounded-full mb-5 backdrop-blur-sm anim-fade-in">About Mentino</span>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 anim-fade-up anim-d1">Mentorship shouldn't depend<br />on who you know.</h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto anim-fade-up anim-d2">
-              Every student deserves a shot at their dream career — not just the ones whose parents happened to know the right people.
-            </p>
-          </div>
-        </div>
-        {/* Colorful mission section */}
-        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 mb-8 text-white">
-          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
-          <p className="text-indigo-100 text-lg leading-relaxed">
-            Some students have a parent in the field they want to enter. An uncle who's a lawyer. A family friend who runs a startup. They get career advice over dinner without even asking for it. Everyone else has to figure things out alone — or not at all. Mentino exists to close that gap. It's where students who don't have those connections can find a real person who's already doing the work and just ask them.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6">
-            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-4">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">For Students</h3>
-            <p className="text-gray-600">Sign up, tell us what you're interested in and where you want to go, and we'll find mentors who've actually been there.</p>
-          </div>
-          <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6">
-            <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white mb-4">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">For Mentors</h3>
-            <p className="text-gray-600">Sign up, go through our verification process, and connect with students who genuinely want to hear from someone like you. A few conversations is all it takes.</p>
-          </div>
-        </div>
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { title: "Accessibility", desc: "Free for students, full stop. No premium tier, no waitlist, no paywall. If you want to find a mentor, you can.", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
-              { title: "Safety", desc: "Every mentor is manually reviewed before going live. Students under 18 require parental consent. We don't skip steps.", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
-              { title: "Honesty", desc: "We match you with people who've actually done the thing — not coaches who've read about it. Real experience, real talk.", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
-              { title: "Impact", desc: "One conversation can change how you see your future. That's not an exaggeration — we've seen it happen.", bg: "bg-amber-50", border: "border-amber-100", h: "text-amber-800", p: "text-amber-700" },
-            ].map((v) => (
-              <div key={v.title} className={`${v.bg} border ${v.border} rounded-xl p-5`}>
-                <h3 className={`font-bold ${v.h} text-lg mb-1`}>{v.title}</h3>
-                <p className={`${v.p} text-sm`}>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-8 text-center text-white">
-          <h2 className="text-xl font-bold mb-2">Say hi.</h2>
-          <p className="text-emerald-100">
-            Questions, feedback, or just want to reach out? Email us at{" "}
-            <a href="mailto:hello@mentino.org" className="underline font-semibold hover:text-white">hello@mentino.org</a>
-          </p>
-        </div>
-      </div>
+    <Layout title="About Mentino" user={user} currentPath="/about">
+      <ArticleShell
+        kicker="About Mentino"
+        title="Mentorship shouldn't depend on who you know."
+        dek="Every student deserves a shot at their dream career, not just the ones whose parents happened to know the right people."
+        byline="Mentino · Bay Area, California"
+        image={{ src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80", alt: "People working together around a table" }}
+      >
+        <h2>Our mission</h2>
+        <p>
+          Some students have a parent in the field they want to enter. An uncle who is a lawyer. A family friend who runs a startup. They get career advice over dinner without even asking for it. Everyone else has to figure things out alone, or not at all.
+        </p>
+        <p>
+          Mentino exists to close that gap. It is where students who don't have those connections can find a real person who is already doing the work and just ask them.
+        </p>
+
+        <h2>How it works for students and mentors</h2>
+        <p>
+          <strong>Students</strong> sign up, share what they are interested in and where they want to go, and get matched with mentors who have actually been there. They can also research any career in <a href="/resources">Resources</a> and take free self-paced courses in <a href="/tracks">Career Tracks</a>.
+        </p>
+        <p>
+          <strong>Mentors</strong> sign up, go through our verification process, and connect with students who genuinely want to hear from someone like them. A few conversations is all it takes.
+        </p>
+
+        <h2>What we believe</h2>
+        <p>
+          <strong>Accessibility.</strong> Free for students, full stop. No premium tier, no waitlist, no paywall. <strong>Safety.</strong> Every mentor is manually reviewed before going live, and students under 18 need parental consent. <strong>Honesty.</strong> We match you with people who have done the thing, not coaches who have read about it. <strong>Impact.</strong> One conversation can change how you see your future.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions, feedback, or want to get involved? Email <a href="mailto:hello@mentino.org">hello@mentino.org</a>. You can also read <a href="/founder">how Mentino started</a>.
+        </p>
+      </ArticleShell>
     </Layout>
   );
 });
 
-// GET /founder — About the Founder
+// GET /founder: About Us (the people behind Mentino)
 staticPages.get("/founder", optionalAuth, (c) => {
   const user = c.get("user");
   return html(
-    <Layout title="About Us | Mentino" user={user} currentPath="/founder">
-      <div className="max-w-5xl mx-auto">
+    <Layout title="About Us" user={user} currentPath="/founder">
+      <ArticleShell
+        kicker="About Us"
+        title="Why a Bay Area student built a free mentorship platform"
+        dek="Mentino connects students with verified professionals at no cost. Here is how it started, and the people who run it."
+        byline="By the Mentino team · Bay Area, California"
+        image={{ src: "/images/founder.jpg", alt: "Ethan Branzuela, founder of Mentino" }}
+        caption="Ethan Branzuela, founder and CEO of Mentino, at Serra Track & Field."
+      >
+        <p>
+          Ethan Branzuela shoots sports photography for professional and collegiate athletes. When he was trying to get better, he sent cold messages to photographers he followed online. A few responded, and those conversations taught him more in a few weeks than years of tutorials ever did.
+        </p>
+        <p>
+          "That experience made something obvious," he said. "One real conversation with someone who has already done the thing is worth more than any amount of research. I kept asking myself why this wasn't easier for every student."
+        </p>
+        <p>
+          He started seeing the same pattern everywhere. Athletes who made it had coaches. Doctors who made it had mentors. Lawyers, engineers and founders almost all had someone older who showed them how things actually worked. Not from a book, but from real experience. That is the thing you can't Google.
+        </p>
 
-        {/* Hero with background image */}
-        <div className="relative rounded-3xl overflow-hidden mb-12">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=1400&q=80"
-              alt="Bay Area skyline"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90" />
-          </div>
-          <div className="relative z-10 text-center text-white py-20 px-8">
-            <div className="w-40 h-40 mx-auto mb-6 rounded-2xl border-4 border-indigo-400 overflow-hidden shadow-2xl">
-              <img src="/images/founder.jpg" alt="Ethan Branzuela, Founder of Mentino" className="w-full h-full object-cover" />
-            </div>
-            <h1 className="text-4xl font-extrabold mb-2">About Us</h1>
-            <p className="text-indigo-300 text-xl mb-5">The people behind Mentino</p>
-            <div className="flex justify-center flex-wrap gap-3 mb-6">
-              {["Founded by Ethan Branzuela", "Bay Area, CA", "Student-Built Platform"].map((tag) => (
-                <span key={tag} className="bg-white/15 border border-white/20 text-white text-sm px-4 py-1.5 rounded-full backdrop-blur-sm">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <a
-              href="https://ebonthecam.mypixieset.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold px-6 py-2.5 rounded-full backdrop-blur-sm transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              View Founder's Photography Portfolio
-            </a>
-          </div>
-        </div>
+        <h2>The idea</h2>
+        <p>
+          So he built Mentino: a free platform where any student can find a verified professional in their field and just talk to them. No connections required. No luck needed.
+        </p>
+        <blockquote>
+          "One day, a student should be able to click a button and instantly connect with the right mentor for their dream career."
+        </blockquote>
+        <p>
+          If you want to become a CEO, you should be able to speak to one. If you want to become a doctor, you should be able to learn from one. If you want to work in sports, law, tech or science, you should have direct access to people already there.
+        </p>
+        <p>
+          Ethan runs the platform while still in high school. His photography work is at <a href="https://ebonthecam.mypixieset.com/" target="_blank" rel="noopener noreferrer">ebonthecam.mypixieset.com</a>.
+        </p>
 
-        {/* Our Team */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-8">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-violet-50 text-violet-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">The Team</span>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">The People Building Mentino</h2>
-            <p className="text-gray-500 text-sm max-w-xl mx-auto">A small team with a big mission — making mentorship accessible to every student.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {/* Ethan */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-violet-100 relative">
-                <img src="/images/founder.jpg" alt="Ethan Branzuela" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #7c3aed, #6366f1)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>E</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Ethan Branzuela</h3>
-              <p className="text-violet-600 text-sm font-semibold mb-3">Founder & Chief Executive Officer</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Founder", "Bay Area, CA", "Student-Built"].map((t) => (
-                  <span key={t} className="bg-violet-50 text-violet-700 text-xs px-2.5 py-0.5 rounded-full border border-violet-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Ethan founded Mentino to give every student access to real mentors in their field — without needing the right connections. He builds and runs the platform while still in high school.
-              </p>
-            </div>
-            {/* Zachary */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
-                <img src="/images/zachary-jasmer.jpg" alt="Zachary Jasmer" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #3b82f6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>Z</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Zachary Jasmer</h3>
-              <p className="text-indigo-600 text-sm font-semibold mb-3">Chief Operating Officer</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Operations", "Strategy", "Student Leader"].map((t) => (
-                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Zachary serves as Chief Operating Officer at Mentino, overseeing day-to-day operations and helping drive the platform's growth. He brings strategic focus and operational discipline to the team's mission.
-              </p>
-            </div>
-          </div>
-        </div>
+        <h2>The team</h2>
+        <PersonRow img="/images/founder.jpg" name="Ethan Branzuela" role="Founder and Chief Executive Officer">
+          Ethan founded Mentino to give every student access to real mentors in their field without needing the right connections. He builds and runs the platform.
+        </PersonRow>
+        <PersonRow img="/images/zachary-jasmer.jpg" name="Zachary Jasmer" role="Chief Operating Officer">
+          Zachary oversees day-to-day operations and helps drive the platform's growth, bringing strategic focus and operational discipline to the team.
+        </PersonRow>
 
-        {/* Co-Advisors — moved to top */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-12">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">Advisory Board</span>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Our Co-Advisors</h2>
-            <p className="text-gray-500 text-sm max-w-xl mx-auto">Mentino is guided by experienced leaders who bring decades of real-world expertise to help shape the platform and support its mission.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Anthony */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-indigo-100 relative">
-                <img src="/images/advisor-anthony.jpg" alt="Anthony Branzuela" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>A</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Anthony Branzuela</h3>
-              <p className="text-indigo-600 text-sm font-semibold mb-3">Co-Advisor</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Automotive Leadership", "Business Strategy", "30+ Years Experience"].map((t) => (
-                  <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full border border-indigo-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy, and business operations. Throughout his career, he has led luxury and mainstream automotive brands, including Porsche, Audi, Lamborghini, and Ford, while driving operational growth and building high-performing sales teams. As an advisor to Mentino, Anthony provides guidance on entrepreneurship, business strategy, customer experience, and developing partnerships that help students connect with career opportunities.
-              </p>
-            </div>
-            {/* Joanne */}
-            <div className="flex flex-col items-center text-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
-              <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 shadow-md border-2 border-emerald-100 relative">
-                <img src="/images/advisor-joanne.jpg" alt="Joanne Branzuela" className="w-full h-full object-cover"
-                  {...{"onerror": "this.style.display='none';this.nextSibling.style.display='flex';"} as any} />
-                <div style={{ display: "none", width: "100%", height: "100%", background: "linear-gradient(135deg, #10b981, #059669)", alignItems: "center", justifyContent: "center", color: "white", fontSize: 48, fontWeight: 800 }}>J</div>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-0.5">Joanne Branzuela</h3>
-              <p className="text-emerald-600 text-sm font-semibold mb-3">Co-Advisor</p>
-              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
-                {["Healthcare Leadership", "Registered Nurse", "Program Development"].map((t) => (
-                  <span key={t} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full border border-emerald-100">{t}</span>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Joanne is an experienced healthcare leader and registered nurse with expertise in nursing leadership, program development, and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams, driven quality improvement initiatives, and built high-performing healthcare organizations. As an advisor to Mentino, Joanne provides guidance on leadership, strategic planning, and creating meaningful experiences that empower students to explore their future careers.
-              </p>
-            </div>
-          </div>
-        </div>
+        <h2>Advisors</h2>
+        <PersonRow img="/images/advisor-anthony.jpg" name="Anthony Branzuela" role="Co-Advisor">
+          Anthony is an automotive industry leader with over 30 years of experience in dealership management, sales strategy and business operations. He has led luxury and mainstream brands including Porsche, Audi, Lamborghini and Ford. He advises Mentino on entrepreneurship, business strategy, customer experience and partnerships that connect students with career opportunities.
+        </PersonRow>
+        <PersonRow img="/images/advisor-joanne.jpg" name="Joanne Branzuela" role="Co-Advisor">
+          Joanne is a healthcare leader and registered nurse with expertise in nursing leadership, program development and operational excellence. With a background in operating room and ambulatory care management, she has led interdisciplinary teams and quality improvement work. She advises Mentino on leadership, strategic planning and building experiences that help students explore their future careers.
+        </PersonRow>
 
-        {/* Impact stats banner */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 anim-fade-up anim-d1">
-          {[
-            { num: "16M", label: "Young people without a mentor in the US", color: "text-rose-600", bg: "bg-rose-50", border: "border-rose-100" },
-            { num: "5×", label: "More promotions for mentored employees", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-            { num: "Early", label: "Access: be one of the first students", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
-            { num: "Free", label: "Always free for students", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
-          ].map((s) => (
-            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
-              <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
-              <div className="text-gray-600 text-xs leading-snug">{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Story section with image */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10 items-start anim-fade-up anim-d2">
-          <div className="md:col-span-3 bg-white rounded-2xl border border-gray-200 p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">The Story</h2>
-            <p className="text-indigo-500 text-sm font-medium mb-4">Ethan Branzuela, Founder</p>
-            <div className="space-y-4 text-gray-600 leading-relaxed">
-              <p>
-                I'm Ethan, from the Bay Area. I shoot sports photography for professional and collegiate athletes. When I was trying to get better, I cold-DM'd photographers I followed online. A few responded. Those conversations taught me more in a few weeks than years of tutorials ever did.
-              </p>
-              <p>
-                That experience made something obvious: one real conversation with someone who's already done the thing is worth more than any amount of research. I kept asking myself why this wasn't easier for every student.
-              </p>
-              <p>
-                So I built Mentino. A free platform where any student can find a verified professional in their field and just talk to them. No connections required. No luck needed.
-              </p>
-            </div>
-          </div>
-          <div className="md:col-span-2 space-y-3">
-            <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=500&q=80" alt="Sports photography" className="rounded-2xl w-full h-52 object-cover" />
-            <img src="/images/founder.jpg" alt="Ethan Branzuela at Serra Track & Field" className="rounded-2xl w-full h-44 object-cover" />
-          </div>
-        </div>
-
-        {/* Realization callout */}
-        <div className="relative bg-indigo-600 rounded-2xl p-10 mb-10 text-white overflow-hidden anim-fade-up anim-d3">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/4 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/4 -translate-x-1/4" />
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold mb-4">That stuck with me.</h2>
-            <p className="text-indigo-100 text-lg leading-relaxed max-w-3xl">
-              I started looking around and seeing it everywhere. Athletes who made it had coaches. Doctors who made it had mentors. Lawyers, engineers, founders: almost every person I looked up to had someone older who showed them how things actually worked. Not from a book. From real experience. That's the thing you can't Google.
-            </p>
-          </div>
-        </div>
-
-        {/* Why Mentino + images */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 items-center">
-          <div className="space-y-4">
-            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=600&q=80" alt="Mentorship connection" className="rounded-2xl w-full h-56 object-cover" />
-            <div className="grid grid-cols-2 gap-3">
-              <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=80" alt="Student and mentor" className="rounded-2xl w-full h-36 object-cover" />
-              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80" alt="Career guidance" className="rounded-2xl w-full h-36 object-cover" />
-            </div>
-          </div>
-          <div className="bg-white rounded-2xl border border-gray-200 p-8">
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
-              <h3 className="text-xl font-bold text-amber-900">That's why I created Mentino.</h3>
-              <p className="text-amber-700 text-sm mt-1">A free platform to make mentorship accessible to every student.</p>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3">My Vision</h3>
-            <blockquote className="border-l-4 border-indigo-500 pl-4 py-2 my-4 text-lg font-medium text-gray-800 italic">
-              "One day, a student should be able to click a button and instantly connect with the right mentor for their dream career."
-            </blockquote>
-            <ul className="space-y-2 text-gray-600">
-              {[
-                "If you want to become a CEO, you should speak to one.",
-                "If you want to become a doctor, you should learn from one.",
-                "If you want to work in sports, law, tech, or science, you should have direct access.",
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Access / Authenticity / Impact */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          {[
-            { icon: "🌍", title: "Access", desc: "Every student deserves opportunity", bg: "bg-blue-50", border: "border-blue-100", h: "text-blue-800", p: "text-blue-700" },
-            { icon: "✅", title: "Authenticity", desc: "Real mentors with real experience", bg: "bg-emerald-50", border: "border-emerald-100", h: "text-emerald-800", p: "text-emerald-700" },
-            { icon: "🚀", title: "Impact", desc: "Conversations that create long-term growth", bg: "bg-violet-50", border: "border-violet-100", h: "text-violet-800", p: "text-violet-700" },
-          ].map((v) => (
-            <div key={v.title} className={`${v.bg} border ${v.border} rounded-xl p-5 text-center`}>
-              <div className="text-3xl mb-2">{v.icon}</div>
-              <h3 className={`font-bold ${v.h} text-lg mb-1`}>{v.title}</h3>
-              <p className={`${v.p} text-sm`}>{v.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-10 text-center text-white">
-          <h3 className="text-2xl font-bold mb-2">Come be part of it.</h3>
-          <p className="text-indigo-100 mb-6">If you're a student trying to figure out your path, sign up. If you're someone who's already figured something out and wants to share it, we genuinely need you.</p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <a href="/signup" className="bg-white text-indigo-600 font-bold px-7 py-3 rounded-full hover:bg-indigo-50 transition-colors">
-              Sign Up as Student
-            </a>
-            <a href="/signup" className="border-2 border-white text-white font-semibold px-7 py-3 rounded-full hover:bg-white/10 transition-colors">
-              Become a Mentor
-            </a>
-          </div>
-        </div>
-      </div>
+        <h2>Get involved</h2>
+        <p>
+          If you are a student trying to figure out your path, <a href="/signup?role=student">sign up</a>. If you have already figured something out and want to share it, <a href="/signup?role=mentor">become a mentor</a>. Questions go to <a href="mailto:hello@mentino.org">hello@mentino.org</a>.
+        </p>
+      </ArticleShell>
     </Layout>
   );
 });
 
 // GET /how-it-works
+const STEPS = [
+  { title: "Create your profile", body: "Pick Student or Mentor. Students share career interests, goals, schedule and how they like to learn. Mentors share their job, experience and what they can help with. It takes about 5 minutes." },
+  { title: "Get matched", body: "Mentino ranks mentors by how well they fit your career field, your goals, your schedule and your learning style. You see the best fits first, with real bios, not just job titles." },
+  { title: "Send a request", body: "Pick a mentor and send a short intro with one click. Mentors accept when they think they can help. No cold emails and no awkwardness either way." },
+  { title: "Talk and learn", body: "Once matched, message your mentor, schedule video sessions, and leave feedback after. Keep going for as long as it is useful." },
+];
+
+const MATCH_WEIGHTS = [
+  { label: "Career field", pct: 35 },
+  { label: "Topics and goals", pct: 25 },
+  { label: "Schedule overlap", pct: 20 },
+  { label: "Personality and learning style", pct: 15 },
+  { label: "Mentor availability", pct: 5 },
+];
+
+const RESEARCH = [
+  { stat: "5x", label: "more likely to be promoted with a mentor" },
+  { stat: "55%", label: "more likely to enroll in college" },
+  { stat: "130%", label: "more likely to hold leadership positions" },
+  { stat: "23%", label: "more job offers before graduation" },
+];
+
+const QUESTIONS = [
+  { q: "What does a typical day look like for you?", why: "Replaces assumptions with what the job is really like." },
+  { q: "What do you wish you had known when you started?", why: "Years of experience in a few minutes." },
+  { q: "How did you get to where you are, step by step?", why: "The real path, not the polished version." },
+  { q: "What skills matter most in your field right now?", why: "Tells you what to work on first." },
+  { q: "If you were me, what would you do next?", why: "Advice you can't get anywhere else." },
+];
+
 staticPages.get("/how-it-works", optionalAuth, (c) => {
   const user = c.get("user");
   return html(
-    <Layout title="How It Works" user={user} currentPath="/how-it-works">
+    <Layout title="How It Works" description="How Mentino works: create a profile, get matched with a verified professional, and start talking. Plus free career Resources and Career Tracks." user={user} currentPath="/how-it-works">
       <div className="max-w-5xl mx-auto">
+        <header className="max-w-2xl">
+          <p className="t-eyebrow mb-4">How It Works</p>
+          <h1 className="font-serif text-4xl sm:text-5xl text-gray-900">Sign up. Get matched. Actually talk to someone.</h1>
+          <p className="text-lg text-gray-600 mt-4">Everything a student needs to go from curious to talking with a professional, in four steps.</p>
+        </header>
 
-        {/* Hero */}
-        <div className="relative rounded-3xl overflow-hidden mb-14">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80"
-              alt="Students working together"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/88 via-teal-900/80 to-blue-900/85" />
+        {/* Steps: text beside one photo */}
+        <section className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <ol className="border-t border-gray-200">
+            {STEPS.map((step, i) => (
+              <li key={step.title} className="py-6 border-b border-gray-200 flex gap-4">
+                <span className="w-8 h-8 rounded-full bg-forest text-white text-sm font-medium flex items-center justify-center flex-shrink-0">{i + 1}</span>
+                <div>
+                  <h2 className="text-lg text-gray-900">{step.title}</h2>
+                  <p className="text-gray-600 mt-1">{step.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <figure className="lg:sticky lg:top-24">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&q=80" alt="Students working together at a table" className="w-full aspect-[4/5] object-cover rounded-xl" />
+          </figure>
+        </section>
+
+        {/* More ways to learn */}
+        <section className="mt-24">
+          <h2 className="font-serif text-3xl text-gray-900">More ways to learn, while you wait for a match</h2>
+          <p className="text-gray-600 mt-2 max-w-2xl">Two free tools for every student, no mentor needed.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+            <a href="/resources" className="card card-interactive overflow-hidden block">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80" alt="" className="w-full aspect-[16/9] object-cover" />
+              <div className="p-6">
+                <h3 className="text-xl text-gray-900">Resources</h3>
+                <p className="text-gray-600 mt-2">Search any career and get videos, YouTube channels, books, articles, mentors on Mentino, and the next steps to take in high school or college.</p>
+                <span className="btn btn-secondary mt-4">Search a career</span>
+              </div>
+            </a>
+            <a href="/tracks" className="card card-interactive overflow-hidden block">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80" alt="" className="w-full aspect-[16/9] object-cover" />
+              <div className="p-6">
+                <h3 className="text-xl text-gray-900">Career Tracks</h3>
+                <p className="text-gray-600 mt-2">Free self-paced courses for one career, 4 to 6 weeks long. Each week has lessons, your own notes, an assignment and a short quiz. Finish to earn a certificate.</p>
+                <span className="btn btn-secondary mt-4">Browse tracks</span>
+              </div>
+            </a>
           </div>
-          <div className="relative z-10 text-center text-white py-20 px-8">
-            <span className="inline-block bg-white/20 border border-white/30 text-white text-sm font-semibold px-5 py-2 rounded-full mb-4 backdrop-blur-sm">
-              How It Works
-            </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Sign up. Get matched. Actually talk to someone.</h1>
-            <p className="text-lg text-emerald-100 max-w-2xl mx-auto">
-              No complicated onboarding, no weeks of waiting. Here's how it works — it's pretty straightforward.
+        </section>
+
+        {/* Matching */}
+        <section className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div>
+            <h2 className="font-serif text-3xl text-gray-900">How matching works</h2>
+            <p className="text-gray-600 mt-4">
+              Every mentor gets a score for every student. The biggest factor is whether they work in the field you picked. Next come your goals and topics, then whether your schedules overlap, since you need to actually meet. Mentors who have room for more students rank a little higher.
             </p>
           </div>
-        </div>
-
-        {/* Key stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
-          {[
-            { num: "5 min", label: "Average time to complete your profile", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
-            { num: "5×", label: "More career promotions for mentored individuals", color: "text-indigo-600", bg: "bg-indigo-50", border: "border-indigo-100" },
-            { num: "71%", label: "Of Fortune 500 companies have formal mentoring programs", color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
-            { num: "23%", label: "More job offers before graduation with a mentor", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-100" },
-          ].map((s) => (
-            <div key={s.num} className={`${s.bg} border ${s.border} rounded-2xl p-5 text-center`}>
-              <div className={`text-3xl font-extrabold ${s.color} mb-1`}>{s.num}</div>
-              <div className="text-gray-600 text-xs leading-snug">{s.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* 4 Steps with images */}
-        <div className="mb-14">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">Your 4-Step Journey</h2>
-          <p className="text-center text-gray-500 mb-10 max-w-xl mx-auto">
-            From creating your profile to your first session — here's what it actually looks like.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                number: 1, color: "blue",
-                title: "Create Your Profile",
-                img: "https://images.unsplash.com/photo-1616587226157-48e49175ee20?w=600&q=80",
-                description: "Sign up and tell us who you are. Students share their career interests, goals, availability, and how they like to learn. Mentors share their background, what they can help with, and when they're free.",
-                details: ["Pick your role: Student or Mentor", "Takes about 5 minutes to set up your profile", "Students: interests, goals, schedule, personality style", "Mentors: job title, experience, topics, verification info"],
-                numBg: "bg-blue-600", cardBg: "bg-blue-50", cardBorder: "border-blue-100", dot: "bg-blue-400",
-              },
-              {
-                number: 2, color: "emerald",
-                title: "Get Smart-Matched",
-                img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-                description: "The matching system looks at your career interests, learning goals, schedule, and personality style to find mentors who are a real fit — not just the closest keyword match.",
-                details: ["Career field alignment (35% of match score)", "Topic relevance to your goals (25%)", "Schedule overlap — because you have to actually meet (20%)", "Personality and learning style (15%)"],
-                numBg: "bg-emerald-600", cardBg: "bg-emerald-50", cardBorder: "border-emerald-100", dot: "bg-emerald-400",
-              },
-              {
-                number: 3, color: "violet",
-                title: "Request a Match",
-                img: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80",
-                description: "Browse your matches, read through mentor profiles, and send a request to the ones that feel right. Mentors review it and accept when they think it's a good fit — no awkward cold-pitching involved.",
-                details: ["See your matches ranked by compatibility", "Read actual mentor bios — not just job titles", "Send a request with one click", "Mentors accept or pass — no weirdness either way"],
-                numBg: "bg-violet-600", cardBg: "bg-violet-50", cardBorder: "border-violet-100", dot: "bg-violet-400",
-              },
-              {
-                number: 4, color: "amber",
-                title: "Connect & Learn",
-                img: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80",
-                description: "Once matched, message your mentor and set up a time to talk. Use the platform to schedule sessions, keep notes, and leave feedback after. That's it — the rest is just a real conversation.",
-                details: ["Direct messaging inside the platform", "Schedule video sessions whenever it works for both of you", "Rate and review sessions after they happen", "Keep the relationship going as long as it's useful"],
-                numBg: "bg-amber-600", cardBg: "bg-amber-50", cardBorder: "border-amber-100", dot: "bg-amber-400",
-              },
-            ].map((step) => (
-              <div key={step.number} className={`${step.cardBg} border ${step.cardBorder} rounded-2xl overflow-hidden`}>
-                <div className="h-44 overflow-hidden">
-                  <img src={step.img} alt={step.title} className="w-full h-full object-cover" />
+          <ul className="flex flex-col gap-4 justify-center">
+            {MATCH_WEIGHTS.map((w) => (
+              <li key={w.label}>
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-gray-900">{w.label}</span>
+                  <span className="text-gray-600 tabular-nums">{w.pct}%</span>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className={`${step.numBg} text-white w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold flex-shrink-0`}>
-                      {step.number}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                      <p className="text-gray-600 mb-3 text-sm leading-relaxed">{step.description}</p>
-                      <ul className="space-y-1">
-                        {step.details.map((d, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                            <span className={`w-1.5 h-1.5 ${step.dot} rounded-full mt-1.5 flex-shrink-0`} />
-                            {d}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-forest rounded-full" style={{ width: `${w.pct * 2}%` }} />
                 </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Prepare */}
+        <section className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div>
+            <h2 className="font-serif text-3xl text-gray-900">Bring 3 to 5 questions to every session</h2>
+            <p className="text-gray-600 mt-4">
+              Students who prepare get the most out of Mentino. Specific questions get specific answers. You'll be asked to confirm you have questions ready before your first session.
+            </p>
+          </div>
+          <ol className="border-t border-gray-200">
+            {QUESTIONS.map((item) => (
+              <li key={item.q} className="py-4 border-b border-gray-200">
+                <p className="text-gray-900">"{item.q}"</p>
+                <p className="text-sm text-gray-600 mt-1">{item.why}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Research */}
+        <section className="mt-24 bg-sand rounded-xl p-6 sm:p-12">
+          <h2 className="font-serif text-3xl text-gray-900">Why mentorship works</h2>
+          <p className="text-gray-700 mt-2 max-w-2xl">Studies keep finding the same thing: people with mentors do better.</p>
+          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+            {RESEARCH.map((r) => (
+              <div key={r.label}>
+                <dt className="sr-only">{r.label}</dt>
+                <dd className="text-4xl text-gray-900 tabular-nums">{r.stat}</dd>
+                <dd className="text-sm text-gray-700 mt-2">{r.label}</dd>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Prepare your questions — pro tip section */}
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-8 mb-10">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex-shrink-0 w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl">
-              💡
-            </div>
-            <div className="flex-1">
-              <span className="inline-block bg-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full mb-3">PRO TIP — FOR STUDENTS</span>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Prepare 3–5 questions before every session</h2>
-              <p className="text-gray-600 mb-5 leading-relaxed">
-                The students who get the most out of Mentino come prepared. A mentor's time is valuable — showing up with real, specific questions gets you real, specific answers. Vague sessions happen when students show up without a plan. Don't be that student.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-                {[
-                  { q: '"What does a typical day look like for you?"', why: "Replaces every assumption you have with reality" },
-                  { q: '"What do you wish you\'d known starting out?"', why: "Gets you years of experience in a few minutes" },
-                  { q: '"How did you get to where you are — step by step?"', why: "Shows the actual path, not the polished version" },
-                  { q: '"What skills matter most in your field right now?"', why: "Cuts the noise on what to actually work on" },
-                  { q: '"If you were me, what would you do next?"', why: "Personalized advice you can't get anywhere else" },
-                  { q: '"What was your biggest career mistake?"', why: "Most mentors love this one — pure gold" },
-                ].map((item) => (
-                  <div key={item.q} className="bg-white rounded-xl border border-amber-100 p-3">
-                    <p className="text-sm font-semibold text-gray-800 italic mb-1">{item.q}</p>
-                    <p className="text-xs text-gray-500">{item.why}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-amber-700 font-medium">
-                You'll be asked to confirm you've prepared questions before your first session — it's that important.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Inside the Matching System — Donut Chart + Legend */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 md:p-10 mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Inside the Matching System</h2>
-          <p className="text-gray-500 text-center mb-10 max-w-2xl mx-auto">
-            The algorithm looks at eight factors — your mentorship style, session needs, experience level, and more — to find someone who's actually a good fit. Here's how the core weights break down:
-          </p>
-          <div className="flex flex-col md:flex-row gap-10 items-center">
-            {/* SVG Donut Chart */}
-            <div className="flex-shrink-0 flex items-center justify-center">
-              <svg viewBox="0 0 180 180" width="220" height="220">
-                {computedSegs.map((s, i) => (
-                  <circle
-                    key={i}
-                    cx="90" cy="90" r="65"
-                    fill="none"
-                    stroke={s.color}
-                    strokeWidth="26"
-                    strokeDasharray={`${s.dash} ${C - s.dash}`}
-                    strokeDashoffset={`${-s.offset}`}
-                    transform="rotate(-90 90 90)"
-                  />
-                ))}
-                <text x="90" y="83" textAnchor="middle" fontSize="22" fontWeight="bold" fill="#111827">5</text>
-                <text x="90" y="100" textAnchor="middle" fontSize="11" fill="#6b7280">Factors</text>
-              </svg>
-            </div>
-            {/* Legend + bars */}
-            <div className="flex-1 space-y-4 w-full">
-              {computedSegs.map((s) => (
-                <div key={s.label} className={`${s.bg} border ${s.border} rounded-xl p-4`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
-                      <span className="font-semibold text-gray-900 text-sm">{s.label}</span>
-                    </div>
-                    <span className={`text-xl font-extrabold ${s.textColor}`}>{s.pct}%</span>
-                  </div>
-                  <div className="w-full bg-white/60 rounded-full h-2">
-                    <div className="h-2 rounded-full" style={{ width: `${s.pct}%`, backgroundColor: s.color }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Research Impact Section — visual bar chart */}
-        <div className="bg-gradient-to-br from-slate-900 to-indigo-900 rounded-2xl p-8 md:p-10 mb-10 text-white">
-          <h2 className="text-2xl font-bold mb-2 text-center">Why Mentorship Works</h2>
-          <p className="text-slate-300 text-center mb-10 max-w-xl mx-auto">
-            The research keeps pointing the same direction. Mentored students and professionals consistently do better — not by a little.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left: horizontal bar chart */}
-            <div>
-              <h3 className="text-slate-200 font-semibold mb-5 text-sm uppercase tracking-wide">Mentorship Impact by the Numbers</h3>
-              <div className="space-y-5">
-                {[
-                  { label: "More likely to be promoted", value: "5×", bar: 100, color: "#6366f1" },
-                  { label: "More likely to enroll in college", value: "55%", bar: 55, color: "#10b981" },
-                  { label: "More job offers before graduation", value: "23%", bar: 23, color: "#f59e0b" },
-                  { label: "More career satisfaction", value: "4×", bar: 80, color: "#8b5cf6" },
-                  { label: "Higher salary per year vs peers", value: "$5,610", bar: 60, color: "#f43f5e" },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <div className="flex justify-between text-sm mb-1.5">
-                      <span className="text-slate-300">{item.label}</span>
-                      <span className="font-bold text-white">{item.value}</span>
-                    </div>
-                    <div className="w-full bg-white/10 rounded-full h-2.5">
-                      <div className="h-2.5 rounded-full" style={{ width: `${item.bar}%`, backgroundColor: item.color }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-slate-500 text-xs mt-4">Sources: MENTOR, NACE, Journal of Applied Psychology, Gartner (2004–2024)</p>
-            </div>
-            {/* Right: key outcome stats */}
-            <div>
-              <h3 className="text-slate-200 font-semibold mb-5 text-sm uppercase tracking-wide">Career Outcomes Over Time</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { stat: "71%", label: "Fortune 500 companies with mentoring programs", color: "from-indigo-600 to-indigo-700" },
-                  { stat: "130%", label: "More likely to hold leadership positions", color: "from-emerald-600 to-emerald-700" },
-                  { stat: "78%", label: "More likely to volunteer in their communities", color: "from-violet-600 to-violet-700" },
-                  { stat: "90%", label: "More interested in becoming a mentor themselves", color: "from-amber-600 to-amber-700" },
-                ].map((s) => (
-                  <div key={s.stat} className={`bg-gradient-to-br ${s.color} rounded-xl p-4 text-center`}>
-                    <div className="text-3xl font-extrabold text-white mb-1">{s.stat}</div>
-                    <div className="text-white/80 text-xs leading-snug">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-slate-500 text-xs mt-4">Source: MENTOR: The National Mentoring Partnership, "The Mentoring Effect" (2014)</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Salary Data Visual */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Salary by Career Field</h2>
-          <p className="text-gray-500 text-center mb-8 max-w-xl mx-auto">
-            Median annual salaries by field (BLS, May 2023). Numbers tell you what, mentors tell you how — find someone in your field and ask.
-          </p>
-          <div className="space-y-3">
-            {[
-              { field: "Computer & IT", salary: "$104,420", pct: 100, color: "bg-blue-500" },
-              { field: "Legal", salary: "$84,910", pct: 82, color: "bg-amber-500" },
-              { field: "Engineering", salary: "$83,340", pct: 80, color: "bg-indigo-500" },
-              { field: "Business & Financial", salary: "$76,850", pct: 74, color: "bg-emerald-500" },
-              { field: "Healthcare Practitioners", salary: "$77,600", pct: 75, color: "bg-rose-500" },
-              { field: "Life Sciences", salary: "$68,830", pct: 66, color: "bg-violet-500" },
-              { field: "Arts & Design", salary: "$50,710", pct: 49, color: "bg-pink-500" },
-              { field: "Education", salary: "$55,350", pct: 53, color: "bg-teal-500" },
-            ].map((item) => (
-              <div key={item.field} className="flex items-center gap-4">
-                <div className="w-36 text-sm text-gray-700 font-medium flex-shrink-0">{item.field}</div>
-                <div className="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden">
-                  <div className={`${item.color} h-6 rounded-full flex items-center justify-end pr-3`} style={{ width: `${item.pct}%` }}>
-                    <span className="text-white text-xs font-bold">{item.salary}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-400 mt-4 text-center">Source: U.S. Bureau of Labor Statistics, Occupational Employment and Wages, May 2023</p>
-        </div>
+          </dl>
+          <p className="text-xs text-gray-700 mt-8">Sources: MENTOR, "The Mentoring Effect" (2014); NACE; Gartner.</p>
+        </section>
 
         {/* Safety */}
-        <div className="relative bg-slate-50 border border-slate-200 rounded-2xl p-8 mb-10 overflow-hidden">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Built for Safety</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="mt-24">
+          <h2 className="font-serif text-3xl text-gray-900">Built for safety</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {[
-              {
-                icon: (
-                  <svg className="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                ),
-                bg: "bg-emerald-100",
-                title: "Verified Mentors",
-                desc: "Every mentor is reviewed and approved before they can connect with anyone. We check credentials and backgrounds by hand — no automation shortcuts.",
-              },
-              {
-                icon: (
-                  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                ),
-                bg: "bg-blue-100",
-                title: "Content Moderation",
-                desc: "Messages are monitored and flagged content is reviewed quickly. If something feels off, you can report it — we take those seriously.",
-              },
-              {
-                icon: (
-                  <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                ),
-                bg: "bg-amber-100",
-                title: "Parental Consent",
-                desc: "Students under 18 need parental consent to join. This isn't optional — it's how we keep younger students safe.",
-              },
+              { title: "Verified mentors", desc: "Every mentor is reviewed and approved by hand before they can connect with anyone." },
+              { title: "Content moderation", desc: "Messages are monitored and flagged content is reviewed quickly. You can report anything that feels off." },
+              { title: "Parental consent", desc: "Students under 18 need parental consent to join. This is not optional." },
             ].map((item) => (
-              <div key={item.title} className="text-center">
-                <div className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                  {item.icon}
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+              <div key={item.title} className="border-t-2 pt-4" style={{ borderColor: "var(--forest)" }}>
+                <h3 className="text-lg text-gray-900">{item.title}</h3>
+                <p className="text-gray-600 mt-2">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* CTA */}
-        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-10 text-center text-white">
-          <h3 className="text-2xl font-bold mb-2">Start the conversation.</h3>
-          <p className="text-emerald-100 mb-6">Set up your profile in 5 minutes and get matched with someone who's already in the field you want to enter.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="/signup?role=student" className="inline-block bg-white text-emerald-700 font-bold px-8 py-3 rounded-full hover:bg-emerald-50 transition-colors">
-              I'm a Student
-            </a>
-            <a href="/signup?role=mentor" className="inline-block border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition-colors">
-              I'm a Mentor
-            </a>
+        <section className="mt-24 bg-sage rounded-xl p-8 sm:p-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h2 className="font-serif text-3xl text-gray-900">Start the conversation.</h2>
+            <p className="text-gray-700 mt-2">Set up your profile in 5 minutes. It is free.</p>
           </div>
-        </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <a href="/signup?role=student" className="btn btn-primary btn-lg">I'm a Student</a>
+            <a href="/signup?role=mentor" className="btn btn-secondary btn-lg">I'm a Mentor</a>
+          </div>
+        </section>
       </div>
     </Layout>
   );
@@ -773,14 +414,11 @@ staticPages.get("/terms", optionalAuth, (c) => {
   return html(
     <Layout title="Terms of Service" user={user} currentPath="/terms">
       <div className="max-w-3xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden mb-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-indigo-900" />
-          <div className="relative z-10 text-center text-white py-14 px-8">
-            <span className="inline-block bg-white/15 border border-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Legal</span>
-            <h1 className="text-4xl font-extrabold mb-3">Terms of Service</h1>
-            <p className="text-slate-300 text-sm">Last updated: March 2026 · Effective immediately upon account creation</p>
-          </div>
-        </div>
+        <header className="mb-10 pb-6 border-b border-gray-200">
+          <p className="t-eyebrow mb-4">Legal</p>
+          <h1 className="font-serif text-4xl text-gray-900">Terms of Service</h1>
+          <p className="text-sm text-gray-600 mt-2">Last updated: March 2026 · Effective immediately upon account creation</p>
+        </header>
 
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8">
           <p className="text-amber-900 text-sm font-medium">
@@ -812,7 +450,7 @@ staticPages.get("/terms", optionalAuth, (c) => {
             </ul>
           </Section>
 
-          <Section title="5. Liability Disclaimer — User Interactions">
+          <Section title="5. Liability Disclaimer: User Interactions">
             <p className="font-semibold text-gray-800">Mentino is a platform that facilitates connections between users. We do not guarantee the quality, accuracy, or outcome of any mentorship relationship.</p>
             <p className="mt-2">All interactions between students and mentors are voluntary and occur at each user's own risk. Mentino is not responsible for:</p>
             <ul className="list-disc list-inside space-y-1 mt-2">
@@ -824,9 +462,9 @@ staticPages.get("/terms", optionalAuth, (c) => {
             <p className="mt-2 text-sm text-gray-500 italic">Mentors on Mentino are volunteer professionals, not Mentino employees. Their conduct is their own responsibility.</p>
           </Section>
 
-          <Section title="6. Minors — Additional Terms">
+          <Section title="6. Minors: Additional Terms">
             <p className="font-semibold text-gray-800">If you are under 18, the following additional terms apply to you.</p>
-            <p className="mt-2">Your use of Mentino is entirely at your own risk and the risk of your parent or guardian who consented on your behalf. Mentino implements safety features including mentor verification, content moderation, and parental consent requirements — however:</p>
+            <p className="mt-2">Your use of Mentino is entirely at your own risk and the risk of your parent or guardian who consented on your behalf. Mentino implements safety features including mentor verification, content moderation, and parental consent requirements, however:</p>
             <ul className="list-disc list-inside space-y-1 mt-2">
               <li>Mentino does not guarantee the safety or appropriateness of all mentor interactions</li>
               <li>Parents and guardians are encouraged to monitor their child's activity on the platform</li>
@@ -871,14 +509,11 @@ staticPages.get("/privacy", optionalAuth, (c) => {
   return html(
     <Layout title="Privacy Policy" user={user} currentPath="/privacy">
       <div className="max-w-3xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden mb-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-800 to-indigo-900" />
-          <div className="relative z-10 text-center text-white py-14 px-8">
-            <span className="inline-block bg-white/15 border border-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Legal</span>
-            <h1 className="text-4xl font-extrabold mb-3">Privacy Policy</h1>
-            <p className="text-violet-200 text-sm">Last updated: March 2026</p>
-          </div>
-        </div>
+        <header className="mb-10 pb-6 border-b border-gray-200">
+          <p className="t-eyebrow mb-4">Legal</p>
+          <h1 className="font-serif text-4xl text-gray-900">Privacy Policy</h1>
+          <p className="text-sm text-gray-600 mt-2">Last updated: March 2026</p>
+        </header>
 
         <div className="space-y-8 bg-white rounded-2xl border border-gray-100 p-8">
           <Section title="1. What We Collect">
@@ -903,7 +538,7 @@ staticPages.get("/privacy", optionalAuth, (c) => {
           </Section>
 
           <Section title="3. Data Storage">
-            <p>Your data is stored in Supabase (PostgreSQL), a cloud database provider. Passwords are stored as bcrypt hashes — never in plain text. All authentication uses secure, HTTP-only cookies.</p>
+            <p>Your data is stored in Supabase (PostgreSQL), a cloud database provider. Passwords are stored as bcrypt hashes, never in plain text. All authentication uses secure, HTTP-only cookies.</p>
           </Section>
 
           <Section title="4. Minors' Privacy">

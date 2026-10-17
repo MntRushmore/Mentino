@@ -19,7 +19,7 @@ function html(element: React.ReactElement, status = 200) {
 // All admin routes require auth + admin
 admin.use("/admin/*", authMiddleware, adminMiddleware);
 
-// GET /admin — Dashboard
+// GET /admin: Dashboard
 admin.get("/admin", async (c) => {
   const user = c.get("user");
 
@@ -84,7 +84,7 @@ admin.get("/admin", async (c) => {
   );
 });
 
-// GET /admin/verify — Pending mentors
+// GET /admin/verify: Pending mentors
 admin.get("/admin/verify", async (c) => {
   const user = c.get("user");
 

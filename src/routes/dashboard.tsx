@@ -7,6 +7,8 @@ import { Badge } from "../views/components/Badge";
 import { MatchCard } from "../views/components/Card";
 import { authMiddleware } from "../middleware/auth";
 import { supabase } from "../db";
+import { listEnrollments, TracksUnavailable, type Enrollment } from "../lib/tracks";
+import { MyTracksList } from "./tracks";
 
 const dashboard = new Hono();
 
@@ -53,7 +55,7 @@ async function renderStudentDashboard(c: any, user: any) {
     .order("scheduled_at", { ascending: true })
     .limit(5);
 
-  // Get unread message count — only in this student's active matches
+  // Get unread message count: only in this student's active matches
   const matchIds = matches?.filter((m: any) => m.status === "active").map((m: any) => m.id) || [];
   const { count: unreadCount } = matchIds.length > 0
     ? await supabase
@@ -83,26 +85,28 @@ async function renderStudentDashboard(c: any, user: any) {
   });
   const studentLevel = getStudentLevel(completedCount);
 
+  let myTracks: Enrollment[] = [];
+  try {
+    myTracks = await listEnrollments(user.id);
+  } catch (e) {
+    if (!(e instanceof TracksUnavailable)) throw e;
+  }
+
   return html(
     <Layout title="Dashboard" user={user} navBadges={{ unreadMessages: unreadCount || 0 }}>
       <div className="space-y-6">
         {/* Hero welcome banner */}
-        <div className="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 rounded-2xl px-8 py-7 text-white overflow-hidden anim-fade-up">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
-          <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
+        <div className="bg-sage rounded-xl px-6 sm:px-8 py-8 anim-fade-up">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <p className="text-indigo-200 text-sm font-medium mb-1">Good to see you 👋</p>
-              <h1 className="text-2xl sm:text-3xl font-bold">{user.first_name} {user.last_name}</h1>
-              <p className="text-indigo-200 text-sm mt-1">Student · Mentino</p>
+              <p className="text-gray-700 text-sm mb-1">Good to see you</p>
+              <h1 className="font-serif text-3xl text-gray-900">{user.first_name} {user.last_name}</h1>
+              <p className="text-gray-700 text-sm mt-1">Student · Mentino</p>
             </div>
-            <div className="flex gap-3">
-              <a href="/matching" className="bg-white text-indigo-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-indigo-50 transition-colors">
-                Find a Mentor
-              </a>
-              <a href="/profile/edit" className="bg-white/20 border border-white/30 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:bg-white/30 transition-colors">
-                Edit Profile
-              </a>
+            <div className="flex flex-wrap gap-2">
+              <a href="/matching" className="btn btn-primary">Find a Mentor</a>
+              <a href="/tracks" className="btn btn-secondary">Career Tracks</a>
+              <a href="/profile/edit" className="btn btn-secondary">Edit Profile</a>
             </div>
           </div>
         </div>
@@ -124,7 +128,22 @@ async function renderStudentDashboard(c: any, user: any) {
           </div>
         )}
 
-        {/* Stats row — each card is a clickable link */}
+        <section aria-labelledby="my-tracks-h" className="card p-6">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <h2 id="my-tracks-h" className="text-xl text-gray-900">My Tracks</h2>
+            <a href="/tracks/notes" className="text-sm text-gray-700 underline underline-offset-4">My notes</a>
+          </div>
+          {myTracks.length > 0 ? (
+            <MyTracksList enrollments={myTracks} />
+          ) : (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-panel rounded p-4">
+              <p className="text-sm text-gray-700">Try a free self-paced course for a career you are curious about, starting with Intro to Marketing.</p>
+              <a href="/tracks" className="btn btn-primary btn-sm">Browse tracks</a>
+            </div>
+          )}
+        </section>
+
+        {/* Stats row: each card is a clickable link */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
             { href: "/matching", label: "Active Mentors", value: activeCount, color: "text-indigo-600", bg: "bg-indigo-50", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", delay: "anim-d1" },
@@ -160,7 +179,7 @@ async function renderStudentDashboard(c: any, user: any) {
                 {studentLevel.nextThreshold ? (
                   <span className="text-xs text-gray-400">{completedCount}/{studentLevel.nextThreshold} sessions to Level {studentLevel.number + 1}</span>
                 ) : (
-                  <span className="text-xs text-amber-500 font-semibold">Max Level 🏆</span>
+                  <span className="text-xs text-amber-500 font-semibold">Max Level </span>
                 )}
               </div>
               {(() => {
@@ -169,7 +188,7 @@ async function renderStudentDashboard(c: any, user: any) {
                 const pct = next ? Math.min(100, Math.round(((completedCount - prev) / (next - prev)) * 100)) : 100;
                 return (
                   <div className="w-full bg-gray-100 rounded-full h-2">
-                    <div className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all" style={{ width: `${pct}%` }} />
+                    <div className="h-2 rounded-full bg-forest transition-all" style={{ width: `${pct}%` }} />
                   </div>
                 );
               })()}
@@ -188,7 +207,7 @@ async function renderStudentDashboard(c: any, user: any) {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {/* Matches — wider */}
+          {/* Matches: wider */}
           <div className="lg:col-span-3">
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-semibold text-gray-900">Your Mentors</h2>
@@ -216,7 +235,7 @@ async function renderStudentDashboard(c: any, user: any) {
             )}
           </div>
 
-          {/* Quick Actions — narrower */}
+          {/* Quick Actions: narrower */}
           <div className="lg:col-span-2">
             <h2 className="font-semibold text-gray-900 mb-3">Quick Actions</h2>
             <div className="space-y-2">
@@ -272,22 +291,16 @@ async function renderMentorDashboard(c: any, user: any) {
       <div className="space-y-6">
 
         {/* Hero welcome banner */}
-        <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 rounded-2xl px-8 py-7 text-white overflow-hidden anim-fade-up">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 pointer-events-none" />
-          <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
+        <div className="bg-sand rounded-xl px-6 sm:px-8 py-8 anim-fade-up">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <p className="text-emerald-100 text-sm font-medium mb-1">Mentor Dashboard 🎓</p>
-              <h1 className="text-2xl sm:text-3xl font-bold">{user.first_name} {user.last_name}</h1>
-              {mentor?.job_title && <p className="text-emerald-100 text-sm mt-1">{mentor.job_title}{mentor.company ? ` · ${mentor.company}` : ""}</p>}
+              <p className="text-gray-700 text-sm mb-1">Mentor Dashboard</p>
+              <h1 className="font-serif text-3xl text-gray-900">{user.first_name} {user.last_name}</h1>
+              {mentor?.job_title && <p className="text-gray-700 text-sm mt-1">{mentor.job_title}{mentor.company ? ` · ${mentor.company}` : ""}</p>}
             </div>
-            <div className="flex gap-3">
-              <a href="/messages" className="bg-white text-emerald-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-emerald-50 transition-colors">
-                Messages
-              </a>
-              <a href="/profile/edit" className="bg-white/20 border border-white/30 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:bg-white/30 transition-colors">
-                Edit Profile
-              </a>
+            <div className="flex flex-wrap gap-2">
+              <a href="/messages" className="btn btn-primary">Messages</a>
+              <a href="/profile/edit" className="btn btn-secondary">Edit Profile</a>
             </div>
           </div>
         </div>
@@ -323,7 +336,7 @@ async function renderMentorDashboard(c: any, user: any) {
 
         {(mentor?.verification_status === "approved" || mentor?.verification_status === "pending") && (
           <>
-            {/* Stats — clickable */}
+            {/* Stats: clickable */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { href: "/messages", label: "Active Mentees", value: activeMatches.length, color: "text-emerald-600", bg: "bg-emerald-50", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z", delay: "anim-d1" },

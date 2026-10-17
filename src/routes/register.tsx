@@ -146,7 +146,7 @@ async function handleStudentStep(
       const personalityTags = normalizeArray(body.personality_tags);
       const sessionNeeds = normalizeArray(body.session_needs);
       const mentorshipStyle = normalizeArray(body.mentorship_style);
-      // session_frequency is a radio — single value
+      // session_frequency is a radio: single value
       const freqVal = (body.session_frequency as string)?.trim();
       const sessionFrequency = freqVal ? [freqVal] : [];
 
@@ -267,7 +267,7 @@ async function handleMentorStep(
       if (bio) {
         const modResult = moderateFields({ bio });
         if (!modResult.clean) throw new Error(modResult.reason);
-        if (bio.length < 80) throw new Error("Bio must be at least 80 characters. Students read this to decide if you're a good fit — give them a real picture of who you are.");
+        if (bio.length < 80) throw new Error("Bio must be at least 80 characters. Students read this to decide if you're a good fit, give them a real picture of who you are.");
       }
 
       await supabase

@@ -17,6 +17,7 @@ import { blog } from "./routes/blog";
 import { reports } from "./routes/reports";
 import { quiz } from "./routes/quiz";
 import { resources } from "./routes/resources";
+import { tracks } from "./routes/tracks";
 import { mentors as mentorsRoute } from "./routes/mentors";
 import { optionalAuth } from "./middleware/auth";
 import { supabase } from "./db";
@@ -67,13 +68,13 @@ app.get("/", optionalAuth, async (c) => {
   };
 
   return render(
-    <Layout title="Home" user={user} currentPath="/">
+    <Layout title="Home" user={user} currentPath="/" bleed>
       <Home featuredMentors={featuredResult.data || []} stats={stats} />
     </Layout>
   );
 });
 
-// Notifications API — for browser push polling
+// Notifications API: for browser push polling
 app.get("/api/notifications", async (c) => {
   const { getCookie } = await import("hono/cookie");
   const { verifyToken } = await import("./lib/jwt");
@@ -168,6 +169,7 @@ app.route("/", reports);
 // Career quiz
 app.route("/quiz", quiz);
 app.route("/", resources);
+app.route("/", tracks);
 
 // Public mentor browse
 app.route("/", mentorsRoute);

@@ -201,21 +201,21 @@ function MentorsPage({ mentors, ratingsMap, allFields, user }: {
 
       {/* Bottom CTA */}
       {!user && (
-        <section className="bg-indigo-950 rounded-2xl p-10 text-center text-white">
-          <h2 className="text-xl sm:text-2xl font-bold mb-2">Ready to get matched?</h2>
-          <p className="text-indigo-300 text-sm sm:text-base mb-6 max-w-md mx-auto">
+        <section className="bg-clay rounded-xl p-10 text-center">
+          <h2 className="font-serif text-3xl text-gray-900 mb-2">Ready to get matched?</h2>
+          <p className="text-gray-700 text-base mb-6 max-w-md mx-auto">
             Create a free account and we'll match you with the right mentor for your goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="/signup?role=student"
-              className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 px-8 py-3.5 rounded-full font-bold hover:bg-indigo-50 transition-colors shadow-md">
+              className="btn btn-primary btn-lg">
               I'm a Student, Get Matched
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
             <a href="/signup?role=mentor"
-              className="inline-flex items-center justify-center bg-white/10 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors">
+              className="btn btn-secondary btn-lg">
               I'm a Mentor, Give Back
             </a>
           </div>

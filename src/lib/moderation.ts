@@ -21,7 +21,7 @@ const BLOCKED_WORDS = [
   "anus", "anal", "horny", "boner", "dildo", "jerk", "jerking",
   "cum", "cumshot", "orgasm", "masturbate", "masturbation",
   "blowjob", "handjob", "fingering", "erection",
-  // Slurs — n-word and all common variants/spellings
+  // Slurs: n-word and all common variants/spellings
   "nigger", "nigga", "nigg", "n1gger", "n1gga", "n!gger", "n!gga",
   "nig", "niggah", "niggaz", "niggr", "n*gger", "n*gga",
   "faggot", "fag", "f*ggot", "fgt",
